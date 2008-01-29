@@ -4,22 +4,14 @@
 
 Descrizione dei casi d'uso in modo strutturato.
 
-= UC1 - Iscrizione di un utente al sistema =
+= UC-XXX - Fac Simile =
 
-*Attore:* Visitatore
+*Attore:* l'attore del caso d'uso
 
-*Contesto:* Un visitatore vuole iscriversi al sistema per diventare _player_
+*Contesto:* l'azione principale
 
-*Prerequisiti:* nessuno
+*Prerequisiti:* prerequisiti
 
 *Azioni:*
 
-  # Il visitatore accede al sito. Il visitatore richiede la pagina di iscrizione/registrazione. Il sistema mostra la pagina di registrazione e richiede i seguenti dati (obbligatori i campi in *grassetto*):
-    * *Username*
-    * *Password*
-    * *Password confirm*
-    * *Email*
-    * *Nickname*
-    * Real Name
-    * Descrizione
-    * *Lingua*
+...
