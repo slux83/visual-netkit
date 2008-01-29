@@ -1,0 +1,25 @@
+#summary (Italian) Casi d'uso
+
+= Introduzione =
+
+Descrizione dei casi d'uso in modo strutturato.
+
+= UC1 - Iscrizione di un utente al sistema =
+
+*Attore:* Visitatore
+
+*Contesto:* Un visitatore vuole iscriversi al sistema per diventare _player_
+
+*Prerequisiti:* nessuno
+
+*Azioni:*
+
+  # Il visitatore accede al sito. Il visitatore richiede la pagina di iscrizione/registrazione. Il sistema mostra la pagina di registrazione e richiede i seguenti dati (obbligatori i campi in *grassetto*):
+    * *Username*
+    * *Password*
+    * *Password confirm*
+    * *Email*
+    * *Nickname*
+    * Real Name
+    * Descrizione
+    * *Lingua*
