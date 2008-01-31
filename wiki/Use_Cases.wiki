@@ -11,7 +11,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* sistema avviato
 
@@ -27,7 +27,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* sistema avviato
 
@@ -46,7 +46,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 
 *Pre-condizioni:* esiste un lab in memoria ed è il lab corrente
@@ -64,7 +64,7 @@ Note: come permettere il renaming? Form? Menu a comparsa tipo tooltip? Menu File
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 
 *Pre-condizioni:* esiste un lab in memoria ed è il lab corrente
@@ -81,7 +81,7 @@ Note: come permettere il renaming? Form? Menu a comparsa tipo tooltip? Menu File
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 
 *Pre-condizioni:* esiste una VM in memoria ed è la VM corrente
@@ -97,7 +97,7 @@ Note: come permettere il renaming? Form? Menu a comparsa tipo tooltip? Menu File
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste una VM in memoria ed è la VM corrente
 
@@ -113,7 +113,7 @@ Note: come permettere il renaming? Form? Menu a comparsa tipo tooltip? Menu File
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste un lab in memoria ed è quello corrente
 
@@ -129,7 +129,7 @@ Note: non è necessario che siano già presenti VM o altri elementi nel lab
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste un CD in memoria ed è quello corrente
 
@@ -145,7 +145,7 @@ Note: non è necessario che siano già presenti VM o altri elementi nel lab
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste un CD in memoria ed è quello corrente
 
@@ -162,7 +162,7 @@ Note: non è necessario che siano già presenti VM o altri elementi nel lab
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste una VM ed un CD in memoria
 
@@ -180,7 +180,7 @@ Note: gli elementi che prendono parte al gruppo (AS), ad es. VM o CD, devono ave
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste un AS in memoria ed è quello corrente
 
@@ -197,7 +197,7 @@ Note: gli elementi che prendono parte al gruppo (AS), ad es. VM o CD, devono ave
 
 *Attore:* utente finale
 
-*Contesto:* 
+*Contesto:* applicazione principale
 
 *Pre-condizioni:* esiste un AS in memoria ed è quello corrente
 
