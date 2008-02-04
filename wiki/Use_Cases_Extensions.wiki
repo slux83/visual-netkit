@@ -37,3 +37,21 @@
 *Varianti:*
   # l'utente, dopo aver selezionato le due VMs, clicca sul menu "Edit" e sceglie la voce "Add New Connection". L'utente specifica il tipo di connessione "Network" ed inserisce i parametri di configurazione di base: nome, identificativo, indirizzo;
   # l'utente clicca sul menu "Edit" e sceglie la voce "Add New Connection". L'utente specifica il tipo di connessione "Network", specifica le due VMs coinvolte ed inserisce i parametri di configurazione di base: nome, identificativo, indirizzo.
+
+
+
+= UC-Crea un gruppo di VMs =
+
+*Attore:* utente finale.
+
+*Contesto:* applicazione principale, creazione di un gruppo di VMs.
+
+*Pre-condizioni:* sistema avviato, esiste un lab con almeno una VM.
+
+*Post-condizioni:* il gruppo è stato creato e le VMs vi sono state associate.
+
+*Scenario Principale di Successo:* l'utente seleziona una o più macchine virtuali, clicca con il tasto destro e sceglie la voce "Group". L'utente specifica il tipo di gruppo tra "AS","Area" ed inserisce alcune informazioni di base: nome, identificativo.
+
+*Varianti:*
+  # l'utente, dopo aver selezionato le VMs, clicca sul menu "Edit" e sceglie la voce "Group". L'utente specifica il tipo di gruppo ed inserisce alcune informazioni di base: nome, identificativo;
+  # l'utente clicca sul menu "Edit" e sceglie la voce "Group". L'utente specifica il tipo di gruppo, le VM coinvolte ed inserisce alcune informazioni di base: nome, identificativo.
