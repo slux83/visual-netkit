@@ -1,7 +1,7 @@
 #summary Casi d'uso per operazioni complesse.
 
-= In questa sezione si analizzano gli scenari di casi d'uso per operazioni più complesse =
-
+= Introduzione = 
+In questa sezione si analizzano, in modo strutturato, gli scenari di casi d'uso per operazioni più complesse.
 ----
 = UC-Aggiungi Interfaccia =
 
