@@ -1,6 +1,6 @@
-#summary One-sentence summary of this page.
+#summary Casi d'uso per operazioni complesse.
 
-= In questa sezione si analizzano gli scenari di casi d'uso più complessi =
+= In questa sezione si analizzano gli scenari di casi d'uso per operazioni più complesse =
 
 ----
 = UC-Aggiungi Interfaccia =
