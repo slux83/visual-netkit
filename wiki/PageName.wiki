@@ -1,7 +1,7 @@
 #summary One-sentence summary of this page.
 
 = Introduction =
-Domande, punti critici, difficoltà...
+Domande, difficoltà, punti critici, dilemmi...
 
 Paolo:
   # come considero le "rotte"? Posso astrarle come classi vere e proprie o come classi di associazione tra le classi "VM" e "Network"? Ricordo che una rotta è così definita:
