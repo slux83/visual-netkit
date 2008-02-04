@@ -1,7 +1,6 @@
 #summary Come risolvo questo problema?
 
-= Introduction =
-Domande, difficoltà, punti critici, dilemmi...
+===Domande, difficoltà, punti critici, dilemmi...===
 
 Paolo:
   # come considero le "rotte"? Posso astrarle come classi vere e proprie o come classi di associazione tra le classi "VM" e "Network"? Ricordo che una rotta è così definita:
