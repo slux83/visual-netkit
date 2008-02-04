@@ -1,3 +1,20 @@
 #summary One-sentence summary of this page.
 
 = In questa sezione si analizzano gli scenari di casi d'uso più complessi =
+
+----
+= UC-Aggiungi Interfaccia =
+
+*Attore:* utente finale.
+
+*Contesto:* applicazione principale, aggiunta di una nuova interfaccia di rete ad una VM.
+
+*Pre-condizioni:* sistema avviato, esiste un lab con almeno una VM che è la VM selezionata.
+
+*Post-condizioni:* l'interfaccia è stata associata alla VM.
+
+*Scenario Principale di Successo:* l'utente, dopo aver selezionato la VM a cui vuole aggiungere l'interfaccia, clicca col tasto destro sulla VM e sceglie la voce "Add New Interface". L'utente specifica quindi il tipo di interfaccia "Network".
+
+*Varianti:*
+  # l'utente seleziona la VM. Dal menu "Edit", sceglie la voce "Add New Interface" e specifica il tipo di interfaccia "Network";
+  # dalla barra dei componenti l'utente trascina l'oggetto "Network Interface" sulla VM di destinazione.
