@@ -9,7 +9,7 @@ una rotta è così definita:
 {{{ 
 route add -net 195.11.14.0 netmask 255.255.255.0 gw 100.0.0.9 dev eth1
 }}}
-  # è necessario che in una rotta venga specificata anche l'interfaccia del
+  #è necessario che in una rotta venga specificata anche l'interfaccia del
 gateway coinvolta? Se il gw è connesso alla rete mediante una interfaccia
 ed ad essa è associato un indirizzo univoco (ad es. 100.0.0.9), forse non è
 necessario che la classe rotta abbia anche tale parametro. -sottolineo che
