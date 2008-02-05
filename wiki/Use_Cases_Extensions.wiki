@@ -22,7 +22,7 @@ In questa sezione si analizzano, in modo strutturato, gli scenari di casi d'uso 
 
 
 
-= UC-Connetti due VM =
+= UC-Connetti due VMs =
 
 *Attore:* utente finale.
 
