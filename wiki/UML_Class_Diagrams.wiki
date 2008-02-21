@@ -1,12 +1,11 @@
 #summary UML Class Diagrams
-#labels UML,Class,Diagram
+#labels UML,DCD
 
 == UML Class Diagrams for Visual Netkit project ==
 ----
 == Main UML class diagram ==
 This is the main UML class diagram. It shows relationships between the project main interfaces and classes.
- 
- 
-[http://visual-netkit.googlecode.com/files/classes_01.png http://visual-netkit.googlecode.com/files/classes_thumb_01.png]
+----
+[http://visual-netkit.googlecode.com/svn/wiki/UML-umbrello/images_export/dcd.png image-preview]
 
-,,Click on the image to zoom in,,
+[http://code.google.com/p/visual-netkit/source/browse/wiki/UML-umbrello/ the-sources]
