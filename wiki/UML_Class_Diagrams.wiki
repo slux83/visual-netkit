@@ -1,6 +1,7 @@
 #summary UML Class Diagrams
+#labels UML,Class,Diagram
 
 == UML Class Diagrams for Visual Netkit project ==
 
 === Main UML class diagram ===
-http://visual-netkit.googlecode.com/files/classi_thumb.png [http://visual-netkit.googlecode.com/files/classi.png]
+[http://visual-netkit.googlecode.com/files/classi_thumb.png http://visual-netkit.googlecode.com/files/classi.png]
