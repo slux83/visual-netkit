@@ -2,6 +2,9 @@
 #labels UML,Class,Diagram
 
 == UML Class Diagrams for Visual Netkit project ==
-
+----
 === Main UML class diagram ===
+This is the main UML class diagram. It shows relationships between the project main interfaces and classes.
+ 
 [http://visual-netkit.googlecode.com/files/classi.png http://visual-netkit.googlecode.com/files/classi_thumb.png]
+,,Click on the image to zoom in,,
