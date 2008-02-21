@@ -8,4 +8,5 @@ This is the main UML class diagram. It shows relationships between the project m
  
  
 [http://visual-netkit.googlecode.com/files/classi.png http://visual-netkit.googlecode.com/files/classi_thumb.png]
+
 ,,Click on the image to zoom in,,
