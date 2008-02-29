@@ -16,20 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Laboratory.h"
+#include "Subnet.h"
 
 /**
  * Constructor
  */
-Laboratory::Laboratory()
+Subnet::Subnet() : QObject()
 {
-	groups = new QList<SuperGroup>();
+	address = new QNetworkAddressEntry();
 }
 
 /**
  * Deconstructor
  */
-Laboratory::~Laboratory()
+Subnet::~Subnet()
 {
-	delete groups;
+	delete address;
 }

@@ -15,8 +15,10 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = 
 CONFIG += debug
-HEADERS = src/Lan.h \
+HEADERS = src/Subnet.h \
+    src/Lan.h \
     src/SuperGroup.h \
     src/Laboratory.h
-SOURCES = src/Lan.cpp \
+SOURCES = src/Subnet.cpp \
+    src/Lan.cpp \
     src/Laboratory.cpp
