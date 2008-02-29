@@ -18,10 +18,26 @@
 
 #include "Lan.h"
 
+/**
+ * Constructor
+ */
 Lan::Lan()
 {
+	subnets = new QList<Subnet>();
 }
 
+/**
+ * Deconstructor
+ */
 Lan::~Lan()
 {
+	delete subnets;
+}
+
+/**
+ * Get the subnet list
+ */
+QList<Subnet> * Lan::getSubnets()
+{
+	return subnets;
 }

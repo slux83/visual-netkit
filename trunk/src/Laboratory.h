@@ -19,7 +19,10 @@
 #ifndef LABORATORY_H_
 #define LABORATORY_H_
 
+#include "SuperGroup.h"
+
 #include <QString>
+#include <QList>
 #include <QDateTime>
 
 /**
@@ -35,6 +38,7 @@ private:
 	QString autor;
 	QString email;
 	QString website;
+	QList<SouperGroup> *groups;
 	
 public:
 	Laboratory();

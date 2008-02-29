@@ -19,13 +19,18 @@
 #ifndef SUPERGROUP_H_
 #define SUPERGROUP_H_
 
+#include <QList>
+#include "Subnet.h"
+
 /**
  * Super Group interface (implementations: Lan, Area, etc...)
  */
 class SuperGroup
 {
+	
 public:
-	virtual ~SuperGroup();
+	virtual ~SuperGroup() {};
+	virtual QList<Subnet> getSubnets() = 0;
 };
 
 #endif /*SUPERGROUP_H_*/
