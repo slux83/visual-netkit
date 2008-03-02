@@ -11,8 +11,6 @@ Scene::~Scene()
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-	qDebug() << "mouse pressed";
-	
 	QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
