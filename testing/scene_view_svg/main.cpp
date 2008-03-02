@@ -19,8 +19,7 @@ int main(int argc, char **argv)
     QGraphicsTextItem text;
     text.setHtml("<b>Press Control to select<br />multiple objects!</b>");
     text.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-    text.moveBy(200, 180);	//center on node1
-    text.setZValue(1000);
+    text.moveBy(200, 100);
     
     win->getScene()->addItem(&text);
     
