@@ -17,8 +17,11 @@ int main(int argc, char **argv)
     win->getScene()->addItem(&node1);
     win->getScene()->addItem(&node2);
     QGraphicsTextItem text;
-    text.setHtml("<b>Hello</b> <em>World</em>!");
+    text.setHtml("<b>Press Control to select<br />multiple objects!</b>");
     text.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    text.moveBy(200, 180);	//center on node1
+    text.setZValue(1000);
+    
     win->getScene()->addItem(&text);
     
     win->show();
