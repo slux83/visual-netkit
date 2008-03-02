@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QDebug>
+#include <QKeyEvent>
 
 #include "Scene.h"
 
@@ -17,9 +18,11 @@ public:
 
 private:
 	Scene *scene;
+	void scaleView(qreal scaleFactor);
 
-private slots:
-	void notifySelection();
+	
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 };
 #endif
