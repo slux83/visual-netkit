@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-Scene::Scene() : QGraphicsScene(0, 0, 500, 500)
+Scene::Scene() : QGraphicsScene(0, 0, 2000, 2000)
 {
 
 }

@@ -16,7 +16,10 @@ int main(int argc, char **argv)
     /* Add nodes to the scene inside the view */
     win->getScene()->addItem(&node1);
     win->getScene()->addItem(&node2);
-    win->getScene()->addSimpleText("Hello World");
+    QGraphicsTextItem text;
+    text.setHtml("<b>Hello</b> <em>World</em>!");
+    text.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    win->getScene()->addItem(&text);
     
     win->show();
     

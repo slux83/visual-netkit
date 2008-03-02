@@ -7,6 +7,9 @@ ViewWindow::ViewWindow() : QGraphicsView()
 	
 	//resize the scene (scale)
 	scale(0.7, 0.7);
+	
+	//ensure to view at (0, 0)
+	ensureVisible(0, 0, 0, 0);
 }
 
 ViewWindow::~ViewWindow()
