@@ -16,19 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Subnet.h"
+#include "CollisionDomain.h"
 
 /**
  * Constructor
  */
-Subnet::Subnet() : QObject()
+CollisionDomain::CollisionDomain() : QObject()
 {
 }
 
 /**
  * Deconstructor
  */
-Subnet::~Subnet()
+CollisionDomain::~CollisionDomain()
 {
-	//TODO: iterate the domain QList and delete all CollisionDomain pointers.
-}
+	}

@@ -19,6 +19,8 @@
 #ifndef SUBNET_H_
 #define SUBNET_H_
 
+#include "CollisionDomain.h"
+
 #include <QNetworkAddressEntry>
 #include <QObject>
 
@@ -30,7 +32,8 @@ class Subnet : public QObject
 	Q_OBJECT
 	
 private:
-	QNetworkAddressEntry *address;
+	QNetworkAddressEntry address;
+	QList<CollisionDomain *> domains;
 	
 public:
 	Subnet();
