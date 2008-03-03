@@ -20,6 +20,7 @@
 #define LABORATORY_H_
 
 #include "SuperGroup.h"
+#include "VirtualMachine.h"
 
 #include <QString>
 #include <QList>
@@ -38,7 +39,8 @@ private:
 	QString autor;
 	QString email;
 	QString website;
-	QList<SouperGroup> *groups;
+	QList<SouperGroup *> groups;
+	QList<VirtualMachine *> vms;
 	
 public:
 	Laboratory();

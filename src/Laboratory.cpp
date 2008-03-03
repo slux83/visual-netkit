@@ -23,7 +23,6 @@
  */
 Laboratory::Laboratory()
 {
-	groups = new QList<SuperGroup>();
 }
 
 /**
@@ -31,5 +30,6 @@ Laboratory::Laboratory()
  */
 Laboratory::~Laboratory()
 {
-	delete groups;
+	//TODO: fore ach supergroup in list and for each vms in list, remember
+	//      to free memory for each pointers!
 }

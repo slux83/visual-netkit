@@ -16,19 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Subnet.h"
+#ifndef VIRTUALMACHINE_H_
+#define VIRTUALMACHINE_H_
 
-/**
- * Constructor
- */
-Subnet::Subnet() : QObject()
+class VirtualMachine
 {
-}
+	
+public:
+	virtual ~VirtualMachine();
+};
 
-/**
- * Deconstructor
- */
-Subnet::~Subnet()
-{
-	//TODO: iterate the domain QList and delete all CollisionDomain pointers.
-}
+#endif /*VIRTUALMACHINE_H_*/

@@ -16,19 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Subnet.h"
+#ifndef HARDWAREINTERFACE_H_
+#define HARDWAREINTERFACE_H_
+
+#include <QNetworkAddressEntry>
+#include <QString>
+
+#include "VirtualMachine.h"
+#include "CollisionDomain.h"
 
 /**
- * Constructor
+ * HardwareInteface (like ethernet, ect...)
  */
-Subnet::Subnet() : QObject()
+class HardwareInterface
 {
-}
+public:
+	virtual ~HardwareInterface() {};
+	virtual QString getName() = 0;
+	virtual QNetworkAddressEntry getAddress() = 0;
+	virtual VirtualMachine* getMyVirtualMachine() = 0;
+	//TODO: etc...
+	
+protected:
+	QString name;
+	QNetworkAddressEntry address;
+	CollisionDomain *myDomain;
+	VirtualMachine *myMachine;
+};
 
-/**
- * Deconstructor
- */
-Subnet::~Subnet()
-{
-	//TODO: iterate the domain QList and delete all CollisionDomain pointers.
-}
+
+#endif /*HARDWAREINTERFACE_H_*/
