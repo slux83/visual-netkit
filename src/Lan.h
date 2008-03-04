@@ -28,11 +28,11 @@ class Lan : public SuperGroup
 {
 	
 private:
-	QList<Subnet> *subnets;
+	QList<Subnet *> subnets;
 	
 public:
 	Lan();
-	QList<Subnet> getSubnets();
+	QList<Subnet *> getSubnets();
 	virtual ~Lan();
 };
 
