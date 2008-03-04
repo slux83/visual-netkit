@@ -19,8 +19,8 @@
 #ifndef COLLISIONDOMAIN_H_
 #define COLLISIONDOMAIN_H_
 
-#include <QNetworkAddressEntry>
 #include <QObject>
+#include <QNetworkAddressEntry>
 
 class CollisionDomain : public QObject
 {

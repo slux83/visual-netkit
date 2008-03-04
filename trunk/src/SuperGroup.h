@@ -30,7 +30,7 @@ class SuperGroup
 	
 public:
 	virtual ~SuperGroup() {};
-	virtual QList<Subnet> getSubnets() = 0;
+	virtual QList<Subnet *> getSubnets() = 0;
 };
 
 #endif /*SUPERGROUP_H_*/

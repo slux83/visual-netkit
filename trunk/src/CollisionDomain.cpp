@@ -30,4 +30,4 @@ CollisionDomain::CollisionDomain() : QObject()
  */
 CollisionDomain::~CollisionDomain()
 {
-	}
+}

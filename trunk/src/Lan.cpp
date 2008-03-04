@@ -31,7 +31,6 @@ Lan::Lan()
  */
 Lan::~Lan()
 {
-	delete subnets;
 }
 
 /**
