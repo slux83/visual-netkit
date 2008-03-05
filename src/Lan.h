@@ -22,7 +22,7 @@
 #include "SuperGroup.h"
 
 /**
- * An concrete Souper group that model a Local Area Network
+ * An concrete super group that model a Local Area Network
  */
 class Lan : public SuperGroup
 {
@@ -32,7 +32,7 @@ private:
 	
 public:
 	Lan();
-	QList<Subnet *> getSubnets();
+	QList<Subnet *> getSubnets();	//the list as copy
 	virtual ~Lan();
 };
 
