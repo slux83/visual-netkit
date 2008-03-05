@@ -30,6 +30,5 @@ Laboratory::Laboratory()
  */
 Laboratory::~Laboratory()
 {
-	//TODO: foreach supergroups as value inside the QMap, remember
-	//      to free memory!
+
 }

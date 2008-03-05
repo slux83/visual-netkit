@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QNetworkAddressEntry>
+#include <QLinkedList>
 
 class CollisionDomain : public QObject
 {
@@ -28,7 +29,7 @@ class CollisionDomain : public QObject
 
 private:
 	QNetworkAddressEntry address;
-	QList<HardwareInterface *> peers;
+	QLinkedList<HardwareInterface *> peers;
 
 public:
 	CollisionDomain();

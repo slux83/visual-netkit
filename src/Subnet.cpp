@@ -21,7 +21,7 @@
 /**
  * Constructor
  */
-Subnet::Subnet() : QObject()
+Subnet::Subnet()
 {
 }
 
