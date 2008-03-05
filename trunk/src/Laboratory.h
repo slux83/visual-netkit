@@ -41,7 +41,7 @@ private:
 	QString email;
 	QString website;
 	QLinkedList<SouperGroup *> groups;
-	QLinkedList<VirtualMachine *> vms;
+	QLinkedList<VirtualMachine *> machines;
 	
 public:
 	Laboratory();

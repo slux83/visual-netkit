@@ -19,18 +19,31 @@
 #ifndef VIRTUALMACHINE_H_
 #define VIRTUALMACHINE_H_
 
+#include "HardwareInterface.h"
+
+#include <QString>
+#include <QLinkedList>
+
 /**
- * [PURE ABSTRACT CLASS]
+ * [ABSTRACT CLASS]
  * The general Virtual machine that inside NetKit it is modelled with
  * User Mode Linux
  */
 class VirtualMachine
 {
+protected:
+	QString name;
+	
+	//the base class is just an host!
+	static const QString type("host");
+	QLinkedList<HardwareInterface *> interfaces;
 	
 public:
+	VirtualMachine(QString newName);
 	virtual ~VirtualMachine() {};
-	virtual QString getName() = 0;
-	virtual QString getType() = 0;
+	QString getName();
+	virtual QString getType();
+	QLinkedList<HardwareInterface *> getInterfaces();
 	
 };
 

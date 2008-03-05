@@ -21,7 +21,8 @@ HEADERS = src/VirtualMachine.h \
     src/Subnet.h \
     src/SuperGroup.h \
     src/Laboratory.h
-SOURCES = src/HardwareInterface.cpp \
+SOURCES = src/VirtualMachine.cpp \
+    src/HardwareInterface.cpp \
     src/SuperGroup.cpp \
     src/CollisionDomain.cpp \
     src/Subnet.cpp \

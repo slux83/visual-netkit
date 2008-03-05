@@ -27,10 +27,8 @@
 /**
  * The subnet class
  */
-class Subnet : public QObject
+class Subnet
 {
-	Q_OBJECT
-	
 private:
 	QNetworkAddressEntry address;
 	QList<CollisionDomain *> domains;
