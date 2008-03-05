@@ -24,6 +24,7 @@
 
 #include <QString>
 #include <QList>
+#include <QMap>
 #include <QDateTime>
 
 /**
@@ -39,8 +40,8 @@ private:
 	QString autor;
 	QString email;
 	QString website;
-	QList<SouperGroup *> groups;
-	QList<VirtualMachine *> vms;
+	QLinkedList<SouperGroup *> groups;
+	QLinkedList<VirtualMachine *> vms;
 	
 public:
 	Laboratory();

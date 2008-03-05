@@ -28,6 +28,7 @@ class CollisionDomain : public QObject
 
 private:
 	QNetworkAddressEntry address;
+	QList<HardwareInterface *> peers;
 
 public:
 	CollisionDomain();

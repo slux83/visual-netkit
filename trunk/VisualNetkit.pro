@@ -15,14 +15,15 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = 
 CONFIG += debug
-HEADERS = src/VirtualMachine.h \
+HEADERS = src/IpInterface.h \
+    src/VirtualMachine.h \
     src/HardwareInterface.h \
     src/CollisionDomain.h \
     src/Subnet.h \
-    src/Lan.h \
     src/SuperGroup.h \
     src/Laboratory.h
-SOURCES = src/CollisionDomain.cpp \
+SOURCES = src/SuperGroup.cpp \
+    src/IpInterface.cpp \
+    src/CollisionDomain.cpp \
     src/Subnet.cpp \
-    src/Lan.cpp \
     src/Laboratory.cpp

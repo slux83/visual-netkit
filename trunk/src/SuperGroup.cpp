@@ -16,33 +16,63 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HARDWAREINTERFACE_H_
-#define HARDWAREINTERFACE_H_
-
-#include <QNetworkAddressEntry>
-#include <QString>
-
-#include "VirtualMachine.h"
-#include "CollisionDomain.h"
+#include "SuperGroup.h"
 
 /**
- * [ABSTRACT CLASS]
- * HardwareInteface (like ethernet, ect...)
+ * [SuperGroup]
+ * The base class implementation
  */
-class HardwareInterface
+SuperGroup::SuperGroup()
 {
-public:
-	virtual ~HardwareInterface() {};
-	virtual QString getType();
-	QString getName();
-	QNetworkAddressEntry getAddress();
-	VirtualMachine* getMyVirtualMachine();
-	CollisionDomain* getMyCollisionDomain();
-	void setMyCollisionDomain(CollisionDomain *cs);
-	void setMyVirtualMachine(VirtualMachine *m);
-	//TODO: etc...
+	
+}
 
-};
+/**
+ * Deconstructor
+ */
+SuperGroup::~SuperGroup()
+{
 
+}
 
-#endif /*HARDWAREINTERFACE_H_*/
+/**
+ * Get the subnets list
+ */
+QLinkedList<Subnet *> SuperGroup::getSubnets()
+{
+	return subnets;
+}
+
+/**
+ * Get the type of this class
+ */
+QString SuperGroup::getType()
+{
+	return type;
+}
+
+/**
+ * [Lan]
+ * The Lan class implementation
+ */
+Lan::Lan()
+{
+	
+}
+
+/**
+ * Deconstructor
+ */
+Lan::~Lan()
+{
+
+}
+
+/**
+ * [REIMPL]
+ * Get the type of this class
+ */
+QString Lan::getType()
+{
+	return type;
+}
