@@ -16,50 +16,76 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SuperGroup.h"
+#include "HardwareInterface.h"
 
 /**
- * [SuperGroup]
+ * [HardwareInterface]
  * The base class implementation
  */
-SuperGroup::SuperGroup()
+HardwareInterface::HardwareInterface(VirtualMachine *m)
 {
-	
+	myMachine = m;
+	domain = NULL;
 }
 
 /**
  * Deconstructor
  */
-SuperGroup::~SuperGroup()
+HardwareInterface::~HardwareInterface()
 {
-
+	
 }
 
 /**
- * Get the subnets list
+ * Get the name of the hardware interface
  */
-QLinkedList<Subnet *> SuperGroup::getSubnets()
+QString HardwareInterface::getName()
 {
-	return subnets;
+	return name;
 }
 
 /**
- * Get the type of this class
+ * Get the address (ip, netmask, broadcast, etc...)
  */
-QString SuperGroup::getType()
+QNetworkAddressEntry HardwareInterface::getAddress()
 {
-	return type;
+	return address;
 }
+
+/**
+ * Get my virtual machine
+ */
+VirtualMachine* HardwareInterface::getMyVirtualMachine()
+{
+	return myMachine;
+}
+
+/**
+ * Get my collision domain
+ */
+CollisionDomain* HardwareInterface::getMyCollisionDomain()
+{
+	return domain;
+}
+
+/**
+ * Set my collision domain (two way)
+ */
+void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
+{
+	//TODO: remember to connect the *cs to 'this'
+	domain = cs;
+}
+
 
 
 /******************************************************************************/
 
 
 /**
- * [Lan]
- * The Lan class implementation
+ * Constructor
  */
-Lan::Lan() : SuperGroup()
+IpInterface::IpInterface(VirtualMachine *m) : HardwareInterface(m)
 {
 	
 }
@@ -67,16 +93,15 @@ Lan::Lan() : SuperGroup()
 /**
  * Deconstructor
  */
-Lan::~Lan()
+IpInterface::~IpInterface()
 {
-
+	
 }
 
 /**
- * [REIMPL]
- * Get the type of this class
+ * Get the type
  */
-QString Lan::getType()
+QString IpInterface::getType()
 {
 	return type;
 }

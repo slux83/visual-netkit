@@ -31,7 +31,15 @@
  */
 class HardwareInterface
 {
+protected:
+	QNetworkAddressEntry address;
+	QString name;
+	VirtualMachine *myMachine;
+	CollisionDomain *domain;
+	static const QString type("unknown");
+	
 public:
+	HardwareInterface(VirtualMachine *m);
 	virtual ~HardwareInterface() {};
 	virtual QString getType();
 	QString getName();
@@ -39,10 +47,23 @@ public:
 	VirtualMachine* getMyVirtualMachine();
 	CollisionDomain* getMyCollisionDomain();
 	void setMyCollisionDomain(CollisionDomain *cs);
-	void setMyVirtualMachine(VirtualMachine *m);
 	//TODO: etc...
 
 };
 
+
+/******************************************************************************/
+
+
+class IpInterface : public HardwareInterface
+{
+private:
+	const QString type("ip_interface");
+	
+public:
+	IpInterface();
+	virtual ~IpInterface();
+	QString getType();
+};
 
 #endif /*HARDWAREINTERFACE_H_*/
