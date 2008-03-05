@@ -30,6 +30,6 @@ Laboratory::Laboratory()
  */
 Laboratory::~Laboratory()
 {
-	//TODO: fore ach supergroup in list and for each vms in list, remember
-	//      to free memory for each pointers!
+	//TODO: foreach supergroups as value inside the QMap, remember
+	//      to free memory!
 }

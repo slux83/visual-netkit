@@ -19,11 +19,19 @@
 #ifndef VIRTUALMACHINE_H_
 #define VIRTUALMACHINE_H_
 
+/**
+ * [PURE ABSTRACT CLASS]
+ * The general Virtual machine that inside NetKit it is modelled with
+ * User Mode Linux
+ */
 class VirtualMachine
 {
 	
 public:
-	virtual ~VirtualMachine();
+	virtual ~VirtualMachine() {};
+	virtual QString getName() = 0;
+	virtual QString getType() = 0;
+	
 };
 
 #endif /*VIRTUALMACHINE_H_*/

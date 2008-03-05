@@ -19,18 +19,49 @@
 #ifndef SUPERGROUP_H_
 #define SUPERGROUP_H_
 
-#include <QList>
+#include <QLinkedList>
+#include <QString>
 #include "Subnet.h"
 
 /**
+ * [ABSTRACT CLASS]
  * Super Group interface (implementations: Lan, Area, etc...)
  */
 class SuperGroup
 {
+protected:
+	QLinkedList<Subnet *> subnets;
+	//the base class is not a correct type
+	static const QString type("unknown");
 	
 public:
+	SuperGroup();
 	virtual ~SuperGroup() {};
-	virtual QList<Subnet *> getSubnets() = 0;
+	QLinkedList<Subnet *> getSubnets();
+	virtual QString getType();
+	//TODO: etc...
 };
+
+
+/******************************************************************************/
+
+
+/**
+ * [LOCAL AREA NETWORK CLASS]
+ * An extension of super group that model a Local Area Network
+ */
+class Lan : public SuperGroup
+{
+	
+private:
+	//this field have more priority than base class
+	static const QString type("lan");
+
+public:
+	Lan();
+	virtual ~Lan();
+	QString getType();
+};
+
 
 #endif /*SUPERGROUP_H_*/
