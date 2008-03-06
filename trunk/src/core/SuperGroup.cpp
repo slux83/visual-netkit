@@ -24,7 +24,7 @@
  */
 SuperGroup::SuperGroup()
 {
-	
+	type = "unknown";
 }
 
 /**
@@ -61,7 +61,7 @@ QString SuperGroup::getType()
  */
 Lan::Lan() : SuperGroup()
 {
-	
+	type = "lan";
 }
 
 /**

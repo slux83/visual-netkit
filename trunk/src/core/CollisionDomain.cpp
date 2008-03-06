@@ -21,8 +21,9 @@
 /**
  * Constructor
  */
-CollisionDomain::CollisionDomain() : QObject()
+CollisionDomain::CollisionDomain()
 {
+	
 }
 
 /**
@@ -30,4 +31,5 @@ CollisionDomain::CollisionDomain() : QObject()
  */
 CollisionDomain::~CollisionDomain()
 {
+	
 }
