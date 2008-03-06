@@ -15,15 +15,15 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = 
 CONFIG += debug
-HEADERS = src/VirtualMachine.h \
-    src/HardwareInterface.h \
-    src/CollisionDomain.h \
-    src/Subnet.h \
-    src/SuperGroup.h \
-    src/Laboratory.h
-SOURCES = src/VirtualMachine.cpp \
-    src/HardwareInterface.cpp \
-    src/SuperGroup.cpp \
-    src/CollisionDomain.cpp \
-    src/Subnet.cpp \
-    src/Laboratory.cpp
+HEADERS = src/core/VirtualMachine.h \
+    src/core/HardwareInterface.h \
+    src/core/CollisionDomain.h \
+    src/core/Subnet.h \
+    src/core/SuperGroup.h \
+    src/core/Laboratory.h
+SOURCES = src/core/VirtualMachine.cpp \
+    src/core/HardwareInterface.cpp \
+    src/core/SuperGroup.cpp \
+    src/core/CollisionDomain.cpp \
+    src/core/Subnet.cpp \
+    src/core/Laboratory.cpp
