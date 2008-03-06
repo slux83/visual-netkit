@@ -25,6 +25,7 @@
 VirtualMachine::VirtualMachine(QString newName)
 {
 	name = newName;
+	type = "host";
 }
 
 /**

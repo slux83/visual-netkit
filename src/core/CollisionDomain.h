@@ -19,13 +19,13 @@
 #ifndef COLLISIONDOMAIN_H_
 #define COLLISIONDOMAIN_H_
 
-#include <QObject>
 #include <QNetworkAddressEntry>
 #include <QLinkedList>
 
-class CollisionDomain : public QObject
+class HardwareInterface;
+
+class CollisionDomain
 {
-	Q_OBJECT
 
 private:
 	QNetworkAddressEntry address;

@@ -26,6 +26,7 @@ HardwareInterface::HardwareInterface(VirtualMachine *m)
 {
 	myMachine = m;
 	domain = NULL;
+	type = "unknown";
 }
 
 /**
@@ -34,6 +35,14 @@ HardwareInterface::HardwareInterface(VirtualMachine *m)
 HardwareInterface::~HardwareInterface()
 {
 	
+}
+
+/**
+ * Get the default hardware interface type
+ */
+QString HardwareInterface::getType()
+{
+	return type;
 }
 
 /**
@@ -78,7 +87,6 @@ void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
 }
 
 
-
 /******************************************************************************/
 
 
@@ -87,7 +95,8 @@ void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
  */
 IpInterface::IpInterface(VirtualMachine *m) : HardwareInterface(m)
 {
-	
+	domain = NULL;
+	type = "ip_interface";
 }
 
 /**

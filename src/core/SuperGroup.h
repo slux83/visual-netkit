@@ -32,11 +32,11 @@ class SuperGroup
 protected:
 	QLinkedList<Subnet *> subnets;
 	//the base class is not a correct type
-	static const QString type("unknown");
+	QString type;
 	
 public:
 	SuperGroup();
-	virtual ~SuperGroup() {};
+	virtual ~SuperGroup();
 	QLinkedList<Subnet *> getSubnets();
 	virtual QString getType();
 	//TODO: etc...
@@ -55,7 +55,7 @@ class Lan : public SuperGroup
 	
 private:
 	//this field have more priority than base class
-	static const QString type("lan");
+	QString type;
 
 public:
 	Lan();

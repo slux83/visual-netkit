@@ -33,17 +33,15 @@ class VirtualMachine
 {
 protected:
 	QString name;
-	
-	//the base class is just an host!
-	static const QString type("host");
+	QString type;	//the base class is just an host! (see the implementation)
 	QLinkedList<HardwareInterface *> interfaces;
 	
 public:
 	VirtualMachine(QString newName);
-	virtual ~VirtualMachine() {};
-	QString getName();
+	virtual ~VirtualMachine();
 	virtual QString getType();
 	QLinkedList<HardwareInterface *> getInterfaces();
+	QString getName();
 	
 };
 

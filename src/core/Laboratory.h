@@ -40,7 +40,7 @@ private:
 	QString autor;
 	QString email;
 	QString website;
-	QLinkedList<SouperGroup *> groups;
+	QLinkedList<SuperGroup *> groups;
 	QLinkedList<VirtualMachine *> machines;
 	
 public:
