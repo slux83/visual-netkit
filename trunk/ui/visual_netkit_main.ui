@@ -86,18 +86,6 @@
     <property name="title" >
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuDocks" >
-     <property name="title" >
-      <string>Docks</string>
-     </property>
-     <addaction name="actionNetkit_Lab" />
-     <addaction name="actionMiniature" />
-     <addaction name="actionProperty_Editor" />
-     <addaction name="actionTree_View" />
-     <addaction name="separator" />
-     <addaction name="actionLog_Panel" />
-    </widget>
-    <addaction name="menuDocks" />
    </widget>
    <widget class="QMenu" name="menuHelp" >
     <property name="title" >
