@@ -17,21 +17,6 @@
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QVBoxLayout" >
-    <property name="spacing" >
-     <number>3</number>
-    </property>
-    <property name="leftMargin" >
-     <number>3</number>
-    </property>
-    <property name="topMargin" >
-     <number>3</number>
-    </property>
-    <property name="rightMargin" >
-     <number>3</number>
-    </property>
-    <property name="bottomMargin" >
-     <number>3</number>
-    </property>
     <item>
      <widget class="QTabWidget" name="tabWidget" >
       <property name="currentIndex" >
@@ -178,6 +163,24 @@
     <layout class="QVBoxLayout" >
      <item>
       <widget class="QTreeView" name="treeView_2" />
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_3" >
+   <property name="floating" >
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle" >
+    <string>Logs</string>
+   </property>
+   <attribute name="dockWidgetArea" >
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3" >
+    <layout class="QVBoxLayout" >
+     <item>
+      <widget class="QTextEdit" name="textEdit" />
      </item>
     </layout>
    </widget>
