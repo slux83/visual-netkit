@@ -37,6 +37,7 @@ public:
 	NewLabFacadeController();
 	virtual ~NewLabFacadeController();
 	static NewLabFacadeController * getInstance();
+	Laboratory * newLaboratory(QString newName, QString newVersion, QString newAutors);
 };
 
 #endif /*VISUALNETKITFACADECONTROLLER_H_*/

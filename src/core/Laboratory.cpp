@@ -21,8 +21,11 @@
 /**
  * Constructor
  */
-Laboratory::Laboratory()
+Laboratory::Laboratory(QString newName, QString newVersion, QString newAutors)
 {
+	name = newName;
+	version = newVersion;
+	autors = newAutors;
 }
 
 /**

@@ -28,6 +28,7 @@ NewLabFacadeController* NewLabFacadeController::instance = NULL;
  */
 NewLabFacadeController::NewLabFacadeController()
 {
+	currentLab = NULL;
 }
 
 /**
@@ -48,4 +49,16 @@ NewLabFacadeController* NewLabFacadeController::getInstance()
 	}
 
 	return instance;
+}
+
+/**
+ * Create a new laboratory and set it as current laboratory
+ * This is also the Factory for laboratory instances
+ */
+Laboratory * NewLabFacadeController::newLaboratory(QString newName, QString newVersion, QString newAutors)
+{
+	//TODO: first check in the currentLab allready exist 
+	currentLab = new Laboratory(newName, newVersion, newAutors);
+	
+	return currentLab;
 }
