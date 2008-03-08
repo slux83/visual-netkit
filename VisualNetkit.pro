@@ -16,14 +16,18 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = 
 CONFIG += debug
-HEADERS = src/gui/MainWindow.h \
+HEADERS = src/core/NewLabFacadeController.h \
+    src/gui/NewLabHandler.h \
+    src/gui/MainWindow.h \
     src/core/VirtualMachine.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/main.cpp \
+SOURCES = src/core/NewLabFacadeController.cpp \
+    src/gui/NewLabHandler.cpp \
+    src/main.cpp \
     src/gui/MainWindow.cpp \
     src/core/VirtualMachine.cpp \
     src/core/HardwareInterface.cpp \
