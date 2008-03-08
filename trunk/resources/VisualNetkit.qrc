@@ -1,0 +1,9 @@
+<RCC>
+	<qresource prefix="/menu" >
+		<file alias="new_icon" >menu_icons/new.png</file>
+		<file alias="open_icon" >menu_icons/open.png</file>
+		<file alias="save_icon" >menu_icons/save.png</file>
+		<file alias="save_as_icon" >menu_icons/save_as.png</file>
+		<file alias="close_icon" >menu_icons/close.png</file>
+	</qresource>
+</RCC>
