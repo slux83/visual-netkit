@@ -48,7 +48,7 @@ VirtualMachineFactory * VirtualMachineFactory::getInstance(VirtualMachineType ty
 /*	switch (type) 
 	{
 		case VirtualMachine::Router :
-			return reinterpret_cast<RouterFactory *>(instance);
+			return RouterFactory::getInstance();
 			break;
 		case VirtualMachine::Host :
 			return instance;
