@@ -16,7 +16,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/core/VirtualMachineType.h \
+HEADERS = src/core/HardwareInterfaceType.h \
+    src/core/VirtualMachineType.h \
     src/core/VirtualMachineFactory.h \
     src/core/NewLabFacadeController.h \
     src/gui/NewLabHandler.h \

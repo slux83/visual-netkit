@@ -21,9 +21,9 @@
 /**
  * Constructor
  */
-CollisionDomain::CollisionDomain()
+CollisionDomain::CollisionDomain(QString newName)
 {
-	
+	name = newName;
 }
 
 /**

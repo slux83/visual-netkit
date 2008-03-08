@@ -16,26 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COLLISIONDOMAIN_H_
-#define COLLISIONDOMAIN_H_
+#ifndef HARDWAREINTERFACETYPE_H_
+#define HARDWAREINTERFACETYPE_H_
 
-#include <QNetworkAddressEntry>
-#include <QLinkedList>
-#include <QString>
-
-class HardwareInterface;
-
-class CollisionDomain
+/**
+ * Enumeration of hardware interface types
+ */
+enum HardwareInterfaceType
 {
-
-private:
-	QString name;
-	QNetworkAddressEntry address;
-	QLinkedList<HardwareInterface *> peers;
-
-public:
-	CollisionDomain(QString newName);
-	virtual ~CollisionDomain();
+	iP = 0x01
 };
 
-#endif /*COLLISIONDOMAIN_H_*/
+#endif /*HARDWAREINTERFACETYPE_H_*/
