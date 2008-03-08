@@ -26,7 +26,7 @@ NewLabHandler* NewLabHandler::instance = NULL;
 /**
  * Constructor
  */
-NewLabHandler::NewLabHandler()
+NewLabHandler::NewLabHandler() : QObject()
 {
 }
 

@@ -19,10 +19,11 @@
 #ifndef NEWLABHANDLER_H_
 #define NEWLABHANDLER_H_
 
+#include <QObject>
 /**
  * This's the controller for the scenario New Laboratory
  */
-class NewLabHandler: public QObject
+class NewLabHandler : public QObject
 {
         Q_OBJECT
         

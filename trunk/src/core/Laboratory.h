@@ -37,14 +37,14 @@ private:
 	QString description;
 	QString version;
 	QDateTime date;
-	QString autor;
+	QString autors;
 	QString email;
 	QString website;
 	QLinkedList<SuperGroup *> groups;
 	QLinkedList<VirtualMachine *> machines;
 	
 public:
-	Laboratory();
+	Laboratory(QString newName, QString newVersion, QString newAutors);
 	virtual ~Laboratory();
 };
 
