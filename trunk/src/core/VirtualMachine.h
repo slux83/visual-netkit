@@ -25,24 +25,35 @@
 #include <QLinkedList>
 
 /**
+ * Enumeration of machine types
+ */
+enum VirtualMachineType
+{
+	Host = 0x01,
+	Router = 0x02
+	//Switch = 0x04,
+};
+
+/**
  * [ABSTRACT CLASS]
  * The general Virtual machine that inside NetKit it is modelled with
  * User Mode Linux
  */
 class VirtualMachine
 {
-protected:
-	QString name;
-	QString type;	//the base class is just an host! (see the implementation)
-	QLinkedList<HardwareInterface *> interfaces;
-	
-public:
+
+public:	
 	VirtualMachine(QString newName);
 	virtual ~VirtualMachine();
-	virtual QString getType();
+	virtual VirtualMachineType getType();
 	QLinkedList<HardwareInterface *> getInterfaces();
 	QString getName();
-	
+
+protected:
+	QString name;
+	VirtualMachineType type;
+	QLinkedList<HardwareInterface *> interfaces;
+
 };
 
 #endif /*VIRTUALMACHINE_H_*/

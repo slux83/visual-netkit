@@ -16,46 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef VIRTUALMACHINEFACTORY_H_
+#define VIRTUALMACHINEFACTORY_H_
+
 #include "VirtualMachine.h"
+#include <QString>
 
 /**
- * [VirtualMachine]
- * Base contructor
+ * Abstract Factory for VirtualMachine
+ * [possible extensions are: RouterFactory, etc...]
  */
-VirtualMachine::VirtualMachine(QString newName)
-{
-	name = newName;
-	type = Host;
-}
-
-/**
- * Deconstructor
- */
-VirtualMachine::~VirtualMachine()
+class VirtualMachineFactory
 {
 	
-}
+private:
+	static VirtualMachineFactory *instance;
+	
+public:
+	VirtualMachineFactory();
+	virtual ~VirtualMachineFactory();
+	static VirtualMachineFactory * getInstance(VirtualMachineType type);
+	virtual VirtualMachine * getNewVirtualMachine(QString name);
+};
 
-/**
- * Get the machine name 
- */
-QString VirtualMachine::getName()
-{
-	return name;
-}
-
-/**
- * Get the machine type (default: "host")
- */
-VirtualMachineType VirtualMachine::getType()
-{
-	return type;
-}
-
-/**
- * Get the list of interfaces owned by this virtual machine
- */
-QLinkedList<HardwareInterface *> VirtualMachine::getInterfaces()
-{
-	return interfaces;
-}
+#endif /*VIRTUALMACHINEFACTORY_H_*/

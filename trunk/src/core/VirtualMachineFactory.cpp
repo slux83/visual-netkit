@@ -16,46 +16,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VirtualMachine.h"
+#include "VirtualMachineFactory.h"
 
 /**
- * [VirtualMachine]
- * Base contructor
+ * Init the null instance for the singletone abstract factory
  */
-VirtualMachine::VirtualMachine(QString newName)
+VirtualMachineFactory* VirtualMachineFactory::instance = NULL;
+
+/**
+ * Constructor
+ */
+VirtualMachineFactory::VirtualMachineFactory()
 {
-	name = newName;
-	type = Host;
 }
 
 /**
  * Deconstructor
  */
-VirtualMachine::~VirtualMachine()
+VirtualMachineFactory::~VirtualMachineFactory()
 {
+}
+
+/**
+ * Get the correct factory
+ */
+VirtualMachineFactory * VirtualMachineFactory::getInstance(VirtualMachineType type)
+{
+	Q_UNUSED(type)
 	
+	//TODO: use a stantment like this when you have some extension of VirtualMachine
+/*	switch (type) 
+	{
+		case VirtualMachine::Router :
+			return reinterpret_cast<RouterFactory *>(instance);
+			break;
+		case VirtualMachine::Host :
+			return instance;
+			break;
+	}
+*/	
+	return instance;
+
 }
 
-/**
- * Get the machine name 
- */
-QString VirtualMachine::getName()
+VirtualMachine * VirtualMachineFactory::getNewVirtualMachine(QString name)
 {
-	return name;
+	return new VirtualMachine(name);
 }
 
-/**
- * Get the machine type (default: "host")
- */
-VirtualMachineType VirtualMachine::getType()
-{
-	return type;
-}
 
-/**
- * Get the list of interfaces owned by this virtual machine
- */
-QLinkedList<HardwareInterface *> VirtualMachine::getInterfaces()
-{
-	return interfaces;
-}
+
