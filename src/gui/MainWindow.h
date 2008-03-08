@@ -20,6 +20,7 @@
 #define MAINWINDOW_H_
 
 #include "ui_visual_netkit_main.h"
+#include "NewLabHandler.h"
 
 #include <QWidget>
 
@@ -30,6 +31,13 @@ class MainWindow : public QMainWindow, private Ui::NetkitMainWindow
 public:
 	MainWindow(QWidget *parent = 0);
 	virtual ~MainWindow();
+	
+private:
+	/* Controllers */
+	NewLabHandler *newLabHandler;
+	
+	void populateViewMenu();
+
 };
 
 #endif /*MAINWINDOW_H_*/
