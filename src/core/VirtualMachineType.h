@@ -24,8 +24,8 @@
  */
 enum VirtualMachineType
 {
-	Host = 0x01,
-	Router = 0x02
+	Host = 0x01
+	//Router = 0x02,
 	//Switch = 0x04,
 };
 

@@ -26,7 +26,7 @@ HardwareInterface::HardwareInterface(VirtualMachine *m)
 {
 	myMachine = m;
 	domain = NULL;
-	type = "unknown";
+	type = iP;
 }
 
 /**
@@ -87,30 +87,3 @@ void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
 }
 
 
-/******************************************************************************/
-
-
-/**
- * Constructor
- */
-IpInterface::IpInterface(VirtualMachine *m) : HardwareInterface(m)
-{
-	domain = NULL;
-	type = "ip_interface";
-}
-
-/**
- * Deconstructor
- */
-IpInterface::~IpInterface()
-{
-	
-}
-
-/**
- * Get the type
- */
-QString IpInterface::getType()
-{
-	return type;
-}

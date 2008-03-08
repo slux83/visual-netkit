@@ -21,6 +21,7 @@
 
 #include <QNetworkAddressEntry>
 #include <QString>
+#include "HardwareInterfaceType.h"
 
 class CollisionDomain;
 class VirtualMachine;
@@ -49,21 +50,6 @@ public:
 	void setMyCollisionDomain(CollisionDomain *cs);
 	//TODO: etc...
 
-};
-
-
-/******************************************************************************/
-
-
-class IpInterface : public HardwareInterface
-{
-private:
-	QString type;
-	
-public:
-	IpInterface(VirtualMachine *m);
-	virtual ~IpInterface();
-	QString getType();
 };
 
 #endif /*HARDWAREINTERFACE_H_*/
