@@ -16,7 +16,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = 
 CONFIG += debug
-HEADERS = src/core/VirtualMachineFactory.h \
+HEADERS = src/core/VirtualMachineType.h \
+    src/core/VirtualMachineFactory.h \
     src/core/NewLabFacadeController.h \
     src/gui/NewLabHandler.h \
     src/gui/MainWindow.h \

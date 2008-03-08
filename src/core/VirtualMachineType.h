@@ -16,35 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIRTUALMACHINE_H_
-#define VIRTUALMACHINE_H_
-
-#include "HardwareInterface.h"
-#include "VirtualMachineType.h"
-
-#include <QString>
-#include <QLinkedList>
+#ifndef VIRTUALMACHINETYPE_H_
+#define VIRTUALMACHINETYPE_H_
 
 /**
- * [ABSTRACT CLASS]
- * The general Virtual machine that inside NetKit it is modelled with
- * User Mode Linux
+ * Enumeration of machine types
  */
-class VirtualMachine
+enum VirtualMachineType
 {
-
-public:	
-	VirtualMachine(QString newName);
-	virtual ~VirtualMachine();
-	virtual VirtualMachineType getType();
-	QLinkedList<HardwareInterface *> getInterfaces();
-	QString getName();
-
-protected:
-	QString name;
-	VirtualMachineType type;
-	QLinkedList<HardwareInterface *> interfaces;
-
+	Host = 0x01,
+	Router = 0x02
+	//Switch = 0x04,
 };
 
-#endif /*VIRTUALMACHINE_H_*/
+#endif /*VIRTUALMACHINETYPE_H_*/
