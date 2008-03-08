@@ -14,7 +14,7 @@ MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
 OBJECTS_DIR = build/obj
-RESOURCES = 
+RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
 HEADERS = src/core/VirtualMachineType.h \
     src/core/VirtualMachineFactory.h \
