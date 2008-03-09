@@ -20,13 +20,13 @@
 
 /**
  * [HardwareInterface]
- * The base class implementation
+ * Constructor
  */
 HardwareInterface::HardwareInterface(VirtualMachine *m)
 {
 	myMachine = m;
 	domain = NULL;
-	type = iP;
+//	type = iP;
 }
 
 /**
@@ -40,10 +40,10 @@ HardwareInterface::~HardwareInterface()
 /**
  * Get the default hardware interface type
  */
-QString HardwareInterface::getType()
-{
-	return type;
-}
+//QString HardwareInterface::getType()
+//{
+//	return type;
+//}
 
 /**
  * Get the name of the hardware interface

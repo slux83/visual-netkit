@@ -27,22 +27,22 @@ class CollisionDomain;
 class VirtualMachine;
 
 /**
- * [ABSTRACT CLASS]
- * HardwareInteface (like ethernet, ect...)
+ * HardwareInteface (like ethernet, wireless, ect...)
  */
 class HardwareInterface
 {
-protected:
+
+private:
 	QNetworkAddressEntry address;
 	QString name;
 	VirtualMachine *myMachine;
 	CollisionDomain *domain;
-	QString type;
+//	QString type;
 	
 public:
 	HardwareInterface(VirtualMachine *m);
 	virtual ~HardwareInterface();
-	virtual QString getType();
+//	virtual QString getType();
 	QString getName();
 	QNetworkAddressEntry getAddress();
 	VirtualMachine* getMyVirtualMachine();
