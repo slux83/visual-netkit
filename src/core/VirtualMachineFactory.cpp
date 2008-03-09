@@ -19,7 +19,7 @@
 #include "VirtualMachineFactory.h"
 
 /**
- * Init the null instance for the singletone abstract factory
+ * Init the null instance for the singletone factory
  */
 VirtualMachineFactory* VirtualMachineFactory::instance = NULL;
 
@@ -40,11 +40,10 @@ VirtualMachineFactory::~VirtualMachineFactory()
 /**
  * Get the correct factory
  */
-VirtualMachineFactory * VirtualMachineFactory::getInstance(VirtualMachineType type)
-{
-	Q_UNUSED(type)
-	
+VirtualMachineFactory * VirtualMachineFactory::getInstance()
+{	
 	//TODO: use a stantment like this when you have some extension of VirtualMachine
+	//NOTE: virtualMachine class is concrete...
 /*	switch (type) 
 	{
 		case VirtualMachine::Router :

@@ -23,8 +23,7 @@
 #include <QString>
 
 /**
- * Abstract Factory for VirtualMachine
- * [possible extensions are: RouterFactory, etc...]
+ * Factory for VirtualMachine
  */
 class VirtualMachineFactory
 {
@@ -35,8 +34,8 @@ private:
 public:
 	VirtualMachineFactory();
 	virtual ~VirtualMachineFactory();
-	static VirtualMachineFactory * getInstance(VirtualMachineType type);
-	virtual VirtualMachine * getNewVirtualMachine(QString name);
+	static VirtualMachineFactory * getInstance();
+	VirtualMachine * getNewVirtualMachine(QString name);
 };
 
 #endif /*VIRTUALMACHINEFACTORY_H_*/
