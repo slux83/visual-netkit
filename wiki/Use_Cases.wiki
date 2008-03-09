@@ -16,10 +16,12 @@ Descrizione dei casi d'uso in modo strutturato.
 *Pre-condizioni:* sistema avviato
 
 
-*Post-condizioni:* è stato creato un nuovo lab
+*Post-condizioni:* è stato creato un nuovo lab ed e' stato associato come corrente
 
 
-*Scenario Principale di Successo:* l’utente sceglie di creare un nuovo lab. Il nuovo lab viene creato, gli viene associato un nome del tipo “Unnamed_lab_x” (ove x è un numero progressivo), vengono creati gli oggetti e le strutture necessarie, vengono inizializzati, vengono richiesti dati o azioni all’utente.
+*Scenario Principale di Successo:* l’utente sceglie di creare un nuovo lab dal menu principale. L'utente inserisce vari parametri quali autori, nome, descrizione, website, versione ed email (non tutte obbligatorie). Il nuovo lab viene creato e associato come corrente.
+
+*Variante: se e' gia' esistente un lab corrente, il sistema provvede a chiedere all'utente (eventualmente se necessario) il salvataggio dello stesso e la conferma a chiudere l'attuale laboratorio e a settare quello nuovo come default.
 
 
 
