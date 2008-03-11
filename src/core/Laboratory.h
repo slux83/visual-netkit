@@ -45,7 +45,10 @@ private:
 	
 public:
 	Laboratory(QString newName, QString newVersion, QString newAutors);
+	Laboratory();
 	virtual ~Laboratory();
+	QString getName() { return name; };
+	QDateTime getDate() { return date; };
 };
 
 #endif /*LABORATORY_H_*/
