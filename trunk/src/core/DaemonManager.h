@@ -16,37 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIRTUALMACHINE_H_
-#define VIRTUALMACHINE_H_
+#ifndef DAEMONMANAGER_H_
+#define DAEMONMANAGER_H_
 
-#include "HardwareInterface.h"
-#include "VirtualMachineType.h"
-#include "DaemonManager.h"
-
-#include <QString>
+#include "DaemonTypes.h"
 #include <QLinkedList>
+#include <QPair>
 
-/**
- * [ABSTRACT CLASS]
- * The general Virtual machine that inside NetKit it is modelled with
- * User Mode Linux
- */
-class VirtualMachine
+
+class DaemonManager
 {
-
-public:	
-	VirtualMachine(QString newName);
-	virtual ~VirtualMachine();
-	virtual VirtualMachineType getType();
-	QLinkedList<HardwareInterface *> getInterfaces();
-	QString getName();
-
-protected:
-	QString name;
-	VirtualMachineType type;
-	QLinkedList<HardwareInterface *> interfaces;
-	DaemonManager *dm;
-
+	
+private:
+	QLinkedList< QPair<Daemon, bool> > daemonList;
+	
+public:
+	DaemonManager();
+	virtual ~DaemonManager();
+	void setDaemonState(Daemon daemon, bool newState);
 };
 
-#endif /*VIRTUALMACHINE_H_*/
+#endif /*DAEMONMANAGER_H_*/
