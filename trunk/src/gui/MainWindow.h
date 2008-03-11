@@ -20,9 +20,13 @@
 #define MAINWINDOW_H_
 
 #include "ui_visual_netkit_main.h"
+class LabHandler;
 #include <QWidget>
-#include "LabHandler.h"
+#include <QTreeWidget>
 
+/**
+ * The main window class
+ */
 class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
 {
 	Q_OBJECT

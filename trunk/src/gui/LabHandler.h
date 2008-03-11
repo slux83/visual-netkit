@@ -21,15 +21,15 @@
 
 #include <QObject>
 #include <QDebug>
-
-class MainWindow;
+#include "../core/Laboratory.h"
+#include "MainWindow.h"
 
 /**
  * This's the controller for the operations on Laboratory
  */
 class LabHandler : public QObject
 {
-        Q_OBJECT
+	Q_OBJECT
         
 private:
 	static LabHandler *instance;
@@ -43,6 +43,7 @@ public:
 
 public slots:
 	void newLab();
+	void showCreatedLab(Laboratory *newLab);
 };
 
 #endif /*NEWLABHANDLER_H_*/

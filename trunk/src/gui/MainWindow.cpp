@@ -17,6 +17,7 @@
  */
 
 #include "MainWindow.h"
+#include "LabHandler.h"
 
 /**
  * Constructor
@@ -25,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	/* Get the reference to controllers */
 	labHandler = LabHandler::getInstance();
+	labHandler->setMainWindow(this);
 	
 	/* Connect the UI resource to this QMainWindow */
 	setupUi(this);
@@ -68,3 +70,4 @@ void MainWindow::createConnections()
 {
 	connect(actionNewLab, SIGNAL(triggered()), labHandler, SLOT(newLab()));
 }
+

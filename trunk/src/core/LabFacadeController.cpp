@@ -17,6 +17,7 @@
  */
 
 #include "LabFacadeController.h"
+#include "../gui/LabHandler.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -29,6 +30,8 @@ LabFacadeController* LabFacadeController::instance = NULL;
 LabFacadeController::LabFacadeController() : QObject()
 {
 	currentLab = NULL;
+	connect(this, SIGNAL(createdNewLab(Laboratory *)),
+			LabHandler::getInstance(), SLOT(showCreatedLab(Laboratory *)));
 }
 
 /**
@@ -57,6 +60,14 @@ LabFacadeController* LabFacadeController::getInstance()
  */
 void LabFacadeController::newLaboratory()
 {
+	/* Check if current lab exist */
+	if(currentLab != NULL)
+	{
+		qWarning() << "Alert, a current lab allready exist!";
+		return;
+		//TODO: manage this scenario (variant)
+	}
+	
 	currentLab = new Laboratory();
 	
 	emit createdNewLab(currentLab);
