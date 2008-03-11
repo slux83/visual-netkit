@@ -20,21 +20,29 @@
 #define NEWLABHANDLER_H_
 
 #include <QObject>
+#include <QDebug>
+
+class MainWindow;
 
 /**
- * This's the controller for the scenario New Laboratory
+ * This's the controller for the operations on Laboratory
  */
-class NewLabHandler : public QObject
+class LabHandler : public QObject
 {
         Q_OBJECT
         
 private:
-	static NewLabHandler *instance;
+	static LabHandler *instance;
+	MainWindow *mainWindow;
 	
 public:
-	NewLabHandler();
-	virtual ~NewLabHandler();
-	static NewLabHandler * getInstance();
+	LabHandler();
+	virtual ~LabHandler();
+	static LabHandler * getInstance();
+	void setMainWindow(MainWindow *w);
+
+public slots:
+	void newLab();
 };
 
 #endif /*NEWLABHANDLER_H_*/
