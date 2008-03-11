@@ -19,13 +19,24 @@
 #include "Laboratory.h"
 
 /**
- * Constructor
+ * Constructor with some params
  */
 Laboratory::Laboratory(QString newName, QString newVersion, QString newAutors)
 {
 	name = newName;
 	version = newVersion;
 	autors = newAutors;
+}
+
+/**
+ * Constructor with no params
+ */
+Laboratory::Laboratory()
+{
+	name = "unnamed_lab";
+	version = "1.0";
+	date.setDate(QDate::currentDate());
+	date.setTime(QTime::currentTime());
 }
 
 /**

@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	//populte the 'View' menu
 	populateViewMenu();
+	
+	createConnections();
 }
 
 /**
@@ -60,4 +62,9 @@ void MainWindow::populateViewMenu()
 	menuView->addSeparator();
 	menuView->addAction(toolBarGeneralActions->toggleViewAction());
 	menuView->addAction(toolBarDrawing->toggleViewAction());
+}
+
+void MainWindow::createConnections()
+{
+	connect(actionNewLab, SIGNAL(triggered()), NewLabHandler::getInstance(), SLOT(newLab()));
 }

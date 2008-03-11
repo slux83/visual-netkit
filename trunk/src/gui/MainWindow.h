@@ -20,11 +20,10 @@
 #define MAINWINDOW_H_
 
 #include "ui_visual_netkit_main.h"
+#include <QWidget>
 #include "NewLabHandler.h"
 
-#include <QWidget>
-
-class MainWindow : public QMainWindow, private Ui::NetkitMainWindow
+class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
 {
 	Q_OBJECT
 	
@@ -35,8 +34,9 @@ public:
 private:
 	/* Controllers */
 	NewLabHandler *newLabHandler;
-	
 	void populateViewMenu();
+	void createConnections();
+
 
 };
 
