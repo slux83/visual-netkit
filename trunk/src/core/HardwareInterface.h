@@ -21,7 +21,6 @@
 
 #include <QNetworkAddressEntry>
 #include <QString>
-#include "HardwareInterfaceType.h"
 
 class CollisionDomain;
 class VirtualMachine;
@@ -37,12 +36,10 @@ private:
 	QString name;
 	VirtualMachine *myMachine;
 	CollisionDomain *domain;
-//	QString type;
 	
 public:
 	HardwareInterface(VirtualMachine *m);
 	virtual ~HardwareInterface();
-//	virtual QString getType();
 	QString getName();
 	QNetworkAddressEntry getAddress();
 	VirtualMachine* getMyVirtualMachine();

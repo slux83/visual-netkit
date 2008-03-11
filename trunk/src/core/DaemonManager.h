@@ -23,12 +23,11 @@
 #include <QLinkedList>
 #include <QPair>
 
-
 class DaemonManager
 {
 	
 private:
-	QLinkedList< QPair<Daemon, bool> > daemonList;
+	QLinkedList< QPair<Daemon, bool> * > daemonList;
 	
 public:
 	DaemonManager();

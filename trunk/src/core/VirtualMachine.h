@@ -27,9 +27,7 @@
 #include <QLinkedList>
 
 /**
- * [ABSTRACT CLASS]
- * The general Virtual machine that inside NetKit it is modelled with
- * User Mode Linux
+ * The Virtual machine that inside NetKit it is modelled with User Mode Linux
  */
 class VirtualMachine
 {
@@ -37,13 +35,11 @@ class VirtualMachine
 public:	
 	VirtualMachine(QString newName);
 	virtual ~VirtualMachine();
-	virtual VirtualMachineType getType();
 	QLinkedList<HardwareInterface *> getInterfaces();
 	QString getName();
 
 protected:
 	QString name;
-	VirtualMachineType type;
 	QLinkedList<HardwareInterface *> interfaces;
 	DaemonManager *dm;
 
