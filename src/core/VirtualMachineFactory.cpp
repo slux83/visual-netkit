@@ -42,18 +42,6 @@ VirtualMachineFactory::~VirtualMachineFactory()
  */
 VirtualMachineFactory * VirtualMachineFactory::getInstance()
 {	
-	//TODO: use a stantment like this when you have some extension of VirtualMachine
-	//NOTE: virtualMachine class is concrete...
-/*	switch (type) 
-	{
-		case VirtualMachine::Router :
-			return RouterFactory::getInstance();
-			break;
-		case VirtualMachine::Host :
-			return instance;
-			break;
-	}
-*/	
 	return instance;
 
 }

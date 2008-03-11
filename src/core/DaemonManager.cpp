@@ -18,10 +18,43 @@
 
 #include "DaemonManager.h"
 
+/**
+ * Constructor
+ */
 DaemonManager::DaemonManager()
+{
+	/* Fill the list of daemons with te enumeration fields
+	 * 
+	 * TODO: put the daemon list inside an .ini file that the user
+	 *       (maybe only developers) can edit easily
+	 */
+	daemonList.append(new QPair<Daemon, bool>(Zebra, false));
+	daemonList.append(new QPair<Daemon, bool>(Ripd, false));
+	daemonList.append(new QPair<Daemon, bool>(Bgpd, false));
+	daemonList.append(new QPair<Daemon, bool>(Ospfd, false));
+	daemonList.append(new QPair<Daemon, bool>(Ospf6d, false));
+	daemonList.append(new QPair<Daemon, bool>(Ripngd, false));
+	daemonList.append(new QPair<Daemon, bool>(Bind, false));
+}
+
+/**
+ * Deconstructor
+ */
+DaemonManager::~DaemonManager()
 {
 }
 
-DaemonManager::~DaemonManager()
+/**
+ * Set the new state for a specific daemon
+ */ 
+void DaemonManager::setDaemonState(Daemon daemon, bool newState)
 {
+	 QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
+	 while (i.hasNext())
+	 {
+		QPair<Daemon, bool> *d = i.next();
+		if(d->first == daemon)
+			d->second = newState;
+		
+	 }
 }

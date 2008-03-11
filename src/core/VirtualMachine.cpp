@@ -25,7 +25,6 @@
 VirtualMachine::VirtualMachine(QString newName)
 {
 	name = newName;
-	type = Host;
 	dm = new DaemonManager();
 }
 
@@ -43,14 +42,6 @@ VirtualMachine::~VirtualMachine()
 QString VirtualMachine::getName()
 {
 	return name;
-}
-
-/**
- * Get the machine type (default: "host")
- */
-VirtualMachineType VirtualMachine::getType()
-{
-	return type;
 }
 
 /**
