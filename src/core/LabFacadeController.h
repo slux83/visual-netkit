@@ -30,6 +30,7 @@
 class LabFacadeController : QObject
 {
 	Q_OBJECT
+	
 private:
 	static LabFacadeController *instance; 
 	Laboratory *currentLab;

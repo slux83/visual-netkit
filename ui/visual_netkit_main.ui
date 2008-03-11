@@ -164,7 +164,22 @@
       <number>3</number>
      </property>
      <item>
-      <widget class="QTreeView" name="treeView" />
+      <widget class="QTreeWidget" name="labTree" >
+       <property name="frameShape" >
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow" >
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="columnCount" >
+        <number>1</number>
+       </property>
+       <column>
+        <property name="text" >
+         <string>Lab</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>

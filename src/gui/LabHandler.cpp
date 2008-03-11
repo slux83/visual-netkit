@@ -18,6 +18,9 @@
 
 #include "LabHandler.h"
 #include "../core/LabFacadeController.h"
+#include <QTreeWidgetItem>
+#include <QIcon>
+
 /**
  * Init the null instance for the singletone controller
  */
@@ -48,17 +51,6 @@ void LabHandler::setMainWindow(MainWindow *w)
 }
 
 /**
- * [SLOT]
- * Create a new lab
- */
-void LabHandler::newLab()
-{
-	qDebug() << "Create new lab";
-	LabFacadeController::getInstance()->newLaboratory();
-}
-
-
-/**
  * Singletone get instance
  */
 LabHandler* LabHandler::getInstance()
@@ -69,4 +61,33 @@ LabHandler* LabHandler::getInstance()
 	}
 
 	return instance;
+}
+
+/**
+ * [SLOT]
+ * Create a new lab
+ */
+void LabHandler::newLab()
+{
+	LabFacadeController::getInstance()->newLaboratory();
+}
+
+/**
+ * [SLOT]
+ * Render a new lab (previusely created)
+ */
+void LabHandler::showCreatedLab(Laboratory *l)
+{
+	qDebug() << "new lab ready to render";
+	
+	QTreeWidgetItem *root = new QTreeWidgetItem();
+	root->setData(0, Qt::DisplayRole, l->getName());
+	root->setIcon(0,QIcon(QString::fromUtf8(":/small/folder_root")));
+	
+	
+	/* fill the tree view */
+	mainWindow->labTree->addTopLevelItem(root);
+	
+	//Disable the action (need a "close lab action")
+	//mainWindow->actionNewLab->setEnabled(false);
 }
