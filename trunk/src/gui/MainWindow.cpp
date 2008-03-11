@@ -24,7 +24,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
 	/* Get the reference to controllers */
-	newLabHandler = NewLabHandler::getInstance();
+	labHandler = LabHandler::getInstance();
 	
 	/* Connect the UI resource to this QMainWindow */
 	setupUi(this);
@@ -66,5 +66,5 @@ void MainWindow::populateViewMenu()
 
 void MainWindow::createConnections()
 {
-	connect(actionNewLab, SIGNAL(triggered()), NewLabHandler::getInstance(), SLOT(newLab()));
+	connect(actionNewLab, SIGNAL(triggered()), labHandler, SLOT(newLab()));
 }

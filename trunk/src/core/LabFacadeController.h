@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VISUALNETKITFACADECONTROLLER_H_
-#define VISUALNETKITFACADECONTROLLER_H_
+#ifndef LABFACADECONTROLLER_H_
+#define LABFACADECONTROLLER_H_
 
 #include "Laboratory.h"
+#include <QObject>
 
 /**
  * The facade controller for the domain layer
@@ -28,7 +29,7 @@
  */
 class LabFacadeController : QObject
 {
-	
+	Q_OBJECT
 private:
 	static LabFacadeController *instance; 
 	Laboratory *currentLab;
@@ -40,7 +41,7 @@ public:
 	void newLaboratory();
 
 signals:
-	void labCreated(Laboratory *);
+	void createdNewLab(Laboratory *newLab);
 };
 
-#endif /*VISUALNETKITFACADECONTROLLER_H_*/
+#endif /*LABFACADECONTROLLER_H_*/

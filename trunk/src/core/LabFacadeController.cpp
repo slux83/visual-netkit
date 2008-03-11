@@ -26,7 +26,7 @@ LabFacadeController* LabFacadeController::instance = NULL;
 /**
  * Constructor
  */
-LabFacadeController::LabFacadeController()
+LabFacadeController::LabFacadeController() : QObject()
 {
 	currentLab = NULL;
 }
@@ -59,5 +59,5 @@ void LabFacadeController::newLaboratory()
 {
 	currentLab = new Laboratory();
 	
-	emit labCreated(currentLab);
+	emit createdNewLab(currentLab);
 }

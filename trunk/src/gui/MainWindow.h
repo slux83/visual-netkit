@@ -21,7 +21,7 @@
 
 #include "ui_visual_netkit_main.h"
 #include <QWidget>
-#include "NewLabHandler.h"
+#include "LabHandler.h"
 
 class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
 {
@@ -33,7 +33,7 @@ public:
 	
 private:
 	/* Controllers */
-	NewLabHandler *newLabHandler;
+	LabHandler *labHandler;
 	void populateViewMenu();
 	void createConnections();
 
