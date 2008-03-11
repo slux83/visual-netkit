@@ -18,14 +18,12 @@
 
 #include <QApplication>
 #include "gui/MainWindow.h"
+#include "gui/LabHandler.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	MainWindow *win = new MainWindow();
-	
-	/* Init controllers (Handlers) */
-	NewLabHandler::getInstance()->setMainWindow(win);
 	
 	win->show();
 	
