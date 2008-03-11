@@ -42,6 +42,7 @@ DaemonManager::DaemonManager()
  */
 DaemonManager::~DaemonManager()
 {
+	/* TODO: delete all qpair pointers */
 }
 
 /**
