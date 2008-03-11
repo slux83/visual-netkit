@@ -16,28 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VISUALNETKITFACADECONTROLLER_H_
-#define VISUALNETKITFACADECONTROLLER_H_
-
-#include "Laboratory.h"
+#include "LabFacadeController.h"
 
 /**
- * The facade controller for the domain layer
- * This object is acceded by Singleton and manage operations for the scenario
- * 'New Laboratory'
+ * Init the null instance for the singletone controller
  */
-class NewLabFacadeController
-{
-	
-private:
-	static NewLabFacadeController *instance; 
-	Laboratory *currentLab;
-	
-public:
-	NewLabFacadeController();
-	virtual ~NewLabFacadeController();
-	static NewLabFacadeController * getInstance();
-	Laboratory * newLaboratory(QString newName, QString newVersion, QString newAutors);
-};
+LabFacadeController* LabFacadeController::instance = NULL;
 
-#endif /*VISUALNETKITFACADECONTROLLER_H_*/
+/**
+ * Constructor
+ */
+LabFacadeController::LabFacadeController()
+{
+	currentLab = NULL;
+}
+
+/**
+ * Deconstructor
+ */
+LabFacadeController::~LabFacadeController()
+{
+}
+
+/**
+ * Singletone get instance
+ */
+LabFacadeController* LabFacadeController::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new LabFacadeController();
+	}
+
+	return instance;
+}
+
+/**
+ * Create a new laboratory and set it as current laboratory
+ * This is also the Factory for laboratory instances
+ */
+void LabFacadeController::newLaboratory()
+{
+	currentLab = new Laboratory();
+	
+	emit labCreated(currentLab);
+}

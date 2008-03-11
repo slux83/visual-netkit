@@ -16,36 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "NewLabHandler.h"
+#ifndef VISUALNETKITFACADECONTROLLER_H_
+#define VISUALNETKITFACADECONTROLLER_H_
+
+#include "Laboratory.h"
 
 /**
- * Init the null instance for the singletone controller
+ * The facade controller for the domain layer
+ * This object is acceded by Singleton and manage operations with the current
+ * Laboratory
  */
-NewLabHandler* NewLabHandler::instance = NULL;
-
-/**
- * Constructor
- */
-NewLabHandler::NewLabHandler() : QObject()
+class LabFacadeController : QObject
 {
-}
+	
+private:
+	static LabFacadeController *instance; 
+	Laboratory *currentLab;
+	
+public:
+	LabFacadeController();
+	virtual ~LabFacadeController();
+	static LabFacadeController * getInstance();
+	void newLaboratory();
 
-/**
- * Deconstructor
- */
-NewLabHandler::~NewLabHandler()
-{
-}
+signals:
+	void labCreated(Laboratory *);
+};
 
-/**
- * Singletone get instance
- */
-NewLabHandler* NewLabHandler::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new NewLabHandler();
-	}
-
-	return instance;
-}
+#endif /*VISUALNETKITFACADECONTROLLER_H_*/

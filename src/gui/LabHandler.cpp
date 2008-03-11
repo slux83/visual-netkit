@@ -16,49 +16,57 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "NewLabFacadeController.h"
-
+#include "LabHandler.h"
+#include "../core/LabFacadeController.h"
 /**
  * Init the null instance for the singletone controller
  */
-NewLabFacadeController* NewLabFacadeController::instance = NULL;
+LabHandler* LabHandler::instance = NULL;
 
 /**
  * Constructor
  */
-NewLabFacadeController::NewLabFacadeController()
+LabHandler::LabHandler() : QObject()
 {
-	currentLab = NULL;
+	mainWindow = NULL;
 }
 
 /**
  * Deconstructor
  */
-NewLabFacadeController::~NewLabFacadeController()
+LabHandler::~LabHandler()
 {
 }
+
+/**
+ * Set the main window
+ */
+void LabHandler::setMainWindow(MainWindow *w)
+{
+	if(mainWindow == NULL)
+		mainWindow = w;
+}
+
+/**
+ * [SLOT]
+ * Create a new lab
+ */
+void LabHandler::newLab()
+{
+	qDebug() << "Create new lab";
+	LabFacadeController::getInstance()->newLaboratory();
+}
+
 
 /**
  * Singletone get instance
  */
-NewLabFacadeController* NewLabFacadeController::getInstance()
+LabHandler* LabHandler::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new NewLabFacadeController();
+		instance = new LabHandler();
 	}
 
 	return instance;
-}
-
-/**
- * Create a new laboratory and set it as current laboratory
- * This is also the Factory for laboratory instances
- */
-Laboratory * NewLabFacadeController::newLaboratory(QString newName, QString newVersion, QString newAutors)
-{
-	//TODO: first check in the currentLab allready exist 
-	currentLab = new Laboratory(newName, newVersion, newAutors);
-	
-	return currentLab;
 }
