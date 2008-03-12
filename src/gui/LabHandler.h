@@ -35,6 +35,9 @@ private:
 	static LabHandler *instance;
 	MainWindow *mainWindow;
 	
+	/* Private functions */
+	void renderLabProperties(Laboratory *l);
+	
 public:
 	LabHandler();
 	virtual ~LabHandler();
@@ -45,6 +48,7 @@ public slots:
 	void newLab();
 	void showCreatedLab(Laboratory *newLab);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
+	void clearPropertyEditor();
 };
 
 #endif /*NEWLABHANDLER_H_*/
