@@ -26,7 +26,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 
 
-= UC-Modifica lab =
+= UC-Modifica proprietà lab =
 
 *Attore:* utente finale
 
@@ -38,29 +38,11 @@ Descrizione dei casi d'uso in modo strutturato.
 *Pre-condizioni:* esiste un lab in memoria ed è il lab corrente
 
 
-*Post-condizioni:* il lab è stato modificato
+*Post-condizioni:* il lab è stato modificato in una delle sue proprietà
 
 
-*Scenario Principale di Successo:* l’utente vuol modificare alcune proprietà del lab. L’utente modifica le proprietà del lab. Il lab modificato viene salvato.
-
-
-
-= UC-Rinomina lab =
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-
-*Pre-condizioni:* esiste un lab in memoria ed è il lab corrente
-
-
-*Post-condizioni:* il nome del lab è stato cambiato
-
-
-*Scenario Principale di Successo:* l’utente indica il nuovo nome e salva.
-Note: come permettere il renaming? Form? Menu a comparsa tipo tooltip? Menu File?
-
+*Scenario Principale di Successo:* l’utente vuol modificare alcune proprietà del lab. L'utente seleziona l'elemento "root" presente sulla dock Laboratory e il sistema dopo la selezione carica nella dock Property editor tutte le varie coppie (nome, valore).
+L'utente accede ad un valore desiderato e lo modifica. Il sistema provvede ad effettuare la modifica per il campo scelto.
 
 ----
 = UC-Crea VM =
