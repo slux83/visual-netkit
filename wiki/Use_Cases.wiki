@@ -7,7 +7,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 
 ----
-= UC-Crea lab [DONE: 60%] =
+= UC-Crea lab `[DONE: 60%]` =
 
 *Attore:* utente finale
 
@@ -26,7 +26,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 
 
-= UC-Modifica proprietà lab =
+= UC-Modifica proprietà lab `[DONE: 100%]` =
 
 *Attore:* utente finale
 
@@ -41,8 +41,8 @@ Descrizione dei casi d'uso in modo strutturato.
 *Post-condizioni:* il lab è stato modificato in una delle sue proprietà
 
 
-*Scenario Principale di Successo:* l’utente vuol modificare alcune proprietà del lab. L'utente seleziona l'elemento "root" presente sulla dock Laboratory e il sistema dopo la selezione carica nella dock Property editor tutte le varie coppie (nome, valore).
-L'utente accede ad un valore desiderato e lo modifica. Il sistema provvede ad effettuare la modifica per il campo scelto.
+*Scenario Principale di Successo:* l'utente vuol modificare alcune proprietà del lab (quali nome, versione, data, descrizione, etc...). L'utente seleziona l'elemento "root" presente all'interno del Tree della dock Laboratory e il sistema dopo la selezione carica nella dock Property editor tutte le varie coppie (chiave, valore).
+L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta modificato il campo, il sistema provvede ad effettuare la modifica per il campo scelto.
 
 ----
 = UC-Crea VM =
