@@ -18,6 +18,7 @@
 
 #include "LabHandler.h"
 #include "../core/LabFacadeController.h"
+#include "LabPropertyController.h"
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
 #include <QIcon>
@@ -89,9 +90,6 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
-	
-	//Disable the action (need a "close lab action")
-	//mainWindow->actionNewLab->setEnabled(false);
 }
 
 /**
@@ -124,6 +122,9 @@ void LabHandler::clearPropertyEditor()
 	/* Clear all table items and reset the view-size */
 	mainWindow->propertyTable->clearContents();		//just only this slot!
 	mainWindow->propertyTable->setRowCount(0);		//resize (reset) the view	
+	
+	//clear mappings
+	LabPropertyController::getInstance()->clearMapping();
 }
 
 /**
@@ -143,10 +144,15 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(0, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+			QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getName());
 	mainWindow->propertyTable->setItem(0, 1, property);
-
+	LabPropertyController::getInstance()->addMapping(
+				QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 	
 	//Lab version
@@ -154,9 +160,14 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Version"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(1, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+				QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getVersion());
 	mainWindow->propertyTable->setItem(1, 1, property);
+	LabPropertyController::getInstance()->addMapping(
+				QPair<QTableWidgetItem *, Laboratory *>(property, l));
 	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 	
@@ -165,9 +176,14 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Date"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(2, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getDate());
 	mainWindow->propertyTable->setItem(2, 1, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
 	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 
@@ -176,9 +192,14 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Description"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(3, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getDescription());
 	mainWindow->propertyTable->setItem(3, 1, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
 	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 
@@ -187,10 +208,15 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Authors"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(4, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getAuthors());
 	mainWindow->propertyTable->setItem(4, 1, property);
-
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 
 	//Lab email
@@ -198,9 +224,14 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("E-Mail"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(5, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+			QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getEmail());
 	mainWindow->propertyTable->setItem(5, 1, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
 	
 	mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
 
@@ -209,8 +240,12 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	property->setData(Qt::DisplayRole, tr("Website"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	mainWindow->propertyTable->setItem(6, 0, property);
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getWebsite());
 	mainWindow->propertyTable->setItem(6, 1, property);
-	
+	LabPropertyController::getInstance()->addMapping(
+					QPair<QTableWidgetItem *, Laboratory *>(property, l));
 }

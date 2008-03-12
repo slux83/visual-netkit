@@ -16,7 +16,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/LabHandler.h \
+HEADERS = src/gui/LabPropertyController.h \
+    src/gui/LabHandler.h \
     src/core/LabFacadeController.h \
     src/core/DaemonTypes.h \
     src/core/DaemonManager.h \
@@ -29,7 +30,8 @@ HEADERS = src/gui/LabHandler.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/LabHandler.cpp \
+SOURCES = src/gui/LabPropertyController.cpp \
+    src/gui/LabHandler.cpp \
     src/core/LabFacadeController.cpp \
     src/core/DaemonManager.cpp \
     src/core/VirtualMachineFactory.cpp \
