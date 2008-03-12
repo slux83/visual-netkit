@@ -209,7 +209,21 @@
       <number>3</number>
      </property>
      <item>
-      <widget class="QTableView" name="tableView" />
+      <widget class="QTableWidget" name="propertyTable" >
+       <property name="alternatingRowColors" >
+        <bool>true</bool>
+       </property>
+       <column>
+        <property name="text" >
+         <string>Property</string>
+        </property>
+       </column>
+       <column>
+        <property name="text" >
+         <string>Value</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>
