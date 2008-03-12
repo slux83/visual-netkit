@@ -21,11 +21,11 @@
 /**
  * Constructor with some params
  */
-Laboratory::Laboratory(QString newName, QString newVersion, QString newAutors)
+Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
 {
 	name = newName;
 	version = newVersion;
-	autors = newAutors;
+	authors = newAuthors;
 }
 
 /**
@@ -35,8 +35,13 @@ Laboratory::Laboratory()
 {
 	name = "unnamed_lab";
 	version = "1.0";
-	date.setDate(QDate::currentDate());
-	date.setTime(QTime::currentTime());
+	
+	/* Set the current date time */
+	QDateTime d;
+	d.setDate(QDate::currentDate());
+	d.setTime(QTime::currentTime());
+	
+	date = d.toString("dd/MM/yyyy hh:mm");
 }
 
 /**

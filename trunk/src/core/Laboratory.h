@@ -36,19 +36,24 @@ private:
 	QString name;
 	QString description;
 	QString version;
-	QDateTime date;
-	QString autors;
+	QString date;
+	QString authors;
 	QString email;
 	QString website;
 	QLinkedList<SuperGroup *> groups;
 	QLinkedList<VirtualMachine *> machines;
 	
 public:
-	Laboratory(QString newName, QString newVersion, QString newAutors);
+	Laboratory(QString newName, QString newVersion, QString newAuthors);
 	Laboratory();
 	virtual ~Laboratory();
 	QString getName() { return name; };
-	QDateTime getDate() { return date; };
+	QString getDate() { return date; };
+	QString getVersion() { return version; };
+	QString getDescription() { return description; };
+	QString getAuthors() { return authors; };
+	QString getEmail() { return email; };
+	QString getWebsite() { return website; };
 };
 
 #endif /*LABORATORY_H_*/
