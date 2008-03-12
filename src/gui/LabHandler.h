@@ -30,7 +30,19 @@
 class LabHandler : public QObject
 {
 	Q_OBJECT
-        
+
+/* Property key for lab */
+enum PropertyKey
+{
+	Name = 0,
+	Version,
+	Date,
+	Description,
+	Authors,
+	Email,
+	Website
+};
+
 private:
 	static LabHandler *instance;
 	MainWindow *mainWindow;
@@ -49,6 +61,7 @@ public slots:
 	void showCreatedLab(Laboratory *newLab);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 	void clearPropertyEditor();
+	void saveChangedProperty(int row, int column);
 };
 
 #endif /*NEWLABHANDLER_H_*/

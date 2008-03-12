@@ -122,9 +122,51 @@ void LabHandler::clearPropertyEditor()
 	/* Clear all table items and reset the view-size */
 	mainWindow->propertyTable->clearContents();		//just only this slot!
 	mainWindow->propertyTable->setRowCount(0);		//resize (reset) the view	
-	
+
 	//clear mappings
 	LabPropertyController::getInstance()->clearMapping();
+}
+
+/**
+ * [SLOT]
+ * Save a changed property for lab
+ */
+void LabHandler::saveChangedProperty(int row, int column)
+{
+	/* get the target property */
+	QTableWidgetItem *changed = mainWindow->propertyTable->item(row, column);
+	
+	/* search if this property is correlated with the Laboratory */
+	Laboratory *l = LabPropertyController::getInstance()->getLabGivedView(changed);
+	
+	/* Is this property mapped with a Laboratory? */
+	if(l == NULL)
+		return;
+		
+	/* Select the correct property to sove inside the domain current lab */
+	switch (changed->data(Qt::UserRole).toInt())
+	{
+		case Name: l->setName(changed->data(Qt::DisplayRole).toString());
+			break;
+		
+		case Version: l->setVersion(changed->data(Qt::DisplayRole).toString());
+			break;
+		
+		case Date: l->setDate(changed->data(Qt::DisplayRole).toString());
+			break;
+
+		case Description: l->setDescription(changed->data(Qt::DisplayRole).toString());
+			break;
+		
+		case Authors: l->setAuthors(changed->data(Qt::DisplayRole).toString());
+			break;
+		
+		case Email: l->setEmail(changed->data(Qt::DisplayRole).toString());
+			break;
+		
+		case Website: l->setWebsite(changed->data(Qt::DisplayRole).toString());
+			break;
+	}
 }
 
 /**
@@ -149,6 +191,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getName());
+	property->setData(Qt::UserRole, Name);
 	mainWindow->propertyTable->setItem(0, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 				QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -165,6 +208,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getVersion());
+	property->setData(Qt::UserRole, Version);
 	mainWindow->propertyTable->setItem(1, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 				QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -181,6 +225,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getDate());
+	property->setData(Qt::UserRole, Date);
 	mainWindow->propertyTable->setItem(2, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 					QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -197,6 +242,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getDescription());
+	property->setData(Qt::UserRole, Description);
 	mainWindow->propertyTable->setItem(3, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 					QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -213,6 +259,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getAuthors());
+	property->setData(Qt::UserRole, Authors);
 	mainWindow->propertyTable->setItem(4, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 					QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -229,6 +276,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getEmail());
+	property->setData(Qt::UserRole, Email);
 	mainWindow->propertyTable->setItem(5, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 					QPair<QTableWidgetItem *, Laboratory *>(property, l));
@@ -245,6 +293,7 @@ void LabHandler::renderLabProperties(Laboratory *l)
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, l->getWebsite());
+	property->setData(Qt::UserRole, Website);
 	mainWindow->propertyTable->setItem(6, 1, property);
 	LabPropertyController::getInstance()->addMapping(
 					QPair<QTableWidgetItem *, Laboratory *>(property, l));

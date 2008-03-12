@@ -68,8 +68,15 @@ void MainWindow::populateViewMenu()
 
 void MainWindow::createConnections()
 {
+	//connect: new lab action
 	connect(actionNewLab, SIGNAL(triggered()), labHandler, SLOT(newLab()));
+	
+	//connect: item tree lab selected
 	connect(labTree, SIGNAL(itemClicked(QTreeWidgetItem * , int)),
 			labHandler, SLOT(labTreeItemSelected(QTreeWidgetItem * , int)));
+	
+	//connect: property changed (property table)
+	connect(propertyTable, SIGNAL(cellChanged(int, int)), 
+			labHandler, SLOT(saveChangedProperty(int, int)));
 }
 
