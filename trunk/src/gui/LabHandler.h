@@ -44,6 +44,7 @@ public:
 public slots:
 	void newLab();
 	void showCreatedLab(Laboratory *newLab);
+	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 };
 
 #endif /*NEWLABHANDLER_H_*/

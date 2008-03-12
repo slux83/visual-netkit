@@ -19,6 +19,7 @@
 #include "LabHandler.h"
 #include "../core/LabFacadeController.h"
 #include <QTreeWidgetItem>
+#include <QTableWidgetItem>
 #include <QIcon>
 
 /**
@@ -82,6 +83,7 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	
 	QTreeWidgetItem *root = new QTreeWidgetItem();
 	root->setData(0, Qt::DisplayRole, l->getName());
+	root->setData(0, Qt::UserRole, "root_element");
 	root->setIcon(0,QIcon(QString::fromUtf8(":/small/folder_root")));
 	
 	
@@ -90,4 +92,29 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	
 	//Disable the action (need a "close lab action")
 	//mainWindow->actionNewLab->setEnabled(false);
+}
+
+void LabHandler::labTreeItemSelected(QTreeWidgetItem * item, int column)
+{
+	Q_UNUSED(column);
+	
+	if(item->data(0, Qt::UserRole) == "root_element")
+	{
+		qDebug() << "Laboratory element selected";
+		Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
+		
+		if(lab == NULL)
+			return;
+		
+		/* render infos inside the property editor */
+		mainWindow->propertyTable->clear();
+		
+		QTableWidgetItem *property = new QTableWidgetItem();
+		//Lab name
+		property->setData(Qt::DisplayRole, tr("name"));
+		
+		mainWindow->propertyTable->setItem(1, 0, property);
+		mainWindow->propertyTable->setItem(1, 1,
+						new QTableWidgetItem(lab->getName()));
+	}
 }
