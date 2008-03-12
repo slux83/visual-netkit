@@ -106,15 +106,18 @@ void LabHandler::labTreeItemSelected(QTreeWidgetItem * item, int column)
 		if(lab == NULL)
 			return;
 		
+		//qDebug() << "rows:" << mainWindow->propertyTable->rowCount();
 		/* render infos inside the property editor */
-		mainWindow->propertyTable->clear();
-		
+		mainWindow->propertyTable->setRowCount(mainWindow->propertyTable->rowCount() + 1);
+
 		QTableWidgetItem *property = new QTableWidgetItem();
 		//Lab name
 		property->setData(Qt::DisplayRole, tr("name"));
 		
-		mainWindow->propertyTable->setItem(1, 0, property);
-		mainWindow->propertyTable->setItem(1, 1,
-						new QTableWidgetItem(lab->getName()));
+		mainWindow->propertyTable->setItem(0, 0, property);
+		property = new QTableWidgetItem();
+		property->setData(Qt::DisplayRole, lab->getName());
+		mainWindow->propertyTable->setItem(0, 1, property);
+		//TODO: need a refactoring...
 	}
 }
