@@ -29,9 +29,8 @@
  * Singletone class that map each property item (for lab) with the lab domain
  * object
  */
-class LabPropertyController : public QObject
+class LabPropertyController
 {
-	Q_OBJECT
 	
 private:
 	static LabPropertyController *instance;

@@ -47,6 +47,8 @@ public:
 	Laboratory(QString newName, QString newVersion, QString newAuthors);
 	Laboratory();
 	virtual ~Laboratory();
+	
+	/* Getter functions */
 	QString getName() { return name; };
 	QString getDate() { return date; };
 	QString getVersion() { return version; };
@@ -54,6 +56,15 @@ public:
 	QString getAuthors() { return authors; };
 	QString getEmail() { return email; };
 	QString getWebsite() { return website; };
+	
+	/* Setter functions */
+	void setName(QString newValue) { name = newValue; };
+	void setDate(QString newValue) { date = newValue; };
+	void setVersion(QString newValue) { version = newValue; };
+	void setDescription(QString newValue) { description = newValue; };
+	void setAuthors(QString newValue) { authors = newValue; };
+	void setEmail(QString newValue) { email = newValue; };
+	void setWebsite(QString newValue) { website = newValue; };
 };
 
 #endif /*LABORATORY_H_*/

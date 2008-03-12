@@ -26,7 +26,7 @@ LabPropertyController* LabPropertyController::instance = NULL;
 /**
  * Constructor
  */
-LabPropertyController::LabPropertyController() : QObject()
+LabPropertyController::LabPropertyController()
 {
 }
 
@@ -52,6 +52,7 @@ LabPropertyController * LabPropertyController::getInstance()
 
 /**
  * Get the lab (domain object) gived the view object
+ * NOTE: Can return NULL
  */
 Laboratory * LabPropertyController::getLabGivedView(QTableWidgetItem * item)
 {
@@ -63,9 +64,6 @@ Laboratory * LabPropertyController::getLabGivedView(QTableWidgetItem * item)
 		if(m.first == item)
 			ret = m.second;
 	}
-	
-	if(ret == NULL)
-		qWarning() << "Mapping QPair<QTableWidgetItem *, Laboratory *>: Laboratory is NULL.";
 	
 	return ret;
 }
