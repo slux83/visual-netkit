@@ -7,7 +7,7 @@ Descrizione dei casi d'uso in modo strutturato.
 
 
 ----
-= UC-Crea lab =
+= UC-Crea lab [DONE: 60%] =
 
 *Attore:* utente finale
 
@@ -22,7 +22,7 @@ Descrizione dei casi d'uso in modo strutturato.
 *Scenario Principale di Successo:* l’utente sceglie di creare un nuovo lab dal menu principale. L'utente inserisce vari parametri quali autori, nome, descrizione, website, versione ed email (non tutte obbligatorie). Il nuovo lab viene creato e associato come corrente.
 
 *Variante:*
- * se e' gia' esistente un lab corrente, il sistema provvede a chiedere all'utente (eventualmente se necessario) il salvataggio dello stesso e la conferma a chiudere l'attuale laboratorio e a settare quello nuovo come default.
+ * se e' gia' esistente un lab corrente, il sistema provvede a chiedere all'utente (eventualmente se necessario) il salvataggio dello stesso e la conferma a chiudere l'attuale laboratorio e a settare quello nuovo come nuovo lab corrente.
 
 
 
