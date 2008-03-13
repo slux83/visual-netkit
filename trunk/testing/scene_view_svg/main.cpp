@@ -9,7 +9,17 @@ int main(int argc, char **argv)
     Scene *s = new Scene();
     ViewWindow *win = new ViewWindow(s);
     
-    SvgItemNode node1, node2;
+    SvgItemNode node1, node2, vm1, vm2;
+    
+    QGraphicsItemGroup group;
+    
+    vm1.moveBy(30, 50);
+    vm2.moveBy(40, 90);
+    
+    group.addToGroup(&vm1);
+    group.addToGroup(&vm2);
+    group.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    
     node1.moveBy(200, 180);
     
     node2.moveBy(20, 18);
@@ -23,6 +33,8 @@ int main(int argc, char **argv)
     text.moveBy(200, 100);
     
     s->addItem(&text);
+    s->addItem(&group);
+    
     
     win->show();
     
