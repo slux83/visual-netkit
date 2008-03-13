@@ -18,7 +18,7 @@
 
 #include "MainWindow.h"
 #include "LabHandler.h"
-
+#include <QHeaderView>
 /**
  * Constructor
  */
@@ -33,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	/* Some settings */
 	showMaximized();
+	
+	propertyTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	
 	//by default don't show the dock for logging
 	dockLog->setVisible(false);
