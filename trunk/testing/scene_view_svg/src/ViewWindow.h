@@ -1,28 +1,27 @@
 #ifndef VIEWWINDOW_H
 #define VIEWWINDOW_H
 
-#include <QGraphicsView>
+#include <QWidget>
 #include <QDebug>
 #include <QKeyEvent>
 
+#include "ui_window.h"
+
 #include "Scene.h"
 
-class ViewWindow : public QGraphicsView
+class ViewWindow : public QWidget, public Ui::PrototypeForm
 {
 	Q_OBJECT
 	
 public:
-	ViewWindow();
+	ViewWindow(Scene *s);
 	virtual ~ViewWindow();
-	Scene * getScene() { return scene; }
 
 private:
 	Scene *scene;
 	void scaleView(qreal scaleFactor);
 
-	
-protected:
-    void keyPressEvent(QKeyEvent *event);
-
+private slots:
+	void zoom(QString z);
 };
 #endif
