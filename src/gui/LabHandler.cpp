@@ -22,7 +22,7 @@
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
 #include <QIcon>
-
+#include <QMessageBox>
 /**
  * Init the null instance for the singletone controller
  */
@@ -146,7 +146,21 @@ void LabHandler::saveChangedProperty(int row, int column)
 	/* Select the correct property to sove inside the domain current lab */
 	switch (changed->data(Qt::UserRole).toInt())
 	{
-		case Name: l->setName(changed->data(Qt::DisplayRole).toString());
+		case Name:
+			if(changed->data(Qt::DisplayRole).toString().isEmpty())
+			{
+				//Restore the value, and alert the user
+				changed->setData(Qt::DisplayRole, l->getName());
+				QMessageBox::warning(NULL, tr("Visual Netkit"),
+		                   tr("The laboratory name must be not empty!"),
+		                   QMessageBox::Ok);
+			}
+			else
+			{
+				l->setName(changed->data(Qt::DisplayRole).toString());
+				//TODO: edit the name on tree view
+			}
+			
 			break;
 		
 		case Version: l->setVersion(changed->data(Qt::DisplayRole).toString());
