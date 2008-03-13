@@ -1,4 +1,6 @@
-#include <QtGui>
+#include <QApplication>
+#include <QGraphicsItemGroup>
+#include <QGraphicsItem>
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
 #include "Scene.h"
@@ -9,15 +11,17 @@ int main(int argc, char **argv)
     Scene *s = new Scene();
     ViewWindow *win = new ViewWindow(s);
     
-    SvgItemNode node1, node2, vm1, vm2;
+    SvgItemNode node1, node2;
+    SvgItemNode *vm1 = new SvgItemNode();
+    SvgItemNode *vm2 = new SvgItemNode();
     
     QGraphicsItemGroup group;
     
-    vm1.moveBy(30, 50);
-    vm2.moveBy(40, 90);
+    vm1->moveBy(30, 50);
+    vm2->moveBy(40, 90);
     
-    group.addToGroup(&vm1);
-    group.addToGroup(&vm2);
+    group.addToGroup(vm1);
+    group.addToGroup(vm2);
     group.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     
     node1.moveBy(200, 180);
@@ -33,7 +37,7 @@ int main(int argc, char **argv)
     text.moveBy(200, 100);
     
     s->addItem(&text);
-    s->addItem(&group);
+   s->addItem(&group);
     
     
     win->show();
