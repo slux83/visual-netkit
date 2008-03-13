@@ -151,7 +151,7 @@ void LabHandler::saveChangedProperty(int row, int column)
 			{
 				//Restore the value, and alert the user
 				changed->setData(Qt::DisplayRole, l->getName());
-				QMessageBox::warning(NULL, tr("Visual Netkit"),
+				QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
 		                   tr("The laboratory name must be not empty!"),
 		                   QMessageBox::Ok);
 			}
