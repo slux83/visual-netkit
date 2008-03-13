@@ -22,6 +22,7 @@ private:
 	void scaleView(qreal scaleFactor);
 
 private slots:
-	void zoom(QString z);
+	void zoomMinus();
+	void zoomPlus();
 };
 #endif

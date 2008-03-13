@@ -7,7 +7,9 @@ ViewWindow::ViewWindow(Scene *s) : QWidget()
 	scene = s;
 	
 	/* Connects */
-	connect(zoomBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(zoom(QString)));
+	connect(minusButton, SIGNAL(clicked()), this, SLOT(zoomMinus()));
+	connect(plusButton, SIGNAL(clicked()), this, SLOT(zoomPlus()));
+
 }
 
 ViewWindow::~ViewWindow()
@@ -15,33 +17,21 @@ ViewWindow::~ViewWindow()
 	delete scene;
 }
 
-/* key + and - to resize the scene */
-/*void ViewWindow::keyPressEvent(QKeyEvent *event)
+void ViewWindow::zoomMinus()
 {
-    switch (event->key())
-    {
-		case Qt::Key_Plus:
-			scaleView(1.25);
-			break;
-		case Qt::Key_Minus:
-			scaleView(1 / 1.25);
-			break;
-		default:
-			QGraphicsView::keyPressEvent(event);
-	}
+	scaleView(1 / 1.25);
+	qDebug() << scene->selectedItems();
 }
-*/
 
-void ViewWindow::zoom(QString z)
+void ViewWindow::zoomPlus()
 {
-	qDebug() << z;
+	scaleView(1.25);
 }
 
 void ViewWindow::scaleView(qreal scaleFactor)
 {
 	qreal factor = view->matrix().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
 	
-	qDebug() << "selected" << scene->selectedItems();
 	
 	if(scene->selectedItems().size() != 0)
 		view->centerOn(scene->selectedItems().first()); //ensure that the view show the first selected item
@@ -49,6 +39,8 @@ void ViewWindow::scaleView(qreal scaleFactor)
 	/* min 20% max 500% */
 	if (factor * 100 < 20 || factor * 100 > 500)
 		return;
+	
+	zoomLabel->setText("Zoom: " + QByteArray::number((uint)(factor * 100)) + "%");
 
 	view->scale(scaleFactor, scaleFactor);
 }
