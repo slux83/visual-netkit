@@ -87,7 +87,6 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	root->setData(0, Qt::UserRole, "root_element");
 	root->setIcon(0,QIcon(QString::fromUtf8(":/small/folder_root")));
 	
-	
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
 }
@@ -147,7 +146,7 @@ void LabHandler::saveChangedProperty(int row, int column)
 	switch (changed->data(Qt::UserRole).toInt())
 	{
 		case Name:
-			if(changed->data(Qt::DisplayRole).toString().isEmpty())
+			if(changed->data(Qt::DisplayRole).toString().trimmed().isEmpty())
 			{
 				//Restore the value, and alert the user
 				changed->setData(Qt::DisplayRole, l->getName());
@@ -158,7 +157,9 @@ void LabHandler::saveChangedProperty(int row, int column)
 			else
 			{
 				l->setName(changed->data(Qt::DisplayRole).toString());
-				//TODO: edit the name on tree view
+				
+				//Update the tree lab view
+				mainWindow->labTree->topLevelItem(0)->setData(0, Qt::DisplayRole, l->getName());
 			}
 			
 			break;
