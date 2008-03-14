@@ -15,14 +15,13 @@ int main(int argc, char **argv)
     SvgItemNode *vm1 = new SvgItemNode();
     SvgItemNode *vm2 = new SvgItemNode();
     
-    QGraphicsItemGroup group;
     
     vm1->moveBy(30, 50);
     vm2->moveBy(40, 90);
     
-    group.addToGroup(vm1);
-    group.addToGroup(vm2);
-    group.setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+
+    vm1->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    vm2->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     
     node1.moveBy(200, 180);
     
@@ -37,7 +36,8 @@ int main(int argc, char **argv)
     text.moveBy(200, 100);
     
     s->addItem(&text);
-   s->addItem(&group);
+	s->addItem(vm1);
+	s->addItem(vm2);
     
     
     win->show();
