@@ -63,6 +63,8 @@ void ViewWindow::makeGroup()
 	
 	groupList.append(newGroup);
 	
+	newGroup->setSelected(true);
+	
 	
 }
 
@@ -74,12 +76,27 @@ void ViewWindow::destroyGroup()
 		QGraphicsItemGroup * item = i.next();
 		if(scene->selectedItems().contains(item))
 		{
-			int indexItem = groupList.indexOf(item);
+			int indexItem = groupList.indexOf(item);			
 			
 			if(indexItem == -1)
 				continue;
 			
-			scene->destroyItemGroup(groupList.takeAt(indexItem));
+			QGraphicsItemGroup *group = groupList.takeAt(indexItem);
+			
+			/* Force unselected all sub-items */
+			qDebug() << "children:" << group->children().size();
+			
+			/* get children for the group and destroy it */
+			QListIterator<QGraphicsItem *> it(group->children());
+			scene->destroyItemGroup(group);
+			
+			while(it.hasNext())
+			{
+				it.next()->setSelected(false);
+			}			
 		}
 	}
+	
+
+	
 }
