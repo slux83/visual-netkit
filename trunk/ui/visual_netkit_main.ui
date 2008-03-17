@@ -313,7 +313,7 @@
       <number>3</number>
      </property>
      <item>
-      <widget class="QTextEdit" name="textEdit" />
+      <widget class="QTextEdit" name="logText" />
      </item>
     </layout>
    </widget>

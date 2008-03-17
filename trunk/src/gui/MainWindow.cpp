@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	populateViewMenu();
 	
 	createConnections();
+	
+	//status bar show a ready state
+	statusBar()->showMessage(tr("Ready"));
 }
 
 /**
@@ -68,6 +71,10 @@ void MainWindow::populateViewMenu()
 	menuView->addAction(toolBarDrawing->toggleViewAction());
 }
 
+/**
+ * [PRIVATE]
+ * Create connctions
+ */
 void MainWindow::createConnections()
 {
 	//connect: new lab action
@@ -80,5 +87,16 @@ void MainWindow::createConnections()
 	//connect: property changed (property table)
 	connect(propertyTable, SIGNAL(cellChanged(int, int)), 
 			labHandler, SLOT(saveChangedProperty(int, int)));
+	
+	//connect: a log event
+	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
 }
 
+/**
+ * [SLOT]
+ * Write a log line with time
+ */
+void MainWindow::writeLogMessage(QString message)
+{
+	logText->append("[" + QTime::currentTime().toString("HH:mm:ss:zzz") + "] " + message);
+}
