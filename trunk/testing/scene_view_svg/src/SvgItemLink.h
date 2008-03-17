@@ -3,22 +3,23 @@
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsItem>
+#include "SvgItemNode.h"
 
 class SvgItemLink : public QGraphicsSvgItem
 {
 	Q_OBJECT	
 	
 public:
-	 SvgItemLink(SVGItemNode *sourceNode, SVGItemNode *destNode);
+	 SvgItemLink(SvgItemNode *sourceNode, SvgItemNode *destNode);
 	 ~SvgItemLink();
 	 
 	 SvgItemLink();
 	 
-	 SVGItemNode *sourceNode() const;
-	 void setSourceNode(SVGItemNode *node);
+	 SvgItemNode *sourceNode();
+	 void setSourceNode(SvgItemNode *node);
 	
-	 SVGItemNode *destNode() const;
-	 void setDestNode(SVGItemNode *node);
+	 SvgItemNode *destNode();
+	 void setDestNode(SvgItemNode *node);
 	
 	 void adjust();
 	
@@ -26,11 +27,11 @@ public:
 	 int type() const { return Type; }
 
 protected:
-     QRectF boundingRect() const;
+     QRectF boundingRect();
      void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-	 SVGItemNode *source, *dest;
+	 SvgItemNode *source, *dest;
 
      QPointF sourcePoint;
      QPointF destPoint;

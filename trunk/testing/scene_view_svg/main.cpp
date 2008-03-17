@@ -4,6 +4,7 @@
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
 #include "Scene.h"
+#include "SvgItemLink.h"
 
 int main(int argc, char **argv)
 {
@@ -40,7 +41,7 @@ int main(int argc, char **argv)
 	s->addItem(vm2);
 	
 	/* Add link between two VMs */
-	SVGItemLink *link12 = new SVGItemLink(vm1, vm2);
+	SvgItemLink *link12 = new SvgItemLink(vm1, vm2);
 	s->addItem(link12);
     
     win->show();
