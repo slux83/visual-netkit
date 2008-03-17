@@ -38,7 +38,10 @@ int main(int argc, char **argv)
     s->addItem(&text);
 	s->addItem(vm1);
 	s->addItem(vm2);
-    
+	
+	/* Add link between two VMs */
+	SVGItemLink *link12 = new SVGItemLink(vm1, vm2);
+	s->addItem(link12);
     
     win->show();
     
