@@ -1,17 +1,19 @@
 #include "SvgItemLink.h"
 #include <math.h>
+#include <QLineF>
+#include <QPainter>
 
 static const double Pi = 3.14159265358979323846264338327950288419717;
 static double TwoPi = 2.0 * Pi;
  
- SvgItemLink::SvgItemLink (Node *sourceNode, Node *destNode)
+ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGraphicsSvgItem()
  {
 	 setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
      setAcceptedMouseButtons(0);
      source = sourceNode;
      dest = destNode;
-     source->addSvgItemLink(this);
-     dest->addSvgItemLink(this);
+ //    source->addSvgItemLink(this);
+ //    dest->addSvgItemLink(this);
      //adjust();
  }
 
@@ -19,23 +21,23 @@ static double TwoPi = 2.0 * Pi;
  {
  }
 
- Node *SvgItemLink::sourceNode() const
+ SvgItemNode *SvgItemLink::sourceNode()
  {
      return source;
  }
 
- void SvgItemLink::setSourceNode(Node *node)
+ void SvgItemLink::setSourceNode(SvgItemNode *node)
  {
      source = node;
      adjust();
  }
 
- Node *SvgItemLink::destNode() const
+ SvgItemNode *SvgItemLink::destNode()
  {
      return dest;
  }
 
- void SvgItemLink::setDestNode(Node *node)
+ void SvgItemLink::setDestNode(SvgItemNode *node)
  {
      dest = node;
      adjust();
@@ -55,13 +57,13 @@ static double TwoPi = 2.0 * Pi;
      destPoint = line.p2() - linkOffset;
  }
 
- QRectF SvgItemLink::boundingRect() const
+ QRectF SvgItemLink::boundingRect()
  {
      if (!source || !dest)
          return QRectF();
 
      qreal penWidth = 1;
-     qreal extra = (penWidth + arrowSize) / 2.0;
+     qreal extra = (penWidth) / 2.0;
 
      return QRectF(sourcePoint, QSizeF(destPoint.x() - sourcePoint.x(),
                                        destPoint.y() - sourcePoint.y()))
@@ -85,6 +87,6 @@ static double TwoPi = 2.0 * Pi;
          angle = TwoPi - angle;
      
      painter->setBrush(Qt::black);
-     painter->drawPolygon(QPolygonF() << line.p1();
-     painter->drawPolygon(QPolygonF() << line.p2();
+     painter->drawPolygon(QPolygonF() << line.p1());
+     painter->drawPolygon(QPolygonF() << line.p2());
  }
