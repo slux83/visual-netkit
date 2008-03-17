@@ -19,8 +19,9 @@
 #ifndef LABFACADECONTROLLER_H_
 #define LABFACADECONTROLLER_H_
 
-#include "Laboratory.h"
 #include <QObject>
+
+#include "Laboratory.h"
 
 /**
  * The facade controller for the domain layer

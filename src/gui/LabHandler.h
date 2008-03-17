@@ -62,6 +62,9 @@ public slots:
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 	void clearPropertyEditor();
 	void saveChangedProperty(int row, int column);
+
+signals:
+	void logEvent(QString message);
 };
 
 #endif /*NEWLABHANDLER_H_*/

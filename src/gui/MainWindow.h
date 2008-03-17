@@ -41,6 +41,8 @@ private:
 	void populateViewMenu();
 	void createConnections();
 
+public slots:
+	void writeLogMessage(QString message);
 
 };
 

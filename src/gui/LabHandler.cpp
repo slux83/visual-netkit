@@ -89,6 +89,7 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
+	emit logEvent(tr("Created a new Lab."));
 }
 
 /**
@@ -182,6 +183,7 @@ void LabHandler::saveChangedProperty(int row, int column)
 		case Website: l->setWebsite(changed->data(Qt::DisplayRole).toString());
 			break;
 	}
+
 }
 
 /**
