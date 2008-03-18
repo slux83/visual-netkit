@@ -3,9 +3,10 @@
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsItem>
-#include "SvgItemNode.h"
 
-class SvgItemLink : public QGraphicsSvgItem
+class SvgItemNode;
+
+class SvgItemLink : public QGraphicsItem
 {
 	Q_OBJECT	
 	

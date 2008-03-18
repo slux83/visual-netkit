@@ -4,7 +4,6 @@
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
 #include "Scene.h"
-#include "SvgItemLink.h"
 
 int main(int argc, char **argv)
 {

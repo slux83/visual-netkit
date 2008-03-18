@@ -5,15 +5,15 @@
 
 static const double Pi = 3.14159265358979323846264338327950288419717;
 static double TwoPi = 2.0 * Pi;
- 
- SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGraphicsSvgItem()
+
+SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGraphicsSvgItem()
  {
 	 setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
      setAcceptedMouseButtons(0);
      source = sourceNode;
      dest = destNode;
- //    source->addSvgItemLink(this);
- //    dest->addSvgItemLink(this);
+     source->addSvgItemLink(this);
+     dest->addSvgItemLink(this);
      //adjust();
  }
 
@@ -29,7 +29,7 @@ static double TwoPi = 2.0 * Pi;
  void SvgItemLink::setSourceNode(SvgItemNode *node)
  {
      source = node;
-     adjust();
+     //adjust();
  }
 
  SvgItemNode *SvgItemLink::destNode()
@@ -40,9 +40,10 @@ static double TwoPi = 2.0 * Pi;
  void SvgItemLink::setDestNode(SvgItemNode *node)
  {
      dest = node;
-     adjust();
+     //adjust();
  }
 
+ /*
  void SvgItemLink::adjust()
  {
      if (!source || !dest)
@@ -56,7 +57,8 @@ static double TwoPi = 2.0 * Pi;
      sourcePoint = line.p1() + linkOffset;
      destPoint = line.p2() - linkOffset;
  }
-
+*/
+ 
  QRectF SvgItemLink::boundingRect()
  {
      if (!source || !dest)
@@ -90,3 +92,4 @@ static double TwoPi = 2.0 * Pi;
      painter->drawPolygon(QPolygonF() << line.p1());
      painter->drawPolygon(QPolygonF() << line.p2());
  }
+ 
