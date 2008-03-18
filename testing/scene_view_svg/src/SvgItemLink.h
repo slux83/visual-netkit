@@ -6,7 +6,7 @@
 
 class SvgItemNode;
 
-class SvgItemLink : public QGraphicsItem
+class SvgItemLink : public QGraphicsSvgItem
 {
 	Q_OBJECT	
 	
