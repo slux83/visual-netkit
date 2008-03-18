@@ -2,7 +2,6 @@
 
 Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
-
 }
 
 Scene::~Scene()
@@ -23,3 +22,38 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
+
+/*
+void GraphWidget::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+    case Qt::Key_Up:
+        centerNode->moveBy(0, -20);
+        break;
+    case Qt::Key_Down:
+        centerNode->moveBy(0, 20);
+        break;
+    case Qt::Key_Left:
+        centerNode->moveBy(-20, 0);
+        break;
+    case Qt::Key_Right:
+        centerNode->moveBy(20, 0);
+        break;
+    case Qt::Key_Plus:
+        scaleView(1.2);
+        break;
+    case Qt::Key_Minus:
+        scaleView(1 / 1.2);
+        break;
+    case Qt::Key_Space:
+    case Qt::Key_Enter:
+        foreach (QGraphicsItem *item, scene()->items()) {
+            if (qgraphicsitem_cast<Node *>(item))
+                item->setPos(-150 + qrand() % 300, -150 + qrand() % 300);
+        }
+        break;
+    default:
+        QGraphicsView::keyPressEvent(event);
+    }
+}
+*/

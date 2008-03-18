@@ -1,9 +1,7 @@
 #include "SvgItemLink.h"
 #include "SvgItemNode.h"
 #include <math.h>
-#include <QLineF>
 #include <QPainter>
-#include <QRectF>
 
 static const double Pi = 3.14159265358979323846264338327950288419717;
 static double TwoPi = 2.0 * Pi;
@@ -16,14 +14,14 @@ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGra
      dest = destNode;
      source->addSvgItemLink(this);
      dest->addSvgItemLink(this);
-     //adjust();
+     adjust();
  }
 
  SvgItemLink::~SvgItemLink()
  {
  }
 
- SvgItemNode *SvgItemLink::sourceNode()
+ SvgItemNode *SvgItemLink::sourceNode() const
  {
      return source;
  }
@@ -31,10 +29,10 @@ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGra
  void SvgItemLink::setSourceNode(SvgItemNode *node)
  {
      source = node;
-     //adjust();
+     adjust();
  }
 
- SvgItemNode *SvgItemLink::destNode()
+ SvgItemNode *SvgItemLink::destNode() const
  {
      return dest;
  }
@@ -42,10 +40,10 @@ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGra
  void SvgItemLink::setDestNode(SvgItemNode *node)
  {
      dest = node;
-     //adjust();
+     adjust();
  }
 
- /*
+
  void SvgItemLink::adjust()
  {
      if (!source || !dest)
@@ -59,41 +57,12 @@ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGra
      sourcePoint = line.p1() + linkOffset;
      destPoint = line.p2() - linkOffset;
  }
-*/
- 
- 
- QRectF SvgItemLink::boundingRect()
- {
-     if (!source || !dest)
-         return QRectF();
 
-     qreal penWidth = 1;
-     qreal extra = (penWidth) / 2.0;
+QGraphicsLineItem *SvgItemLink::draw()
+{
+    if (!source || !dest)
+        return NULL;
 
-     return QRectF(sourcePoint, QSizeF(destPoint.x() - sourcePoint.x(),
-                                       destPoint.y() - sourcePoint.y()))
-         .normalized()
-         .adjusted(-extra, -extra, extra, extra);
- }
- 
-
- void SvgItemLink::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
- {
-     if (!source || !dest)
-         return;
-
-     // Draw the line itself
-     QLineF line(sourcePoint, destPoint);
-     painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-     painter->drawLine(line);
-
-     // Draw the arrows if there's enough room
-     double angle = ::acos(line.dx() / line.length());
-     if (line.dy() >= 0)
-         angle = TwoPi - angle;
-     
-     painter->setBrush(Qt::black);
-     painter->drawPolygon(QPolygonF() << line.p1());
-     painter->drawPolygon(QPolygonF() << line.p2());
- }
- 
+    QGraphicsLineItem *link = new QGraphicsLineItem(QLineF(sourcePoint, destPoint));
+    return link;
+}

@@ -1,6 +1,8 @@
 #include <QApplication>
 #include <QGraphicsItemGroup>
 #include <QGraphicsItem>
+#include <QLineF>
+#include <QGraphicsLineItem>
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
 #include "Scene.h"
@@ -42,7 +44,7 @@ int main(int argc, char **argv)
 	/* Add link between two VMs */
 	SvgItemLink *link12 = new SvgItemLink(vm1, vm2);
 	s->addItem(link12);
-    
+	
     win->show();
     
 	

@@ -10,11 +10,12 @@ class SvgItemNode : public QGraphicsSvgItem
 {
 	Q_OBJECT
 
-private:
-	QLinkedList<QGraphicsItem *> links;
-	
 public:
 	SvgItemNode();
 	void addSvgItemLink(SvgItemLink *l);
+	QList<SvgItemLink *> getAllLinks();
+    
+private:
+    QList<SvgItemLink *> links;
 };
 #endif
