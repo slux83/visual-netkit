@@ -2,7 +2,7 @@
 #define SVGITEMLINK_H
 
 #include <QGraphicsSvgItem>
-#include <QGraphicsItem>
+#include <QRectF>
 
 class SvgItemNode;
 
@@ -16,10 +16,10 @@ public:
 	 
 	 SvgItemLink();
 	 
-	 SvgItemNode *sourceNode();
+	 SvgItemNode *sourceNode() const;
 	 void setSourceNode(SvgItemNode *node);
 	
-	 SvgItemNode *destNode();
+	 SvgItemNode *destNode() const;
 	 void setDestNode(SvgItemNode *node);
 	
 	 void adjust();
@@ -28,8 +28,7 @@ public:
 	 int type() const { return Type; }
 
 protected:
-     QRectF boundingRect();
-     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	 QGraphicsLineItem* draw();
 
 private:
 	 SvgItemNode *source, *dest;

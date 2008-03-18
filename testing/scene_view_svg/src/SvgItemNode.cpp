@@ -9,3 +9,8 @@ void SvgItemNode::addSvgItemLink(SvgItemLink *l)
 {
 	links.append(l);
 }
+
+QList<SvgItemLink *> SvgItemNode::getAllLinks()
+{
+	return links;
+}
