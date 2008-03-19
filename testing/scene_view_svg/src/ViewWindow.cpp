@@ -1,6 +1,9 @@
 #include "ViewWindow.h"
 
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
+#include <QLinkedList>
+#include <QList>
 #include <QListIterator>
 
 ViewWindow::ViewWindow(Scene *s) : QWidget()
@@ -10,6 +13,7 @@ ViewWindow::ViewWindow(Scene *s) : QWidget()
 	scene = s;
 	
 	/* Connects */
+	connect(addMachineButton, SIGNAL(clicked()), this, SLOT(addVM()));
 	connect(minusButton, SIGNAL(clicked()), this, SLOT(zoomMinus()));
 	connect(plusButton, SIGNAL(clicked()), this, SLOT(zoomPlus()));
 	connect(groupButton, SIGNAL(clicked()), this, SLOT(makeGroup()));
@@ -63,10 +67,27 @@ void ViewWindow::makeGroup()
 	
 	groupList.append(newGroup);
 	
-	newGroup->setSelected(true);
-	
-	
+	newGroup->setSelected(true);	
 }
+
+/*
+void ViewWindow::makeGroupFromItems(QLinkedList<QGraphicsItem *> *items)
+{
+	if(items->size() == 0 ||items->size() == 1)
+	{
+		//Show warning
+		qDebug() << "no items selected / only one item selected";
+		return;
+	}
+	
+	QGraphicsItemGroup *newGroup = scene->createItemGroup(items);
+	newGroup->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	
+	groupList.append(newGroup);
+	
+	newGroup->setSelected(true);
+}
+*/
 
 void ViewWindow::destroyGroup()
 {
@@ -95,8 +116,28 @@ void ViewWindow::destroyGroup()
 				it.next()->setSelected(false);
 			}			
 		}
-	}
-	
+	}	
+}
 
-	
+void ViewWindow::addVM()
+{
+	SvgItemNode *vm = new SvgItemNode();
+	vm->moveBy(190, 190);
+	vm->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	scene->addItem(vm);
+}
+
+void ViewWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (!event->modifiers()) {
+		 //QGraphicsScene::mousePressEvent(event);
+	} else {
+		//aggiungo un VM
+		//this->addVM();
+		
+		//edge->adjust();
+    	//advance();
+    	//update();
+	}
+	this->addVM();
 }

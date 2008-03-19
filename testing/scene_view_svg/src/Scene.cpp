@@ -21,7 +21,28 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+	
 }
+
+/*
+void Scene::dumpToPDF() {
+	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+	printer->setOutputFormat(QPrinter::PdfFormat);
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
+	printer->setOutputFileName(fileName);
+	QPainter *pdfPainter = new QPainter(printer);
+	scene()->render(pdfPainter);
+	pdfPainter->end();
+}
+
+void Scene::dumpToSVG() {
+	QSvgGenerator *gen = new QSvgGenerator();
+	gen->setFileName("~/out.svg");
+	QPainter *svgPainter = new QPainter(gen);
+	scene()->render(svgPainter);
+	svgPainter->end();
+}
+*/
 
 /*
 void GraphWidget::keyPressEvent(QKeyEvent *event)

@@ -2,6 +2,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsItem>
 #include <QLineF>
+#include <QLinkedList>
 #include <QGraphicsLineItem>
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
@@ -43,7 +44,15 @@ int main(int argc, char **argv)
 	
 	/* Add link between two VMs */
 	SvgItemLink *link12 = new SvgItemLink(vm1, vm2);
-	s->addItem(link12);
+	/*
+	 * forse facendo un ruppo tra 2 vm e il link, il dragging è facilitato (automatico)
+	QLinkedList<QGraphicsItem *> items;
+	items.append(vm1);
+	items.append(vm2);
+	items.append(link12);
+	win->makeGroupFromItems(items);
+	*/
+	s->addItem(link12->draw());
 	
     win->show();
     

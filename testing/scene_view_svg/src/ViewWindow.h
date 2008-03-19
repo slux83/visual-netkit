@@ -9,6 +9,7 @@
 
 #include "ui_window.h"
 
+#include "SvgItemNode.h"
 #include "Scene.h"
 
 class ViewWindow : public QWidget, public Ui::PrototypeForm
@@ -18,6 +19,10 @@ class ViewWindow : public QWidget, public Ui::PrototypeForm
 public:
 	ViewWindow(Scene *s);
 	virtual ~ViewWindow();
+	//void makeGroupFromItems(QLinkedList<QGraphicsItem *> *items);
+
+protected:
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
 	Scene *scene;
@@ -25,6 +30,7 @@ private:
 	void scaleView(qreal scaleFactor);
 	
 private slots:
+	void addVM();
 	void zoomMinus();
 	void zoomPlus();
 	void makeGroup();

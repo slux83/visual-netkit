@@ -8,14 +8,14 @@ static double TwoPi = 2.0 * Pi;
 
 SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGraphicsSvgItem()
  {
-	 setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-     setAcceptedMouseButtons(0);
-     source = sourceNode;
-     dest = destNode;
-     source->addSvgItemLink(this);
-     dest->addSvgItemLink(this);
-     adjust();
- }
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setAcceptedMouseButtons(0);
+    source = sourceNode;
+    dest = destNode;
+    source->addSvgItemLink(this);
+    dest->addSvgItemLink(this);
+    adjust();
+}
 
  SvgItemLink::~SvgItemLink()
  {
@@ -64,5 +64,6 @@ QGraphicsLineItem *SvgItemLink::draw()
         return NULL;
 
     QGraphicsLineItem *link = new QGraphicsLineItem(QLineF(sourcePoint, destPoint));
+    //QGraphicsLineItem *link = new QGraphicsLineItem(QLineF(QPointF(100,100), QPointF(0,0)));
     return link;
 }
