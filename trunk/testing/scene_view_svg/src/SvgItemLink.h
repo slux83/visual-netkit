@@ -27,8 +27,9 @@ public:
 	 enum { Type = UserType + 2 };
 	 int type() const { return Type; }
 
-protected:
 	 QGraphicsLineItem* draw();
+	 
+protected:
 
 private:
 	 SvgItemNode *source, *dest;
