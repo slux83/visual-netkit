@@ -19,7 +19,7 @@
 #ifndef MAINWINDOW_H_
 #define MAINWINDOW_H_
 
-#include "ui_visual_netkit_main.h"
+#include "ui_main.h"
 class LabHandler;
 #include <QWidget>
 #include <QTreeWidget>
