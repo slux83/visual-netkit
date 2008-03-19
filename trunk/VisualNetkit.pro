@@ -5,7 +5,7 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/visual_netkit_main.ui
+FORMS += ui/main.ui
 QT += core \
     gui \
     network
