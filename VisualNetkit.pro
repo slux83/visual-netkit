@@ -8,7 +8,8 @@ INCLUDEPATH += . \
 FORMS += ui/main.ui
 QT += core \
     gui \
-    network
+    network \
+    svg
 DESTDIR = bin
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
@@ -16,7 +17,10 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/core/Types.h \
+HEADERS = src/gui/VirtualMachineItem.h \
+    src/gui/VmController.h \
+    src/gui/VmHandler.h \
+    src/core/Types.h \
     src/gui/GraphicsView.h \
     src/gui/LabScene.h \
     src/gui/LabPropertyController.h \
@@ -31,7 +35,10 @@ HEADERS = src/core/Types.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/GraphicsView.cpp \
+SOURCES = src/gui/VirtualMachineItem.cpp \
+    src/gui/VmController.cpp \
+    src/gui/VmHandler.cpp \
+    src/gui/GraphicsView.cpp \
     src/gui/LabScene.cpp \
     src/gui/LabPropertyController.cpp \
     src/gui/LabHandler.cpp \

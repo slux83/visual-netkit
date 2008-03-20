@@ -16,42 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef VMCONTROLLER_H_
+#define VMCONTROLLER_H_
 
-#include "ui_main.h"
-class LabHandler;
-#include <QWidget>
-#include <QTreeWidget>
+#include <QLinkedList>
+#include <QPair>
+
+#include "VirtualMachineItem.h"
+#include "../core/VirtualMachine.h"
 
 /**
- * The main window class
+ * This class is the singleton controller for the virtual machines.
+ * It's also map the graphical (view) item with the domain object (model)
  */
-class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
+class VmController
 {
-	Q_OBJECT
-	
-public:
-	MainWindow(QWidget *parent = 0);
-	virtual ~MainWindow();
-	void unlockSceneAndActions();
 	
 private:
-	/* Controllers */
-	LabHandler *labHandler;
+	static VmController *instance;
 	
-	/* Action groups */
-	QActionGroup *labItemGroup, *sceneSizeGroup;
+	/* the pair: <VIEW, DOMAIN> */
+	QLinkedList< QPair<VirtualMachineItem*, VirtualMachine*> > mappings;
 	
-	void populateViewMenu();
-	void createConnections();
-	void createActionGroups();
-	void createScene();
-
-public slots:
-	void writeLogMessage(QString message);
-	void resizeScene(QAction *action);
-
+public:
+	VmController();
+	virtual ~VmController();
+	static VmController* getInstance();
 };
 
-#endif /*MAINWINDOW_H_*/
+#endif /*VMCONTROLLER_H_*/

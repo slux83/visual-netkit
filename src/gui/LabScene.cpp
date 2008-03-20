@@ -37,6 +37,12 @@ LabScene::~LabScene()
  */
 void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	/* The user want to add an element? */
+	if(mouseEvent->button() == Qt::LeftButton)
+	{
+		
+	}
+	
 	QGraphicsScene::mousePressEvent(mouseEvent);
 }
 

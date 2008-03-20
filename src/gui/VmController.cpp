@@ -16,42 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
-
-#include "ui_main.h"
-class LabHandler;
-#include <QWidget>
-#include <QTreeWidget>
+#include "VmController.h"
 
 /**
- * The main window class
+ * Init the null instance for the singletone controller
  */
-class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
+VmController* VmController::instance = NULL;
+
+/**
+ * Constructor
+ */
+VmController::VmController()
 {
-	Q_OBJECT
-	
-public:
-	MainWindow(QWidget *parent = 0);
-	virtual ~MainWindow();
-	void unlockSceneAndActions();
-	
-private:
-	/* Controllers */
-	LabHandler *labHandler;
-	
-	/* Action groups */
-	QActionGroup *labItemGroup, *sceneSizeGroup;
-	
-	void populateViewMenu();
-	void createConnections();
-	void createActionGroups();
-	void createScene();
+}
 
-public slots:
-	void writeLogMessage(QString message);
-	void resizeScene(QAction *action);
+/**
+ * Deconstructor
+ */
+VmController::~VmController()
+{
+}
 
-};
+/**
+ * Singletone get instance
+ */
+VmController * VmController::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new VmController();
+	}
 
-#endif /*MAINWINDOW_H_*/
+	return instance;
+}

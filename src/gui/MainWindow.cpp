@@ -113,14 +113,14 @@ void MainWindow::writeLogMessage(QString message)
 void MainWindow::createActionGroups()
 {
 	/* Group for graphic components */
-	QActionGroup *labItemGroup = new QActionGroup(this);
+	labItemGroup = new QActionGroup(this);
 	//add Actions to the group
 	labItemGroup->addAction(actionAddVirtualMachine);
 	labItemGroup->addAction(actionAddCollisionDomain);
 	labItemGroup->setDisabled(true);
 	
 	/* Group for scene size */
-	QActionGroup *sceneSizeGroup = new QActionGroup(this);
+	sceneSizeGroup = new QActionGroup(this);
 	//add Actions to the group
 	sceneSizeGroup->addAction(actionSmall);
 	actionSmall->setData(QRectF(0, 0, 500, 500));
@@ -130,7 +130,7 @@ void MainWindow::createActionGroups()
 	actionBig->setData(QRectF(0, 0, 2000, 2000));
 	sceneSizeGroup->addAction(actionHuge);
 	actionHuge->setData(QRectF(0, 0, 4000, 4000));
-	//sceneSizeGroup->setDisabled(true);
+	sceneSizeGroup->setDisabled(true);
 	//connect: action for resize scene
 	connect(sceneSizeGroup, SIGNAL(triggered(QAction *)), this, SLOT(resizeScene(QAction *)));
 }
@@ -143,6 +143,7 @@ void MainWindow::createScene()
 {
 	LabScene *scene = new LabScene();
 	graphicsView->setScene(scene);
+	graphicsView->setVisible(false);
 }
 
 /**
@@ -160,4 +161,15 @@ void MainWindow::resizeScene(QAction *action)
 			QByteArray::number(newSize.width()) +
 			"x" +
 			QByteArray::number(newSize.height()) + " pixel)");
+}
+
+/**
+ * Unlock the scene and correlated actions
+ */
+void MainWindow::unlockSceneAndActions()
+{
+	graphicsView->setVisible(true);
+	graphicsView->setDisabled(false);
+	sceneSizeGroup->setDisabled(false);
+	labItemGroup->setDisabled(false);
 }
