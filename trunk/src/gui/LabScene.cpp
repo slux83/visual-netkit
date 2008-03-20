@@ -16,37 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
-
-#include "ui_main.h"
-class LabHandler;
-#include <QWidget>
-#include <QTreeWidget>
+#include "LabScene.h"
 
 /**
- * The main window class
+ * Constructor
  */
-class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
+LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
-	Q_OBJECT
-	
-public:
-	MainWindow(QWidget *parent = 0);
-	virtual ~MainWindow();
-	
-private:
-	/* Controllers */
-	LabHandler *labHandler;
-	
-	void populateViewMenu();
-	void createConnections();
-	void createActionGroups();
-	void createScene();
+}
 
-public slots:
-	void writeLogMessage(QString message);
+/**
+ * Deconstructor
+ */
+LabScene::~LabScene()
+{
+}
 
-};
+/**
+ * Mouse press event
+ */
+void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+	QGraphicsScene::mousePressEvent(mouseEvent);
+}
 
-#endif /*MAINWINDOW_H_*/
+/**
+ * Mouse move event
+ */
+void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
+}
+
+/**
+ * Mouse release event
+ */
+void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}

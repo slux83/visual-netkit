@@ -16,37 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#ifndef GRAPHICSVIEW_H_
+#define GRAPHICSVIEW_H_
 
-#include "ui_main.h"
-class LabHandler;
-#include <QWidget>
-#include <QTreeWidget>
+#include "LabScene.h"
+
+#include <QGraphicsView>
+#include <QDebug>
 
 /**
- * The main window class
+ * This is a class for convenience.
+ * Just an extention of QGraphicsView for now.
  */
-class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
+class GraphicsView : public QGraphicsView
 {
 	Q_OBJECT
-	
+
 public:
-	MainWindow(QWidget *parent = 0);
-	virtual ~MainWindow();
-	
-private:
-	/* Controllers */
-	LabHandler *labHandler;
-	
-	void populateViewMenu();
-	void createConnections();
-	void createActionGroups();
-	void createScene();
-
-public slots:
-	void writeLogMessage(QString message);
-
+	GraphicsView(LabScene *scene);
+	GraphicsView(QWidget *parent = 0);
+	GraphicsView();
+	virtual ~GraphicsView();
 };
 
-#endif /*MAINWINDOW_H_*/
+#endif /*GRAPHICSVIEW_H_*/

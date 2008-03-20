@@ -18,7 +18,9 @@
 
 #include "MainWindow.h"
 #include "LabHandler.h"
+#include "GraphicsView.h"
 #include <QHeaderView>
+#include <QActionGroup>
 /**
  * Constructor
  */
@@ -33,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	/* Some settings */
 	showMaximized();
-	
+	createActionGroups();
 	propertyTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	
 	//by default don't show the dock for logging
@@ -42,7 +44,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	//populte the 'View' menu
 	populateViewMenu();
 	
+	//connections and scene
 	createConnections();
+	createScene();
 	
 	//status bar show a ready state
 	statusBar()->showMessage(tr("Ready"));
@@ -99,4 +103,28 @@ void MainWindow::createConnections()
 void MainWindow::writeLogMessage(QString message)
 {
 	logText->append("[" + QTime::currentTime().toString("HH:mm:ss:zzz") + "] " + message);
+}
+
+/**
+ * [PRIVATE]
+ * Create action groups
+ */
+void MainWindow::createActionGroups()
+{
+	QActionGroup *itemGroup = new QActionGroup(this);
+	
+	//add Actions to the group
+	itemGroup->addAction(actionAddVirtualMachine);
+	itemGroup->addAction(actionAddCollisionDomain);
+	itemGroup->setDisabled(true);
+}
+
+/**
+ * [PRIVATE]
+ * Create the scene
+ */
+void MainWindow::createScene()
+{
+	LabScene *scene = new LabScene();
+	graphicsView->setScene(scene);
 }
