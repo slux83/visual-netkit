@@ -23,7 +23,6 @@ HEADERS = src/core/Types.h \
     src/gui/LabHandler.h \
     src/core/LabFacadeController.h \
     src/core/DaemonManager.h \
-    src/core/VirtualMachineType.h \
     src/core/VirtualMachineFactory.h \
     src/gui/MainWindow.h \
     src/core/VirtualMachine.h \

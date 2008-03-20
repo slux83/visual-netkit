@@ -46,6 +46,7 @@ private:
 
 public slots:
 	void writeLogMessage(QString message);
+	void resizeScene(QAction *action);
 
 };
 

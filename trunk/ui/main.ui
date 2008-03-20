@@ -130,7 +130,17 @@
      <addaction name="actionPNGImage" />
      <addaction name="actionSVGImage" />
     </widget>
+    <widget class="QMenu" name="menuSize" >
+     <property name="title" >
+      <string>Scene size</string>
+     </property>
+     <addaction name="actionSmall" />
+     <addaction name="actionNormal" />
+     <addaction name="actionBig" />
+     <addaction name="actionHuge" />
+    </widget>
     <addaction name="menuZoom" />
+    <addaction name="menuSize" />
     <addaction name="separator" />
     <addaction name="actionAddVirtualMachine" />
     <addaction name="actionAddCollisionDomain" />
@@ -593,6 +603,53 @@
    </property>
    <property name="text" >
     <string>SVG image</string>
+   </property>
+  </action>
+  <action name="actionSmall" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Small</string>
+   </property>
+   <property name="toolTip" >
+    <string>Small (500x500)</string>
+   </property>
+  </action>
+  <action name="actionNormal" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Normal</string>
+   </property>
+   <property name="toolTip" >
+    <string>Normal (1000x1000)</string>
+   </property>
+  </action>
+  <action name="actionBig" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Big</string>
+   </property>
+   <property name="toolTip" >
+    <string>Big (2000x2000)</string>
+   </property>
+  </action>
+  <action name="actionHuge" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Huge</string>
+   </property>
+   <property name="toolTip" >
+    <string>Huge (4000x4000)</string>
    </property>
   </action>
  </widget>

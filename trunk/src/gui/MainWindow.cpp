@@ -94,6 +94,7 @@ void MainWindow::createConnections()
 	
 	//connect: a log event
 	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
+
 }
 
 /**
@@ -111,12 +112,27 @@ void MainWindow::writeLogMessage(QString message)
  */
 void MainWindow::createActionGroups()
 {
-	QActionGroup *itemGroup = new QActionGroup(this);
-	
+	/* Group for graphic components */
+	QActionGroup *labItemGroup = new QActionGroup(this);
 	//add Actions to the group
-	itemGroup->addAction(actionAddVirtualMachine);
-	itemGroup->addAction(actionAddCollisionDomain);
-	itemGroup->setDisabled(true);
+	labItemGroup->addAction(actionAddVirtualMachine);
+	labItemGroup->addAction(actionAddCollisionDomain);
+	labItemGroup->setDisabled(true);
+	
+	/* Group for scene size */
+	QActionGroup *sceneSizeGroup = new QActionGroup(this);
+	//add Actions to the group
+	sceneSizeGroup->addAction(actionSmall);
+	actionSmall->setData(QRectF(0, 0, 500, 500));
+	sceneSizeGroup->addAction(actionNormal);
+	actionNormal->setData(QRectF(0, 0, 1000, 1000));
+	sceneSizeGroup->addAction(actionBig);
+	actionBig->setData(QRectF(0, 0, 2000, 2000));
+	sceneSizeGroup->addAction(actionHuge);
+	actionHuge->setData(QRectF(0, 0, 4000, 4000));
+	//sceneSizeGroup->setDisabled(true);
+	//connect: action for resize scene
+	connect(sceneSizeGroup, SIGNAL(triggered(QAction *)), this, SLOT(resizeScene(QAction *)));
 }
 
 /**
@@ -127,4 +143,21 @@ void MainWindow::createScene()
 {
 	LabScene *scene = new LabScene();
 	graphicsView->setScene(scene);
+}
+
+/**
+ * [PRIVATE SLOT]
+ * Change the scene size after user interaction
+ */
+void MainWindow::resizeScene(QAction *action)
+{
+	if(!action->isChecked())
+		return;
+	
+	QRectF newSize = action->data().toRectF(); 
+	graphicsView->scene()->setSceneRect(newSize);
+	writeLogMessage("Scene resized (" +
+			QByteArray::number(newSize.width()) +
+			"x" +
+			QByteArray::number(newSize.height()) + " pixel)");
 }

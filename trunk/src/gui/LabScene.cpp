@@ -19,7 +19,7 @@
 #include "LabScene.h"
 
 /**
- * Constructor
+ * Constructor: the scene size is Normal = 1000x1000
  */
 LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
