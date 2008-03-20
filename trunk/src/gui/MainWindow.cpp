@@ -156,7 +156,7 @@ void MainWindow::resizeScene(QAction *action)
 	
 	QRectF newSize = action->data().toRectF(); 
 	graphicsView->scene()->setSceneRect(newSize);
-	writeLogMessage("Scene resized (" +
+	writeLogMessage(tr("Scene resized") + " (" +
 			QByteArray::number(newSize.width()) +
 			"x" +
 			QByteArray::number(newSize.height()) + " pixel)");
