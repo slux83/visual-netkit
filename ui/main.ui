@@ -58,7 +58,7 @@
          <number>3</number>
         </property>
         <item>
-         <widget class="QGraphicsView" name="labGraphicsView" />
+         <widget class="GraphicsView" name="graphicsView" />
         </item>
        </layout>
       </widget>
@@ -553,7 +553,7 @@
     <bool>true</bool>
    </property>
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/vm_icon</iconset>
@@ -570,7 +570,7 @@
     <bool>true</bool>
    </property>
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/cd_icon</iconset>
@@ -596,6 +596,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>gui/GraphicsView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/VisualNetkit.qrc" />
  </resources>
