@@ -34,7 +34,7 @@ DaemonManager::DaemonManager()
 	daemonList.append(new QPair<Daemon, bool>(Ospfd, false));
 	daemonList.append(new QPair<Daemon, bool>(Ospf6d, false));
 	daemonList.append(new QPair<Daemon, bool>(Ripngd, false));
-	daemonList.append(new QPair<Daemon, bool>(Bind, false));
+	//daemonList.append(new QPair<Daemon, bool>(Bind, false));
 }
 
 /**

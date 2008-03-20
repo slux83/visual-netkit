@@ -16,12 +16,12 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/GraphicsView.h \
+HEADERS = src/core/Types.h \
+    src/gui/GraphicsView.h \
     src/gui/LabScene.h \
     src/gui/LabPropertyController.h \
     src/gui/LabHandler.h \
     src/core/LabFacadeController.h \
-    src/core/DaemonTypes.h \
     src/core/DaemonManager.h \
     src/core/VirtualMachineType.h \
     src/core/VirtualMachineFactory.h \

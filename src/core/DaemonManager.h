@@ -19,7 +19,7 @@
 #ifndef DAEMONMANAGER_H_
 #define DAEMONMANAGER_H_
 
-#include "DaemonTypes.h"
+#include "Types.h"
 #include <QLinkedList>
 #include <QPair>
 
@@ -33,6 +33,7 @@ public:
 	DaemonManager();
 	virtual ~DaemonManager();
 	void setDaemonState(Daemon daemon, bool newState);
+	
 };
 
 #endif /*DAEMONMANAGER_H_*/
