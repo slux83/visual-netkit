@@ -50,12 +50,54 @@ DaemonManager::~DaemonManager()
  */ 
 void DaemonManager::setDaemonState(Daemon daemon, bool newState)
 {
-	 QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
-	 while (i.hasNext())
-	 {
-		QPair<Daemon, bool> *d = i.next();
+	QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
+	while (i.hasNext())
+	{
+		 QPair<Daemon, bool> *d = i.next();
 		if(d->first == daemon)
 			d->second = newState;
-		
-	 }
+	}
+}
+
+/**
+ * Get the correct virtual machine type depending on the active daemons
+ */
+VmType DaemonManager::getVmType()
+{
+	bool foundRouter = false;
+	QList<Daemon> activeDaemons = daemons2activeList();
+	QListIterator<Daemon> it(activeDaemons);
+	
+	while(it.hasNext())
+	{
+		Daemon d = it.next();
+		if(d >= Zebra && d <= Ripngd)
+			foundRouter = true;
+	}
+	
+	if(foundRouter)
+		return Router;
+	else
+		return Host;
+}
+
+/**
+ * [PRIVATE]
+ * Map the active daemons inside a list
+ */
+QList<Daemon> DaemonManager::daemons2activeList()
+{
+	QList<Daemon> activeDaemons;
+	QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
+	while (i.hasNext())
+	{
+		QPair<Daemon, bool> *daemon = i.next();
+		/* if the daemon is enabled */
+		if(daemon->second)
+		{
+			activeDaemons.append(daemon->first);
+		}
+	}
+	
+	return activeDaemons;
 }

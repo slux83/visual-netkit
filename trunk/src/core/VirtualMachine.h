@@ -20,7 +20,6 @@
 #define VIRTUALMACHINE_H_
 
 #include "HardwareInterface.h"
-#include "VirtualMachineType.h"
 #include "DaemonManager.h"
 
 #include <QString>

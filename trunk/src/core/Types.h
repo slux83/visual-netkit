@@ -32,4 +32,10 @@ enum Daemon
 	Ripngd = 5
 };
 
+enum VmType
+{
+	Router = 0,
+	Host = 1
+};
+
 #endif /*TYPES_H_*/
