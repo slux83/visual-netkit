@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DAEMONTYPES_H_
-#define DAEMONTYPES_H_
+#ifndef TYPES_H_
+#define TYPES_H_
 
 /**
  * Enumeration for daemons
@@ -29,8 +29,7 @@ enum Daemon
 	Bgpd = 2,
 	Ospfd = 3,
 	Ospf6d = 4,
-	Ripngd = 5,
-	Bind = 6
+	Ripngd = 5
 };
 
-#endif /*DAEMONTYPES_H_*/
+#endif /*TYPES_H_*/
