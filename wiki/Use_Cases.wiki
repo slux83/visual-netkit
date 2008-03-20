@@ -58,7 +58,8 @@ L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta 
 *Post-condizioni:* è stata creata una nuova VM ed è stata associata al lab corrente
 
 
-*Scenario Principale di Successo:* la VM viene creata ed associata al lab corrente.
+*Scenario Principale di Successo:* L'utente seleziona dal menu' l'azione di "add virtual machine" che risulta mutuamente esclusiva rispetto alle altre azioni che governano la scena. L'utente clicca con il mouse su un'area della scena e il sistema mostra una form per l'acquisizione dei dati riguardanti la nuova macchina virtuale.
+La form in particolare mostra campi per l'inserimento di dati quali: nome della macchina virtuale, servizi che si vuole avviare (e che caratterizzano il "tipo" della vm), nonche' l'AS di appartenenza con la possibilita' di crearne uno nuovo. L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti e mostra sulla scena la macchina virtuale (eventualmente all'interno del suo AS), disegnata in base ai servizi ad essa assiciati (ad esempio un router, un dns, uno switch, un semplice host, ecc...)
 
 
 
