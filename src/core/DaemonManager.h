@@ -29,10 +29,13 @@ class DaemonManager
 private:
 	QLinkedList< QPair<Daemon, bool> * > daemonList;
 	
+	QList<Daemon> daemons2activeList();
+	
 public:
 	DaemonManager();
 	virtual ~DaemonManager();
 	void setDaemonState(Daemon daemon, bool newState);
+	VmType getVmType();
 	
 };
 
