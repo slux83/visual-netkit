@@ -23,6 +23,7 @@
 #include <QTableWidgetItem>
 #include <QIcon>
 #include <QMessageBox>
+
 /**
  * Init the null instance for the singletone controller
  */
@@ -89,7 +90,11 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
+	
 	emit logEvent(tr("Created a new Lab."));
+	
+	//unlock scene and actions
+	mainWindow->unlockSceneAndActions();
 }
 
 /**

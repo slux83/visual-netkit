@@ -58,7 +58,11 @@
          <number>3</number>
         </property>
         <item>
-         <widget class="GraphicsView" name="graphicsView" />
+         <widget class="GraphicsView" name="graphicsView" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

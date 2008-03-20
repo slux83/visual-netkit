@@ -20,6 +20,7 @@
 #define LABSCENE_H_
 
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
 class LabScene : public QGraphicsScene

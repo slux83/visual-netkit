@@ -16,42 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAINWINDOW_H_
-#define MAINWINDOW_H_
+#include "VirtualMachineItem.h"
 
-#include "ui_main.h"
-class LabHandler;
-#include <QWidget>
-#include <QTreeWidget>
-
-/**
- * The main window class
- */
-class MainWindow : public QMainWindow, public Ui::NetkitMainWindow
+VirtualMachineItem::VirtualMachineItem() : QGraphicsSvgItem()
 {
-	Q_OBJECT
-	
-public:
-	MainWindow(QWidget *parent = 0);
-	virtual ~MainWindow();
-	void unlockSceneAndActions();
-	
-private:
-	/* Controllers */
-	LabHandler *labHandler;
-	
-	/* Action groups */
-	QActionGroup *labItemGroup, *sceneSizeGroup;
-	
-	void populateViewMenu();
-	void createConnections();
-	void createActionGroups();
-	void createScene();
+}
 
-public slots:
-	void writeLogMessage(QString message);
-	void resizeScene(QAction *action);
-
-};
-
-#endif /*MAINWINDOW_H_*/
+VirtualMachineItem::~VirtualMachineItem()
+{
+}
