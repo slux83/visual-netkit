@@ -58,8 +58,8 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode,
     	 return;
      }
 
-     QLineF line(mapFromItem(myStartNode, 0, 0), mapFromItem(myEndNode, 0, 0));
-     //QLineF line(QPointF(100,0), QPointF(300,30));
+     //QLineF line(mapFromItem(myStartNode, 0, 0), mapFromItem(myEndNode, 0, 0));
+     QLineF line(QPointF(100,0), QPointF(300,30));
      qreal length = line.length();
      QPointF linkOffset((line.dx() * 10) / length, (line.dy() * 10) / length);
 

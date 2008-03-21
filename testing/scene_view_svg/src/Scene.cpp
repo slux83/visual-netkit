@@ -4,6 +4,7 @@
 
 Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
+	setMode(InsertItem);
 }
 
 Scene::~Scene()
@@ -33,17 +34,18 @@ void Scene::dumpToSVG() {
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    //if (mouseEvent->button() != Qt::LeftButton)
-        //return;
+    if (mouseEvent->button() != Qt::LeftButton)
+        return;
 
     //SvgItemNode *item;
-    //switch (myMode) {
-        //case InsertItem:
+    switch (myMode) {
+        case InsertItem:
             //item = new SvgItemNode();
             //addItem(item);
             //item->setPos(mouseEvent->scenePos());
             //emit itemInserted(item);
-        /*    break;
+            break;
+        
         case InsertLine:
             line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
             line->setPen(QPen(myLineColor, 2));
@@ -63,10 +65,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             textItem->setDefaultTextColor(myTextColor);
             textItem->setPos(mouseEvent->scenePos());
             emit textInserted(textItem);
-       */
-    //default:
-        //;
-    //}
+        */
+    default:
+        ;
+    }
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
@@ -99,6 +101,13 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             startItems.first() != endItems.first()) {
         	SvgItemNode *startItem = qgraphicsitem_cast<SvgItemNode *>(startItems.first());
             SvgItemNode *endItem = qgraphicsitem_cast<SvgItemNode *>(endItems.first());
+            SvgItemLink *arrow = new SvgItemLink(startItem, endItem);
+            arrow->setColor(myLineColor);
+            startItem->addLink(arrow);
+            endItem->addLink(arrow);
+            arrow->setZValue(-1000.0);
+            addItem(arrow);
+            arrow->updatePosition();
         }
     }
     line = 0;
