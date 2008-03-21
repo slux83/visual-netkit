@@ -26,7 +26,7 @@ public:
 	SvgItemNode();
 	QList<SvgItemLink *> getLinks();
 
-    void removeLink(SvgItemLink *link);
+    //void removeLink(SvgItemLink *link);
     void removeLinks();
     void addLink(SvgItemLink *link);
     

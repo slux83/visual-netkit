@@ -37,8 +37,8 @@ public:
 private:
 	bool isItemChange(int type);
 
-public slots:
-	void setMode(Mode mode);
+//public slots:
+//	void setMode(Mode mode);
 	
 signals:
      void vmInserted(SvgItemNode *item);

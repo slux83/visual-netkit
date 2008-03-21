@@ -17,8 +17,8 @@ QList<SvgItemLink *> SvgItemNode::getLinks()
 void SvgItemNode::removeLinks()
 {
     foreach (SvgItemLink *link, links) {
-        link->startNode()->removeLink(link);
-        link->endNode()->removeLink(link);
+        //link->startNode()->removeLink(link);
+        //link->endNode()->removeLink(link);
         //scene()->removeItem(link);
         delete link;
     }
