@@ -5,7 +5,8 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/main.ui
+FORMS += ui/fileEdit.ui \
+    ui/main.ui
 QT += core \
     gui \
     network \
@@ -35,7 +36,12 @@ HEADERS = src/gui/VirtualMachineItem.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/VirtualMachineItem.cpp \
+SOURCES = src/gui/GraphicsView.cpp \
+    src/gui/LabScene.cpp \
+    src/gui/VirtualMachineItem.cpp \
+    src/gui/VmController.cpp \
+    src/gui/VmHandler.cpp \
+    src/gui/VirtualMachineItem.cpp \
     src/gui/VmController.cpp \
     src/gui/VmHandler.cpp \
     src/gui/GraphicsView.cpp \
