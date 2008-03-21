@@ -2,54 +2,55 @@
 #include "SvgItemNode.h"
 #include <math.h>
 #include <QPainter>
+#include <QPolygonF>
 
 static const double Pi = 3.14159265358979323846264338327950288419717;
-static double TwoPi = 2.0 * Pi;
 
-SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGraphicsSvgItem()
- {
+SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphicsItem *parent, QGraphicsScene *scene)
+: QGraphicsLineItem(parent, scene)
+{
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-	setAcceptedMouseButtons(0);
-    source = sourceNode;
-    dest = destNode;
-    source->addSvgItemLink(this);
-    dest->addSvgItemLink(this);
-    adjust();
+	myStartNode = startNode;
+	myEndNode = endNode;
+	myColor = Qt::black;
+	setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));setAcceptedMouseButtons(0);
 }
 
  SvgItemLink::~SvgItemLink()
  {
  }
 
- SvgItemNode *SvgItemLink::sourceNode() const
- {
-     return source;
- }
-
  void SvgItemLink::setSourceNode(SvgItemNode *node)
  {
-     source = node;
+	 myStartNode = node;
      adjust();
- }
-
- SvgItemNode *SvgItemLink::destNode() const
- {
-     return dest;
  }
 
  void SvgItemLink::setDestNode(SvgItemNode *node)
  {
-     dest = node;
+	 myEndNode = node;
      adjust();
  }
 
-
+ QRectF SvgItemLink::boundingRect() const
+ {
+      qreal extra = (pen().width() + 20) / 2.0;
+      
+      return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
+                                        line().p2().y() - line().p1().y()))
+		           .normalized()
+		           .adjusted(-extra, -extra, extra, extra);
+ }
+ 
  void SvgItemLink::adjust()
  {
-     if (!source || !dest)
-         return;
+     if (!myStartNode || !myEndNode) {
+    	 QLineF line(QPointF(0,0), QPointF(300,30));
+    	 return;
+     }
 
-     QLineF line(mapFromItem(source, 0, 0), mapFromItem(dest, 0, 0));
+     QLineF line(mapFromItem(myStartNode, 0, 0), mapFromItem(myEndNode, 0, 0));
+     //QLineF line(QPointF(100,0), QPointF(300,30));
      qreal length = line.length();
      QPointF linkOffset((line.dx() * 10) / length, (line.dy() * 10) / length);
 
@@ -58,12 +59,48 @@ SvgItemLink::SvgItemLink (SvgItemNode *sourceNode, SvgItemNode *destNode) : QGra
      destPoint = line.p2() - linkOffset;
  }
 
-QGraphicsLineItem *SvgItemLink::draw()
-{
-    if (!source || !dest)
-        return NULL;
+ void SvgItemLink::updatePosition()
+ {
+     QLineF line(mapFromItem(myStartNode, 0, 0), mapFromItem(myEndNode, 0, 0));
+     setLine(line);
+ }
 
-    QGraphicsLineItem *link = new QGraphicsLineItem(QLineF(sourcePoint, destPoint));
-    //QGraphicsLineItem *link = new QGraphicsLineItem(QLineF(QPointF(100,100), QPointF(0,0)));
-    return link;
-}
+ void SvgItemLink::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+ {
+     if (myStartNode->collidesWithItem(myEndNode))
+         return;
+
+     QPen myPen = pen();
+     myPen.setColor(myColor);
+     painter->setPen(myPen);
+     painter->setBrush(myColor);
+
+     QLineF centerLine(myStartNode->pos(), myEndNode->pos());
+     QPolygonF endPolygon = myEndNode->polygon();
+     QPointF p1 = endPolygon.first() + myEndNode->pos();
+     QPointF p2;
+     QPointF intersectPoint;
+     QLineF polyLine;
+     for (int i = 1; i < endPolygon.count(); ++i) {
+     p2 = endPolygon.at(i) + myEndNode->pos();
+     polyLine = QLineF(p1, p2);
+     QLineF::IntersectType intersectType = polyLine.intersect(centerLine, &intersectPoint);
+     if (intersectType == QLineF::BoundedIntersection)
+         break;
+         p1 = p2;
+     }
+
+     setLine(QLineF(intersectPoint, myStartNode->pos()));
+
+     double angle = ::acos(line().dx() / line().length());
+     if (line().dy() >= 0)
+         painter->drawLine(line());
+         if (isSelected()) {
+             painter->setPen(QPen(myColor, 1, Qt::DashLine));
+         QLineF myLine = line();
+         myLine.translate(0, 4.0);
+         painter->drawLine(myLine);
+         myLine.translate(0,-8.0);
+         painter->drawLine(myLine);
+     }
+ }

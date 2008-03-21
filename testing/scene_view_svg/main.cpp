@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     Scene *s = new Scene();
     ViewWindow *win = new ViewWindow(s);
     
-    SvgItemNode node1, node2;
+    SvgItemNode node2;
     SvgItemNode *vm1 = new SvgItemNode();
     SvgItemNode *vm2 = new SvgItemNode();
     
@@ -26,12 +26,13 @@ int main(int argc, char **argv)
     vm1->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     vm2->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
     
-    node1.moveBy(200, 180);
+    SvgItemNode *node1 = new SvgItemNode();
+    node1->moveBy(200, 180);
     
     node2.moveBy(20, 18);
     
     /* Add nodes to the scene inside the view */
-    s->addItem(&node1);
+    s->addItem(node1);
     s->addItem(&node2);
     QGraphicsTextItem text;
     text.setHtml("<b>Press Control to select<br />multiple objects!</b>");
@@ -43,16 +44,16 @@ int main(int argc, char **argv)
 	s->addItem(vm2);
 	
 	/* Add link between two VMs */
-	SvgItemLink *link12 = new SvgItemLink(vm1, vm2);
+	SvgItemLink *link12 = new SvgItemLink(vm1, node1);
 	/*
-	 * forse facendo un ruppo tra 2 vm e il link, il dragging è facilitato (automatico)
+	 * forse facendo un gruppo tra 2 vm e il link, il dragging è facilitato (automatico)
 	QLinkedList<QGraphicsItem *> items;
 	items.append(vm1);
 	items.append(vm2);
 	items.append(link12);
 	win->makeGroupFromItems(items);
 	*/
-	s->addItem(link12->draw());
+	s->addItem(link12);
 	
     win->show();
     

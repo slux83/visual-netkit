@@ -127,17 +127,3 @@ void ViewWindow::addVM()
 	scene->addItem(vm);
 }
 
-void ViewWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-	if (!event->modifiers()) {
-		 //QGraphicsScene::mousePressEvent(event);
-	} else {
-		//aggiungo un VM
-		//this->addVM();
-		
-		//edge->adjust();
-    	//advance();
-    	//update();
-	}
-	this->addVM();
-}
