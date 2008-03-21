@@ -41,9 +41,6 @@ SOURCES = src/gui/GraphicsView.cpp \
     src/gui/VirtualMachineItem.cpp \
     src/gui/VmController.cpp \
     src/gui/VmHandler.cpp \
-    src/gui/VirtualMachineItem.cpp \
-    src/gui/VmController.cpp \
-    src/gui/VmHandler.cpp \
     src/gui/GraphicsView.cpp \
     src/gui/LabScene.cpp \
     src/gui/LabPropertyController.cpp \
