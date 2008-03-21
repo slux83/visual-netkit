@@ -3,9 +3,9 @@
 #include <QGraphicsItem>
 #include <QLineF>
 #include <QLinkedList>
-#include <QGraphicsLineItem>
 #include "ViewWindow.h"
 #include "SvgItemNode.h"
+#include "SvgItemLink.h"
 #include "Scene.h"
 
 int main(int argc, char **argv)

@@ -36,12 +36,12 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     //if (mouseEvent->button() != Qt::LeftButton)
         //return;
 
-    SvgItemNode *item;
+    //SvgItemNode *item;
     //switch (myMode) {
         //case InsertItem:
-            item = new SvgItemNode();
-            addItem(item);
-            item->setPos(mouseEvent->scenePos());
+            //item = new SvgItemNode();
+            //addItem(item);
+            //item->setPos(mouseEvent->scenePos());
             //emit itemInserted(item);
         /*    break;
         case InsertLine:
@@ -49,7 +49,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             line->setPen(QPen(myLineColor, 2));
             addItem(line);
             break;
-        /*
+
         case InsertText:
             textItem = new DiagramTextItem();
             textItem->setFont(myFont);

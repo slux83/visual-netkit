@@ -2,21 +2,26 @@
 #define SVGITEMLINK_H
 
 #include <QGraphicsLineItem>
+#include <QGraphicsItem>
 #include <QRectF>
+#include <QPainterPath>
+#include <QObject>
 
 class SvgItemNode;
 class QColor;
 
-class SvgItemLink : public QGraphicsLineItem
+class SvgItemLink :  public QObject, public QGraphicsLineItem
 {
 	Q_OBJECT	
 	
 public:
-	 SvgItemLink(SvgItemNode *sourceNode, SvgItemNode *destNode, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	 SvgItemLink(SvgItemNode *sourceNode, SvgItemNode *destNode,
+			 QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 	 ~SvgItemLink();
 	 
-	 SvgItemLink();
-	 QRectF boundingRect() const;
+	 
+	QRectF boundingRect() const;
+	QPainterPath shape() const;
 	 
 	 void setSourceNode(SvgItemNode *node);
 	 void setDestNode(SvgItemNode *node);
@@ -26,14 +31,14 @@ public:
      SvgItemNode *endNode() const { return myEndNode; }
      
 	 void adjust();
-	 //QGraphicsLineItem* draw();
+	 QGraphicsLineItem* draw();
 
 public slots:
      void updatePosition();
 
 protected:
      void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                QWidget *widget = 0);
+               QWidget *widget = 0);
 private:
 	 SvgItemNode *myStartNode;
 	 SvgItemNode *myEndNode;

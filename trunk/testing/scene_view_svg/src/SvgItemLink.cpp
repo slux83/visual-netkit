@@ -4,16 +4,17 @@
 #include <QPainter>
 #include <QPolygonF>
 
-static const double Pi = 3.14159265358979323846264338327950288419717;
+static const double Pi = 3.14159;
 
-SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphicsItem *parent, QGraphicsScene *scene)
-: QGraphicsLineItem(parent, scene)
+SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode,
+		QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsLineItem(parent, scene)
 {
-	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setFlags(QGraphicsItem::ItemIsSelectable);
 	myStartNode = startNode;
 	myEndNode = endNode;
 	myColor = Qt::black;
-	setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));setAcceptedMouseButtons(0);
+	setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	//setAcceptedMouseButtons(0);
 }
 
  SvgItemLink::~SvgItemLink()
@@ -23,7 +24,7 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
  void SvgItemLink::setSourceNode(SvgItemNode *node)
  {
 	 myStartNode = node;
-     adjust();
+    adjust();
  }
 
  void SvgItemLink::setDestNode(SvgItemNode *node)
@@ -32,6 +33,14 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
      adjust();
  }
 
+ 
+ QPainterPath SvgItemLink::shape() const
+ {
+     QPainterPath path = QGraphicsLineItem::shape();
+     //path.addPolygon(arrowHead);
+     return path;
+ }
+ 
  QRectF SvgItemLink::boundingRect() const
  {
       qreal extra = (pen().width() + 20) / 2.0;
@@ -59,6 +68,7 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
      destPoint = line.p2() - linkOffset;
  }
 
+
  void SvgItemLink::updatePosition()
  {
      QLineF line(mapFromItem(myStartNode, 0, 0), mapFromItem(myEndNode, 0, 0));
@@ -81,13 +91,14 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
      QPointF p2;
      QPointF intersectPoint;
      QLineF polyLine;
-     for (int i = 1; i < endPolygon.count(); ++i) {
-     p2 = endPolygon.at(i) + myEndNode->pos();
-     polyLine = QLineF(p1, p2);
-     QLineF::IntersectType intersectType = polyLine.intersect(centerLine, &intersectPoint);
-     if (intersectType == QLineF::BoundedIntersection)
-         break;
-         p1 = p2;
+     for (int i = 1; i < endPolygon.count(); ++i) 
+     {
+	     p2 = endPolygon.at(i) + myEndNode->pos();
+	     polyLine = QLineF(p1, p2);
+	     QLineF::IntersectType intersectType = polyLine.intersect(centerLine, &intersectPoint);
+	     if (intersectType == QLineF::BoundedIntersection)
+	         break;
+	         p1 = p2;
      }
 
      setLine(QLineF(intersectPoint, myStartNode->pos()));
@@ -95,8 +106,9 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
      double angle = ::acos(line().dx() / line().length());
      if (line().dy() >= 0)
          painter->drawLine(line());
-         if (isSelected()) {
-             painter->setPen(QPen(myColor, 1, Qt::DashLine));
+     if (isSelected())
+     {
+    	 painter->setPen(QPen(myColor, 1, Qt::DashLine));
          QLineF myLine = line();
          myLine.translate(0, 4.0);
          painter->drawLine(myLine);
@@ -104,3 +116,5 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode, QGraphic
          painter->drawLine(myLine);
      }
  }
+
+ 
