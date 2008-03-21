@@ -22,7 +22,6 @@ public:
 	//void makeGroupFromItems(QLinkedList<QGraphicsItem *> *items);
 
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
 	Scene *scene;

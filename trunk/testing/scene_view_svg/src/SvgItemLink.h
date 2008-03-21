@@ -1,38 +1,43 @@
 #ifndef SVGITEMLINK_H
 #define SVGITEMLINK_H
 
-#include <QGraphicsSvgItem>
+#include <QGraphicsLineItem>
 #include <QRectF>
 
 class SvgItemNode;
+class QColor;
 
-class SvgItemLink : public QGraphicsSvgItem
+class SvgItemLink : public QGraphicsLineItem
 {
 	Q_OBJECT	
 	
 public:
-	 SvgItemLink(SvgItemNode *sourceNode, SvgItemNode *destNode);
+	 SvgItemLink(SvgItemNode *sourceNode, SvgItemNode *destNode, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 	 ~SvgItemLink();
 	 
 	 SvgItemLink();
+	 QRectF boundingRect() const;
 	 
-	 SvgItemNode *sourceNode() const;
 	 void setSourceNode(SvgItemNode *node);
-	
-	 SvgItemNode *destNode() const;
 	 void setDestNode(SvgItemNode *node);
-	
+
+     void setColor(const QColor &color) { myColor = color; }
+     SvgItemNode *startNode() const { return myStartNode; }
+     SvgItemNode *endNode() const { return myEndNode; }
+     
 	 void adjust();
-	
-	 enum { Type = UserType + 2 };
-	 int type() const { return Type; }
+	 //QGraphicsLineItem* draw();
 
-	 QGraphicsLineItem* draw();
-	 
+public slots:
+     void updatePosition();
+
 protected:
-
+     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                QWidget *widget = 0);
 private:
-	 SvgItemNode *source, *dest;
+	 SvgItemNode *myStartNode;
+	 SvgItemNode *myEndNode;
+     QColor myColor;
 
      QPointF sourcePoint;
      QPointF destPoint;

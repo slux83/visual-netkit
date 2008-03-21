@@ -3,29 +3,47 @@
 SvgItemNode::SvgItemNode() : QGraphicsSvgItem("host.svg")
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	myPolygon << QPointF(-100, 0) << QPointF(0, 100)
+	                       << QPointF(100, 0) << QPointF(0, -100)
+	                       << QPointF(-100, 0);
 }
 
-void SvgItemNode::addSvgItemLink(SvgItemLink *l)
-{
-	links.append(l);
-}
-
-QList<SvgItemLink *> SvgItemNode::getAllLinks()
+QList<SvgItemLink *> SvgItemNode::getLinks()
 {
 	return links;
 }
 
+
+void SvgItemNode::removeLinks()
+{
+    foreach (SvgItemLink *link, links) {
+        link->startNode()->removeLink(link);
+        link->endNode()->removeLink(link);
+        //scene()->removeItem(link);
+        delete link;
+    }
+}
+
+void SvgItemNode::addLink(SvgItemLink *link)
+{
+    links.append(link);
+}
+
+void SvgItemNode::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    //scene()->clearSelection();
+    setSelected(true);
+    //myContextMenu->exec(event->screenPos());
+}
+
 QVariant SvgItemNode::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-    switch (change) {
-    case ItemPositionHasChanged:
-        foreach (SvgItemLink *link, linkList)
-            link->adjust();
-        	 //graph->itemMoved();
-        break;
-    default:
-        break;
-    };
+    if (change == QGraphicsItem::ItemPositionChange) {
+        foreach (SvgItemLink *link, links) {
+            link->updatePosition();
+        }
+    }
 
-    return QGraphicsItem::itemChange(change, value);
+    return value;
 }
+
