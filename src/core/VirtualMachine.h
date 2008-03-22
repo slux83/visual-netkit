@@ -36,6 +36,7 @@ public:
 	virtual ~VirtualMachine();
 	QLinkedList<HardwareInterface *> getInterfaces();
 	QString getName();
+	VmType getMyType();
 
 protected:
 	QString name;

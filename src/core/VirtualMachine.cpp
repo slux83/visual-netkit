@@ -51,3 +51,12 @@ QLinkedList<HardwareInterface *> VirtualMachine::getInterfaces()
 {
 	return interfaces;
 }
+
+/**
+ * Get my vm type
+ */
+VmType VirtualMachine::getMyType()
+{
+	dm->getVmType();
+}
+

@@ -34,8 +34,8 @@ enum Daemon
 
 enum VmType
 {
-	Router = 0,
-	Host = 1
+	Host = 0,
+	Router = 1
 };
 
 #endif /*TYPES_H_*/
