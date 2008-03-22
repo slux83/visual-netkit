@@ -20,12 +20,20 @@
 #define LABSCENE_H_
 
 #include <QGraphicsScene>
+#include <QPainterPath>
+#include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
 class LabScene : public QGraphicsScene
 {
 	Q_OBJECT
+	
+private:
+	QGraphicsRectItem *border;	//the path for the scene border
+	
+private slots:
+	void adjustSceneBorder(QRectF r);
 	
 public:
 	LabScene();

@@ -23,6 +23,21 @@
  */
 LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
+	border = new QGraphicsRectItem();
+	
+	//the pen & flags
+	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+	border->setFlags(QGraphicsItem::ItemClipsToShape);
+	border->setPen(pen);
+	//set the rect
+	border->setRect(sceneRect());
+	border->setFlags(QGraphicsItem::ItemClipsToShape);
+	border->setZValue(100);
+	
+	/* Adde the border to this scene */
+	addItem(border);
+	
+	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
 }
 
 /**
@@ -60,4 +75,13 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Adjust the border of this scene when the user resize the scene rect
+ */
+void LabScene::adjustSceneBorder(QRectF r)
+{
+	border->setRect(sceneRect());
 }
