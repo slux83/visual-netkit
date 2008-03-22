@@ -18,4 +18,9 @@
 	<qresource prefix="/small" >
 		<file alias="folder_root">small_icons/folder_root.png</file>
 	</qresource>
+	<qresource prefix="/svg" >
+		<file alias="cs">svg/collision_domain.svg</file>
+		<file alias="vm_host">svg/vm_host.svg</file>
+		<file alias="vm_router">svg/vm_router.svg</file>
+	</qresource>
 </RCC>
