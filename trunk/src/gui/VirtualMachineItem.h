@@ -20,6 +20,11 @@
 #define VIRTUALMACHINEITEM_H_
 
 #include <QGraphicsSvgItem>
+#include <QSvgRenderer>
+#include <QString>
+#include <QDebug>
+
+#include "../core/Types.h"
 
 /**
  * This class is a graphic (SVG) element of type Virtual Machine
@@ -28,9 +33,15 @@ class VirtualMachineItem : public QGraphicsSvgItem
 {
 	Q_OBJECT
 	
+private:
+	QMap<VmType, QString> svgFiles;
+	
 public:
-	VirtualMachineItem();
+	VirtualMachineItem(VmType type = Host);
 	virtual ~VirtualMachineItem();
+
+public slots:
+	void changeSvgFile(VmType type);
 };
 
 #endif /*VIRTUALMACHINEITEM_H_*/

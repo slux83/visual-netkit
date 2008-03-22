@@ -42,6 +42,7 @@ public:
 	VmController();
 	virtual ~VmController();
 	static VmController* getInstance();
+	void addVirtualMachine();
 };
 
 #endif /*VMCONTROLLER_H_*/

@@ -18,10 +18,38 @@
 
 #include "VirtualMachineItem.h"
 
-VirtualMachineItem::VirtualMachineItem() : QGraphicsSvgItem()
+/**
+ * Contructor
+ * by default, this svg item is showed as VmHost
+ */
+VirtualMachineItem::VirtualMachineItem(VmType type) : QGraphicsSvgItem()
+{
+	/* Fill the filemap */
+	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
+	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
+	
+	/* Set the default svg file: VmHost */
+	renderer()->load(svgFiles.value(type));
+}
+
+/**
+ * Deconstructor
+ */
+VirtualMachineItem::~VirtualMachineItem()
 {
 }
 
-VirtualMachineItem::~VirtualMachineItem()
+/**
+ * [PUBLIC-SLOT]
+ * Change the visualization for this vm
+ */
+void VirtualMachineItem::changeSvgFile(VmType type)
 {
+	if(!svgFiles.contains(type))
+	{
+		qWarning() << "VmType" << type << "NOT FOUND INSIDE THE MAP";
+		return;
+	}
+	
+	renderer()->load(svgFiles.value(type));
 }

@@ -49,3 +49,9 @@ VmController * VmController::getInstance()
 
 	return instance;
 }
+
+/* TODO */
+void VmController::addVirtualMachine()
+{
+	
+}
