@@ -55,6 +55,7 @@ public:
 	virtual ~LabHandler();
 	static LabHandler * getInstance();
 	void setMainWindow(MainWindow *w);
+	MainWindow* getMainWindow() { return mainWindow; };
 
 public slots:
 	void newLab();

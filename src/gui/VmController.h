@@ -24,6 +24,7 @@
 
 #include "VirtualMachineItem.h"
 #include "../core/VirtualMachine.h"
+#include "AddVmForm.h"
 
 /**
  * This class is the singleton controller for the virtual machines.
@@ -34,6 +35,7 @@ class VmController
 	
 private:
 	static VmController *instance;
+	AddVmForm *addVm;
 	
 	/* the pair: <VIEW, DOMAIN> */
 	QLinkedList< QPair<VirtualMachineItem*, VirtualMachine*> > mappings;

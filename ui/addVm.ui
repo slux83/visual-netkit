@@ -1,0 +1,100 @@
+<ui version="4.0" >
+ <class>AddVmForm</class>
+ <widget class="QWidget" name="AddVmForm" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>414</width>
+    <height>272</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Add virtual machine - Visual Netkit</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>VM name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="vmName" />
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="title" >
+        <string>Services</string>
+       </property>
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>3</number>
+        </property>
+        <property name="leftMargin" >
+         <number>3</number>
+        </property>
+        <property name="topMargin" >
+         <number>3</number>
+        </property>
+        <property name="rightMargin" >
+         <number>3</number>
+        </property>
+        <property name="bottomMargin" >
+         <number>3</number>
+        </property>
+        <item>
+         <widget class="QTreeWidget" name="daemonsList" >
+          <column>
+           <property name="text" >
+            <string>Daemon</string>
+           </property>
+          </column>
+          <column>
+           <property name="text" >
+            <string>State (Enabled | Disabled)</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="formButtonBox" >
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>formButtonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>AddVmForm</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>180</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>6</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

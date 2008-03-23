@@ -17,6 +17,8 @@
  */
 
 #include "LabScene.h"
+#include "LabHandler.h"
+#include "VmController.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -53,9 +55,11 @@ LabScene::~LabScene()
 void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	/* The user want to add an element? */
-	if(mouseEvent->button() == Qt::LeftButton)
+	if(mouseEvent->button() == Qt::LeftButton &&
+			LabHandler::getInstance()->getMainWindow()->actionAddVirtualMachine->isChecked())
 	{
-		
+		qDebug() << "Adding a new wirtual machine.";
+		VmController::getInstance()->addVirtualMachine();
 	}
 	
 	QGraphicsScene::mousePressEvent(mouseEvent);
@@ -83,5 +87,5 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
  */
 void LabScene::adjustSceneBorder(QRectF r)
 {
-	border->setRect(sceneRect());
+	border->setRect(r);
 }
