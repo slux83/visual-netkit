@@ -5,8 +5,9 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/main.ui \
-	ui/fileEdit.ui
+FORMS += ui/addVm.ui \
+    ui/main.ui \
+    ui/fileEdit.ui
 QT += core \
     gui \
     network \
@@ -18,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/VirtualMachineItem.h \
+HEADERS = src/gui/AddVmForm.h \
+    src/gui/VirtualMachineItem.h \
     src/gui/VmController.h \
     src/gui/VmHandler.h \
     src/core/Types.h \
@@ -36,7 +38,8 @@ HEADERS = src/gui/VirtualMachineItem.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/VirtualMachineItem.cpp \
+SOURCES = src/gui/AddVmForm.cpp \
+    src/gui/VirtualMachineItem.cpp \
     src/gui/VmController.cpp \
     src/gui/VmHandler.cpp \
     src/gui/GraphicsView.cpp \
@@ -54,4 +57,3 @@ SOURCES = src/gui/VirtualMachineItem.cpp \
     src/core/CollisionDomain.cpp \
     src/core/Subnet.cpp \
     src/core/Laboratory.cpp
-    

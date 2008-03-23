@@ -16,43 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VmController.h"
+#ifndef ADDVMFORM_H_
+#define ADDVMFORM_H_
+
+#include <QWidget>
+#include "ui_addVm.h"
 
 /**
- * Init the null instance for the singletone controller
+ * This class implement the form for add vm action
  */
-VmController* VmController::instance = NULL;
-
-/**
- * Constructor
- */
-VmController::VmController()
+class AddVmForm : public QWidget, public Ui::AddVmForm
 {
-	addVm = new AddVmForm();
-}
+	Q_OBJECT
+	
+private:
+	void fillDaemonsList();
+	
+public:
+	AddVmForm(QWidget *parent = 0);
+	virtual ~AddVmForm();
+};
 
-/**
- * Deconstructor
- */
-VmController::~VmController()
-{
-}
-
-/**
- * Singletone get instance
- */
-VmController * VmController::getInstance()
-{
-	if (instance == NULL)
-	{
-		instance = new VmController();
-	}
-
-	return instance;
-}
-
-/* TODO */
-void VmController::addVirtualMachine()
-{
-	addVm->show();
-}
+#endif /*ADDVMFORM_H_*/
