@@ -133,6 +133,13 @@ void MainWindow::createActionGroups()
 	sceneSizeGroup->setDisabled(true);
 	//connect: action for resize scene
 	connect(sceneSizeGroup, SIGNAL(triggered(QAction *)), this, SLOT(resizeScene(QAction *)));
+	
+	/* Group for zoom the scene */
+	graphZoomGroup = new QActionGroup(this);
+	graphZoomGroup->addAction(actionZoomIn);
+	graphZoomGroup->addAction(actionZoomOriginal);
+	graphZoomGroup->addAction(actionZoomOut);
+	graphZoomGroup->setDisabled(true);
 }
 
 /**
@@ -172,4 +179,6 @@ void MainWindow::unlockSceneAndActions()
 	graphicsView->setDisabled(false);
 	sceneSizeGroup->setDisabled(false);
 	labItemGroup->setDisabled(false);
+	menuGraph->setDisabled(false);
+	graphZoomGroup->setDisabled(false);
 }

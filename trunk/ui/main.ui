@@ -111,23 +111,20 @@
    </widget>
    <widget class="QMenu" name="menuGraph" >
     <property name="enabled" >
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="title" >
      <string>Graph</string>
     </property>
     <widget class="QMenu" name="menuZoom" >
-     <property name="enabled" >
-      <bool>true</bool>
-     </property>
      <property name="title" >
       <string>Zoom</string>
      </property>
-     <addaction name="actionZoom_in" />
-     <addaction name="actionZoom_out" />
-     <addaction name="actionZoom_origina" />
+     <addaction name="actionZoomIn" />
+     <addaction name="actionZoomOut" />
+     <addaction name="actionZoomOriginal" />
     </widget>
-    <widget class="QMenu" name="menuExport_as" >
+    <widget class="QMenu" name="menuExportAs" >
      <property name="title" >
       <string>Export as...</string>
      </property>
@@ -149,7 +146,7 @@
     <addaction name="actionAddVirtualMachine" />
     <addaction name="actionAddCollisionDomain" />
     <addaction name="separator" />
-    <addaction name="menuExport_as" />
+    <addaction name="menuExportAs" />
    </widget>
    <widget class="QMenu" name="menuHelp" >
     <property name="title" >
@@ -384,9 +381,9 @@
    <attribute name="toolBarBreak" >
     <bool>false</bool>
    </attribute>
-   <addaction name="actionZoom_out" />
-   <addaction name="actionZoom_origina" />
-   <addaction name="actionZoom_in" />
+   <addaction name="actionZoomOut" />
+   <addaction name="actionZoomOriginal" />
+   <addaction name="actionZoomIn" />
    <addaction name="separator" />
    <addaction name="actionAddVirtualMachine" />
    <addaction name="actionAddCollisionDomain" />
@@ -529,9 +526,9 @@
     <string>Redo</string>
    </property>
   </action>
-  <action name="actionZoom_in" >
+  <action name="actionZoomIn" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/zoom_in_icon</iconset>
@@ -540,9 +537,9 @@
     <string>Zoom in</string>
    </property>
   </action>
-  <action name="actionZoom_out" >
+  <action name="actionZoomOut" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/zoom_out_icon</iconset>
@@ -551,9 +548,9 @@
     <string>Zoom out</string>
    </property>
   </action>
-  <action name="actionZoom_origina" >
+  <action name="actionZoomOriginal" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/zoom_original_icon</iconset>
@@ -595,7 +592,7 @@
   </action>
   <action name="actionPNGImage" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text" >
     <string>PNG image</string>
@@ -603,7 +600,7 @@
   </action>
   <action name="actionSVGImage" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text" >
     <string>SVG image</string>
