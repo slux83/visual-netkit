@@ -41,7 +41,7 @@ private:
 	LabHandler *labHandler;
 	
 	/* Action groups */
-	QActionGroup *labItemGroup, *sceneSizeGroup;
+	QActionGroup *labItemGroup, *sceneSizeGroup, *graphZoomGroup;
 	
 	void populateViewMenu();
 	void createConnections();
