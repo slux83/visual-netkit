@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>414</width>
-    <height>272</height>
+    <width>315</width>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -29,12 +29,24 @@
    </item>
    <item>
     <layout class="QHBoxLayout" >
+     <property name="leftMargin" >
+      <number>3</number>
+     </property>
+     <property name="topMargin" >
+      <number>3</number>
+     </property>
+     <property name="rightMargin" >
+      <number>3</number>
+     </property>
+     <property name="bottomMargin" >
+      <number>3</number>
+     </property>
      <item>
       <widget class="QGroupBox" name="groupBox" >
        <property name="title" >
         <string>Services</string>
        </property>
-       <layout class="QVBoxLayout" >
+       <layout class="QHBoxLayout" >
         <property name="spacing" >
          <number>3</number>
         </property>
@@ -52,18 +64,43 @@
         </property>
         <item>
          <widget class="QTreeWidget" name="daemonsList" >
+          <property name="alternatingRowColors" >
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode" >
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
           <column>
            <property name="text" >
-            <string>Daemon</string>
-           </property>
-          </column>
-          <column>
-           <property name="text" >
-            <string>State (Enabled | Disabled)</string>
+            <string>Daemon (Enabled | Disabled)</string>
            </property>
           </column>
          </widget>
         </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="previewGroup" >
+       <property name="title" >
+        <string>Preview</string>
+       </property>
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>3</number>
+        </property>
+        <property name="leftMargin" >
+         <number>3</number>
+        </property>
+        <property name="topMargin" >
+         <number>3</number>
+        </property>
+        <property name="rightMargin" >
+         <number>3</number>
+        </property>
+        <property name="bottomMargin" >
+         <number>3</number>
+        </property>
        </layout>
       </widget>
      </item>
