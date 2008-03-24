@@ -20,6 +20,9 @@
 #define ADDVMFORM_H_
 
 #include <QWidget>
+#include <QSvgWidget>
+#include <QSpacerItem>
+#include <QDebug>
 #include "ui_addVm.h"
 
 /**
@@ -30,8 +33,13 @@ class AddVmForm : public QWidget, public Ui::AddVmForm
 	Q_OBJECT
 	
 private:
+	QSpacerItem *spacePreview;
+	QSvgWidget *vmPreview;
+	QLabel *vmType;
 	void fillDaemonsList();
-	
+
+private slots:
+	void updateVmPreview(QTreeWidgetItem * item, int column);
 public:
 	AddVmForm(QWidget *parent = 0);
 	virtual ~AddVmForm();
