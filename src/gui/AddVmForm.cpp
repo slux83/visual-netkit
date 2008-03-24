@@ -120,8 +120,11 @@ void AddVmForm::fillDaemonsList()
  * [PRIVATE-SLOT]
  * Check the user daemon choise, and update the preview
  */
-void AddVmForm::updateVmPreview(QTreeWidgetItem * item, int column)
+void AddVmForm::updateVmPreview(QTreeWidgetItem *item, int column)
 {
+	Q_UNUSED(item)
+	Q_UNUSED(column)
+	
 	/* Get all items */
 	QList<QTreeWidgetItem *> items = daemonsList->findItems("Zebra|Ripd|Bgpd|Ospfd|Ospf6d|Ripngd",
 			Qt::MatchRegExp | Qt::MatchRecursive, 0);
