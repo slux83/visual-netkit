@@ -64,6 +64,7 @@ void DaemonManager::setDaemonState(Daemon daemon, bool newState)
  */
 VmType DaemonManager::getVmType()
 {
+	VmType returnVal = Host;
 	bool foundRouter = false;
 	QList<Daemon> activeDaemons = daemons2activeList();
 	QListIterator<Daemon> it(activeDaemons);
@@ -76,9 +77,9 @@ VmType DaemonManager::getVmType()
 	}
 	
 	if(foundRouter)
-		return Router;
-	else
-		return Host;
+		returnVal = Router;
+	
+	return returnVal;
 }
 
 /**
