@@ -17,7 +17,7 @@
  */
 
 #include "MainWindow.h"
-#include "LabHandler.h"
+#include "handles/LabHandler.h"
 #include "GraphicsView.h"
 #include <QHeaderView>
 #include <QActionGroup>

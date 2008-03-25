@@ -18,7 +18,7 @@
 
 #include <QApplication>
 #include "gui/MainWindow.h"
-#include "gui/LabHandler.h"
+#include "gui/handles/LabHandler.h"
 
 int main(int argc, char *argv[])
 {
