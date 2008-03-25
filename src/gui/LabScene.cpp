@@ -17,8 +17,8 @@
  */
 
 #include "LabScene.h"
-#include "LabHandler.h"
-#include "VmController.h"
+#include "handles/LabHandler.h"
+#include "handles/VmController.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000

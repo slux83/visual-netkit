@@ -21,6 +21,7 @@
 
 #include "HardwareInterface.h"
 #include "DaemonManager.h"
+#include "Types.h"
 
 #include <QString>
 #include <QLinkedList>

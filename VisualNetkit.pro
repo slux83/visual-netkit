@@ -19,18 +19,18 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/AddVmForm.h \
+HEADERS = src/core/factories/VirtualMachineFactory.h \
+    src/core/handles/LabFacadeController.h \
+    src/gui/handles/LabHandler.h \
+    src/gui/handles/LabPropertyController.h \
+    src/gui/handles/VmController.h \
+    src/gui/handles/VmHandler.h \
+    src/gui/AddVmForm.h \
     src/gui/VirtualMachineItem.h \
-    src/gui/VmController.h \
-    src/gui/VmHandler.h \
     src/core/Types.h \
     src/gui/GraphicsView.h \
     src/gui/LabScene.h \
-    src/gui/LabPropertyController.h \
-    src/gui/LabHandler.h \
-    src/core/LabFacadeController.h \
     src/core/DaemonManager.h \
-    src/core/VirtualMachineFactory.h \
     src/gui/MainWindow.h \
     src/core/VirtualMachine.h \
     src/core/HardwareInterface.h \
@@ -38,17 +38,17 @@ HEADERS = src/gui/AddVmForm.h \
     src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/AddVmForm.cpp \
+SOURCES = src/core/factories/VirtualMachineFactory.cpp \
+    src/core/handles/LabFacadeController.cpp \
+    src/gui/handles/LabHandler.cpp \
+    src/gui/handles/LabPropertyController.cpp \
+    src/gui/handles/VmController.cpp \
+    src/gui/handles/VmHandler.cpp \
+    src/gui/AddVmForm.cpp \
     src/gui/VirtualMachineItem.cpp \
-    src/gui/VmController.cpp \
-    src/gui/VmHandler.cpp \
     src/gui/GraphicsView.cpp \
     src/gui/LabScene.cpp \
-    src/gui/LabPropertyController.cpp \
-    src/gui/LabHandler.cpp \
-    src/core/LabFacadeController.cpp \
     src/core/DaemonManager.cpp \
-    src/core/VirtualMachineFactory.cpp \
     src/main.cpp \
     src/gui/MainWindow.cpp \
     src/core/VirtualMachine.cpp \
