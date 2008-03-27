@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/core/factories/VirtualMachineFactory.h \
+HEADERS = src/common/Types.h \
+    src/core/factories/VirtualMachineFactory.h \
     src/core/handles/LabFacadeController.h \
     src/gui/handles/LabHandler.h \
     src/gui/handles/LabPropertyController.h \
@@ -27,7 +28,6 @@ HEADERS = src/core/factories/VirtualMachineFactory.h \
     src/gui/handles/VmHandler.h \
     src/gui/AddVmForm.h \
     src/gui/VirtualMachineItem.h \
-    src/core/Types.h \
     src/gui/GraphicsView.h \
     src/gui/LabScene.h \
     src/core/DaemonManager.h \

@@ -17,7 +17,7 @@
  */
 
 #include "AddVmForm.h"
-#include "../core/Types.h"
+#include "../common/Types.h"
 #include <QDesktopWidget>
 #include <QTreeWidgetItem>
 #include <QRect>
