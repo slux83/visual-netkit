@@ -24,7 +24,7 @@
 #include <QString>
 #include <QDebug>
 
-#include "../core/Types.h"
+#include "../common/Types.h"
 
 /**
  * This class is a graphic (SVG) element of type Virtual Machine

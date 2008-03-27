@@ -19,7 +19,7 @@
 #ifndef DAEMONMANAGER_H_
 #define DAEMONMANAGER_H_
 
-#include "Types.h"
+#include "../common/Types.h"
 #include <QLinkedList>
 #include <QPair>
 
