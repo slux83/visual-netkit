@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/common/Types.h \
+HEADERS = src/common/NetworkAddress.h \
+    src/common/Types.h \
     src/core/factories/VirtualMachineFactory.h \
     src/core/handles/LabFacadeController.h \
     src/gui/handles/LabHandler.h \
@@ -35,10 +36,10 @@ HEADERS = src/common/Types.h \
     src/core/VirtualMachine.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
-    src/core/Subnet.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/core/factories/VirtualMachineFactory.cpp \
+SOURCES = src/common/NetworkAddress.cpp \
+    src/core/factories/VirtualMachineFactory.cpp \
     src/core/handles/LabFacadeController.cpp \
     src/gui/handles/LabHandler.cpp \
     src/gui/handles/LabPropertyController.cpp \
@@ -55,5 +56,4 @@ SOURCES = src/core/factories/VirtualMachineFactory.cpp \
     src/core/HardwareInterface.cpp \
     src/core/SuperGroup.cpp \
     src/core/CollisionDomain.cpp \
-    src/core/Subnet.cpp \
     src/core/Laboratory.cpp

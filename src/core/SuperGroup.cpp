@@ -22,9 +22,9 @@
  * [SuperGroup]
  * The base class implementation
  */
-SuperGroup::SuperGroup()
+SuperGroup::SuperGroup(SuperGroupType groupType)
 {
-	type = "unknown";
+	type = groupType;
 }
 
 /**
@@ -35,48 +35,23 @@ SuperGroup::~SuperGroup()
 
 }
 
-/**
- * Get the subnets list
- */
-QLinkedList<Subnet *> SuperGroup::getSubnets()
-{
-	return subnets;
-}
-
-/**
- * Get the type of this class
- */
-QString SuperGroup::getType()
-{
-	return type;
-}
-
 
 /******************************************************************************/
 
 
 /**
- * [Lan]
- * The Lan class implementation
+ * Constructor
+ * The AutonomouSystem class implementation
  */
-Lan::Lan() : SuperGroup()
+AutonomouSystem::AutonomouSystem(SuperGroupType groupType) : SuperGroup(groupType)
 {
-	type = "lan";
 }
 
 /**
  * Deconstructor
  */
-Lan::~Lan()
+AutonomouSystem::~AutonomouSystem()
 {
 
 }
 
-/**
- * [REIMPL]
- * Get the type of this class
- */
-QString Lan::getType()
-{
-	return type;
-}

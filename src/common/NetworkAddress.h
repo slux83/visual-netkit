@@ -16,26 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SUBNET_H_
-#define SUBNET_H_
-
-#include "CollisionDomain.h"
+#ifndef NETWORKADDRESS_H_
+#define NETWORKADDRESS_H_
 
 #include <QNetworkAddressEntry>
-#include <QObject>
 
 /**
- * The subnet class
+ * This class extend QNetworkAddressEntry, and offer some useful functions.
+ * For instance the convertion between [IP/CLASS] and [IP+NETMASK]
+ * EXAMPLE: 10.0.0.0/8 = 10.0.0.0 + 255.0.0.0
  */
-class Subnet
+class NetworkAddress : public QNetworkAddressEntry
 {
-private:
-	QNetworkAddressEntry address;
-	QList<CollisionDomain *> domains;
-	
+
 public:
-	Subnet();
-	virtual ~Subnet();
+	NetworkAddress();
+	NetworkAddress(QHostAddress ip, QHostAddress netmask);
+	NetworkAddress(QHostAddress ip, quint16 ipClass);
+	virtual ~NetworkAddress();
 };
 
-#endif /*SUBNET_H_*/
+#endif /*NETWORKADDRESS_H_*/
