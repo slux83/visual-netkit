@@ -19,27 +19,49 @@
 #ifndef SUPERGROUP_H_
 #define SUPERGROUP_H_
 
-#include <QLinkedList>
+#include <QMap>
 #include <QString>
-#include "Subnet.h"
+#include "../common/NetworkAddress.h"
+#include "../common/Types.h"
+#include "CollisionDomain.h"
 
 /**
  * [ABSTRACT CLASS]
- * Super Group interface (implementations: Lan, Area, etc...)
+ * Super Group interface (implementations: AS, Area, etc...)
  */
 class SuperGroup
 {
 protected:
-	QLinkedList<Subnet *> subnets;
-	//the base class is not a correct type
-	QString type;
+	/**
+	 * The super group subnet (if any)
+	 * This value is calculated trought the collision domain owned by this 
+	 * super group 
+	 */
+	NetworkAddress subnet;
+	QMap<QString, CollisionDomain *> domains;
+	
+	/**
+	 * The base class is a generic group (maybe it contains some uncategorized
+	 * collision domains like peering collision between two or more AS
+	 */
+	SuperGroupType type;
 	
 public:
-	SuperGroup();
+	SuperGroup(SuperGroupType groupType = Uncategorized);
 	virtual ~SuperGroup();
-	QLinkedList<Subnet *> getSubnets();
-	virtual QString getType();
-	//TODO: etc...
+	
+	/**
+	 * Getter functions
+	 */
+	NetworkAddress getSubnet() { return subnet; };
+	SuperGroupType getType() { return type; };
+	
+	/**
+	 * Setter functions
+	 */
+	void setType(SuperGroupType newType) { type = newType; };
+	void setSubnet(NetworkAddress newSubnet) { subnet = newSubnet; };
+	
 };
 
 
@@ -47,20 +69,15 @@ public:
 
 
 /**
- * [LOCAL AREA NETWORK CLASS]
- * An extension of super group that model a Local Area Network
+ * [AUTONOMOUS SYSTEM CLASS]
+ * An extension of super group that model an AS
  */
-class Lan : public SuperGroup
+class AutonomouSystem : public SuperGroup
 {
-	
-private:
-	//this field have more priority than base class
-	QString type;
 
 public:
-	Lan();
-	virtual ~Lan();
-	QString getType();
+	AutonomouSystem(SuperGroupType groupType);
+	virtual ~AutonomouSystem();
 };
 
 

@@ -32,10 +32,22 @@ enum Daemon
 	Ripngd = 5
 };
 
+/**
+ * Enumeration for virtual machines
+ */
 enum VmType
 {
 	Host = 0,
 	Router = 1
+};
+
+/**
+ * Enumeration for Super Groups
+ */
+enum SuperGroupType
+{
+	AutonomousSystem = 0,
+	Uncategorized = 1
 };
 
 #endif /*TYPES_H_*/

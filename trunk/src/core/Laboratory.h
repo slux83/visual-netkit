@@ -26,6 +26,7 @@
 #include <QList>
 #include <QMap>
 #include <QDateTime>
+#include <QDir>
 
 /**
  * The laboratory object
@@ -44,6 +45,7 @@ private:
 	QString website;
 	QLinkedList<SuperGroup *> groups;
 	QLinkedList<VirtualMachine *> machines;
+	QDir labPath;
 	
 public:
 	Laboratory(QString newName, QString newVersion, QString newAuthors);
@@ -59,6 +61,7 @@ public:
 	QString getEmail() { return email; };
 	QString getWebsite() { return website; };
 	bool getSaveState() { return isSaved; };
+	QDir getLabPath() { return labPath; };
 	
 	/* Setter functions */
 	void setName(QString newValue) { name = newValue; };
@@ -69,6 +72,7 @@ public:
 	void setEmail(QString newValue) { email = newValue; };
 	void setWebsite(QString newValue) { website = newValue; };
 	void setSavedState(bool saveState) { isSaved = saveState; };
+	void setLabPath(QString path) { labPath.setPath(path); };
 };
 
 #endif /*LABORATORY_H_*/

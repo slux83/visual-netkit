@@ -16,19 +16,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Subnet.h"
+#include "NetworkAddress.h"
 
 /**
- * Constructor
+ * Empty constructor
  */
-Subnet::Subnet()
+NetworkAddress::NetworkAddress() : QNetworkAddressEntry()
 {
+}
+
+/**
+ * Constructor with ip + netmask
+ */
+NetworkAddress::NetworkAddress(QHostAddress ip, QHostAddress netmask) 
+	: QNetworkAddressEntry()
+{
+	setIp(ip);
+	setNetmask(netmask);
+}
+
+/**
+ * Constructor with ip + class
+ */
+NetworkAddress::NetworkAddress(QHostAddress ip, quint16 ipClass)
+	: QNetworkAddressEntry()
+{
+	setIp(ip);
+	//TODO: calculate the correct netmask, gived the ip class
 }
 
 /**
  * Deconstructor
  */
-Subnet::~Subnet()
+NetworkAddress::~NetworkAddress()
 {
-	//TODO: iterate the domain QList and delete all CollisionDomain pointers.
 }
