@@ -32,6 +32,7 @@
  */
 class Laboratory
 {
+	
 private:
 	bool isSaved;
 	QString name;
@@ -57,7 +58,7 @@ public:
 	QString getAuthors() { return authors; };
 	QString getEmail() { return email; };
 	QString getWebsite() { return website; };
-	bool isSaved() { return isSaved; };
+	bool getSaveState() { return isSaved; };
 	
 	/* Setter functions */
 	void setName(QString newValue) { name = newValue; };
