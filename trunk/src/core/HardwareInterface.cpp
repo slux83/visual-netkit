@@ -45,14 +45,6 @@ QString HardwareInterface::getName()
 }
 
 /**
- * Get the address (ip, netmask, broadcast, etc...)
- */
-QNetworkAddressEntry HardwareInterface::getAddress()
-{
-	return address;
-}
-
-/**
  * Get my virtual machine
  */
 VirtualMachine* HardwareInterface::getMyVirtualMachine()

@@ -23,6 +23,8 @@
 #include <QLinkedList>
 #include <QString>
 
+#include "../common/NetworkAddress.h"
+
 class HardwareInterface;
 
 class CollisionDomain
@@ -30,7 +32,7 @@ class CollisionDomain
 
 private:
 	QString name;
-	QNetworkAddressEntry address;
+	NetworkAddress address;
 	QLinkedList<HardwareInterface *> peers;
 
 public:

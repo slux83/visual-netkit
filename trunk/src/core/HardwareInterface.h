@@ -22,6 +22,7 @@
 #include <QNetworkAddressEntry>
 #include <QString>
 
+#include "../common/NetworkAddress.h"
 class CollisionDomain;
 class VirtualMachine;
 
@@ -32,7 +33,7 @@ class HardwareInterface
 {
 
 private:
-	QNetworkAddressEntry address;
+	NetworkAddress address;
 	QString name;
 	VirtualMachine *myMachine;
 	CollisionDomain *domain;
@@ -41,7 +42,7 @@ public:
 	HardwareInterface(VirtualMachine *m);
 	virtual ~HardwareInterface();
 	QString getName();
-	QNetworkAddressEntry getAddress();
+	NetworkAddress getAddress() { return address; };
 	VirtualMachine* getMyVirtualMachine();
 	CollisionDomain* getMyCollisionDomain();
 	void setMyCollisionDomain(CollisionDomain *cs);
