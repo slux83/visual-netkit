@@ -42,6 +42,8 @@ Laboratory::Laboratory()
 	d.setTime(QTime::currentTime());
 	
 	date = d.toString("dd/MM/yyyy hh:mm");
+	
+	isSaved = false;
 }
 
 /**
