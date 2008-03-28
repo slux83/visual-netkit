@@ -38,8 +38,9 @@ public:
 	QLinkedList<HardwareInterface *> getInterfaces();
 	QString getName();
 	VmType getMyType();
+	DaemonManager *getDm() { return dm; };
 
-protected:
+private:
 	QString name;
 	QLinkedList<HardwareInterface *> interfaces;
 	DaemonManager *dm;
