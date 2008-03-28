@@ -23,9 +23,11 @@
 #include <QDebug>
 #include "../../core/Laboratory.h"
 #include "../MainWindow.h"
+#include "../UndoStack.h"
 
 /**
- * This's the controller for the operations on Laboratory
+ * [PRIMARY CONTROLLER]
+ * This's the controller for the operations on Laboratory 
  */
 class LabHandler : public QObject
 {
@@ -46,6 +48,7 @@ enum PropertyKey
 private:
 	static LabHandler *instance;
 	MainWindow *mainWindow;
+	UndoStack *undoStack;
 	
 	/* Private functions */
 	void renderLabProperties(Laboratory *l);
@@ -55,6 +58,7 @@ public:
 	virtual ~LabHandler();
 	static LabHandler * getInstance();
 	void setMainWindow(MainWindow *w);
+	UndoStack *getUndoStack() { return undoStack; };
 	MainWindow* getMainWindow() { return mainWindow; };
 
 public slots:

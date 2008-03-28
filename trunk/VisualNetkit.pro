@@ -19,7 +19,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/common/Errors.h \
+HEADERS = src/gui/undoCommands/UndoCommands.h \
+    src/gui/UndoStack.h \
+    src/common/Errors.h \
     src/common/NetworkAddress.h \
     src/common/Types.h \
     src/core/factories/VirtualMachineFactory.h \
@@ -39,7 +41,9 @@ HEADERS = src/common/Errors.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/common/NetworkAddress.cpp \
+SOURCES = src/gui/undoCommands/UndoCommands.cpp \
+    src/gui/UndoStack.cpp \
+    src/common/NetworkAddress.cpp \
     src/core/factories/VirtualMachineFactory.cpp \
     src/core/handles/LabFacadeController.cpp \
     src/gui/handles/LabHandler.cpp \
