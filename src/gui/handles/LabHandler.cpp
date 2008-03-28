@@ -35,6 +35,7 @@ LabHandler* LabHandler::instance = NULL;
 LabHandler::LabHandler() : QObject()
 {
 	mainWindow = NULL;
+	undoStack = new UndoStack();
 }
 
 /**
