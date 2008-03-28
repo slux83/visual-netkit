@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/common/NetworkAddress.h \
+HEADERS = src/common/Errors.h \
+    src/common/NetworkAddress.h \
     src/common/Types.h \
     src/core/factories/VirtualMachineFactory.h \
     src/core/handles/LabFacadeController.h \

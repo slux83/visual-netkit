@@ -44,7 +44,7 @@ private:
 	QString email;
 	QString website;
 	QLinkedList<SuperGroup *> groups;
-	QLinkedList<VirtualMachine *> machines;
+	QMap<QString, VirtualMachine *> machines;
 	QDir labPath;
 	
 public:
@@ -73,6 +73,9 @@ public:
 	void setWebsite(QString newValue) { website = newValue; };
 	void setSavedState(bool saveState) { isSaved = saveState; };
 	void setLabPath(QString path) { labPath.setPath(path); };
+	
+	/* Other functions */
+	bool vmExist(QString vmName) { return machines.contains(vmName); };
 };
 
 #endif /*LABORATORY_H_*/
