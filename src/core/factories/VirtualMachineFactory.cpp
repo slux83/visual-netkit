@@ -46,9 +46,24 @@ VirtualMachineFactory * VirtualMachineFactory::getInstance()
 
 }
 
-VirtualMachine * VirtualMachineFactory::getNewVirtualMachine(QString name)
+/**
+ * Geta a new instance of VirtualMachine giving the name and the
+ * list of active daemons
+ */
+VirtualMachine * VirtualMachineFactory::getNewVirtualMachine(QString name,
+		QList<Daemon> activeDaemons)
 {
-	return new VirtualMachine(name);
+	VirtualMachine *m = new VirtualMachine(name);
+	QListIterator<Daemon> i(activeDaemons);
+	
+	//Active daemons in list
+	while(i.hasNext())
+	{
+		/* Set the daemon as active */
+		m->getDm()->setDaemonState(i.next(), true);
+	}
+	
+	return m;
 }
 
 

@@ -16,28 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIRTUALMACHINEFACTORY_H_
-#define VIRTUALMACHINEFACTORY_H_
-
-#include "../VirtualMachine.h"
-#include "../../common/Types.h"
-#include <QString>
-#include <QList>
+#ifndef ERRORS_H_
+#define ERRORS_H_
 
 /**
- * Factory for VirtualMachine
+ * Enumeration of errors
  */
-class VirtualMachineFactory
+enum Error
 {
-	
-private:
-	static VirtualMachineFactory *instance;
-	
-public:
-	VirtualMachineFactory();
-	virtual ~VirtualMachineFactory();
-	static VirtualMachineFactory * getInstance();
-	VirtualMachine * getNewVirtualMachine(QString name, QList<Daemon> activeDaemons);
+	AllOk = 0
 };
 
-#endif /*VIRTUALMACHINEFACTORY_H_*/
+#endif /*ERRORS_H_*/
