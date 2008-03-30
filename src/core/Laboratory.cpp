@@ -55,3 +55,16 @@ Laboratory::~Laboratory()
 
 }
 
+/**
+ * Add a new machine inside the collection
+ */
+void Laboratory::addMachine(VirtualMachine *vm)
+{
+	if(machines.contains(vm->getName()))
+	{
+		qWarning() << "Warning: Virtual machine" << vm->getName() << "is allready inside the machines map";
+		return;
+	}
+	
+	machines.insert(vm->getName(), vm);
+}

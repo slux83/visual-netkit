@@ -76,6 +76,7 @@ public:
 	
 	/* Other functions */
 	bool vmExist(QString vmName) { return machines.contains(vmName); };
+	void addMachine(VirtualMachine *vm);
 };
 
 #endif /*LABORATORY_H_*/

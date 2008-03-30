@@ -16,37 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VMHANDLER_H_
-#define VMHANDLER_H_
+#ifndef VMMAPPER_H_
+#define VMMAPPER_H_
 
-#include <QObject>
+#include <QMap>
 
-#include "../../core/handles/LabFacadeController.h"
-#include "../../core/handles/VmFacadeController.h"
+#include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
-#include "LabHandler.h"
+#include "../AddVmForm.h"
 
 /**
- * This class is the controller for the vm operations
+ * This class is the singleton controller for the virtual machines.
+ * It's also map the graphical (view) item with the domain object (model)
  */
-class VmHandler : public QObject
+class VmMapper
 {
-	Q_OBJECT
 	
 private:
-	static VmHandler* instance;
-	LabFacadeController *labFacadeController;
-	VmFacadeController *vmFacadeController;
-	LabHandler *labHandler;
+	static VmMapper *instance;
+	AddVmForm *addVm;
+	
+	/* the pair: <VIEW, DOMAIN> */
+	QMap<VirtualMachineItem*, VirtualMachine*> mappings;
 	
 public:
-	VmHandler();
-	virtual ~VmHandler();
-	static VmHandler* getInstance();
-	bool vmNameExist(QString vmNameToCheck);
-
-public slots:
-	void createVm(QString vmNewName, QList<Daemon> activeDaemons);
+	VmMapper();
+	virtual ~VmMapper();
+	static VmMapper* getInstance();
+	void showAddVmForm();
+	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 };
 
-#endif /*VMHANDLER_H_*/
+#endif /*VMMAPPER_H_*/

@@ -24,6 +24,7 @@
 #include <QSpacerItem>
 #include <QDebug>
 #include "ui_addVm.h"
+#include "handles/VmHandler.h"
 
 /**
  * This class implement the form for add vm action
@@ -36,13 +37,21 @@ private:
 	QSpacerItem *spacePreview;
 	QSvgWidget *vmPreview;
 	QLabel *vmType;
+	VmHandler *vmHandler;
+	
 	void fillDaemonsList();
+	QList<Daemon> getSelectedDaemons();
 
 private slots:
 	void updateVmPreview(QTreeWidgetItem * item, int column);
+	void handleAcceptedSignal();
+	
 public:
 	AddVmForm(QWidget *parent = 0);
 	virtual ~AddVmForm();
+	
+signals:
+	void userAddedVm(QString vmNewName, QList<Daemon> activeDaemons);
 };
 
 #endif /*ADDVMFORM_H_*/

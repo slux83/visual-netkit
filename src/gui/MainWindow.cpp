@@ -94,6 +94,12 @@ void MainWindow::createConnections()
 	
 	//connect: a log event
 	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
+	
+	//connect: undo/redo actions with QUndoStack state
+	connect(labHandler->getUndoStack(), SIGNAL(canRedoChanged(bool)),
+			actionRedo, SLOT(setEnabled(bool)));
+	connect(labHandler->getUndoStack(), SIGNAL(canUndoChanged(bool)),
+			actionUndo, SLOT(setEnabled(bool)));
 
 }
 
@@ -117,6 +123,7 @@ void MainWindow::createActionGroups()
 	//add Actions to the group
 	labItemGroup->addAction(actionAddVirtualMachine);
 	labItemGroup->addAction(actionAddCollisionDomain);
+	labItemGroup->addAction(actionManageGraph);
 	labItemGroup->setDisabled(true);
 	
 	/* Group for scene size */

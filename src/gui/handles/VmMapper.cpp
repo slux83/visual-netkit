@@ -16,17 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VmController.h"
+#include "VmMapper.h"
+#include "LabHandler.h"
 
 /**
  * Init the null instance for the singletone controller
  */
-VmController* VmController::instance = NULL;
+VmMapper* VmMapper::instance = NULL;
 
 /**
  * Constructor
  */
-VmController::VmController()
+VmMapper::VmMapper()
 {
 	addVm = new AddVmForm();
 }
@@ -34,25 +35,41 @@ VmController::VmController()
 /**
  * Deconstructor
  */
-VmController::~VmController()
+VmMapper::~VmMapper()
 {
 }
 
 /**
  * Singletone get instance
  */
-VmController * VmController::getInstance()
+VmMapper * VmMapper::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new VmController();
+		instance = new VmMapper();
 	}
 
 	return instance;
 }
 
-/* TODO */
-void VmController::addVirtualMachine()
+/**
+ * Show the form
+ */
+void VmMapper::showAddVmForm()
 {
 	addVm->show();
+}
+
+/**
+ * Add a new mapping (view, domain) and pass the view item to the scene
+ */
+void VmMapper::addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm)
+{
+	//add mapping
+	mappings.insert(vmItem, vm);
+	LabHandler *labHandler = LabHandler::getInstance();
+	labHandler->getMainWindow()->graphicsView->scene()->addItem(vmItem);
+	labHandler->getMainWindow()->graphicsView->ensureVisible(vmItem);
+	
+	
 }

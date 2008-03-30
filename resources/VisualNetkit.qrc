@@ -14,6 +14,7 @@
 		<file alias="zoom_in_icon">menu_icons/zoom_in.png</file>
 		<file alias="zoom_out_icon">menu_icons/zoom_out.png</file>
 		<file alias="zoom_original_icon">menu_icons/zoom_original.png</file>
+		<file alias="mouse_icon">menu_icons/mouse.png</file>
 	</qresource>
 	<qresource prefix="/small" >
 		<file alias="folder_root">small_icons/folder_root.png</file>

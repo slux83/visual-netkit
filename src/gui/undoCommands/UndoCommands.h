@@ -20,27 +20,30 @@
 #define UNDOCOMMANDS_H_
 
 #include <QUndoCommand>
+#include <QObject>
 #include "../VirtualMachineItem.h"
+#include "../../core/VirtualMachine.h"
+#include "../handles/VmMapper.h"
 
 /**
  * [COMMAND]
  * Add a virtual machine command.
- * The command know only the view object; the domain vm object cam be getteb
- * by VmController trought the QMap of mappings.
  */
-class AddVmCommand : public QUndoCommand
+class AddVmCommand : public QObject, public QUndoCommand
 {
 	
 private:
-	VirtualMachineItem *item;
+	VirtualMachineItem *vmItem;
+	VirtualMachine *vm;
 	
 public:
-	AddVmCommand(VirtualMachineItem *vmItem, QUndoCommand *parent = 0);
+	AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
+			QUndoCommand *parent = 0);
 	virtual ~AddVmCommand();
 	
 	//TODO
-	void undo() {};
-	void redo() {};
+	void undo();
+	void redo();
 };
 
 #endif /*UNDOCOMMANDS_H_*/
