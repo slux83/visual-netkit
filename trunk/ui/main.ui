@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
+    <width>1026</width>
     <height>768</height>
    </rect>
   </property>
@@ -58,11 +58,7 @@
          <number>3</number>
         </property>
         <item>
-         <widget class="GraphicsView" name="graphicsView" >
-          <property name="enabled" >
-           <bool>false</bool>
-          </property>
-         </widget>
+         <widget class="GraphicsView" name="graphicsView" />
         </item>
        </layout>
       </widget>
@@ -75,7 +71,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1025</width>
+     <width>1026</width>
      <height>25</height>
     </rect>
    </property>
@@ -145,6 +141,7 @@
     <addaction name="separator" />
     <addaction name="actionAddVirtualMachine" />
     <addaction name="actionAddCollisionDomain" />
+    <addaction name="actionManageGraph" />
     <addaction name="separator" />
     <addaction name="menuExportAs" />
    </widget>
@@ -387,6 +384,7 @@
    <addaction name="separator" />
    <addaction name="actionAddVirtualMachine" />
    <addaction name="actionAddCollisionDomain" />
+   <addaction name="actionManageGraph" />
   </widget>
   <action name="actionNetkit_Lab" >
    <property name="checkable" >
@@ -651,6 +649,17 @@
    </property>
    <property name="toolTip" >
     <string>Huge (4000x4000)</string>
+   </property>
+  </action>
+  <action name="actionManageGraph" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../resources/VisualNetkit.qrc" >:/menu/mouse_icon</iconset>
+   </property>
+   <property name="text" >
+    <string>Manage graph</string>
    </property>
   </action>
  </widget>

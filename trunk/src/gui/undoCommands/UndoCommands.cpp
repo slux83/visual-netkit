@@ -18,11 +18,37 @@
 
 #include "UndoCommands.h"
 
-AddVmCommand::AddVmCommand(VirtualMachineItem *vmItem,
+/**
+ * Contructor
+ */
+AddVmCommand::AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
 		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	vmItem = newVmItem;
+	vm = newVm;
+	setText(tr("Added a new virtua machine: ") + vm->getName());
+}
+
+/**
+ * Deconstructor
+ */ 
+AddVmCommand::~AddVmCommand()
 {
 }
 
-AddVmCommand::~AddVmCommand()
+/**
+ * Redo action
+ */
+void AddVmCommand::redo()
 {
+	//show and connect view & domain machines
+	VmMapper::getInstance()->addNewMapping(vmItem, vm);
+}
+
+/**
+ * Undo action
+ */
+void AddVmCommand::undo()
+{
+	//TODO
 }

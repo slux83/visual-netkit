@@ -16,35 +16,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VMCONTROLLER_H_
-#define VMCONTROLLER_H_
-
-#include <QLinkedList>
-#include <QPair>
-
-#include "../VirtualMachineItem.h"
-#include "../../core/VirtualMachine.h"
-#include "../AddVmForm.h"
+#include "VmFacadeController.h"
 
 /**
- * This class is the singleton controller for the virtual machines.
- * It's also map the graphical (view) item with the domain object (model)
+ * Init the null instance for the singletone controller
  */
-class VmController
-{
-	
-private:
-	static VmController *instance;
-	AddVmForm *addVm;
-	
-	/* the pair: <VIEW, DOMAIN> */
-	QLinkedList< QPair<VirtualMachineItem*, VirtualMachine*> > mappings;
-	
-public:
-	VmController();
-	virtual ~VmController();
-	static VmController* getInstance();
-	void addVirtualMachine();
-};
+VmFacadeController* VmFacadeController::instance = NULL;
 
-#endif /*VMCONTROLLER_H_*/
+/**
+ * Constructor
+ */
+VmFacadeController::VmFacadeController()
+{
+}
+
+/**
+ * Deconstructor
+ */
+VmFacadeController::~VmFacadeController()
+{
+}
+
+
+/**
+ * Singletone get instance
+ */
+VmFacadeController* VmFacadeController::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new VmFacadeController();
+	}
+
+	return instance;
+}
+
+/**
+ * Create a new vm (foward request to factory)
+ */
+VirtualMachine* VmFacadeController::createNewVirtualMachine(QString name,
+		QList<Daemon> activeDaemons)
+{
+	return VirtualMachineFactory::getInstance()->getNewVirtualMachine(name, activeDaemons);
+}
+

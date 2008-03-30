@@ -17,6 +17,7 @@
  */
 
 #include "VmHandler.h"
+#include "../undoCommands/UndoCommands.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -28,6 +29,12 @@ VmHandler* VmHandler::instance = NULL;
  */
 VmHandler::VmHandler() : QObject()
 {
+	/* Get the controller (Domain side) */
+	labFacadeController = LabFacadeController::getInstance();
+	vmFacadeController = VmFacadeController::getInstance();
+	
+	/* Get controller (View side) */
+	labHandler = LabHandler::getInstance();
 }
 
 /**
@@ -49,3 +56,32 @@ VmHandler* VmHandler::getInstance()
 
 	return instance;
 }
+
+/**
+ * Check if the name passed is owned by a virtual machine
+ */ 
+bool VmHandler::vmNameExist(QString vmNameToCheck)
+{
+	//controller->lab->check
+	return labFacadeController->getCurrentLab()->vmExist(vmNameToCheck);
+}
+
+/**
+ * [SLOT]
+ * Create a new vm
+ */
+void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons)
+{
+	/* Create the view and domain objects */
+	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName,
+			activeDaemons);
+	
+	VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getMyType());
+	
+	labFacadeController->getCurrentLab()->addMachine(vm);
+	
+	/* the undo command (redo) can accomplish the action */
+	labHandler->getUndoStack()->push(new AddVmCommand(vmItem, vm));
+	
+}
+

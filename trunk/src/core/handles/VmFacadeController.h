@@ -16,37 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VMHANDLER_H_
-#define VMHANDLER_H_
+#ifndef VMFACADECONTROLLER_H_
+#define VMFACADECONTROLLER_H_
 
-#include <QObject>
-
-#include "../../core/handles/LabFacadeController.h"
-#include "../../core/handles/VmFacadeController.h"
-#include "../../core/VirtualMachine.h"
-#include "LabHandler.h"
+#include "../factories/VirtualMachineFactory.h"
 
 /**
- * This class is the controller for the vm operations
+ * The facade controller for the actions on VMs
+ * This object is acceded by Singleton and manage operations on virtual machines
  */
-class VmHandler : public QObject
+class VmFacadeController
 {
-	Q_OBJECT
 	
 private:
-	static VmHandler* instance;
-	LabFacadeController *labFacadeController;
-	VmFacadeController *vmFacadeController;
-	LabHandler *labHandler;
+	static VmFacadeController *instance;
 	
 public:
-	VmHandler();
-	virtual ~VmHandler();
-	static VmHandler* getInstance();
-	bool vmNameExist(QString vmNameToCheck);
-
-public slots:
-	void createVm(QString vmNewName, QList<Daemon> activeDaemons);
+	VmFacadeController();
+	virtual ~VmFacadeController();
+	static VmFacadeController* getInstance();
+	VirtualMachine* createNewVirtualMachine(QString name, QList<Daemon> activeDaemons);
 };
 
-#endif /*VMHANDLER_H_*/
+#endif /*VMFACADECONTROLLER_H_*/

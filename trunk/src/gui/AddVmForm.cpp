@@ -21,7 +21,9 @@
 #include <QDesktopWidget>
 #include <QTreeWidgetItem>
 #include <QRect>
-#include <QCheckBox> 
+#include <QMessageBox>
+
+#define REGEXP_ALL_DAEMONS QString("Zebra|Ripd|Bgpd|Ospfd|Ospf6d|Ripngd")
 
 /**
  * Contructor
@@ -31,6 +33,9 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	/* Connect the UI resource to this QWidget */
 	setupUi(this);
 	fillDaemonsList();
+	
+	/* Get the controller instance */
+	vmHandler = VmHandler::getInstance();
 	
 	/* Centering the gui */
 	QDesktopWidget dw;
@@ -45,6 +50,8 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	vmType = new QLabel(tr("Type: ") + "Host");
 	vmPreview = new QSvgWidget(QString::fromUtf8(":/svg/vm_host"));
 	vmPreview->setFixedSize(48, 48);
+	
+	previewGroup->layout()->setAlignment(Qt::AlignHCenter);
 	previewGroup->layout()->addWidget(vmPreview);
 	previewGroup->layout()->addWidget(vmType);
 	previewGroup->layout()->addItem(spacePreview);
@@ -52,6 +59,10 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	/* Connections */
 	connect(daemonsList, SIGNAL(itemChanged(QTreeWidgetItem *, int)),
 			this, SLOT(updateVmPreview(QTreeWidgetItem *, int)));
+	connect(addVmButtonBox, SIGNAL(accepted()),
+			this, SLOT(handleAcceptedSignal()));
+	connect(this, SIGNAL(userAddedVm(QString, QList<Daemon>)),
+			vmHandler, SLOT(createVm(QString, QList<Daemon>)));
 }
 
 /**
@@ -126,8 +137,8 @@ void AddVmForm::updateVmPreview(QTreeWidgetItem *item, int column)
 	Q_UNUSED(column)
 	
 	/* Get all items */
-	QList<QTreeWidgetItem *> items = daemonsList->findItems("Zebra|Ripd|Bgpd|Ospfd|Ospf6d|Ripngd",
-			Qt::MatchRegExp | Qt::MatchRecursive, 0);
+	QList<QTreeWidgetItem *> items = daemonsList->findItems(
+			REGEXP_ALL_DAEMONS,	Qt::MatchRegExp | Qt::MatchRecursive, 0);
 	
 	bool routerDaemonChecked = false;
 	foreach(QTreeWidgetItem *item, items)
@@ -146,4 +157,70 @@ void AddVmForm::updateVmPreview(QTreeWidgetItem *item, int column)
 		vmPreview->load(QString::fromUtf8(":/svg/vm_host"));
 		vmType->setText(tr("Type: ") + "Host");
 	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle the OK action on this form
+ *  -> Check the vm name uniqueness and correctness
+ *  -> Foward the request to the undo stack
+ */
+void AddVmForm::handleAcceptedSignal()
+{
+	bool allCorrect = true;
+	QString newVmName = vmName->text();
+	
+	/* Empty name? */
+	if(newVmName.trimmed() == "")
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+				tr("The virtual machine name cannot be empty!"),
+				QMessageBox::Ok);
+		
+		allCorrect = false;
+	}
+	
+	/* ok if don't exist */
+	if(vmHandler->vmNameExist(newVmName))
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+				tr("The virtual machine name must be unique!\nPlease, retry."),
+				QMessageBox::Ok);
+		allCorrect = false;
+	}
+		
+	
+	/* Clear vm name and close this form */
+	if(allCorrect)
+	{
+		/* Ok, get active daemons and foward the request */
+		emit userAddedVm(newVmName, getSelectedDaemons());
+		
+		vmName->clear();
+		close();
+	}
+}
+
+/**
+ * [PRIVATE]
+ * Return the list of selected daemons
+ */
+QList<Daemon> AddVmForm::getSelectedDaemons()
+{
+	QList<Daemon> activeDaemons;
+	
+	/* Get all items */
+	QList<QTreeWidgetItem *> items = daemonsList->findItems(
+			REGEXP_ALL_DAEMONS,	Qt::MatchRegExp | Qt::MatchRecursive, 0);
+	
+	//scan
+	foreach(QTreeWidgetItem *item, items)
+	{
+		if(item->checkState(0) == Qt::Checked)
+			activeDaemons.append((Daemon)item->data(0, Qt::UserRole).toInt());
+	}
+	
+	return activeDaemons;
 }

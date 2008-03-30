@@ -18,7 +18,7 @@
 
 #include "LabScene.h"
 #include "handles/LabHandler.h"
-#include "handles/VmController.h"
+#include "handles/VmMapper.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -59,7 +59,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			LabHandler::getInstance()->getMainWindow()->actionAddVirtualMachine->isChecked())
 	{
 		qDebug() << "Adding a new wirtual machine.";
-		VmController::getInstance()->addVirtualMachine();
+		VmMapper::getInstance()->showAddVmForm();
 	}
 	
 	QGraphicsScene::mousePressEvent(mouseEvent);

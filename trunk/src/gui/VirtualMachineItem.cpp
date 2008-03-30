@@ -22,7 +22,8 @@
  * Contructor
  * by default, this svg item is showed as VmHost
  */
-VirtualMachineItem::VirtualMachineItem(VmType type) : QGraphicsSvgItem()
+VirtualMachineItem::VirtualMachineItem(VmType type) 
+	: QGraphicsSvgItem(QString::fromUtf8(":/svg/vm_host"))
 {
 	/* Fill the filemap */
 	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
@@ -30,6 +31,9 @@ VirtualMachineItem::VirtualMachineItem(VmType type) : QGraphicsSvgItem()
 	
 	/* Set the default svg file: VmHost */
 	renderer()->load(svgFiles.value(type));
+	
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(1000);
 }
 
 /**
