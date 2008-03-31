@@ -3,55 +3,31 @@
 #include <QHostAddress>
 #include <QDebug>
 
+QHostAddress cidr2netmask(quint8 cidrMask);
+
 int main(int argc, char *argv[])
 {
 	QCoreApplication app(argc, argv);
-    
-	
-	/**
-	 * CIDR-NETMASK to IP-NETMASK
-	 */
-	quint8 cidrMask = 12;
-	
-	QHostAddress base(QHostAddress::Broadcast);
-	
-	QHostAddress conv((base.toIPv4Address() << (32 - cidrMask)));
-	
-	qDebug() << "/" + QByteArray::number(cidrMask) + " = " + conv.toString();
-	
-	/**************************************************************************/
 
+
+	QMap<quint8, QHostAddress> maskMapping;
+	for(int i=1; i<33; i++)
+		maskMapping.insert(i, cidr2netmask(i));
+	
 	/**
-	 * IP-NETMASK to CIDR-NETMASK
+	 * if key don't exist the map return a QHostAddress empty (verify with isNull()
+	 * if the value don't exist, the map return 0 (invalid netmask) 
 	 */
-	
-	QHostAddress netmask("255.255.255.0");
-	quint32 cidrNotationNetmask = 0;
-	
-	QStringList l = netmask.toString().split(".");
-	
-	int div, test;
-	for(int i=0; i<4; i++)
-	{
-		div = 256;
-		while(div > 1)
-		{
-			div = div/2;
-			test = l[i].toInt() - div;
-			if(test >= 0)
-			{
-				cidrNotationNetmask++;
-				l[i] = QString::number(test);
-				qDebug() << l << cidrNotationNetmask << div;
-			}
-			else
-				break;
-			
-		}
-		
-	}
-	
-	qDebug() << netmask << "=" << cidrNotationNetmask;
+	qDebug() << maskMapping.key(QHostAddress("10.0.0.0"));
 	
 	return 0;
+}
+
+QHostAddress cidr2netmask(quint8 cidrMask)
+{
+	QHostAddress base(QHostAddress::Broadcast);
+		
+	QHostAddress conv((base.toIPv4Address() << (32 - cidrMask)));
+	
+	return conv;
 }
