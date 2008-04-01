@@ -23,6 +23,7 @@
  */
 NetworkAddress::NetworkAddress() : QNetworkAddressEntry()
 {
+	fillNetmaskMap();
 }
 
 /**
@@ -33,16 +34,19 @@ NetworkAddress::NetworkAddress(QHostAddress ip, QHostAddress netmask)
 {
 	setIp(ip);
 	setNetmask(netmask);
+	fillNetmaskMap();
 }
 
 /**
  * Constructor with ip + class
  */
-NetworkAddress::NetworkAddress(QHostAddress ip, quint16 ipClass)
+NetworkAddress::NetworkAddress(QHostAddress ip, quint8 netmaskCidr)
 	: QNetworkAddressEntry()
 {
 	setIp(ip);
-	//TODO: calculate the correct netmask, gived the ip class
+	fillNetmaskMap();
+	
+	setNetmask(netmaskMapping.value(netmaskCidr));
 }
 
 /**
@@ -50,4 +54,41 @@ NetworkAddress::NetworkAddress(QHostAddress ip, quint16 ipClass)
  */
 NetworkAddress::~NetworkAddress()
 {
+}
+
+/**
+ * [PRIVATE]
+ * Convert che cidr notation in common ip netmask.
+ * 		=> EXAMPLE: 10.0.0.0/8 = 10.0.0.0/255.0.0.0
+ */
+QHostAddress NetworkAddress::cidr2netmask(quint8 cidrMask)
+{
+	QHostAddress base(QHostAddress::Broadcast);
+	QHostAddress conv((base.toIPv4Address() << (32 - cidrMask)));
+	
+	return conv;
+}
+
+/**
+ * [PRIVATE]
+ * fill the netmask table
+ */
+void NetworkAddress::fillNetmaskMap()
+{
+	/* fill the table */
+	for(int i=1; i<33; i++)
+		netmaskMapping.insert(i, cidr2netmask(i));
+}
+
+/**
+ * Get the string that represent this network address
+ * Default:		"10.0.0.1/8" 
+ * False arg:	"10.0.0.1/255.0.0.0"
+ */
+QString NetworkAddress::toString(bool cidr)
+{
+	if(cidr)	//10.0.0.1/8
+		return QString(ip().toString() + "/" + QString::number(netmaskMapping.key(netmask())));
+	else		//10.0.0.1/255.0.0.0
+		return QString(ip().toString() + "/" + netmask().toString());
 }

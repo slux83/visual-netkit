@@ -23,17 +23,24 @@
 
 /**
  * This class extend QNetworkAddressEntry, and offer some useful functions.
- * For instance the convertion between [IP/CLASS] and [IP+NETMASK]
- * EXAMPLE: 10.0.0.0/8 = 10.0.0.0 + 255.0.0.0
+ * For instance the convertion between [IP/CIDR-NETMASK] and [IP/CLASSIC-NETMASK]
+ * EXAMPLE: 10.0.0.0/8 = 10.0.0.0/255.0.0.0
  */
 class NetworkAddress : public QNetworkAddressEntry
 {
-
+private:
+	//this map is a mapping between ip-netmask and cidr netmask notation
+	QMap<quint8, QHostAddress> netmaskMapping;
+	QHostAddress cidr2netmask(quint8 cidrMask);
+	void fillNetmaskMap();
+	
 public:
 	NetworkAddress();
 	NetworkAddress(QHostAddress ip, QHostAddress netmask);
-	NetworkAddress(QHostAddress ip, quint16 ipClass);
+	NetworkAddress(QHostAddress ip, quint8 netmaskCidr);
 	virtual ~NetworkAddress();
+	QString toString(bool cidr = true);
+
 };
 
 #endif /*NETWORKADDRESS_H_*/
