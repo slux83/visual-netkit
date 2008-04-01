@@ -17,6 +17,7 @@
  */
 
 #include "SuperGroup.h"
+#include <QListIterator>
 
 /**
  * [SuperGroup]
@@ -32,7 +33,8 @@ SuperGroup::SuperGroup(SuperGroupType groupType)
  */
 SuperGroup::~SuperGroup()
 {
-
+	//Destroy all NetworkAddress
+	subnets.clear();
 }
 
 
