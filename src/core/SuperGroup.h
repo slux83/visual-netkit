@@ -21,6 +21,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QSet>
 #include "../common/NetworkAddress.h"
 #include "../common/Types.h"
 #include "CollisionDomain.h"
@@ -33,11 +34,12 @@ class SuperGroup
 {
 protected:
 	/**
-	 * The super group subnet (if any)
-	 * This value is calculated trought the collision domain owned by this 
-	 * super group 
+	 * The super group subnets (if any)
+	 * This value is calculated trought the collision domains owned by this 
+	 * super group or by a matching between config files and internal collision
+	 * domains
 	 */
-	NetworkAddress subnet;
+	QSet<NetworkAddress *> subnets;
 	QMap<QString, CollisionDomain *> domains;
 	
 	/**
@@ -53,14 +55,13 @@ public:
 	/**
 	 * Getter functions
 	 */
-	NetworkAddress getSubnet() { return subnet; };
+	QSet<NetworkAddress *> getSubnets() { return subnets; };
 	SuperGroupType getType() { return type; };
 	
 	/**
 	 * Setter functions
 	 */
 	void setType(SuperGroupType newType) { type = newType; };
-	void setSubnet(NetworkAddress newSubnet) { subnet = newSubnet; };
 	
 };
 
@@ -76,7 +77,7 @@ class AutonomouSystem : public SuperGroup
 {
 
 public:
-	AutonomouSystem(SuperGroupType groupType);
+	AutonomouSystem(SuperGroupType groupType = AutonomousSystemType);
 	virtual ~AutonomouSystem();
 };
 

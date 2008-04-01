@@ -46,7 +46,7 @@ enum VmType
  */
 enum SuperGroupType
 {
-	AutonomousSystem = 0,
+	AutonomousSystemType = 0,
 	Uncategorized = 1
 };
 
