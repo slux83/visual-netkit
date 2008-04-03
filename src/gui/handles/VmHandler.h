@@ -45,6 +45,9 @@ public:
 	static VmHandler* getInstance();
 	bool vmNameExist(QString vmNameToCheck);
 
+signals:
+	void logEvent(QString message);
+
 public slots:
 	void createVm(QString vmNewName, QList<Daemon> activeDaemons);
 };

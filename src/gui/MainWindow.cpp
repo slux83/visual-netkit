@@ -18,9 +18,11 @@
 
 #include "MainWindow.h"
 #include "handles/LabHandler.h"
+#include "handles/VmHandler.h"
 #include "GraphicsView.h"
 #include <QHeaderView>
 #include <QActionGroup>
+
 /**
  * Constructor
  */
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	/* Get the reference to controllers */
 	labHandler = LabHandler::getInstance();
 	labHandler->setMainWindow(this);
+	vmHandler = VmHandler::getInstance();
 	
 	/* Connect the UI resource to this QMainWindow */
 	setupUi(this);
@@ -88,12 +91,17 @@ void MainWindow::createConnections()
 	connect(labTree, SIGNAL(itemClicked(QTreeWidgetItem * , int)),
 			labHandler, SLOT(labTreeItemSelected(QTreeWidgetItem * , int)));
 	
+	//connect: item tree lab double clicked
+	connect(labTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)),
+			labHandler, SLOT(labTreeItemDoubleClicked(QTreeWidgetItem * , int)));
+	
 	//connect: property changed (property table)
 	connect(propertyTable, SIGNAL(cellChanged(int, int)), 
 			labHandler, SLOT(saveChangedProperty(int, int)));
 	
 	//connect: a log event
 	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
+	connect(vmHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
 	
 	//connect: undo/redo actions with QUndoStack state
 	connect(labHandler->getUndoStack(), SIGNAL(canRedoChanged(bool)),
