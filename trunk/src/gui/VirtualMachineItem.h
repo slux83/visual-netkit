@@ -40,6 +40,9 @@ public:
 	VirtualMachineItem(VmType type = Host);
 	virtual ~VirtualMachineItem();
 
+protected:
+//	void mouseMoveEvent (QGraphicsSceneMouseEvent *event);
+	
 public slots:
 	void changeSvgFile(VmType type);
 };

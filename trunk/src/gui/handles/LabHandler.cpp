@@ -85,12 +85,21 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	qDebug() << "new lab ready to render";
 	
 	QTreeWidgetItem *root = new QTreeWidgetItem();
+	QTreeWidgetItem *labConf = new QTreeWidgetItem();
+	
 	root->setData(0, Qt::DisplayRole, l->getName());
 	root->setData(0, Qt::UserRole, "root_element");
-	root->setIcon(0,QIcon(QString::fromUtf8(":/small/folder_root")));
+	root->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
+	
+	labConf->setData(0, Qt::DisplayRole, "lab.conf");
+	//labConf->setData(0, Qt::UserRole, "./lab.conf")
+	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
+	
+	root->addChild(labConf);
 	
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
+	mainWindow->labTree->expandItem(root);
 	
 	emit logEvent(tr("Created a new Lab."));
 	
