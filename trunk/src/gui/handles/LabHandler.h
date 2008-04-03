@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include "../../core/handles/LabFacadeController.h"
 #include "../../core/Laboratory.h"
 #include "../MainWindow.h"
 #include "../UndoStack.h"
@@ -65,6 +66,7 @@ public slots:
 	void newLab();
 	void showCreatedLab(Laboratory *newLab);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
+	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
 	void clearPropertyEditor();
 	void saveChangedProperty(int row, int column);
 

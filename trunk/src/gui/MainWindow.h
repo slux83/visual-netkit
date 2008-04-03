@@ -20,7 +20,10 @@
 #define MAINWINDOW_H_
 
 #include "ui_main.h"
+
+class VmHandler;
 class LabHandler;
+
 #include <QWidget>
 #include <QTreeWidget>
 
@@ -39,6 +42,7 @@ public:
 private:
 	/* Controllers */
 	LabHandler *labHandler;
+	VmHandler *vmHandler;
 	
 	/* Action groups */
 	QActionGroup *labItemGroup, *sceneSizeGroup, *graphZoomGroup;

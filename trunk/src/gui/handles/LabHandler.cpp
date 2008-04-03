@@ -17,7 +17,6 @@
  */
 
 #include "LabHandler.h"
-#include "../../core/handles/LabFacadeController.h"
 #include "LabPropertyController.h"
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
@@ -88,12 +87,19 @@ void LabHandler::showCreatedLab(Laboratory *l)
 	QTreeWidgetItem *labConf = new QTreeWidgetItem();
 	
 	root->setData(0, Qt::DisplayRole, l->getName());
+	
+	//type of element
 	root->setData(0, Qt::UserRole, "root_element");
 	root->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
 	
 	labConf->setData(0, Qt::DisplayRole, "lab.conf");
-	//labConf->setData(0, Qt::UserRole, "./lab.conf")
-	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
+	
+	//type of element
+	labConf->setData(0, Qt::UserRole, "config_file");
+	
+	//if config_file, this role show the relative path for the config file
+	labConf->setData(0, Qt::UserRole + 1, "lab.conf");
+	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	
 	root->addChild(labConf);
 	
@@ -109,22 +115,53 @@ void LabHandler::showCreatedLab(Laboratory *l)
 
 /**
  * [SLOT]
- * Manage the selection of a element inside the tree (lab tree)
+ * Manage the selection of an element inside the tree (lab tree)
  */
 void LabHandler::labTreeItemSelected(QTreeWidgetItem * item, int column)
 {
 	Q_UNUSED(column);
 	
+	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	/* Clear the property editor */
+	clearPropertyEditor();
+	
 	if(item->data(0, Qt::UserRole) == "root_element")
 	{
 		qDebug() << "Laboratory element selected";
-		Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
-		
-		if(lab == NULL)
-			return;
 		
 		renderLabProperties(lab);
 		
+	}
+}
+
+/**
+ * [SLOT]
+ * Manage the double click of an element inside the tree (lab tree)
+ */
+void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
+{
+	Q_UNUSED(column);
+	
+	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	if(item->data(0, Qt::UserRole) == "config_file")
+	{
+		qDebug() << "Config file double clicked" << item->data(0, Qt::UserRole + 1).toString();
+		
+		/* the lab is saved? */
+		if(!lab->getSaveState())
+		{
+			QMessageBox::warning(mainWindow,
+					"Visual Netkit - Warning",
+					tr("You must save the laboratory before edit this config file!"),
+					QMessageBox::Ok);
+		}
+		else
+		{
+			//TODO: show this config file inside a new tab if none already exist,
+			//		otherwise, show the correct tab
+		}
 	}
 }
 
