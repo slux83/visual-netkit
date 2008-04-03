@@ -20,6 +20,13 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
+       <widget class="QPushButton" name="connectButton" >
+        <property name="text" >
+         <string>Connect</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addMachineButton" >
         <property name="text" >
          <string>Machine</string>
