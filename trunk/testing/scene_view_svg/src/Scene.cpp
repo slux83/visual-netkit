@@ -5,7 +5,8 @@
 
 Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
-	myMode=InsertLine;
+	myMode = InsertLine;
+	line = NULL;
 }
 
 Scene::~Scene()
@@ -38,11 +39,12 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if (mouseEvent->button() != Qt::LeftButton)
         return;
 
-    QPointF *end = new QPointF(mouseEvent->scenePos().x()+100, mouseEvent->scenePos().y());
+    QPointF *end = new QPointF(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
     
     
     //SvgItemNode *item;
-    switch (myMode) {
+    switch (myMode)
+    {
         case InsertItem:
             //item = new SvgItemNode();
             //addItem(item);
@@ -51,9 +53,9 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             break;
         
         case InsertLine:
-        	qDebug() << "Mouse:  start--> " << mouseEvent->scenePos() << "  end --> " << mouseEvent->scenePos();
+        	//qDebug() << "Mouse:  start--> " << mouseEvent->scenePos() << "  end --> " << mouseEvent->scenePos();
             line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), *end));
-            line->setPen(QPen(myLineColor, 2));
+            line->setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
             addItem(line);
             break;
 
@@ -81,9 +83,10 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (myMode == InsertLine && line != 0) {
-        QLineF newLine(line->line().p1(), mouseEvent->scenePos());
-        line->setLine(newLine);
+    if (myMode == InsertLine && line != NULL) {
+    	QLineF newLine(line->line().p1(), mouseEvent->scenePos());
+    	line->setLine(newLine);
+        
     } else if (myMode == MoveItem) {
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }

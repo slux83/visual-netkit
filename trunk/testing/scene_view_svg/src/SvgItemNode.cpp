@@ -3,9 +3,6 @@
 SvgItemNode::SvgItemNode() : QGraphicsSvgItem("host.svg")
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
-	myPolygon << QPointF(-100, 0) << QPointF(0, 100)
-	                       << QPointF(100, 0) << QPointF(0, -100)
-	                       << QPointF(-100, 0);
 }
 
 QList<SvgItemLink *> SvgItemNode::getLinks()

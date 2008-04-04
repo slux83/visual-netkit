@@ -75,6 +75,7 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode,
      setLine(line);
  }
 
+ /*
  void SvgItemLink::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
  {
      if (myStartNode->collidesWithItem(myEndNode))
@@ -86,7 +87,7 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode,
      painter->setBrush(myColor);
 
      QLineF centerLine(myStartNode->pos(), myEndNode->pos());
-     QPolygonF endPolygon = myEndNode->polygon();
+     SvgItemNode endPolygon = myEndNode;
      QPointF p1 = endPolygon.first() + myEndNode->pos();
      QPointF p2;
      QPointF intersectPoint;
@@ -117,4 +118,5 @@ SvgItemLink::SvgItemLink (SvgItemNode *startNode, SvgItemNode *endNode,
      }
  }
 
+*/
  
