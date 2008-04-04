@@ -36,9 +36,9 @@ public:
 public slots:
      void updatePosition();
 
-protected:
-     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget = 0);
+//protected:
+//     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+//               QWidget *widget = 0);
 private:
 	 SvgItemNode *myStartNode;
 	 SvgItemNode *myEndNode;

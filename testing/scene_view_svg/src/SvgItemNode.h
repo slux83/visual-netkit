@@ -29,15 +29,11 @@ public:
     //void removeLink(SvgItemLink *link);
     void removeLinks();
     void addLink(SvgItemLink *link);
-    
-    QPolygonF polygon() const
-    { return myPolygon; }
-    
+        
 private:
     QList<SvgItemLink *> links;
     QMenu *myContextMenu;
 	QColor linkColor;
-    QPolygonF myPolygon;
 	
 protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
