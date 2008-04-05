@@ -83,9 +83,6 @@ void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons)
 	/* the undo command (redo) can accomplish the action */
 	labHandler->getUndoStack()->push(new AddVmCommand(vmItem, vm));
 	
-	/* emit the log event */
-	emit logEvent(tr("Created a new virtual machine: ") + vm->getName());
-	
 }
 
 

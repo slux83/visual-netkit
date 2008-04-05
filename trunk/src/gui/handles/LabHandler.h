@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include "LabPropertyController.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "../../core/Laboratory.h"
 #include "../MainWindow.h"
@@ -34,22 +35,11 @@ class LabHandler : public QObject
 {
 	Q_OBJECT
 
-/* Property key for lab */
-enum PropertyKey
-{
-	Name = 0,
-	Version,
-	Date,
-	Description,
-	Authors,
-	Email,
-	Website
-};
-
 private:
 	static LabHandler *instance;
 	MainWindow *mainWindow;
 	UndoStack *undoStack;
+	LabPropertyController *propertyController;
 	
 	/* Private functions */
 	void renderLabProperties(Laboratory *l);
@@ -64,10 +54,11 @@ public:
 
 public slots:
 	void newLab();
-	void showCreatedLab(Laboratory *newLab);
+	void addCreatedLabOnTree(Laboratory *newLab);
+	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
-	void clearPropertyEditor();
+	void clearPropertyDock();
 	void saveChangedProperty(int row, int column);
 
 signals:

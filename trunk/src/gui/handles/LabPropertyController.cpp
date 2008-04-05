@@ -17,17 +17,14 @@
  */
 
 #include "LabPropertyController.h"
-
-/**
- * Init the null instance for the singletone controller
- */
-LabPropertyController* LabPropertyController::instance = NULL;
+#include "LabHandler.h"
 
 /**
  * Constructor
  */
-LabPropertyController::LabPropertyController()
+LabPropertyController::LabPropertyController() : QObject()
 {
+	lab = NULL;
 }
 
 /**
@@ -38,32 +35,74 @@ LabPropertyController::~LabPropertyController()
 }
 
 /**
- * Singletone get instance
+ * Save the property passed, if it's mine
+ * Return true if the property is saved correctly
  */
-LabPropertyController * LabPropertyController::getInstance()
+bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
 {
-	if (instance == NULL)
+	bool returnVal = false;
+	
+	if(!myProperties.contains(item))
 	{
-		instance = new LabPropertyController();
-	}
-
-	return instance;
-}
-
-/**
- * Get the lab (domain object) gived the view object
- * NOTE: Can return NULL
- */
-Laboratory * LabPropertyController::getLabGivedView(QTableWidgetItem * item)
-{
-	Laboratory *ret = NULL;
-	QLinkedListIterator< QPair<QTableWidgetItem *, Laboratory *> > i(mapping);
-	while (i.hasNext())
-	{
-		QPair<QTableWidgetItem *, Laboratory *> m = i.next();
-		if(m.first == item)
-			ret = m.second;
+		//not mine
+		return returnVal;		
 	}
 	
-	return ret;
+	/* Is this property mapped with a Laboratory? */
+	if(lab == NULL)
+		return false;
+		
+	/* Select the correct property to sove inside the domain current lab */
+	switch (item->data(Qt::UserRole).toInt())
+	{
+		case Name:
+			if(item->data(Qt::DisplayRole).toString().trimmed().isEmpty())
+			{
+				//Restore the value, and alert the user
+				item->setData(Qt::DisplayRole, lab->getName());
+				QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+		                   tr("The laboratory name must be not empty!"),
+		                   QMessageBox::Ok);
+			}
+			else
+			{
+				lab->setName(item->data(Qt::DisplayRole).toString());
+				
+				//Update the tree lab view
+				LabHandler::getInstance()->getMainWindow()->labTree->topLevelItem(0)->setData(0, Qt::DisplayRole, lab->getName());
+				returnVal = true;
+			}
+			
+			break;
+		
+		case
+			Version: lab->setVersion(item->data(Qt::DisplayRole).toString());
+			returnVal = true;
+			break;
+		
+		case 
+			Date: lab->setDate(item->data(Qt::DisplayRole).toString());
+			returnVal = true;
+			break;
+
+		case Description: lab->setDescription(item->data(Qt::DisplayRole).toString());
+			break;
+		
+		case 
+			Authors: lab->setAuthors(item->data(Qt::DisplayRole).toString());
+			returnVal = true;
+			break;
+		
+		case 
+			Email: lab->setEmail(item->data(Qt::DisplayRole).toString());
+			returnVal = true;
+			break;
+		
+		case 
+			Website: lab->setWebsite(item->data(Qt::DisplayRole).toString());
+			returnVal = true;
+			break;
+	}
+	
+	return returnVal;
 }
