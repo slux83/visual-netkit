@@ -27,9 +27,13 @@ VmMapper* VmMapper::instance = NULL;
 /**
  * Constructor
  */
-VmMapper::VmMapper()
+VmMapper::VmMapper() : QObject()
 {
 	addVm = new AddVmForm();
+	
+	/* Connect signals */
+	connect(this, SIGNAL(newMappingCreated(VirtualMachine *)),
+			LabHandler::getInstance(), SLOT(addCreatedVmOnTree(VirtualMachine *)));
 }
 
 /**
@@ -70,6 +74,7 @@ void VmMapper::addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm)
 	LabHandler *labHandler = LabHandler::getInstance();
 	labHandler->getMainWindow()->graphicsView->scene()->addItem(vmItem);
 	labHandler->getMainWindow()->graphicsView->ensureVisible(vmItem);
-	
-	
+		
+	//emit signal
+	emit newMappingCreated(vm);
 }

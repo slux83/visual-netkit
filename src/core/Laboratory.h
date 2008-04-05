@@ -28,6 +28,19 @@
 #include <QDateTime>
 #include <QDir>
 
+
+/* Property key for lab */
+enum PropertyKey
+{
+	Name = 0,
+	Version,
+	Date,
+	Description,
+	Authors,
+	Email,
+	Website
+};
+
 /**
  * The laboratory object
  */

@@ -31,7 +31,7 @@ LabFacadeController::LabFacadeController() : QObject()
 {
 	currentLab = NULL;
 	connect(this, SIGNAL(createdNewLab(Laboratory *)),
-			LabHandler::getInstance(), SLOT(showCreatedLab(Laboratory *)));
+			LabHandler::getInstance(), SLOT(addCreatedLabOnTree(Laboratory *)));
 }
 
 /**

@@ -132,6 +132,7 @@ void MainWindow::createActionGroups()
 	labItemGroup->addAction(actionAddVirtualMachine);
 	labItemGroup->addAction(actionAddCollisionDomain);
 	labItemGroup->addAction(actionManageGraph);
+	labItemGroup->addAction(actionAddLink);
 	labItemGroup->setDisabled(true);
 	
 	/* Group for scene size */
@@ -179,6 +180,8 @@ void MainWindow::resizeScene(QAction *action)
 	
 	QRectF newSize = action->data().toRectF(); 
 	graphicsView->scene()->setSceneRect(newSize);
+	
+	//Log action
 	writeLogMessage(tr("Scene resized") + " (" +
 			QByteArray::number(newSize.width()) +
 			"x" +
@@ -192,6 +195,7 @@ void MainWindow::unlockSceneAndActions()
 {
 	graphicsView->setVisible(true);
 	graphicsView->setDisabled(false);
+	graphicsView->ensureVisible(0, 0, 100, 100);
 	sceneSizeGroup->setDisabled(false);
 	labItemGroup->setDisabled(false);
 	menuGraph->setDisabled(false);

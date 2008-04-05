@@ -10,6 +10,7 @@
 		<file alias="undo_icon">menu_icons/undo.png</file>
 		<file alias="vm_icon">menu_icons/vm.png</file>
 		<file alias="cd_icon">menu_icons/cd.png</file>
+		<file alias="link_icon">menu_icons/link.png</file>
 		<file alias="tab_close_icon">menu_icons/tab_close.png</file>
 		<file alias="zoom_in_icon">menu_icons/zoom_in.png</file>
 		<file alias="zoom_out_icon">menu_icons/zoom_out.png</file>
@@ -18,10 +19,12 @@
 	</qresource>
 	<qresource prefix="/small" >
 		<file alias="folder_root">small_icons/folder_root.png</file>
+		<file alias="folder_vm">small_icons/folder_vm.png</file>
 		<file alias="file_conf">small_icons/file_conf.png</file>
 	</qresource>
 	<qresource prefix="/svg" >
-		<file alias="cs">svg/collision_domain.svg</file>
+		<file alias="cs_on">svg/collision_domain_on.svg</file>
+		<file alias="cs_off">svg/collision_domain_off.svg</file>
 		<file alias="vm_host">svg/vm_host.svg</file>
 		<file alias="vm_router">svg/vm_router.svg</file>
 	</qresource>

@@ -19,18 +19,21 @@
 #ifndef VMMAPPER_H_
 #define VMMAPPER_H_
 
-#include <QMap>
-
 #include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
 #include "../AddVmForm.h"
+
+#include <QObject>
+#include <QDebug>
+#include <QMap>
 
 /**
  * This class is the singleton controller for the virtual machines.
  * It's also map the graphical (view) item with the domain object (model)
  */
-class VmMapper
+class VmMapper : public QObject
 {
+	Q_OBJECT
 	
 private:
 	static VmMapper *instance;
@@ -45,6 +48,9 @@ public:
 	static VmMapper* getInstance();
 	void showAddVmForm();
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
+
+signals:
+	void newMappingCreated(VirtualMachine *machine);
 };
 
 #endif /*VMMAPPER_H_*/

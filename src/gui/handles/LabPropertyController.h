@@ -20,32 +20,37 @@
 #define LABPROPERTYCONTROLLER_H_
 
 #include "../../core/Laboratory.h"
+
 #include <QTableWidgetItem>
 #include <QObject>
 #include <QLinkedList>
 #include <QPair>
+#include <QMessageBox>
+#include <QObject>
+
+class LabHandler;
 
 /**
- * Singletone class that map each property item (for lab) with the lab domain
- * object
+ * Class that map each property item (for lab) with the lab domain object
  */
-class LabPropertyController
+class LabPropertyController : public QObject
 {
 	
 private:
-	static LabPropertyController *instance;
-	
 	/* the pair: <VIEW, DOMAIN> */
-	QLinkedList< QPair<QTableWidgetItem *, Laboratory *> > mapping;
-	
+	QLinkedList<QTableWidgetItem *> myProperties;
+	Laboratory *lab;
 	
 public:
 	LabPropertyController();
 	virtual ~LabPropertyController();
-	static LabPropertyController * getInstance();
-	void addMapping(QPair<QTableWidgetItem *, Laboratory *> m) { mapping.append(m); };
-	void clearMapping() { mapping.clear(); };
-	Laboratory * getLabGivedView(QTableWidgetItem *item);
+	
+	void addProperty(QTableWidgetItem *p) { myProperties.append(p); };
+	void clearMapping() { myProperties.clear(); };
+	bool saveChangedProperty(QTableWidgetItem *item);
+	
+	//Setter functions
+	void setLab(Laboratory *l) { lab = l; };
 };
 
 #endif /*LABPROPERTYCONTROLLER_H_*/

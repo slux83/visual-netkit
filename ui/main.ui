@@ -141,6 +141,7 @@
     <addaction name="separator" />
     <addaction name="actionAddVirtualMachine" />
     <addaction name="actionAddCollisionDomain" />
+    <addaction name="actionAddLink" />
     <addaction name="actionManageGraph" />
     <addaction name="separator" />
     <addaction name="menuExportAs" />
@@ -384,6 +385,7 @@
    <addaction name="separator" />
    <addaction name="actionAddVirtualMachine" />
    <addaction name="actionAddCollisionDomain" />
+   <addaction name="actionAddLink" />
    <addaction name="actionManageGraph" />
   </widget>
   <action name="actionNetkit_Lab" >
@@ -660,6 +662,17 @@
    </property>
    <property name="text" >
     <string>Manage graph</string>
+   </property>
+  </action>
+  <action name="actionAddLink" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../resources/VisualNetkit.qrc" >:/menu/link_icon</iconset>
+   </property>
+   <property name="text" >
+    <string>Add link</string>
    </property>
   </action>
  </widget>
