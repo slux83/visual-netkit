@@ -41,9 +41,6 @@ private:
 	UndoStack *undoStack;
 	LabPropertyController *propertyController;
 	
-	/* Private functions */
-	void renderLabProperties(Laboratory *l);
-	
 public:
 	LabHandler();
 	virtual ~LabHandler();
@@ -58,7 +55,6 @@ public slots:
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
-	void clearPropertyDock();
 	void saveChangedProperty(int row, int column);
 
 signals:

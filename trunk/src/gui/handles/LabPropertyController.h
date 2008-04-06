@@ -27,6 +27,7 @@
 #include <QPair>
 #include <QMessageBox>
 #include <QObject>
+#include <QTableWidget>
 
 class LabHandler;
 
@@ -48,6 +49,8 @@ public:
 	void addProperty(QTableWidgetItem *p) { myProperties.append(p); };
 	void clearMapping() { myProperties.clear(); };
 	bool saveChangedProperty(QTableWidgetItem *item);
+	void renderLabProperties(QTableWidget *tableWidget);
+	void clearPropertyDock(QTableWidget *tableWidget);
 	
 	//Setter functions
 	void setLab(Laboratory *l) { lab = l; };
