@@ -59,7 +59,8 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			LabHandler::getInstance()->getMainWindow()->actionAddVirtualMachine->isChecked())
 	{
 		qDebug() << "Adding a new wirtual machine.";
-		VmMapper::getInstance()->showAddVmForm();
+		
+		VmMapper::getInstance()->showAddVmForm(mouseEvent->scenePos());
 	}
 	
 	QGraphicsScene::mousePressEvent(mouseEvent);

@@ -200,4 +200,7 @@ void MainWindow::unlockSceneAndActions()
 	labItemGroup->setDisabled(false);
 	menuGraph->setDisabled(false);
 	graphZoomGroup->setDisabled(false);
+	
+	//select the default action
+	forceManageGraphAction();
 }
