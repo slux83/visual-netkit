@@ -59,8 +59,10 @@ VmMapper * VmMapper::getInstance()
 /**
  * Show the form
  */
-void VmMapper::showAddVmForm()
+void VmMapper::showAddVmForm(QPointF pos)
 {
+	addVm->setMachinePos(pos);	//update the pos for the new machine
+	
 	addVm->show();
 }
 

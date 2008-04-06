@@ -46,7 +46,7 @@ public:
 	VmMapper();
 	virtual ~VmMapper();
 	static VmMapper* getInstance();
-	void showAddVmForm();
+	void showAddVmForm(QPointF pos);
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 
 signals:

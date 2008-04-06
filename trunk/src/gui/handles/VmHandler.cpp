@@ -70,7 +70,7 @@ bool VmHandler::vmNameExist(QString vmNameToCheck)
  * [SLOT]
  * Create a new vm
  */
-void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons)
+void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons, QPointF pos)
 {
 	/* Create the view and domain objects */
 	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName,
@@ -78,10 +78,15 @@ void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons)
 	
 	VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getMyType());
 	
+	vmItem->setPos(pos);	//place the new machine where user clicked
+	
 	labFacadeController->getCurrentLab()->addMachine(vm);
 	
 	/* the undo command (redo) can accomplish the action */
 	labHandler->getUndoStack()->push(new AddVmCommand(vmItem, vm));
+	
+	/* reset the default action (manage graph) */
+	labHandler->getMainWindow()->forceManageGraphAction();
 	
 }
 

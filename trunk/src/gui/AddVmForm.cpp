@@ -61,8 +61,8 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 			this, SLOT(updateVmPreview(QTreeWidgetItem *, int)));
 	connect(addVmButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAcceptedSignal()));
-	connect(this, SIGNAL(userAddedVm(QString, QList<Daemon>)),
-			vmHandler, SLOT(createVm(QString, QList<Daemon>)));
+	connect(this, SIGNAL(userAddedVm(QString, QList<Daemon>, QPointF)),
+			vmHandler, SLOT(createVm(QString, QList<Daemon>, QPointF)));
 }
 
 /**
@@ -196,7 +196,7 @@ void AddVmForm::handleAcceptedSignal()
 	if(allCorrect)
 	{
 		/* Ok, get active daemons and foward the request */
-		emit userAddedVm(newVmName, getSelectedDaemons());
+		emit userAddedVm(newVmName, getSelectedDaemons(), machinePos);
 		
 		vmName->clear();
 		close();
