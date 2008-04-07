@@ -45,7 +45,7 @@ Descrizione dei casi d'uso in modo strutturato.
 L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta modificato il campo, il sistema provvede ad effettuare la modifica per il campo scelto.
 
 ----
-= UC-Crea VM =
+= UC-Crea VM `[DONE: 80%]`=
 
 *Attore:* utente finale
 
@@ -59,7 +59,7 @@ L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta 
 
 
 *Scenario Principale di Successo:* L'utente seleziona dal menu'/toolbar l'azione di "add virtual machine" che risulta mutuamente esclusiva rispetto alle altre azioni che governano la scena. L'utente clicca con il mouse su un'area della scena e il sistema mostra una form per l'acquisizione dei dati riguardanti la nuova macchina virtuale.
-La form in particolare mostra campi per l'inserimento di dati quali: nome della macchina virtuale, servizi che si vuole avviare (e che caratterizzano il "tipo" della vm), nonche' l'AS di appartenenza con la possibilita' di crearne uno nuovo. L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti e mostra sulla scena la macchina virtuale etichettata dal suo nome (eventualmente all'interno del suo AS), disegnata in base ai servizi ad essa associati (ad esempio un router, un dns, uno switch, un semplice host, ecc...).
+La form in particolare mostra campi per l'inserimento di dati quali: nome della macchina virtuale, servizi che si vuole avviare (e che caratterizzano il "tipo" della vm). L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti e mostra sulla scena la macchina virtuale etichettata dal suo nome, disegnata in base ai servizi ad essa associati (ad esempio un router, un dns, uno switch, un semplice host, ecc...).
 
 
 
@@ -73,10 +73,10 @@ La form in particolare mostra campi per l'inserimento di dati quali: nome della 
 *Pre-condizioni:* esiste una VM in memoria
 
 
-*Post-condizioni:* luna prorpreta' della VM prescelta è stata cambiata
+*Post-condizioni:* una proprieta' della VM prescelta è stata cambiata
 
 
-*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella scena grafica. Il sistema provvede a mostrare tutte li proprieta' della macchina all'interno della dock "property editor". L'utente tramite quest'ultima puo' modificare le varie priprieta' della macchina virtuale selezionata e il sistema provvede ad aggiornare i dati.
+*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella dock del laboratorio. Il sistema provvede a mostrare tutte li proprieta' della macchina all'interno della dock "property editor". L'utente tramite quest'ultima puo' modificare le varie priprieta' della macchina virtuale selezionata e il sistema provvede ad aggiornare i dati.
 
 
 = UC-Aggiungi una interfaccia di rete per una VM =
@@ -91,7 +91,7 @@ La form in particolare mostra campi per l'inserimento di dati quali: nome della 
 *Post-condizioni:* e' stata aggiunta una interfaccia di rete alla macchina selezionata
 
 
-*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella scena grafica. Con il tasto destro del muose l'utente accede al menu' della vm selezionata e sceglie l'opzione "Manage hardware interfaces". Il sistema provvede a mostrare un form che mostra tutte le interfaccie di rete della macchina e offre la possibilita' di crearne uno nuova. L'utente deve inserire il nome della nuova interfaccia di rete, nonche' l'indirizzo ip, la netmask, lo stato (UP|DOWN) ecc... In questo momento, la nuova interfaccia di rete non e' connessa a nessun dominio di collisione, e pertanto e' marcata graficamente con sfondo "rosso".
+*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella scena grafica. Con il tasto destro del muose l'utente accede al menu' della vm selezionata e sceglie l'opzione "Manage hardware interfaces". Il sistema provvede a mostrare un form che mostra tutte le interfaccie di rete della macchina e offre la possibilita' di crearne uno nuova. L'utente deve inserire il nome della nuova interfaccia di rete, nonche' l'indirizzo ip, la netmask (se lo desidera), lo stato (UP | DOWN) ecc... In questo momento, la nuova interfaccia di rete non e' connessa a nessun dominio di collisione.
 
 
 ----
@@ -103,7 +103,7 @@ La form in particolare mostra campi per l'inserimento di dati quali: nome della 
 
 *Pre-condizioni:* esiste un lab in memoria ed è quello corrente
 
-*Post-condizioni:* è stato creato un nuovo CD ed associato al lab
+*Post-condizioni:* è stato creato un nuovo Collision Domain ed associato al lab
 
 
 *Scenario Principale di Successo:* l’utente crea un nuovo CD associandogli nome, ip, netmask...
