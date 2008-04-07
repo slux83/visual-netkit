@@ -169,7 +169,7 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             VirtualMachineItem *endItem = qgraphicsitem_cast<VirtualMachineItem *>(endItems.first());
             
             //creo l'elemento CollisionDomainItem e lo inizializzo
-            CollisionDomainItem *cd = new CollisionDomainItem(new QString("CD"));
+            CollisionDomainItem *cd = new CollisionDomainItem(new QString("X"));
 
             //creo i link tra la prima VM e il CollisionDomainItem 
             //e tra il CollisionDomainItem e la seconda VM
@@ -187,13 +187,9 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             cd->addLink(link1);				//associo il link1 al CollisionDomainItem
             cd->addLink(link2);				//associo il link2 al CollisionDomainItem
             
+            cd->setZValue(1000.0);
             link1->setZValue(500.0);
             link2->setZValue(500.0);
-            
-            //aggiungo gli elementi alla scena
-            addItem(cd);
-            addItem(link1);
-            addItem(link2);
             
             //aggiorno le posizioni
             link1->updatePosition();
@@ -221,9 +217,13 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             //ipLabel2->setPos(center);
             link1->addLabel(ipLabel1);
             //link2->addLabel(ipLabel2);
+            
+            //aggiungo gli elementi alla scena
+            addItem(link1);
+            addItem(link2);
+            addItem(cd);
             addItem(ipLabel1);
             //addItem(ipLabel2);
-            
             
             //test per il paint del CollisionDomainItem
             //CollisionDomainItem *cd = new CollisionDomainItem(new QString("C"), link, link);

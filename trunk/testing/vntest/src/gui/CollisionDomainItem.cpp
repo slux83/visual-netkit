@@ -59,9 +59,9 @@ CollisionDomainItem::~CollisionDomainItem()
 
 QRectF CollisionDomainItem::boundingRect() const
 {
-	qreal penWidth = 3;
-	return QRectF( 0.0 - penWidth/2,  0.0 - penWidth/2,
-				   20.0 + penWidth/2,  20.0 + penWidth/2);
+	qreal penWidth = 2;
+	return QRectF( -11.0 - penWidth/2, -11.0 - penWidth/2,
+				    22.0 + penWidth,  22.0 + penWidth);
 }
 
 QString* CollisionDomainItem::name()
@@ -117,15 +117,18 @@ void CollisionDomainItem::removeLinks()
 
 void CollisionDomainItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-	painter->setPen(QColor::fromRgb(255,0,0,100));
+	painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
+	painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	QRectF rectangle(*myStartPoint, QSizeF(boundingRect().width(), boundingRect().height()));
 	painter->drawEllipse(rectangle);
 	
-	painter->setPen(QColor::fromRgb(0,0,0,100));
+	painter->setPen(QPen(QBrush(Qt::black), 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	QFont font("Helvetica", 14, QFont::Bold, false);
-	painter->drawText(myStartPoint->x() + (boundingRect().width()/2),
-					  myStartPoint->y() + (boundingRect().height()/2), 
+	painter->drawText(myStartPoint->x() + (boundingRect().width())/2,
+					  myStartPoint->y() + (boundingRect().height())/2, 
 					  *myName);
+
+	//painter->drawText(QPointF(boundingRect().width()/3.2, boundingRect().height()*2/2.666), *myName);
 }
 
 
