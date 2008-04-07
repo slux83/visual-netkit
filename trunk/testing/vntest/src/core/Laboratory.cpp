@@ -69,9 +69,4 @@ void Laboratory::addMachine(VirtualMachine *vm)
 	machines.insert(vm->getName(), vm);
 }
 
-QString* Laboratory::getVMName(VirtualMachineItem *vmItem)
-{
-	QString *name = new QString("VMx");
-	return name;
-}
 
