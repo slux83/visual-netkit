@@ -18,6 +18,7 @@
 
 #include "VirtualMachineItem.h"
 
+
 /**
  * Contructor
  * by default, this svg item is showed as VmHost
@@ -57,3 +58,64 @@ void VirtualMachineItem::changeSvgFile(VmType type)
 	
 	renderer()->load(svgFiles.value(type));
 }
+
+
+//----  ADDED  BY  PAOLO  ----//
+
+QList<SvgItemLink *> VirtualMachineItem::getLinks()
+{
+	return links;
+}
+
+void VirtualMachineItem::removeLink(SvgItemLink *link) {
+	links.removeAt(links.indexOf(link));
+}
+
+void VirtualMachineItem::removeLinks()
+{
+    foreach (SvgItemLink *link, links) {
+        //link->startNode()->removeLink(link);
+        //link->endNode()->removeLink(link);
+        
+    	//faccio il downcasting dei QGraphicsItem a seconda del loro tipo
+    	if (link->startNode()->type() == VirtualMachineItem::Type) {
+			qgraphicsitem_cast<VirtualMachineItem *>(link->startNode())->removeLink(link);
+		} else {
+			qgraphicsitem_cast<CollisionDomainItem *>(link->startNode())->removeLink(link);
+		}
+		
+		if (link->endNode()->type() == CollisionDomainItem::Type) {
+			qgraphicsitem_cast<CollisionDomainItem *>(link->endNode())->removeLink(link);
+		} else {
+			qgraphicsitem_cast<VirtualMachineItem *>(link->endNode())->removeLink(link);
+		}
+    	
+    	//scene()->removeItem(link);
+        delete link;
+    }
+}
+
+void VirtualMachineItem::addLink(SvgItemLink *link)
+{
+    links.append(link);
+}
+
+void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+    //scene()->clearSelection();
+    setSelected(true);
+    //myContextMenu->exec(event->screenPos());
+}
+
+QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == QGraphicsItem::ItemPositionChange) {
+        foreach (SvgItemLink *link, links) {
+            link->updatePosition();
+        }
+    }
+
+    return value;
+}
+
+
