@@ -212,7 +212,7 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             //LabelItem *ipLabel2 = new LabelItem(link2, this);
             
             
-            ipLabel1->setPlainText( QString(qgraphicsitem_cast<VirtualMachineItem *>(link1->startNode())->type()) );
+            ipLabel1->setPlainText(QString("LINK1"));
             //ipLabel2->setPlainText( QString(qgraphicsitem_cast<VirtualMachineItem *>(link2->startNode())->type()) );
             QFont font("Courier", 12, QFont::Bold, false);
             ipLabel1->setFont(font);
