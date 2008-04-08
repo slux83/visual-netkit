@@ -47,5 +47,8 @@ inline QList<Daemon> getDaemons()
 	return l;
 }
 
+/* Graphics label font */
+#define GRAPHICS_FONT QFont("Sand Serif", 10)
+
 
 #endif /*COMMONCONFIGS_H_*/

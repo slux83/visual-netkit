@@ -17,24 +17,33 @@
  */
 
 #include "VirtualMachineItem.h"
+#include "../common/CommonConfigs.h"
 #include <QGraphicsScene>
 
 /**
  * Contructor
  * by default, this svg item is showed as VmHost
  */
-VirtualMachineItem::VirtualMachineItem(VmType type) 
-	: QGraphicsSvgItem(QString::fromUtf8(":/svg/vm_host"))
+VirtualMachineItem::VirtualMachineItem(QString label, VmType type) 
+	: QGraphicsItemGroup()
 {
 	/* Fill the filemap */
 	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
 	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
 	
 	/* Set the default svg file: VmHost */
-	renderer()->load(svgFiles.value(type));
+	vmSvg = new QGraphicsSvgItem(svgFiles.value(type));
+	vmNameLabel = new QGraphicsSimpleTextItem(label);
+	vmNameLabel->setPos(0, 52);
+	vmNameLabel->setFont(GRAPHICS_FONT);
+	
+	/* Add svg and label to this group */	
+	addToGroup(vmSvg);
+	addToGroup(vmNameLabel);
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
+	qDebug() << shape().boundingRect();
 }
 
 /**
@@ -45,7 +54,7 @@ VirtualMachineItem::~VirtualMachineItem()
 }
 
 /**
- * [PUBLIC-SLOT]
+ * [PUBLIC]
  * Change the visualization for this vm
  */
 void VirtualMachineItem::changeSvgFile(VmType type)
@@ -56,7 +65,7 @@ void VirtualMachineItem::changeSvgFile(VmType type)
 		return;
 	}
 	
-	renderer()->load(svgFiles.value(type));
+	vmSvg->renderer()->load(svgFiles.value(type));
 }
 
 /**
@@ -72,10 +81,12 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 		QPointF newPos = value.toPointF();
 		QRectF rect = scene()->sceneRect();
 
-		// Keep the item inside the scene rect.
-		newPos.setX(qMin(rect.right()-48, qMax(newPos.x(), rect.left())));
-		newPos.setY(qMin(rect.bottom()-48, qMax(newPos.y(), rect.top())));
-		qDebug() << value << "scene:" << scene()->sceneRect();
+		// Keep the item inside the scene rect. (- 2 is a padding)
+		newPos.setX(qMin(rect.right() - boundingRect().width() - 2,
+				qMax(newPos.x(), rect.left())));
+		newPos.setY(qMin(rect.bottom()- boundingRect().height() - 2,
+				qMax(newPos.y(), rect.top())));
+
 		return newPos;
 	}
 	
