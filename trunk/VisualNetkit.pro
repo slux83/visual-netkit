@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/VmMapper.h \
+HEADERS = src/common/CommonConfigs.h \
+    src/gui/handles/VmMapper.h \
     src/core/handles/VmFacadeController.h \
     src/gui/undoCommands/UndoCommands.h \
     src/gui/UndoStack.h \

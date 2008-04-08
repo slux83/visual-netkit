@@ -17,6 +17,8 @@
  */
 
 #include "LabHandler.h"
+#include "../../common/CommonConfigs.h"
+
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
 #include <QIcon>
@@ -95,13 +97,13 @@ void LabHandler::addCreatedLabOnTree(Laboratory *l)
 	root->setData(0, Qt::UserRole, "lab_element");
 	root->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
 	
-	labConf->setData(0, Qt::DisplayRole, "lab.conf");
+	labConf->setData(0, Qt::DisplayRole, LAB_CONF);
 	
 	//type of element
 	labConf->setData(0, Qt::UserRole, "config_file");
 	
 	//if config_file, this role show the relative path for the config file
-	labConf->setData(0, Qt::UserRole + 1, "lab.conf");
+	labConf->setData(0, Qt::UserRole + 1, LAB_CONF);
 	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	
 	root->addChild(labConf);
@@ -134,7 +136,68 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	
 	startupConf->setData(0, Qt::DisplayRole, QString(m->getName() + ".startup"));
 	startupConf->setData(0, Qt::UserRole, "config_file");		//type
+	startupConf->setData(0, Qt::UserRole +1 , QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+	
+	/* create subdirs if daemons are found */
+	if(m->getMyType() == Router)
+	{
+		// etc dir
+		QTreeWidgetItem *etc = new QTreeWidgetItem();
+		etc->setData(0, Qt::DisplayRole, ETC_PATH);
+		etc->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
+		elem->addChild(etc);
+		
+		// zebra dir
+		QTreeWidgetItem *zebraDir = new QTreeWidgetItem();
+		zebraDir->setData(0, Qt::DisplayRole, ZEBRA_PATH);
+		zebraDir->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
+		
+		etc->addChild(zebraDir);
+		
+		// config files
+		QTreeWidgetItem *daemonFile, *bgpdFile, *ripdFile;
+		
+		daemonFile = new QTreeWidgetItem();
+		daemonFile->setData(0, Qt::DisplayRole, ZEBRA_DAEMONS_CONF);
+		daemonFile->setData(0, Qt::UserRole, "config_file");		//type
+		daemonFile->setData(0, Qt::UserRole +1 , 
+				QString(m->getName() + "/" +
+						ETC_PATH + "/" + ZEBRA_PATH + "/" +
+						ZEBRA_DAEMONS_CONF));	//path
+		daemonFile->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+		zebraDir->addChild(daemonFile);
+		
+		//bgp?
+		if(m->getDm()->getDaemonState(Bgpd))
+		{
+			bgpdFile = new QTreeWidgetItem();
+			bgpdFile->setData(0, Qt::DisplayRole, BGPD_CONF);
+			bgpdFile->setData(0, Qt::UserRole, "config_file");		//type
+			bgpdFile->setData(0, Qt::UserRole +1 , 
+					QString(m->getName() + "/" +
+							ETC_PATH + "/" + ZEBRA_PATH + "/" +
+							BGPD_CONF));	//path
+			bgpdFile->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+			zebraDir->addChild(bgpdFile);
+		}
+		
+		//rip?
+		if(m->getDm()->getDaemonState(Ripd))
+		{
+			ripdFile = new QTreeWidgetItem();
+			ripdFile->setData(0, Qt::DisplayRole, RIPD_CONF);
+			ripdFile->setData(0, Qt::UserRole, "config_file");		//type
+			ripdFile->setData(0, Qt::UserRole +1 , 
+					QString(m->getName() + "/" +
+							ETC_PATH + "/" + ZEBRA_PATH + "/" +
+							RIPD_CONF));	//path
+			ripdFile->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+			zebraDir->addChild(ripdFile);
+		}
+
+				
+	}
 	
 	QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
 	

@@ -23,7 +23,8 @@
 #include <QRect>
 #include <QMessageBox>
 
-#define REGEXP_ALL_DAEMONS QString("Zebra|Ripd|Bgpd|Ospfd|Ospf6d|Ripngd")
+/* Pattern to search all daemons on the tree */
+#define REGEXP_ALL_DAEMONS QString("Zebra|Ripd|Bgpd")
 
 /**
  * Contructor
@@ -78,8 +79,9 @@ AddVmForm::~AddVmForm()
  */
 void AddVmForm::fillDaemonsList()
 {	
+	
 	QTreeWidgetItem *zebraItem;
-	QTreeWidgetItem *ripd, *bgpd, *ospfd, *ospf6d, *ripngd;
+	QTreeWidgetItem *ripd, *bgpd;
 	
 	//Zebra
 	zebraItem = new QTreeWidgetItem();
@@ -102,7 +104,7 @@ void AddVmForm::fillDaemonsList()
 	zebraItem->addChild(bgpd);
 	
 	//Ospfd
-	ospfd = new QTreeWidgetItem();
+/*	ospfd = new QTreeWidgetItem();
 	ospfd->setData(0, Qt::DisplayRole, "Ospfd");
 	ospfd->setData(0, Qt::UserRole, Ospfd);
 	ospfd->setCheckState (0, Qt::Unchecked);
@@ -121,7 +123,7 @@ void AddVmForm::fillDaemonsList()
 	ripngd->setData(0, Qt::UserRole, Ripngd);
 	ripngd->setCheckState (0, Qt::Unchecked);
 	zebraItem->addChild(ripngd);
-	
+*/	
 	daemonsList->addTopLevelItem(zebraItem);
 	daemonsList->expandItem(zebraItem);	//expand the level
 	

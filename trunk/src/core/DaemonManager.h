@@ -21,13 +21,13 @@
 
 #include "../common/Types.h"
 #include <QLinkedList>
-#include <QPair>
+#include <QMap>
 
 class DaemonManager
 {
 	
 private:
-	QLinkedList< QPair<Daemon, bool> * > daemonList;
+	QMap<Daemon, bool> daemonList;
 	
 	QList<Daemon> daemons2activeList();
 	
@@ -36,6 +36,7 @@ public:
 	virtual ~DaemonManager();
 	void setDaemonState(Daemon daemon, bool newState);
 	VmType getVmType();
+	bool getDaemonState(Daemon daemon) { return daemonList.value(daemon); };
 	
 };
 

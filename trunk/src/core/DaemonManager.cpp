@@ -17,46 +17,38 @@
  */
 
 #include "DaemonManager.h"
+#include "../common/CommonConfigs.h"
+
+#include <QDebug>
 
 /**
  * Constructor
  */
 DaemonManager::DaemonManager()
 {
-	/* Fill the list of daemons with te enumeration fields
-	 * 
-	 * TODO: put the daemon list inside an .ini file that the user
-	 *       (maybe only developers) can edit easily
-	 */
-	daemonList.append(new QPair<Daemon, bool>(Zebra, false));
-	daemonList.append(new QPair<Daemon, bool>(Ripd, false));
-	daemonList.append(new QPair<Daemon, bool>(Bgpd, false));
-	daemonList.append(new QPair<Daemon, bool>(Ospfd, false));
-	daemonList.append(new QPair<Daemon, bool>(Ospf6d, false));
-	daemonList.append(new QPair<Daemon, bool>(Ripngd, false));
-	//daemonList.append(new QPair<Daemon, bool>(Bind, false));
+	/* Fill the daemonList */
+	QListIterator<Daemon> i(getDaemons());
+	while(i.hasNext())
+		daemonList.insert(i.next(), false);
 }
 
 /**
  * Deconstructor
  */
-DaemonManager::~DaemonManager()
-{
-	/* TODO: delete all qpair pointers */
-}
+DaemonManager::~DaemonManager() { }
 
 /**
  * Set the new state for a specific daemon
  */ 
 void DaemonManager::setDaemonState(Daemon daemon, bool newState)
 {
-	QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
-	while (i.hasNext())
+	if(!daemonList.contains(daemon))
 	{
-		 QPair<Daemon, bool> *d = i.next();
-		if(d->first == daemon)
-			d->second = newState;
+		qWarning() << "DaemonManager:" << "Unknow daemon" << daemon;
+		return;
 	}
+	
+	daemonList[daemon] = newState;
 }
 
 /**
@@ -66,14 +58,17 @@ VmType DaemonManager::getVmType()
 {
 	VmType returnVal = Host;
 	bool foundRouter = false;
-	QList<Daemon> activeDaemons = daemons2activeList();
-	QListIterator<Daemon> it(activeDaemons);
+	QListIterator<Daemon> it(daemons2activeList());
 	
+	//process active daemons
 	while(it.hasNext())
 	{
 		Daemon d = it.next();
-		if(d >= Zebra && d <= Ripngd)
+		if(d >= getDaemons().first() && d <= getDaemons().last())
+		{
 			foundRouter = true;
+			break;
+		}
 	}
 	
 	if(foundRouter)
@@ -89,14 +84,14 @@ VmType DaemonManager::getVmType()
 QList<Daemon> DaemonManager::daemons2activeList()
 {
 	QList<Daemon> activeDaemons;
-	QLinkedListIterator< QPair<Daemon, bool> * > i(daemonList);
+	QMapIterator<Daemon, bool> i(daemonList);
 	while (i.hasNext())
 	{
-		QPair<Daemon, bool> *daemon = i.next();
+		i.next();
 		/* if the daemon is enabled */
-		if(daemon->second)
+		if(i.value())
 		{
-			activeDaemons.append(daemon->first);
+			activeDaemons.append(i.key());
 		}
 	}
 	
