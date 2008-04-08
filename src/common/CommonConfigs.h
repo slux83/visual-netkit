@@ -16,35 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TYPES_H_
-#define TYPES_H_
-
 /**
- * Enumeration for daemons
+ * This header contains some defines for general purpose
  */
-enum Daemon
-{
-	Zebra = 0,	//Zebra must be the first!
-	Ripd = 1,
-	Bgpd = 2
-};
 
-/**
- * Enumeration for virtual machines
- */
-enum VmType
-{
-	Host = 0,
-	Router = 1
-};
+#ifndef COMMONCONFIGS_H_
+#define COMMONCONFIGS_H_
 
-/**
- * Enumeration for Super Groups
- */
-enum SuperGroupType
-{
-	AutonomousSystemType = 0,
-	Uncategorized = 1
-};
+#include "Types.h"
 
-#endif /*TYPES_H_*/
+/* Visual Netkit Version */
+#define VISUAL_NETKIT_VERSION QString("SVN")
+
+/* Config file names */
+#define LAB_CONF QString("lab.conf")
+#define ZEBRA_DAEMONS_CONF QString("daemons")
+#define BGPD_CONF QString("bgpd.conf")
+#define RIPD_CONF QString("ripd.conf")
+
+/* Config file paths */
+#define ZEBRA_PATH QString("zebra")
+#define ETC_PATH QString("etc")
+
+/* ZEBRA Daemons list */
+inline QList<Daemon> getDaemons()
+{
+	QList<Daemon> l;
+	l << Zebra << Bgpd << Ripd;
+	qSort(l.begin(), l.end());
+	return l;
+}
+
+
+#endif /*COMMONCONFIGS_H_*/
