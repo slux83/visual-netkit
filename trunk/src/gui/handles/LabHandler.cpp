@@ -253,7 +253,7 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 		{
 			QMessageBox::warning(mainWindow,
 					"Visual Netkit - Warning",
-					tr("You must save the laboratory before edit this config file!"),
+					tr("You must save the laboratory before edit this config file."),
 					QMessageBox::Ok);
 		}
 		else

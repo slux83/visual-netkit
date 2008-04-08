@@ -17,7 +17,7 @@
  */
 
 #include "VirtualMachineItem.h"
-
+#include <QGraphicsScene>
 
 /**
  * Contructor
@@ -58,3 +58,27 @@ void VirtualMachineItem::changeSvgFile(VmType type)
 	
 	renderer()->load(svgFiles.value(type));
 }
+
+/**
+ * [PROTECTED]
+ * Control the moviment of this item and don't permit that it's drowed outside
+ * the scene rect
+ */
+QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	if (change == ItemPositionChange && scene())
+	{
+		// value is the new position.
+		QPointF newPos = value.toPointF();
+		QRectF rect = scene()->sceneRect();
+
+		// Keep the item inside the scene rect.
+		newPos.setX(qMin(rect.right()-48, qMax(newPos.x(), rect.left())));
+		newPos.setY(qMin(rect.bottom()-48, qMax(newPos.y(), rect.top())));
+		qDebug() << value << "scene:" << scene()->sceneRect();
+		return newPos;
+	}
+	
+	return QGraphicsItem::itemChange(change, value);
+}
+
