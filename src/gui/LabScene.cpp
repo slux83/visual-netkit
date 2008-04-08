@@ -53,7 +53,7 @@ LabScene::~LabScene()
  * Mouse press event
  */
 void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
+{	
 	/* The user want to add an element? */
 	if(mouseEvent->button() == Qt::LeftButton &&
 			LabHandler::getInstance()->getMainWindow()->actionAddVirtualMachine->isChecked())

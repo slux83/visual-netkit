@@ -76,7 +76,7 @@ void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons, QPointF
 	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName,
 			activeDaemons);
 	
-	VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getMyType());
+	VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getName(), vm->getMyType());
 	
 	vmItem->setPos(pos);	//place the new machine where user clicked
 	
