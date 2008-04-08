@@ -23,6 +23,7 @@
 #include <QSvgRenderer>
 #include <QString>
 #include <QDebug>
+#include <QVariant>
 
 #include "../common/Types.h"
 
@@ -42,6 +43,7 @@ public:
 
 protected:
 //	void mouseMoveEvent (QGraphicsSceneMouseEvent *event);
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	
 public slots:
 	void changeSvgFile(VmType type);
