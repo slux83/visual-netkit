@@ -19,7 +19,6 @@
 #ifndef VIRTUALMACHINEITEM_H_
 #define VIRTUALMACHINEITEM_H_
 
-#include <QGraphicsSvgItem>
 #include <QGraphicsItemGroup>
 #include <QSvgRenderer>
 #include <QString>
@@ -31,6 +30,7 @@
 
 #include "../common/Types.h"
 #include "SvgItemPrivate.h"
+#include "LabelItemPrivate.h"
 
 /**
  * This class is a graphic (SVG) element of type Virtual Machine
@@ -43,9 +43,10 @@ class VirtualMachineItem : public QObject, public QGraphicsItemGroup
 private:
 	QMap<VmType, QString> svgFiles;
 	SvgItemPrivate *vmSvg;
-	QGraphicsSimpleTextItem *vmNameLabel;
+	LabelItemPrivate *vmNameLabel;
 	QMenu contextMenu;
 	QAction *ungroupAction;
+	QAction *restoreGroupAction;
 	QAction *deleteAction;
 	
 	void initContextMenu();
@@ -62,6 +63,7 @@ protected:
 private slots:
 	void ungroupActionCalled();
 	void deleteVmActionCalled();
+	void restoreGroupActionCalled();
 
 };
 

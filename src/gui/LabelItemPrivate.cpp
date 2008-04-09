@@ -16,23 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SvgItemPrivate.h"
-
+#include "LabelItemPrivate.h"
 
 /**
  * Constructor
  */
-SvgItemPrivate::SvgItemPrivate(const QString & fileName, QGraphicsItemGroup *group, 
-		QGraphicsItem *parent) : QGraphicsSvgItem(fileName, parent)
+LabelItemPrivate::LabelItemPrivate(const QString &text, QGraphicsItem *parent)
+	: QGraphicsSimpleTextItem(text, parent)
 {
-	myGroup = group;
-	
-	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);	
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(1100);
 }
 
-/**
- * Deconstructor
- */ 
-SvgItemPrivate::~SvgItemPrivate()
+LabelItemPrivate::~LabelItemPrivate()
 {
 }
