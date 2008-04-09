@@ -40,6 +40,20 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	addItem(border);
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
+	
+	/* Test line */
+/*	QGraphicsLineItem *line = new QGraphicsLineItem(150, 99, 100, 200);
+	line->setZValue(1000);
+	addItem(line);
+	QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem("bao bao");
+	addItem(label);
+	
+	label->setPos(155, 100);
+	label->rotate(line->line().angle(QLineF(0,0,1000,0)));
+	label->rotate(180);
+	
+	qDebug() << "angle:" << line->line().angle(QLineF(0,0,1000,0));
+*/
 }
 
 /**

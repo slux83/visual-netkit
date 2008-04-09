@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/common/CommonConfigs.h \
+HEADERS = src/gui/SvgItemPrivate.h \
+    src/common/CommonConfigs.h \
     src/gui/handles/VmMapper.h \
     src/core/handles/VmFacadeController.h \
     src/gui/undoCommands/UndoCommands.h \
@@ -43,7 +44,8 @@ HEADERS = src/common/CommonConfigs.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/VmMapper.cpp \
+SOURCES = src/gui/SvgItemPrivate.cpp \
+    src/gui/handles/VmMapper.cpp \
     src/core/handles/VmFacadeController.cpp \
     src/gui/undoCommands/UndoCommands.cpp \
     src/gui/UndoStack.cpp \
