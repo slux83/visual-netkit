@@ -25,6 +25,9 @@
 #include <QString>
 #include <QDebug>
 #include <QVariant>
+#include <QMenu>
+#include <QObject>
+#include <QGraphicsSceneContextMenuEvent>
 
 #include "../common/Types.h"
 #include "SvgItemPrivate.h"
@@ -33,23 +36,33 @@
  * This class is a graphic (SVG) element of type Virtual Machine
  * and cantain a label (it's a QGraphicsItemGroup)
  */
-class VirtualMachineItem : public QGraphicsItemGroup
+class VirtualMachineItem : public QObject, public QGraphicsItemGroup
 {
+	Q_OBJECT
 	
 private:
 	QMap<VmType, QString> svgFiles;
 	SvgItemPrivate *vmSvg;
 	QGraphicsSimpleTextItem *vmNameLabel;
+	QMenu contextMenu;
+	QAction *ungroupAction;
+	QAction *deleteAction;
+	
+	void initContextMenu();
 	
 public:
 	VirtualMachineItem(QString label, VmType type = Host) ;
 	virtual ~VirtualMachineItem();
+	void changeSvgFile(VmType type);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	
-public:
-	void changeSvgFile(VmType type);
+private slots:
+	void ungroupActionCalled();
+	void deleteVmActionCalled();
+
 };
 
 #endif /*VIRTUALMACHINEITEM_H_*/
