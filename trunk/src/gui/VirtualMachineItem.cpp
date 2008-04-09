@@ -19,13 +19,15 @@
 #include "VirtualMachineItem.h"
 #include "../common/CommonConfigs.h"
 #include <QGraphicsScene>
+#include <QCursor>
+#include <QMessageBox>
 
 /**
  * Contructor
  * by default, this svg item is showed as VmHost
  */
 VirtualMachineItem::VirtualMachineItem(QString label, VmType type) 
-	: QGraphicsItemGroup()
+	: QObject(), QGraphicsItemGroup()
 {
 	/* Fill the filemap */
 	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
@@ -43,6 +45,9 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
+	
+	/* Context menu */
+	initContextMenu();
 }
 
 /**
@@ -92,3 +97,56 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 	return QGraphicsItem::itemChange(change, value);
 }
 
+/**
+ * [PROTECTED]
+ * Context menu
+ */
+void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	Q_UNUSED(event);
+	contextMenu.exec(QCursor::pos());
+}
+
+/**
+ * [PRIVATE]
+ * Create and inite che cantext menu
+ */
+void VirtualMachineItem::initContextMenu()
+{
+	ungroupAction = new QAction(tr("Ungroup items"), this);
+	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/small/delete_group")));
+	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
+	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
+	contextMenu.addAction(ungroupAction);
+	contextMenu.addAction(deleteAction);
+	
+	/* Connects */
+	connect(ungroupAction, SIGNAL(triggered()),
+			this, SLOT(ungroupActionCalled()));
+	connect(deleteAction, SIGNAL(triggered()),
+			this, SLOT(deleteVmActionCalled()));
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Ungroup action hanle
+ */
+void VirtualMachineItem::ungroupActionCalled()
+{
+	qDebug() << "ungroup called!";
+	removeFromGroup(vmSvg);
+	removeFromGroup(vmNameLabel);
+}
+
+
+/**
+ * [PRIVATE-SLOT]
+ * Delete action hanle
+ */
+void VirtualMachineItem::deleteVmActionCalled()
+{
+	QMessageBox::warning(NULL,
+			tr("NOT IMPLEMENTED"),
+			tr("This function is not implemented yet >_<"),
+			QMessageBox::Ok);
+}
