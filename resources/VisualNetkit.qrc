@@ -21,6 +21,9 @@
 		<file alias="folder_root">small_icons/folder_root.png</file>
 		<file alias="folder_vm">small_icons/folder_vm.png</file>
 		<file alias="file_conf">small_icons/file_conf.png</file>
+		<file alias="delete">small_icons/delete.png</file>
+		<file alias="delete_group">small_icons/delete_group.png</file>
+		<file alias="create_group">small_icons/create_group.png</file>
 	</qresource>
 	<qresource prefix="/svg" >
 		<file alias="cs_on">svg/collision_domain_on.svg</file>
