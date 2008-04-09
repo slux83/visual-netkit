@@ -16,23 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SvgItemPrivate.h"
-
+#ifndef LABELITEMPRIVATE_H_
+#define LABELITEMPRIVATE_H_
+#include <QGraphicsSimpleTextItem>
 
 /**
- * Constructor
+ * This is a private class used by group items to include a graphics label
+ * that have more features compared to the base QGraphicsSimpleTextItem Qt class
  */
-SvgItemPrivate::SvgItemPrivate(const QString & fileName, QGraphicsItemGroup *group, 
-		QGraphicsItem *parent) : QGraphicsSvgItem(fileName, parent)
+class LabelItemPrivate : public QGraphicsSimpleTextItem
 {
-	myGroup = group;
 	
-	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);	
-}
+public:
+	LabelItemPrivate(const QString & text, QGraphicsItem * parent = 0);
+	virtual ~LabelItemPrivate();
+};
 
-/**
- * Deconstructor
- */ 
-SvgItemPrivate::~SvgItemPrivate()
-{
-}
+#endif /*LABELITEMPRIVATE_H_*/

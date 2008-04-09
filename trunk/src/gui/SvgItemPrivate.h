@@ -21,6 +21,9 @@
 
 #include <QGraphicsSvgItem>
 #include <QDebug>
+#include <QMenu>
+#include <QObject>
+#include <QGraphicsSceneContextMenuEvent>
 
 /**
  * This is a private class used by group items to include an svg graphics item
@@ -28,13 +31,15 @@
  */
 class SvgItemPrivate : public QGraphicsSvgItem
 {
+	Q_OBJECT
+	
+private:
+	QGraphicsItemGroup *myGroup;
 	
 public:
-	SvgItemPrivate(const QString &fileName, QGraphicsItem *parent = 0);
+	SvgItemPrivate(const QString &fileName, QGraphicsItemGroup *group, 
+			QGraphicsItem *parent = 0);
 	virtual ~SvgItemPrivate();
-	
-protected:
-//	QRectF boundingRect() const;
 };
 
 #endif /*SVGITEMPRIVATE_H_*/

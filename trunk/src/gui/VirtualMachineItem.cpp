@@ -34,8 +34,8 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
 	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
 	
 	/* Set the default svg file: VmHost */
-	vmSvg = new SvgItemPrivate(svgFiles.value(type));
-	vmNameLabel = new QGraphicsSimpleTextItem(label);
+	vmSvg = new SvgItemPrivate(svgFiles.value(type), this);
+	vmNameLabel = new LabelItemPrivate(label);
 	vmNameLabel->setPos(0, 52);
 	vmNameLabel->setFont(GRAPHICS_FONT);
 	
@@ -104,6 +104,11 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	Q_UNUSED(event);
+	
+	/* enable restoreGroup if the label is separated */
+	restoreGroupAction->setDisabled((vmNameLabel->group() != NULL));
+	ungroupAction->setDisabled((vmNameLabel->group() == NULL));
+	
 	contextMenu.exec(QCursor::pos());
 }
 
@@ -117,7 +122,11 @@ void VirtualMachineItem::initContextMenu()
 	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/small/delete_group")));
 	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
+	restoreGroupAction = new QAction(tr("Restore group") , this);
+	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/small/create_group")));
+	
 	contextMenu.addAction(ungroupAction);
+	contextMenu.addAction(restoreGroupAction);
 	contextMenu.addAction(deleteAction);
 	
 	/* Connects */
@@ -125,6 +134,8 @@ void VirtualMachineItem::initContextMenu()
 			this, SLOT(ungroupActionCalled()));
 	connect(deleteAction, SIGNAL(triggered()),
 			this, SLOT(deleteVmActionCalled()));
+	connect(restoreGroupAction, SIGNAL(triggered()),
+				this, SLOT(restoreGroupActionCalled()));
 }
 
 /**
@@ -132,9 +143,8 @@ void VirtualMachineItem::initContextMenu()
  * Ungroup action hanle
  */
 void VirtualMachineItem::ungroupActionCalled()
-{
-	qDebug() << "ungroup called!";
-	removeFromGroup(vmSvg);
+{	
+	//The svg item remain inside the group!
 	removeFromGroup(vmNameLabel);
 }
 
@@ -149,4 +159,13 @@ void VirtualMachineItem::deleteVmActionCalled()
 			tr("NOT IMPLEMENTED"),
 			tr("This function is not implemented yet >_<"),
 			QMessageBox::Ok);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Restore the group
+ */
+void VirtualMachineItem::restoreGroupActionCalled()
+{	
+	addToGroup(vmNameLabel);
 }
