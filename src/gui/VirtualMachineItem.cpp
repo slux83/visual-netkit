@@ -32,7 +32,7 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
 	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
 	
 	/* Set the default svg file: VmHost */
-	vmSvg = new QGraphicsSvgItem(svgFiles.value(type));
+	vmSvg = new SvgItemPrivate(svgFiles.value(type));
 	vmNameLabel = new QGraphicsSimpleTextItem(label);
 	vmNameLabel->setPos(0, 52);
 	vmNameLabel->setFont(GRAPHICS_FONT);
@@ -43,7 +43,6 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
-	qDebug() << shape().boundingRect();
 }
 
 /**

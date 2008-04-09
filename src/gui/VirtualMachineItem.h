@@ -27,6 +27,7 @@
 #include <QVariant>
 
 #include "../common/Types.h"
+#include "SvgItemPrivate.h"
 
 /**
  * This class is a graphic (SVG) element of type Virtual Machine
@@ -37,7 +38,7 @@ class VirtualMachineItem : public QGraphicsItemGroup
 	
 private:
 	QMap<VmType, QString> svgFiles;
-	QGraphicsSvgItem *vmSvg;
+	SvgItemPrivate *vmSvg;
 	QGraphicsSimpleTextItem *vmNameLabel;
 	
 public:
