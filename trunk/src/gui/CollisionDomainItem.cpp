@@ -16,55 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VirtualMachineFactory.h"
+#include "CollisionDomainItem.h"
+#include "../common/CommonConfigs.h"
 
 /**
- * Init the null instance for the singletone factory
+ * Contructor
  */
-VirtualMachineFactory* VirtualMachineFactory::instance = NULL;
-
-/**
- * Constructor
- */
-VirtualMachineFactory::VirtualMachineFactory()
+CollisionDomainItem::CollisionDomainItem(QString label) 
+	: QObject(), QGraphicsItemGroup()
 {
+	/* init label and svg item */
+	myLabel = new LabelItemPrivate(label);
+	myLabel->setFont(GRAPHICS_FONT);
+	myLabel->setPos(0, 35);
+	
+	//by default the svg collision domain is marked as unconnected icon
+	collisionDomainSvg = new SvgItemPrivate(QString::fromUtf8(":/svg/cs_off"), this);
+	
+	addToGroup(collisionDomainSvg);
+	addToGroup(myLabel);
+	
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(1000);
 }
 
 /**
  * Deconstructor
  */
-VirtualMachineFactory::~VirtualMachineFactory()
+CollisionDomainItem::~CollisionDomainItem()
 {
 }
-
-/**
- * Get the correct factory
- */
-VirtualMachineFactory * VirtualMachineFactory::getInstance()
-{	
-	return instance;
-
-}
-
-/**
- * Geta a new instance of VirtualMachine giving the name and the
- * list of active daemons
- */
-VirtualMachine * VirtualMachineFactory::getNewVirtualMachine(QString name,
-		QList<Daemon> activeDaemons)
-{
-	VirtualMachine *m = new VirtualMachine(name);
-	QListIterator<Daemon> i(activeDaemons);
-	
-	//Active daemons in list
-	while(i.hasNext())
-	{
-		/* Set the daemon as active */
-		m->getDm()->setDaemonState(i.next(), true);
-	}
-	
-	return m;
-}
-
-
-
