@@ -110,22 +110,6 @@ SvgItemLink::SvgItemLink (QGraphicsItem *startNode, QGraphicsItem *endNode,
      painter->setBrush(myColor);
 
      QLineF centerLine(myStartNode->pos(), myEndNode->pos());
-     /*
-     QPolygonF endPolygon = myEndNode->polygon();
-     QPointF p1 = endPolygon.first() + myEndNode->pos();
-     QPointF p2;
-     QPointF intersectPoint;
-     QLineF polyLine;
-     for (int i = 1; i < endPolygon.count(); ++i) 
-     {
-	     p2 = endPolygon.at(i) + myEndNode->pos();
-	     polyLine = QLineF(p1, p2);
-	     QLineF::IntersectType intersectType = polyLine.intersect(centerLine, &intersectPoint);
-	     if (intersectType == QLineF::BoundedIntersection)
-	         break;
-	         p1 = p2;
-     }
-	 */
      
      int itemWidth = 48;	//per centrare il punto di attacco dei link
      int itemHeight = 48;

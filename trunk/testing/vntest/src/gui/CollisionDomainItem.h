@@ -39,8 +39,8 @@ class CollisionDomainItem : public QObject, public QGraphicsItem
 	Q_OBJECT
 	
 public:
-	CollisionDomainItem(QString *name, SvgItemLink *l1, SvgItemLink *l2, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
-	CollisionDomainItem(QString *name, QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+	CollisionDomainItem(QString *name, SvgItemLink *l1, SvgItemLink *l2, QGraphicsScene *scene = 0);
+	CollisionDomainItem(QString *name, LabScene *scene = 0);
 	~CollisionDomainItem();
 	
 	QRectF boundingRect() const;
@@ -66,6 +66,7 @@ private:
 	QGraphicsScene *scene;
 	
 	QList<SvgItemLink *> links;
+	QGraphicsItemGroup *labels;
 	
 };
 
