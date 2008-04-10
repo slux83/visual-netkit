@@ -18,7 +18,7 @@
 
 
 #include <QFont>
-
+#include <math.h>
 #include <QtDebug>
 
 #include "LabScene.h"
@@ -45,7 +45,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	border->setFlags(QGraphicsItem::ItemClipsToShape);
 	border->setZValue(100);
 	
-	/* Adde the border to this scene */
+	/* Add the border to this scene */
 	addItem(border);
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
@@ -77,6 +77,14 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	/* The user want to add an element? */
 	if(mouseEvent->button() == Qt::LeftButton)
 	{
+		qDebug()<<"-- tipo oggetto selezionato: "<< itemAt(mouseEvent->scenePos())->type();
+		if (itemAt(mouseEvent->scenePos())->type() == CollisionDomainItem::Type)
+			qDebug()<<"   CollisionDomain - SI";
+		else if (itemAt(mouseEvent->scenePos())->type() == VirtualMachineItem::Type)
+			qDebug()<<"   VirtualMachineItem - SI";
+		else
+			qDebug()<<"   ??";
+		
 		if (labHandler->getMainWindow()->actionAddVirtualMachine->isChecked()) {
 			qDebug() << "Adding a new wirtual machine.";
 			VmMapper::getInstance()->showAddVmForm();
@@ -92,24 +100,21 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		
 		//se non ho selezionato nessuno strumento
 		if (labHandler->getMainWindow()->actionManageGraph->isChecked()) {
-			/*
+			
 			//quando il cursore non è su alcun oggetto della scena,
-			if ( (itemAt(mouseEvent->scenePos()))->type() != VirtualMachineItem::Type ) {
+			if ( (itemAt(mouseEvent->scenePos()))->type() != VirtualMachineItem::Type &&
+				 (itemAt(mouseEvent->scenePos()))->type() != CollisionDomainItem::Type &&
+				 (itemAt(mouseEvent->scenePos()))->type() != LabelItem::Type && 
+				 (itemAt(mouseEvent->scenePos()))->type() != SvgItemLink::Type &&
+				 (itemAt(mouseEvent->scenePos()))->type() != QGraphicsItem::Type ) {
 				//se lo trascino col tasto sinistro premuto,
 				//disegno l'area di "selezionamento" e la aggiungo alla scena
-				
-				//selectionRect = new QGraphicsRectItem(QRectF(mouseEvent->scenePos(), mouseEvent->scenePos()));
-				
 				QRectF rect(mouseEvent->scenePos(), mouseEvent->scenePos());
-				qDebug() << "selectionRect" << selectionRect << rect;
 				selectionRect->setRect(rect);
-				qDebug() << "Valore rect inizializzata = " << selectionRect;
 				selectionRect->setPen(QPen(Qt::black, 1, Qt::DashLine, Qt::SquareCap, Qt::RoundJoin));
 	        	addItem(selectionRect);
-	        	
 			}
-			*/
-
+			
 		    QGraphicsScene::mousePressEvent(mouseEvent);
 		}
 	}
@@ -124,14 +129,12 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QLineF newLine(line->line().p1(), mouseEvent->scenePos());
         line->setLine(newLine);
     } else if (labHandler->getMainWindow()->actionManageGraph->isChecked()) {
-    	/*
-    	if (mouseEvent->button() == Qt::LeftButton) {
+    	
+    	if (selectionRect != NULL) {
 	    	//aggiorno le dimensioni dell'area di "selezionamento"
 	    	QRectF newRect(selectionRect->rect().topLeft(), mouseEvent->scenePos());
 	    	selectionRect->setRect(newRect);
-    		//selectionRect->setRect(QRectF(selectionRect->rect().topLeft(), mouseEvent->scenePos()));
     	}
-    	*/
     }
     
     QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -187,14 +190,6 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             cd->addLink(link1);				//associo il link1 al CollisionDomainItem
             cd->addLink(link2);				//associo il link2 al CollisionDomainItem
             
-            cd->setZValue(1000.0);
-            link1->setZValue(500.0);
-            link2->setZValue(500.0);
-            
-            //aggiorno le posizioni
-            link1->updatePosition();
-            link2->updatePosition();
-            
             //creo l'etichetta e l'associo al link
             //trovo il punto centrale del link
             QPointF start = startItems.first()->pos();
@@ -207,16 +202,40 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             LabelItem *ipLabel1 = new LabelItem(link1, this);
             //LabelItem *ipLabel2 = new LabelItem(link2, this);
             
-            
             ipLabel1->setPlainText(QString("LINK1"));
             //ipLabel2->setPlainText( QString(qgraphicsitem_cast<VirtualMachineItem *>(link2->startNode())->type()) );
             QFont font("Courier", 12, QFont::Bold, false);
             ipLabel1->setFont(font);
             //ipLabel2->setFont(font);
             ipLabel1->setPos(center);
+            
+            //ruoto l'etichetta per farla allineare al link
+            //qreal coeff = (end.y()-start.y())/(end.x()-start.x());
+            QLineF l(start, end);
+            qreal angle = ::acos(l.dx() / l.length());;
+            //deve essere tradotto in gradi
+            //ipLabel1->rotate((end.y()-start.y())/(end.x()-start.x()));
+            ipLabel1->rotate(angle);
+            //setAngle(qRound(rad * 180 / 3.14159265));
+            
             //ipLabel2->setPos(center);
             link1->addLabel(ipLabel1);
             //link2->addLabel(ipLabel2);
+            
+            //creo un gruppo tra link1 e label1
+            QList<QGraphicsItem*> list;
+            list.append(link1);
+            list.append(ipLabel1);
+            createItemGroup(list);
+            
+            //ordino su Z
+            cd->setZValue(1000.0);
+            link1->setZValue(500.0);
+            link2->setZValue(500.0);
+            
+            //aggiorno le posizioni
+            link1->updatePosition();
+            link2->updatePosition();
             
             //aggiungo gli elementi alla scena
             addItem(link1);
@@ -225,24 +244,21 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             addItem(ipLabel1);
             //addItem(ipLabel2);
             
-            //test per il paint del CollisionDomainItem
-            //CollisionDomainItem *cd = new CollisionDomainItem(new QString("C"), link, link);
-            //addItem(cd);
         }
     }
     line = NULL;
     
-    /*
-            
-    if (selectionRect != NULL && labHandler->getMainWindow()->actionManageGraph->isChecked()) {
+    if (selectionRect != NULL && !selectionRect->rect().isNull() && labHandler->getMainWindow()->actionManageGraph->isChecked()) {
     	QPainterPath path;
     	path.addRect(selectionRect->rect());
     	setSelectionArea(path);
     	removeItem(selectionRect);
-    	delete selectionRect;
+    	//delete selectionRect;
+    } else if (selectionRect->rect().isNull()) {
+    	removeItem(selectionRect);
+    	//delete selectionRect;
     }
-    selectionRect = NULL;
-    */
+    //selectionRect = NULL;
     
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }

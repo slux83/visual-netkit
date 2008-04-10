@@ -28,9 +28,11 @@
  * Contructor
  */
 CollisionDomainItem::CollisionDomainItem (QString *name, SvgItemLink *l1, SvgItemLink *l2, 
-						QGraphicsItem *parent, QGraphicsScene *s)
+										  QGraphicsScene *s) : QGraphicsItem()
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	labels = new QGraphicsItemGroup();
+	//labels->addToGroup(this);
 	scene = s;
 	myName = name;
 	link1 = l1;
@@ -42,9 +44,11 @@ CollisionDomainItem::CollisionDomainItem (QString *name, SvgItemLink *l1, SvgIte
 /**
  * Contructor
  */
-CollisionDomainItem::CollisionDomainItem (QString *name, QGraphicsItem *parent, QGraphicsScene *s)
+CollisionDomainItem::CollisionDomainItem (QString *name, LabScene *s)
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	labels = new QGraphicsItemGroup();
+	//labels->addToGroup(this);
 	scene = s;
 	myName = name;
 	myStartPoint = new QPointF(0,0);
@@ -124,11 +128,20 @@ void CollisionDomainItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	
 	painter->setPen(QPen(QBrush(Qt::black), 5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	QFont font("Helvetica", 14, QFont::Bold, false);
-	painter->drawText(myStartPoint->x() + (boundingRect().width())/2,
-					  myStartPoint->y() + (boundingRect().height())/2, 
-					  *myName);
+	//painter->drawText(myStartPoint->x() + (boundingRect().width())/2,
+	//				  myStartPoint->y() + (boundingRect().height())/2, 
+	//				  *myName);
 
-	//painter->drawText(QPointF(boundingRect().width()/3.2, boundingRect().height()*2/2.666), *myName);
+	QPointF *point = new QPointF(boundingRect().x() + boundingRect().width()/2 + 7.5, boundingRect().y() + boundingRect().height() + 30);
+	painter->drawText(*point, *myName);
+	
+	/*
+	LabelItem *l = new LabelItem(point, point);
+	l->setHtml("X\n192.168.1.0/24");
+	labels->addToGroup(l);
+	l->setPos(*point);
+	scene->addItem(l);
+	*/
 }
 
 

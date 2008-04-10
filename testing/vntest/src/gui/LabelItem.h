@@ -42,17 +42,20 @@ public:
 
     void setLinkStartPoint(QPointF *start);
     void setLinkEndPoint(QPointF *end);
+    //void setText(QString *text);
     
 signals:
     void lostFocus(LabelItem *item);
     void selectedChange(QGraphicsItem *item);
 
 private:
+	QString *text;
 	//Link start and end points
 	QPointF *start;
     QPointF *end;
     QGraphicsItem *parent;
     QGraphicsScene *scene;
+    qreal currentAngle;	//angolo di inclinazione
 	
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);

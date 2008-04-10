@@ -19,12 +19,15 @@
 #include <QtGui>
 #include "LabelItem.h"
 
+#include "math.h"
+
 LabelItem::LabelItem(QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsTextItem(parent, scene)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
     this->parent = parent;
     this->scene = scene;
+    currentAngle = 0;
 }
 
 LabelItem::LabelItem(QPointF *start, QPointF *end, QGraphicsItem *parent, QGraphicsScene *scene) : QGraphicsTextItem(parent, scene)
@@ -35,6 +38,7 @@ LabelItem::LabelItem(QPointF *start, QPointF *end, QGraphicsItem *parent, QGraph
     this->end = end;
     this->parent = parent;
     this->scene = scene;
+    currentAngle = 0;
 }
 
 void LabelItem::setLinkStartPoint(QPointF *start)
@@ -99,10 +103,34 @@ void LabelItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 }
 
 void LabelItem::updatePosition(QPointF p1, QPointF p2)
-{
+{	
+	//centro l'etichetta nel punto medio del link
 	QPointF center;
     center.setX((p2.x() + p1.x())*0.5);
     center.setY((p2.y() + p1.y())*0.5);
     setPos(center);
+    
+    QLineF line(p1, p2);
+    qreal Pi = 3.1415;
+    double angle = ::acos(line.dx() / line.length());
+    if (line.dy() >= 0) {
+		angle = (Pi * 2) - angle;
+		
+		QPointF lp1 = line.p1() + QPointF(sin(angle + Pi / 3),
+		                                 cos(angle + Pi / 3));
+		QPointF lp2 = line.p1() + QPointF(sin(angle + Pi - Pi / 3),
+                                         cos(angle + Pi - Pi / 3));
+	}
+    
+    //ruoto l'etichetta per allinearla parallelamente al link
+    /*
+    QLineF line(p1, p2);
+    qreal angle = line.angle(QLineF(0, 0, 10, 0));		//angolo tra il link e una retta parallela all'asse delle ascisse
+    
+    QLineF l(boundingRect().bottomLeft(), boundingRect().bottomRight());
+    currentAngle = l.angle(QLineF(0,0, 10,0));
+    
+    rotate(currentAngle - angle);
+    */
 }
 
