@@ -33,8 +33,9 @@
 #include "LabelItemPrivate.h"
 
 /**
- * This class is a graphic (SVG) element of type Virtual Machine
- * and cantain a label (it's a QGraphicsItemGroup)
+ * This class is a graphic group element of type Virtual Machine
+ * and cantain a label and a svg item showed as virtual machine
+ * (it's a QGraphicsItemGroup)
  */
 class VirtualMachineItem : public QObject, public QGraphicsItemGroup
 {

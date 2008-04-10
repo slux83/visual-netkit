@@ -58,6 +58,7 @@ private:
 	QString website;
 	QLinkedList<SuperGroup *> groups;
 	QMap<QString, VirtualMachine *> machines;
+	QMap<QString, CollisionDomain *> collisionDomais;
 	QDir labPath;
 	
 public:
@@ -89,7 +90,9 @@ public:
 	
 	/* Other functions */
 	bool vmExist(QString vmName) { return machines.contains(vmName); };
+	bool cdExist(QString cdName) { return collisionDomais.contains(cdName); };
 	void addMachine(VirtualMachine *vm);
+	void addCollisionDomain(CollisionDomain *cd);
 };
 
 #endif /*LABORATORY_H_*/

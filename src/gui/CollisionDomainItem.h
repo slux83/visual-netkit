@@ -16,28 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VIRTUALMACHINEFACTORY_H_
-#define VIRTUALMACHINEFACTORY_H_
+#ifndef COLLISIONDOMAINITEM_H_
+#define COLLISIONDOMAINITEM_H_
 
-#include "../VirtualMachine.h"
-#include "../../common/Types.h"
+#include <QGraphicsItemGroup>
+#include <QSvgRenderer>
 #include <QString>
-#include <QList>
+#include <QDebug>
+#include <QVariant>
+#include <QMenu>
+#include <QObject>
+#include <QGraphicsSceneContextMenuEvent>
+
+#include "SvgItemPrivate.h"
+#include "LabelItemPrivate.h"
 
 /**
- * Factory for VirtualMachine
+ * This class is a graphic group element of type Virtual Machine
+ * and cantain a label and a svg item showed as virtual machine
+ * (it's a QGraphicsItemGroup)
  */
-class VirtualMachineFactory
+class CollisionDomainItem :public QObject, public QGraphicsItemGroup
 {
-	
+	Q_OBJECT
+
 private:
-	static VirtualMachineFactory *instance;
-	
+	SvgItemPrivate *collisionDomainSvg;
+	LabelItemPrivate *myLabel;
+
 public:
-	VirtualMachineFactory();
-	virtual ~VirtualMachineFactory();
-	static VirtualMachineFactory * getInstance();
-	VirtualMachine * getNewVirtualMachine(QString name, QList<Daemon> activeDaemons);
+	CollisionDomainItem(QString label);
+	virtual ~CollisionDomainItem();
 };
 
-#endif /*VIRTUALMACHINEFACTORY_H_*/
+#endif /*COLLISIONDOMAINITEM_H_*/

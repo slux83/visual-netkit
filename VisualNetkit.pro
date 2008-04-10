@@ -19,7 +19,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/LabelItemPrivate.h \
+HEADERS = src/gui/CollisionDomainItem.h \
+    src/gui/LabelItemPrivate.h \
     src/gui/SvgItemPrivate.h \
     src/common/CommonConfigs.h \
     src/gui/handles/VmMapper.h \
@@ -29,7 +30,6 @@ HEADERS = src/gui/LabelItemPrivate.h \
     src/common/Errors.h \
     src/common/NetworkAddress.h \
     src/common/Types.h \
-    src/core/factories/VirtualMachineFactory.h \
     src/core/handles/LabFacadeController.h \
     src/gui/handles/LabHandler.h \
     src/gui/handles/LabPropertyController.h \
@@ -45,14 +45,14 @@ HEADERS = src/gui/LabelItemPrivate.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/LabelItemPrivate.cpp \
+SOURCES = src/gui/CollisionDomainItem.cpp \
+    src/gui/LabelItemPrivate.cpp \
     src/gui/SvgItemPrivate.cpp \
     src/gui/handles/VmMapper.cpp \
     src/core/handles/VmFacadeController.cpp \
     src/gui/undoCommands/UndoCommands.cpp \
     src/gui/UndoStack.cpp \
     src/common/NetworkAddress.cpp \
-    src/core/factories/VirtualMachineFactory.cpp \
     src/core/handles/LabFacadeController.cpp \
     src/gui/handles/LabHandler.cpp \
     src/gui/handles/LabPropertyController.cpp \

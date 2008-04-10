@@ -19,7 +19,8 @@
 #ifndef VMFACADECONTROLLER_H_
 #define VMFACADECONTROLLER_H_
 
-#include "../factories/VirtualMachineFactory.h"
+//#include "../factories/VirtualMachineFactory.h"
+#include "../VirtualMachine.h"
 
 /**
  * The facade controller for the actions on VMs

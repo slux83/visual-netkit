@@ -38,6 +38,9 @@ private:
 public:
 	CollisionDomain(QString newName);
 	virtual ~CollisionDomain();
+	
+	/* Setter and getter functions */
+	QString getName() { return name; };
 };
 
 #endif /*COLLISIONDOMAIN_H_*/

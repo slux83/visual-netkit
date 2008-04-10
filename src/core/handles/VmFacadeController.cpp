@@ -52,11 +52,21 @@ VmFacadeController* VmFacadeController::getInstance()
 }
 
 /**
- * Create a new vm (foward request to factory)
+ * Create a new instance of VirtualMachine [by-creator]
  */
 VirtualMachine* VmFacadeController::createNewVirtualMachine(QString name,
 		QList<Daemon> activeDaemons)
 {
-	return VirtualMachineFactory::getInstance()->getNewVirtualMachine(name, activeDaemons);
+	VirtualMachine *m = new VirtualMachine(name);
+	QListIterator<Daemon> i(activeDaemons);
+	
+	//Active daemons in list
+	while(i.hasNext())
+	{
+		/* Set the daemon as active */
+		m->getDm()->setDaemonState(i.next(), true);
+	}
+	
+	return m;
 }
 
