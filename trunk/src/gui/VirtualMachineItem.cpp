@@ -79,6 +79,7 @@ void VirtualMachineItem::changeSvgFile(VmType type)
  */
 QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
+	//qDebug() << boundingRect() << boundingRect().x() << boundingRect().y();
 	if (change == ItemPositionChange && scene())
 	{
 		// value is the new position.

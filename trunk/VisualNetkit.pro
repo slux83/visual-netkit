@@ -5,7 +5,8 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/addVm.ui \
+FORMS += ui/addCd.ui \
+    ui/addVm.ui \
     ui/main.ui \
     ui/fileEdit.ui
 QT += core \
@@ -19,7 +20,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/CollisionDomainItem.h \
+HEADERS = src/gui/handles/CdMapper.h \
+    src/gui/AddCdForm.h \
+    src/gui/CollisionDomainItem.h \
     src/gui/LabelItemPrivate.h \
     src/gui/SvgItemPrivate.h \
     src/common/CommonConfigs.h \
@@ -45,7 +48,9 @@ HEADERS = src/gui/CollisionDomainItem.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/CollisionDomainItem.cpp \
+SOURCES = src/gui/handles/CdMapper.cpp \
+    src/gui/AddCdForm.cpp \
+    src/gui/CollisionDomainItem.cpp \
     src/gui/LabelItemPrivate.cpp \
     src/gui/SvgItemPrivate.cpp \
     src/gui/handles/VmMapper.cpp \

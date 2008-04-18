@@ -19,6 +19,7 @@
 #include "LabScene.h"
 #include "handles/LabHandler.h"
 #include "handles/VmMapper.h"
+#include "handles/CdMapper.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -68,13 +69,23 @@ LabScene::~LabScene()
  */
 void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {	
+	MainWindow *m = LabHandler::getInstance()->getMainWindow();
+	
 	/* The user want to add an element? */
-	if(mouseEvent->button() == Qt::LeftButton &&
-			LabHandler::getInstance()->getMainWindow()->actionAddVirtualMachine->isChecked())
+	if(mouseEvent->button() == Qt::LeftButton && 
+			m->actionAddVirtualMachine->isChecked())
 	{
-		qDebug() << "Adding a new wirtual machine.";
+		qDebug() << "Adding a new virtual machine.";
 		
 		VmMapper::getInstance()->showAddVmForm(mouseEvent->scenePos());
+	}
+	
+	if(mouseEvent->button() == Qt::LeftButton && 
+			m->actionAddCollisionDomain->isChecked())
+	{
+		qDebug() << "Adding a new collision domain.";
+		
+		CdMapper::getInstance()->showAddCdForm(mouseEvent->scenePos());
 	}
 	
 	QGraphicsScene::mousePressEvent(mouseEvent);
