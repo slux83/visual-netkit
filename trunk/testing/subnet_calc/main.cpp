@@ -18,7 +18,11 @@ int main(int argc, char *argv[])
 	 * if key don't exist the map return a QHostAddress empty (verify with isNull()
 	 * if the value don't exist, the map return 0 (invalid netmask) 
 	 */
-	qDebug() << maskMapping.key(QHostAddress("10.0.0.0"));
+	//qDebug() << maskMapping.key(QHostAddress("10.0.0.0"));
+	
+	QHostAddress some("10.0.0.21");
+	QHostAddress some_mask("128.0.0.0");
+	qDebug() << QHostAddress(some.toIPv4Address() & some_mask.toIPv4Address());
 	
 	return 0;
 }
