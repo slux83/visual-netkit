@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="cdSubnetLineEdit" />
+      <widget class="QLineEdit" name="subnetLineEdit" />
      </item>
     </layout>
    </item>
@@ -97,29 +97,13 @@
  <connections>
   <connection>
    <sender>cdFormConfirmBox</sender>
-   <signal>accepted()</signal>
-   <receiver>AddCdForm</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cdFormConfirmBox</sender>
    <signal>rejected()</signal>
    <receiver>AddCdForm</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
      <x>286</x>
