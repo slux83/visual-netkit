@@ -23,7 +23,10 @@
 #include <QObject>
 #include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
+#include "../CollisionDomainItem.h"
+#include "../../core/CollisionDomain.h"
 #include "../handles/VmMapper.h"
+#include "../handles/CdMapper.h"
 
 /**
  * [COMMAND]
@@ -45,5 +48,30 @@ public:
 	void undo();
 	void redo();
 };
+
+/******************************************************************************/
+
+
+/**
+ * [COMMAND]
+ * Add a collision domain command.
+ */
+class AddCdCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	CollisionDomainItem *cdItem;
+	CollisionDomain *cd;
+	
+public:
+	AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newCd,
+			QUndoCommand *parent = 0);
+	virtual ~AddCdCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
+
 
 #endif /*UNDOCOMMANDS_H_*/

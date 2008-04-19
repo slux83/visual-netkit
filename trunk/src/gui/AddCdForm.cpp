@@ -40,9 +40,14 @@ AddCdForm::AddCdForm(QWidget *parent) : QDialog(parent)
 				width(),
 				height());
 	
+	cdHandler = CdHandler::getInstance();
+	
 	/* Connects */
 	connect(cdFormConfirmBox, SIGNAL(accepted()),
 			this, SLOT(handleUserConfirm()));
+	
+	connect(this, SIGNAL(userAddCd(QString, NetworkAddress *, QPointF)),
+				cdHandler, SLOT(handleAddNewCd(QString, NetworkAddress *, QPointF)));	
 }
 
 /**
@@ -191,9 +196,13 @@ void AddCdForm::handleUserConfirm()
 	}
 	
 	/**
-	 * ok, all seems correct
+	 * ok, all seems correct.. emit a signal, clear gui and close
 	 */
-	//TODO
+	emit userAddCd(cdName, cdSubnet, cdPos);
+	
+	cdNameLineEdit->clear();
+	subnetLineEdit->clear();
+	close();
 
 error:
 	return;

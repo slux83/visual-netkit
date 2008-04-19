@@ -21,9 +21,10 @@
 /**
  * Constructor with the name
  */
-CollisionDomain::CollisionDomain(QString newName)
+CollisionDomain::CollisionDomain(QString newName, NetworkAddress *subnet)
 {
 	name = newName;
+	address = subnet;
 }
 
 /**
@@ -31,5 +32,5 @@ CollisionDomain::CollisionDomain(QString newName)
  */
 CollisionDomain::~CollisionDomain()
 {
-	
+	delete address;
 }

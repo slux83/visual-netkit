@@ -59,3 +59,19 @@ void CdMapper::showAddCdForm(QPointF pos)
 	addCdForm->setCollisionDomainPos(pos);
 	addCdForm->show();
 }
+
+/**
+ * Add a new mapping
+ */
+void CdMapper::addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd)
+{
+	//add mapping
+	mappings.insert(cdItem, cd);
+	LabHandler *labHandler = LabHandler::getInstance();
+	labHandler->getMainWindow()->graphicsView->scene()->addItem(cdItem);
+	labHandler->getMainWindow()->graphicsView->ensureVisible(cdItem);
+	
+	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain: ") +
+			cd->getName() + " [" + cd->getSubnet()->toString(false) + "]");
+}
+
