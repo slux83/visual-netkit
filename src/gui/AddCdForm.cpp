@@ -17,7 +17,12 @@
  */
 
 #include "AddCdForm.h"
+#include "handles/CdHandler.h"
+
 #include <QDesktopWidget>
+#include <QStringList>
+#include <QHostAddress>
+#include <QMessageBox>
 
 /**
  * Constructor
@@ -54,5 +59,143 @@ AddCdForm::~AddCdForm()
  */
 void AddCdForm::handleUserConfirm()
 {
+	QString cdName = cdNameLineEdit->text();
+	QStringList subnet = subnetLineEdit->text().split("/");
+	NetworkAddress *cdSubnet = new NetworkAddress();
+	quint8 cidrNetmask = 0;
+	
+	/*
+	 * Checks on cd name
+	 */
+	if(cdName.trimmed() == "")
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+				tr("The collision domain name cannot be empty!"),
+				QMessageBox::Ok);
+		
+		goto error;
+	}
+	
+	if(CdHandler::getInstance()->cdNameExist(cdName))
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+				tr("The collision domain name must be unique!\nPlease, retry."),
+				QMessageBox::Ok);
+		
+		goto error;
+	}
+	
+	/*
+	 * Checks on subnet
+	 */
+	if(subnet.size() != 2)
+	{	
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+				tr("Subnet not valid."),
+				QMessageBox::Ok);
+		
+		goto error;
+	}
+	else
+	{
+		QString networkString = subnet[0];
+		QString netmaskString = subnet[1];
+		
+		/* CIDR notation for the netmask? */
+		bool isInt;
+		cidrNetmask = netmaskString.toInt(&isInt);
+		
+		/* Maybe the netmask is in normal notation? 255.255.0.0 */
+		if(!isInt)
+		{
+			QHostAddress netmask(netmaskString);
+			qDebug() << netmask << netmaskString;
+			if(!NetworkAddress::validateNetmask(netmask))
+			{
+				/* Show a warning message */
+				QMessageBox::warning(this, tr("VisualNetkit - Error"),
+						tr("Invalid netmask."),
+						QMessageBox::Ok);
+				
+				goto error;
+			}
+			else //Netmask ok
+			{
+				cdSubnet->setNetmask(QHostAddress(netmaskString));				
+			}				
+			
+		}
+		else
+		{
+			/* Validate cidr netmask */
+			if(cidrNetmask > 32 || cidrNetmask < 1)			
+			{
+				/* Show a warning message */
+				QMessageBox::warning(this, tr("VisualNetkit - Error"),
+						tr("Invalid netmask.\nIn the CIDR nonation the netmask is included between 1 and 32."),
+						QMessageBox::Ok);
+				
+				goto error;	
+				
+			}
+			else	//save the netmask
+			{
+				cdSubnet->setCidrNetmask(cidrNetmask);
+			}
+				
+		}
+		
+		/* Check the network */
+		if(!NetworkAddress::validateIp(networkString))
+		{
+			/* Show a warning message */
+			QMessageBox::warning(this, tr("VisualNetkit - Error"),
+					tr("Invalid Network."),
+					QMessageBox::Ok);
+			
+			goto error;				
+		}
+		
+		/* 
+		 * Network is inside the netmask? ok, transale it
+		 * (10.0.1.3/24 -> 10.0.1.0/24) 
+		 */
+		if(NetworkAddress::toGeneralNetwork(QHostAddress(networkString), cdSubnet->netmask())
+			!= QHostAddress(networkString))
+		{
+			QString question =
+						"You have inserted this subnet: " + networkString + "/"
+						+ cdSubnet->netmask().toString()
+						+ "\nThe correct network for the gived netmask is:\n"
+						+ NetworkAddress::toGeneralNetwork(QHostAddress(networkString), cdSubnet->netmask()).toString()
+						+ "\n\nContinue?";
+			
+			int ret = QMessageBox::question(this, tr("VisualNetkit - Warning"),
+				tr(question.toUtf8()),
+				QMessageBox::Yes | QMessageBox::No,
+				QMessageBox::Yes);
+			
+			if(ret == QMessageBox::Yes)
+			{
+				cdSubnet->setIp(NetworkAddress::toGeneralNetwork(QHostAddress(networkString), cdSubnet->netmask()));
+			}
+			else
+				goto error;
+		}
+		else
+			cdSubnet->setIp(QHostAddress(networkString));
+			
+	}
+	
+	/**
+	 * ok, all seems correct
+	 */
+	//TODO
+
+error:
+	return;
 	
 }

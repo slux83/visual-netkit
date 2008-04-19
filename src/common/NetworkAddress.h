@@ -20,6 +20,7 @@
 #define NETWORKADDRESS_H_
 
 #include <QNetworkAddressEntry>
+#include <QRegExp>
 
 /**
  * This class extend QNetworkAddressEntry, and offer some useful functions.
@@ -39,8 +40,12 @@ public:
 	NetworkAddress(QHostAddress ip, QHostAddress netmask);
 	NetworkAddress(QHostAddress ip, quint8 netmaskCidr);
 	virtual ~NetworkAddress();
+	void setCidrNetmask(quint8 cidrNetmask);
 	QString toString(bool cidr = true);
-
+	bool isValidNetmask();
+	static QHostAddress toGeneralNetwork(QHostAddress ip, QHostAddress netmask);
+	static bool validateNetmask(QHostAddress netmask);
+	static bool validateIp(QString ip);
 };
 
 #endif /*NETWORKADDRESS_H_*/

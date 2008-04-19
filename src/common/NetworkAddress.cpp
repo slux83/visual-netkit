@@ -92,3 +92,64 @@ QString NetworkAddress::toString(bool cidr)
 	else		//10.0.0.1/255.0.0.0
 		return QString(ip().toString() + "/" + netmask().toString());
 }
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the network gived an ip and the netmask
+ * (ip & netmask)
+ */
+QHostAddress NetworkAddress::toGeneralNetwork(QHostAddress ip, QHostAddress netmask)
+{
+	return QHostAddress(ip.toIPv4Address() & netmask.toIPv4Address());
+}
+
+/**
+ * [STATIC-PUBIC]
+ * Validate a netmask
+ */
+bool NetworkAddress::validateNetmask(QHostAddress netmask)
+{
+	bool valid = false;
+	for(int i=1; i<33; i++)
+	{
+		if(QHostAddress((QHostAddress(QHostAddress::Broadcast).toIPv4Address() << (32 - i))) == netmask)
+		{
+			valid = true;
+			break;
+		}
+	}
+	
+	return valid;
+}
+
+/**
+ * [STATIC-PUBLIC]
+ * Validate an ip address (ipv4)
+ */
+bool NetworkAddress::validateIp(QString ip)
+{
+	//Regular expression
+	QRegExp ipRegExp("(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)(?:\\.(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)){3}", 
+					Qt::CaseSensitive, QRegExp::RegExp2);
+	
+	return (ipRegExp.exactMatch(ip));
+}
+
+/**
+ * [PUBLIC]
+ * Check a netmask if is valid
+ */
+bool NetworkAddress::isValidNetmask()
+{
+	return (netmaskMapping.key(netmask()) != 0);
+}
+
+/**
+ * [PUBLIC]
+ * Set the netmask gived the CIDR notation
+ * (ussuming a correct cidr value)
+ */
+void NetworkAddress::setCidrNetmask(quint8 cidrNetmask)
+{
+	setNetmask(cidr2netmask(cidrNetmask));
+}
