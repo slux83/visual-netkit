@@ -52,3 +52,41 @@ void AddVmCommand::undo()
 {
 	//TODO
 }
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+AddCdCommand::AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newCd,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	cdItem = newCdItem;
+	cd = newCd;
+	setText(tr("Added a new collision domain: ") + cd->getName() +
+			"[" + cd->getSubnet()->toString(true) + "]");
+}
+
+/**
+ * Deconstructor
+ */ 
+AddCdCommand::~AddCdCommand()
+{
+}
+
+/**
+ * Redo action
+ */
+void AddCdCommand::redo()
+{
+	//show and connect view & domain machines
+	CdMapper::getInstance()->addNewMapping(cdItem, cd);
+}
+
+/**
+ * Undo action
+ */
+void AddCdCommand::undo()
+{
+	//TODO
+}

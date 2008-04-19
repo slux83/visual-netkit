@@ -23,6 +23,8 @@
 #include <QDebug>
 #include <QPointF>
 #include "ui_addCd.h"
+#include "../common/NetworkAddress.h"
+#include "handles/CdHandler.h"
 
 /**
  * This class implement the form for add collision domain action
@@ -33,6 +35,7 @@ class AddCdForm : public QDialog, public Ui::AddCdForm
 	
 private:
 	QPointF cdPos;
+	CdHandler *cdHandler;
 
 public:
 	AddCdForm(QWidget *parent = 0);
@@ -41,6 +44,10 @@ public:
 	
 private slots:
 	void handleUserConfirm();
+
+signals:
+	void userAddCd(QString cdName, NetworkAddress *subnet, QPointF pos);
 };
+
 
 #endif /*ADDCDFORM_H_*/

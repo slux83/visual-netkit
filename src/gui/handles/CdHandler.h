@@ -16,32 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COLLISIONDOMAIN_H_
-#define COLLISIONDOMAIN_H_
+#ifndef CDHANDLER_H_
+#define CDHANDLER_H_
 
-#include <QNetworkAddressEntry>
-#include <QLinkedList>
-#include <QString>
+#include "../../core/handles/LabFacadeController.h"
+#include "LabHandler.h"
+#include <QPointF>
 
-#include "../common/NetworkAddress.h"
-
-class HardwareInterface;
-
-class CollisionDomain
+/**
+ * This class is the controller for the collision domain operations
+ */
+class CdHandler : public QObject
 {
-
+	Q_OBJECT
+	
 private:
-	QString name;
-	NetworkAddress *address;
-	QLinkedList<HardwareInterface *> peers;
+	LabFacadeController *labFacadeController;
+	LabHandler *labHandler;
+	static CdHandler *instance;
 
 public:
-	CollisionDomain(QString newName, NetworkAddress *subnet);
-	virtual ~CollisionDomain();
+	CdHandler();
+	virtual ~CdHandler();
+	static CdHandler* getInstance();
+	bool cdNameExist(QString cdNameToCheck);
 	
-	/* Setter and getter functions */
-	QString getName() { return name; };
-	NetworkAddress* getSubnet() { return address; };
+public slots:
+	void handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF pos);
+	
 };
 
-#endif /*COLLISIONDOMAIN_H_*/
+#endif /*CDHANDLER_H_*/

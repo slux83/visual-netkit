@@ -21,7 +21,10 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QMap>
 #include "../AddCdForm.h"
+#include "../CollisionDomainItem.h"
+#include "../../core/CollisionDomain.h"
 
 /**
  * This class is the singleton controller for the collision domain
@@ -34,12 +37,16 @@ class CdMapper : public QObject
 private:
 	static CdMapper *instance;
 	AddCdForm *addCdForm;
+	
+	/* the pair: <VIEW, DOMAIN> */
+	QMap<CollisionDomainItem*, CollisionDomain*> mappings;
 
 public:
 	CdMapper();
 	virtual ~CdMapper();
 	static CdMapper* getInstance();
 	void showAddCdForm(QPointF pos);
+	void addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd);
 };
 
 #endif /*CDMAPPER_H_*/
