@@ -28,7 +28,7 @@
 #include <QObject>
 #include <QGraphicsSceneContextMenuEvent>
 
-#include "../common/Types.h"
+#include "../common/CommonConfigs.h"
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
 
@@ -49,6 +49,7 @@ private:
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
+	bool isJoin;
 	
 	void initContextMenu();
 	
@@ -57,6 +58,9 @@ public:
 	virtual ~VirtualMachineItem();
 	void changeSvgFile(VmType type);
 
+	/* Reimpl */
+	int type() const { return UserType + VmItem; };
+	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

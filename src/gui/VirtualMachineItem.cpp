@@ -17,7 +17,6 @@
  */
 
 #include "VirtualMachineItem.h"
-#include "../common/CommonConfigs.h"
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -29,6 +28,8 @@
 VirtualMachineItem::VirtualMachineItem(QString label, VmType type) 
 	: QObject(), QGraphicsItemGroup()
 {
+	isJoin = true; //start witha joined group
+	
 	/* Fill the filemap */
 	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
 	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
@@ -107,8 +108,8 @@ void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	Q_UNUSED(event);
 	
 	/* enable restoreGroup if the label is separated */
-	restoreGroupAction->setDisabled((vmNameLabel->group() != NULL));
-	ungroupAction->setDisabled((vmNameLabel->group() == NULL));
+	restoreGroupAction->setDisabled(isJoin);
+	ungroupAction->setDisabled(!isJoin);
 	
 	contextMenu.exec(QCursor::pos());
 }
@@ -147,6 +148,7 @@ void VirtualMachineItem::ungroupActionCalled()
 {	
 	//The svg item remain inside the group!
 	removeFromGroup(vmNameLabel);
+	isJoin = false;
 }
 
 
@@ -169,4 +171,5 @@ void VirtualMachineItem::deleteVmActionCalled()
 void VirtualMachineItem::restoreGroupActionCalled()
 {	
 	addToGroup(vmNameLabel);
+	isJoin = true;
 }

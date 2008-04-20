@@ -17,7 +17,6 @@
  */
 
 #include "CollisionDomainItem.h"
-#include "../common/CommonConfigs.h"
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -28,6 +27,9 @@
 CollisionDomainItem::CollisionDomainItem(QString label) 
 	: QObject(), QGraphicsItemGroup()
 {
+	//the group is joined
+	isJoin = true;
+	
 	/* init label and svg item */
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setFont(GRAPHICS_FONT);
@@ -114,8 +116,8 @@ void CollisionDomainItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event
 	Q_UNUSED(event);
 	
 	/* enable restoreGroup if the label is separated */
-	restoreGroupAction->setDisabled((myLabel->group() != NULL));
-	ungroupAction->setDisabled((myLabel->group() == NULL));
+	restoreGroupAction->setDisabled(isJoin);
+	ungroupAction->setDisabled(!isJoin);
 	
 	contextMenu.exec(QCursor::pos());
 }
@@ -128,6 +130,7 @@ void CollisionDomainItem::ungroupActionCalled()
 {	
 	//The svg item remain inside the group!
 	removeFromGroup(myLabel);
+	isJoin = false;
 }
 
 
@@ -150,4 +153,5 @@ void CollisionDomainItem::deleteVmActionCalled()
 void CollisionDomainItem::restoreGroupActionCalled()
 {	
 	addToGroup(myLabel);
+	isJoin = true;
 }
