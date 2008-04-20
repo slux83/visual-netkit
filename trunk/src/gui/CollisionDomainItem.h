@@ -36,17 +36,32 @@
  * and cantain a label and a svg item showed as virtual machine
  * (it's a QGraphicsItemGroup)
  */
-class CollisionDomainItem :public QObject, public QGraphicsItemGroup
+class CollisionDomainItem : public QObject, public QGraphicsItemGroup
 {
 	Q_OBJECT
 
 private:
 	SvgItemPrivate *collisionDomainSvg;
 	LabelItemPrivate *myLabel;
+	QMenu contextMenu;
+	QAction *ungroupAction;
+	QAction *restoreGroupAction;
+	QAction *deleteAction;
+	
+	void initContextMenu();
 
 public:
 	CollisionDomainItem(QString label);
 	virtual ~CollisionDomainItem();
+
+protected:
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	
+private slots:
+	void ungroupActionCalled();
+	void deleteVmActionCalled();
+	void restoreGroupActionCalled();
 };
 
 #endif /*COLLISIONDOMAINITEM_H_*/

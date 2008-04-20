@@ -115,7 +115,7 @@ void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 /**
  * [PRIVATE]
- * Create and inite che cantext menu
+ * Create and initiate the cantext menu
  */
 void VirtualMachineItem::initContextMenu()
 {
