@@ -47,4 +47,13 @@ enum SuperGroupType
 	Uncategorized = 1
 };
 
+/**
+ * Enumeration for graphics item groups
+ */
+enum ItemType
+{
+	VmItem = 1,
+	CdItem = 2
+};
+
 #endif /*TYPES_H_*/

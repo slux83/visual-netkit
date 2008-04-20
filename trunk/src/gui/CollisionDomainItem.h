@@ -30,6 +30,7 @@
 
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
+#include "../common/CommonConfigs.h"
 
 /**
  * This class is a graphic group element of type Virtual Machine
@@ -47,13 +48,17 @@ private:
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
+	bool isJoin;
 	
 	void initContextMenu();
 
 public:
 	CollisionDomainItem(QString label);
 	virtual ~CollisionDomainItem();
-
+	
+	/* Reimpl */
+	int type() const { return UserType + CdItem; };
+	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
