@@ -18,6 +18,9 @@
 
 #include "CollisionDomainItem.h"
 #include "../common/CommonConfigs.h"
+#include <QGraphicsScene>
+#include <QCursor>
+#include <QMessageBox>
 
 /**
  * Contructor
@@ -38,6 +41,9 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
+	
+	/* init the context menu */
+	initContextMenu();
 }
 
 /**
@@ -45,4 +51,103 @@ CollisionDomainItem::CollisionDomainItem(QString label)
  */
 CollisionDomainItem::~CollisionDomainItem()
 {
+}
+
+/**
+ * [PRIVATE]
+ * Create and initiate the cantext menu
+ */
+void CollisionDomainItem::initContextMenu()
+{
+	ungroupAction = new QAction(tr("Ungroup items"), this);
+	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/small/delete_group")));
+	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
+	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
+	restoreGroupAction = new QAction(tr("Restore group") , this);
+	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/small/create_group")));
+	
+	contextMenu.addAction(ungroupAction);
+	contextMenu.addAction(restoreGroupAction);
+	contextMenu.addAction(deleteAction);
+	
+	/* Connects */
+	connect(ungroupAction, SIGNAL(triggered()),
+			this, SLOT(ungroupActionCalled()));
+	connect(deleteAction, SIGNAL(triggered()),
+			this, SLOT(deleteVmActionCalled()));
+	connect(restoreGroupAction, SIGNAL(triggered()),
+				this, SLOT(restoreGroupActionCalled()));
+}
+
+/**
+ * [PROTECTED]
+ * Control the moviment of this item and don't permit that it's drowed outside
+ * the scene rect
+ */
+QVariant CollisionDomainItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	//qDebug() << boundingRect() << boundingRect().x() << boundingRect().y();
+	if (change == ItemPositionChange && scene())
+	{
+		// value is the new position.
+		QPointF newPos = value.toPointF();
+		QRectF rect = scene()->sceneRect();
+
+		// Keep the item inside the scene rect. (- 2 is a padding)
+		newPos.setX(qMin(rect.right() - boundingRect().width() - 2,
+				qMax(newPos.x(), rect.left())));
+		newPos.setY(qMin(rect.bottom()- boundingRect().height() - 2,
+				qMax(newPos.y(), rect.top())));
+
+		return newPos;
+	}
+	
+	return QGraphicsItem::itemChange(change, value);
+}
+
+/**
+ * [PROTECTED]
+ * Context menu
+ */
+void CollisionDomainItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	Q_UNUSED(event);
+	
+	/* enable restoreGroup if the label is separated */
+	restoreGroupAction->setDisabled((myLabel->group() != NULL));
+	ungroupAction->setDisabled((myLabel->group() == NULL));
+	
+	contextMenu.exec(QCursor::pos());
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Ungroup action hanle
+ */
+void CollisionDomainItem::ungroupActionCalled()
+{	
+	//The svg item remain inside the group!
+	removeFromGroup(myLabel);
+}
+
+
+/**
+ * [PRIVATE-SLOT]
+ * Delete action hanle
+ */
+void CollisionDomainItem::deleteVmActionCalled()
+{
+	QMessageBox::warning(NULL,
+			tr("NOT IMPLEMENTED"),
+			tr("This function is not implemented yet >_<"),
+			QMessageBox::Ok);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Restore the group
+ */
+void CollisionDomainItem::restoreGroupActionCalled()
+{	
+	addToGroup(myLabel);
 }
