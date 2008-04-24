@@ -57,6 +57,7 @@ public:
 	VirtualMachineItem(QString label, VmType type = Host) ;
 	virtual ~VirtualMachineItem();
 	void changeSvgFile(VmType type);
+	QString getLabel() { return vmNameLabel->text(); };
 
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };

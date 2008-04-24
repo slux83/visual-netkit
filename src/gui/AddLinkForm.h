@@ -20,9 +20,12 @@
 #define ADDLINKFORM_H_
 
 #include <QDialog>
+#include <QWidget>
+#include "VirtualMachineItem.h"
+#include "CollisionDomainItem.h"
 #include "ui_addLink.h"
 
-class AddLinkForm : public QDialog, public Ui::AddCdForm
+class AddLinkForm : public QDialog, public Ui::AddLinkForm
 {
 	
 private:
@@ -30,9 +33,9 @@ private:
 	CollisionDomainItem* cdItem;
 	
 public:
-	AddLinkForm(QWidget *parent = 0);
+	AddLinkForm(QWidget *parent=0);
 	virtual ~AddLinkForm();
-	void updateItems(VitualMachineItem *vm, CollisionDomainItem* cd) { vmItem = vm; cdItem = cd; };
+	void updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd);
 };
 
 #endif /*ADDLINKFORM_H_*/

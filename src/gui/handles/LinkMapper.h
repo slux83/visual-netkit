@@ -22,6 +22,9 @@
 #include <QObject>
 #include <QGraphicsItemGroup>
 #include "../../core/HardwareInterface.h"
+#include "../AddLinkForm.h"
+#include "../VirtualMachineItem.h"
+#include "../../core/VirtualMachine.h"
 
 class LinkMapper : QObject
 {
@@ -29,6 +32,7 @@ class LinkMapper : QObject
 	
 private:
 	static LinkMapper* instance;
+	AddLinkForm *addLinkForm;
 	
 	/* the pair: <VIEW, DOMAIN> */
 	QMap<QGraphicsItemGroup*, HardwareInterface*> mappings;
