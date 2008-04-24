@@ -12,7 +12,8 @@ FORMS += ui/addCd.ui \
 QT += core \
     gui \
     network \
-    svg
+    svg \
+    xml
 DESTDIR = bin
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
@@ -20,7 +21,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/LinkItem.h \
+HEADERS = src/persistence/XMLExpert.h \
+    src/persistence/XMLSaver.h \
+    src/gui/LinkItem.h \
     src/gui/handles/LinkMapper.h \
     src/gui/handles/CdHandler.h \
     src/gui/handles/CdMapper.h \
@@ -51,7 +54,9 @@ HEADERS = src/gui/LinkItem.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/LinkItem.cpp \
+SOURCES = src/persistence/XMLExpert.cpp \
+    src/persistence/XMLSaver.cpp \
+    src/gui/LinkItem.cpp \
     src/gui/handles/LinkMapper.cpp \
     src/gui/handles/CdHandler.cpp \
     src/gui/handles/CdMapper.cpp \
