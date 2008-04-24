@@ -32,7 +32,7 @@ private:
 public:
 	AddLinkForm(QWidget *parent = 0);
 	virtual ~AddLinkForm();
-	void updateItems(VitualMachineItem *vm, CollisionDomainItem* cd) { vmItem = vm; cdItem = cd;};
+	void updateItems(VitualMachineItem *vm, CollisionDomainItem* cd) { vmItem = vm; cdItem = cd; };
 };
 
 #endif /*ADDLINKFORM_H_*/
