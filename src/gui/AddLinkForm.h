@@ -34,6 +34,10 @@ private:
 	VirtualMachineItem* vmItem;
 	CollisionDomainItem* cdItem;
 	
+private slots:
+	void handleAccept();
+	void validateIp(const QString &text);
+	
 public:
 	AddLinkForm(QWidget *parent = 0);
 	virtual ~AddLinkForm();
