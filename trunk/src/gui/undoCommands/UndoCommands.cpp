@@ -26,7 +26,7 @@ AddVmCommand::AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
 {
 	vmItem = newVmItem;
 	vm = newVm;
-	setText(tr("Added a new virtua machine: ") + vm->getName());
+	setText(tr("Added a new virtual machine: ") + vm->getName());
 }
 
 /**
