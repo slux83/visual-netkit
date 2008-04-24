@@ -11,7 +11,8 @@ FORMS += ui/addVm.ui \
 QT += core \
     gui \
     network \
-    svg
+    svg \
+    xml
 DESTDIR = bin
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
@@ -19,7 +20,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/CollisionDomainItem.h \
+HEADERS = src/persistence/XMLSaver.h \
+    src/persistence/XMLExpert.h \
+    src/gui/CollisionDomainItem.h \
     src/gui/LabelItem.h \
     src/gui/handles/VmMapper.h \
     src/core/handles/VmFacadeController.h \
@@ -44,7 +47,9 @@ HEADERS = src/gui/CollisionDomainItem.h \
     src/core/HardwareInterface.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/CollisionDomainItem.cpp \
+SOURCES = src/persistence/XMLSaver.cpp \
+    src/persistence/XMLExpert.cpp \
+    src/gui/CollisionDomainItem.cpp \
     src/gui/LabelItem.cpp \
     src/gui/handles/VmMapper.cpp \
     src/core/handles/VmFacadeController.cpp \
