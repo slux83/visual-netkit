@@ -48,6 +48,7 @@ public:
 	static VmMapper* getInstance();
 	void showAddVmForm(QPointF pos);
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
+	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);
