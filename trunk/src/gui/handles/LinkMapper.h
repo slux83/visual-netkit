@@ -22,9 +22,10 @@
 #include <QObject>
 #include <QGraphicsItemGroup>
 #include "../../core/HardwareInterface.h"
-#include "../AddLinkForm.h"
 #include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
+
+class AddLinkForm;
 
 class LinkMapper : QObject
 {
