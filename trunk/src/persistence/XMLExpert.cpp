@@ -26,8 +26,15 @@ XMLExpert::~XMLExpert()
 {
 }
 
-
 bool XMLExpert::dumpDocument(QDomDocument *doc)
 {
+	QFile data(XML_DEFAULT_FILE_NAME);
+	if (data.open(QFile::WriteOnly | QFile::Truncate)) 
+	{
+		//QTextStream out(&data);
+	    //doc->save(out, 4, QDomNode::EncodingFromDocument);
+		QTextStream out(stdout);
+		out << "---- TEST PERSISTENZA ----";
+	}
 	return true;
 }
