@@ -16,33 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HardwareInterface.h"
+#include "LinkMapper.h"
 
 /**
- * [HardwareInterface]
+ * Init the null instance for the singletone controller
+ */
+LinkMapper* LinkMapper::instance = NULL;
+
+/**
  * Constructor
  */
-HardwareInterface::HardwareInterface(VirtualMachine *m)
+LinkMapper::LinkMapper() : QObject()
 {
-	myMachine = m;
-	domain = NULL;
 }
 
 /**
  * Deconstructor
  */
-HardwareInterface::~HardwareInterface()
+LinkMapper::~LinkMapper()
 {
-	
 }
-
-/**
- * Set my collision domain (two way)
- */
-void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
-{
-	//TODO: remember to connect the *cs to 'this'
-	domain = cs;
-}
-
-

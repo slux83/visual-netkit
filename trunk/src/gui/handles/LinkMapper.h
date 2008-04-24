@@ -16,33 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HardwareInterface.h"
+#ifndef LINKMAPPER_H_
+#define LINKMAPPER_H_
 
-/**
- * [HardwareInterface]
- * Constructor
- */
-HardwareInterface::HardwareInterface(VirtualMachine *m)
-{
-	myMachine = m;
-	domain = NULL;
-}
+#include <QObject>
+#include <QGraphicsItemGroup>
+#include "../../core/HardwareInterface.h"
 
-/**
- * Deconstructor
- */
-HardwareInterface::~HardwareInterface()
+class LinkMapper : QObject
 {
+	Q_OBJECT
 	
-}
+private:
+	static LinkMapper* instance;
+	
+	/* the pair: <VIEW, DOMAIN> */
+	QMap<QGraphicsItemGroup*, HardwareInterface*> mappings;
+	
+public:
+	LinkMapper();
+	virtual ~LinkMapper();
+	static LinkMapper* getInstance();
+};
 
-/**
- * Set my collision domain (two way)
- */
-void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
-{
-	//TODO: remember to connect the *cs to 'this'
-	domain = cs;
-}
-
-
+#endif /*LINKMAPPER_H_*/

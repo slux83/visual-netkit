@@ -24,6 +24,7 @@
 #include <QMenu>
 #include <QObject>
 #include <QGraphicsSceneContextMenuEvent>
+#include "../common/Types.h"
 
 /**
  * This is a private class used by group items to include an svg graphics item
@@ -40,6 +41,10 @@ public:
 	SvgItemPrivate(const QString &fileName, QGraphicsItemGroup *group, 
 			QGraphicsItem *parent = 0);
 	virtual ~SvgItemPrivate();
+	QGraphicsItemGroup *getGroup() { return myGroup; };
+	
+	/* Reimpl */
+	int type() const { return UserType + SvgItem; };
 };
 
 #endif /*SVGITEMPRIVATE_H_*/

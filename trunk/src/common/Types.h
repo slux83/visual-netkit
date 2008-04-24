@@ -53,7 +53,8 @@ enum SuperGroupType
 enum ItemType
 {
 	VmItem = 1,
-	CdItem = 2
+	CdItem = 2,
+	SvgItem = 3
 };
 
 #endif /*TYPES_H_*/

@@ -20,7 +20,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/CdHandler.h \
+HEADERS = src/gui/LinkItem.h \
+    src/gui/handles/LinkMapper.h \
+    src/gui/handles/CdHandler.h \
     src/gui/handles/CdMapper.h \
     src/gui/AddCdForm.h \
     src/gui/CollisionDomainItem.h \
@@ -49,7 +51,9 @@ HEADERS = src/gui/handles/CdHandler.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/CdHandler.cpp \
+SOURCES = src/gui/LinkItem.cpp \
+    src/gui/handles/LinkMapper.cpp \
+    src/gui/handles/CdHandler.cpp \
     src/gui/handles/CdMapper.cpp \
     src/gui/AddCdForm.cpp \
     src/gui/CollisionDomainItem.cpp \
