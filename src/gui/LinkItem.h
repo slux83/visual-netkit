@@ -16,33 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HardwareInterface.h"
+#ifndef LINKITEM_H_
+#define LINKITEM_H_
+
+#include <QGraphicsItemGroup>
+#include <QGraphicsLineItem>
+
+#include "LabelItemPrivate.h"
+#include "SvgItemPrivate.h"
 
 /**
- * [HardwareInterface]
- * Constructor
+ * This class is a graphic group element of type Link
+ * and cantain a label and a graphics line item.
+ * (it's a QGraphicsItemGroup)
  */
-HardwareInterface::HardwareInterface(VirtualMachine *m)
+class LinkItem : public QObject, public QGraphicsItemGroup
 {
-	myMachine = m;
-	domain = NULL;
-}
+	Q_OBJECT
 
-/**
- * Deconstructor
- */
-HardwareInterface::~HardwareInterface()
-{
+private:
+	QGraphicsLineItem *linkLine;
+	LabelItemPrivate *myLabel;
+	SvgItemPrivate *startNode, *endNode;	//start and end of this "line"
 	
-}
+public:
+	LinkItem(SvgItemPrivate* start, SvgItemPrivate* end, QString label);
+	virtual ~LinkItem();
+};
 
-/**
- * Set my collision domain (two way)
- */
-void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
-{
-	//TODO: remember to connect the *cs to 'this'
-	domain = cs;
-}
-
-
+#endif /*LINKITEM_H_*/

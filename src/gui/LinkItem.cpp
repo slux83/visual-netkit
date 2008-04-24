@@ -16,33 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HardwareInterface.h"
+#include "LinkItem.h"
 
 /**
- * [HardwareInterface]
  * Constructor
  */
-HardwareInterface::HardwareInterface(VirtualMachine *m)
-{
-	myMachine = m;
-	domain = NULL;
-}
-
-/**
- * Deconstructor
- */
-HardwareInterface::~HardwareInterface()
+LinkItem::LinkItem(SvgItemPrivate* start, SvgItemPrivate* end, QString label)
 {
 	
 }
 
 /**
- * Set my collision domain (two way)
+ * Deconstructor
  */
-void HardwareInterface::setMyCollisionDomain(CollisionDomain *cs)
+LinkItem::~LinkItem()
 {
-	//TODO: remember to connect the *cs to 'this'
-	domain = cs;
 }
-
-

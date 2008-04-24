@@ -42,19 +42,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
 	
-	/* Test line */
-/*	QGraphicsLineItem *line = new QGraphicsLineItem(150, 99, 100, 200);
-	line->setZValue(1000);
-	addItem(line);
-	QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem("bao bao");
-	addItem(label);
-	
-	label->setPos(155, 100);
-	label->rotate(line->line().angle(QLineF(0,0,1000,0)));
-	label->rotate(180);
-	
-	qDebug() << "angle:" << line->line().angle(QLineF(0,0,1000,0));
-*/
+	link = NULL;
 }
 
 /**
@@ -71,7 +59,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {	
 	MainWindow *m = LabHandler::getInstance()->getMainWindow();
 	
-	/* The user want to add an element? */
+	/* The user want to add an element? (virtual machine) */
 	if(mouseEvent->button() == Qt::LeftButton && 
 			m->actionAddVirtualMachine->isChecked())
 	{
@@ -80,6 +68,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		VmMapper::getInstance()->showAddVmForm(mouseEvent->scenePos());
 	}
 	
+	/* The user want to add an element? (collision domain) */
 	if(mouseEvent->button() == Qt::LeftButton && 
 			m->actionAddCollisionDomain->isChecked())
 	{
@@ -88,7 +77,22 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		CdMapper::getInstance()->showAddCdForm(mouseEvent->scenePos());
 	}
 	
-	QGraphicsScene::mousePressEvent(mouseEvent);
+	/* The user want to add a link? */
+	if(mouseEvent->button() == Qt::LeftButton && 
+			m->actionAddLink->isChecked() &&
+			itemAt(mouseEvent->scenePos())->type() == QGraphicsItem::UserType + SvgItem)
+	{
+		link = initNewLinkLine();
+		link->setLine(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()));
+		addItem(link);	//the fake link is added inside the scene...
+	}
+	
+	/* default action when the arrow icon is checked */
+	if(m->actionManageGraph->isChecked())
+	{
+		QGraphicsScene::mousePressEvent(mouseEvent);	
+	}
+
 }
 
 /**
@@ -96,6 +100,13 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
  */
 void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	/* user is adding a new link? */
+	if(link != NULL)
+	{
+		QLineF linkNewPos(link->line().p1(), mouseEvent->scenePos());
+		link->setLine(linkNewPos);
+	}
+	
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
@@ -104,6 +115,80 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
  */
 void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	/* user is adding a new link? */
+	if(link != NULL)
+	{
+		/* Get start and end nodes */
+		QGraphicsItem *startNode = itemAt(link->line().p1());
+		QGraphicsItem *endNode = itemAt(link->line().p2());
+		
+		if(startNode == NULL || endNode == NULL)
+		{
+			removeItem(link);
+			delete link;
+			link = NULL;
+			return;
+		}
+		
+		/* cast nodes dynamically */
+		SvgItemPrivate *startSvgNode = dynamic_cast<SvgItemPrivate*>(startNode);
+		SvgItemPrivate *endSvgNode = dynamic_cast<SvgItemPrivate*>(endNode);
+		
+		if(startSvgNode == NULL || endSvgNode == NULL)
+		{
+			removeItem(link);
+			delete link;
+			link = NULL;
+			return;
+		}
+		
+		/* now, get the source and destination groups */
+		CollisionDomainItem *cdItem;
+		VirtualMachineItem *vmItem;
+		if(startSvgNode->getGroup()->type() == QGraphicsItem::UserType + VmItem)
+		{
+			vmItem = dynamic_cast<VirtualMachineItem*>(startSvgNode->getGroup());
+			cdItem = dynamic_cast<CollisionDomainItem*>(endSvgNode->getGroup());
+		}
+		else if(startSvgNode->getGroup()->type() == QGraphicsItem::UserType + CdItem)
+		{
+			vmItem = dynamic_cast<VirtualMachineItem*>(endSvgNode->getGroup());
+			cdItem = dynamic_cast<CollisionDomainItem*>(startSvgNode->getGroup());
+		}
+		else
+		{
+			qWarning()	<< "casting failed during add link:"
+						<< "startType =" << startSvgNode->getGroup()->type()
+						<< "endType =" << endSvgNode->getGroup()->type();
+			
+			removeItem(link);
+			delete link;
+			link = NULL;
+			
+			return;
+		}
+		
+		/*  */
+		
+		/*
+		qDebug() 	<< startNode->type()
+					<< "(" 
+					<< startNode->group()
+					<< ") ----->" 
+					<< endNode->type()
+					<< "(" << endNode->group() << ")";
+		
+		
+		SvgItemPrivate *test = dynamic_cast<SvgItemPrivate*>(startNode);
+		qDebug() << "group type:" << test->getGroup()->type();
+		*/
+
+		/* and finally, clear the fake line */
+		removeItem(link);
+		delete link;
+		link = NULL;
+	}
+	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
@@ -114,4 +199,17 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void LabScene::adjustSceneBorder(QRectF r)
 {
 	border->setRect(r);
+}
+
+/**
+ * [PRIVATE]
+ * Create a new instance of line (che future link beetween two items)
+ */
+QGraphicsLineItem* LabScene::initNewLinkLine()
+{
+	//this link is only a fake. the true line will be created later...
+	QGraphicsLineItem *link = new QGraphicsLineItem();
+	link->setPen(QPen(Qt::blue, 4, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin));
+	
+	return link;
 }

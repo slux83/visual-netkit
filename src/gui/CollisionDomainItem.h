@@ -33,8 +33,8 @@
 #include "../common/CommonConfigs.h"
 
 /**
- * This class is a graphic group element of type Virtual Machine
- * and cantain a label and a svg item showed as virtual machine
+ * This class is a graphic group element of type Collision Domain
+ * and cantain a label and a svg item showed as Collision domain
  * (it's a QGraphicsItemGroup)
  */
 class CollisionDomainItem : public QObject, public QGraphicsItemGroup

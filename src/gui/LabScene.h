@@ -31,6 +31,8 @@ class LabScene : public QGraphicsScene
 	
 private:
 	QGraphicsRectItem *border;	//the path for the scene border
+	QGraphicsLineItem *link;	//a fake link
+	QGraphicsLineItem *initNewLinkLine();
 	
 private slots:
 	void adjustSceneBorder(QRectF r);

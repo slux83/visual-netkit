@@ -41,10 +41,10 @@ private:
 public:
 	HardwareInterface(VirtualMachine *m);
 	virtual ~HardwareInterface();
-	QString getName();
+	QString getName() { return name; };
 	NetworkAddress getAddress() { return address; };
-	VirtualMachine* getMyVirtualMachine();
-	CollisionDomain* getMyCollisionDomain();
+	VirtualMachine* getMyVirtualMachine() { return myMachine; };
+	CollisionDomain* getMyCollisionDomain() { return domain; };
 	void setMyCollisionDomain(CollisionDomain *cs);
 	//TODO: etc...
 
