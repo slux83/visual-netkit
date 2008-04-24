@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>AddLinkDialog</class>
- <widget class="QDialog" name="AddLinkDialog" >
+ <class>AddLinkForm</class>
+ <widget class="QDialog" name="AddLinkForm" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -34,7 +34,7 @@
       <item>
        <layout class="QHBoxLayout" >
         <item>
-         <widget class="QLabel" name="label_4" >
+         <widget class="QLabel" name="labelVm" >
           <property name="text" >
            <string/>
           </property>
@@ -54,7 +54,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_5" >
+         <widget class="QLabel" name="labelCd" >
           <property name="text" >
            <string/>
           </property>
@@ -151,7 +151,7 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QTableWidget" name="tableWidget" >
+       <widget class="QTableWidget" name="interfacestable" >
         <property name="alternatingRowColors" >
          <bool>true</bool>
         </property>
@@ -187,7 +187,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>AddLinkDialog</receiver>
+   <receiver>AddLinkForm</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >

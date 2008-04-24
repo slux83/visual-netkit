@@ -28,6 +28,7 @@ LinkMapper* LinkMapper::instance = NULL;
  */
 LinkMapper::LinkMapper() : QObject()
 {
+	addLinkForm = new AddLinkForm();
 }
 
 /**

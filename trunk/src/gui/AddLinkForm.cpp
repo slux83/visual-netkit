@@ -43,4 +43,19 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 /**
  * Deconstructor
  */
-AddLinkForm::~AddLinkForm() { }
+AddLinkForm::~AddLinkForm()
+{
+}
+
+/**
+ * Update items and gui labels/infos
+ */
+void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
+{
+	vmItem = vm;
+	cdItem = cd;
+	
+	//update gui
+	labelVm->setText(vm->getLabel());
+	labelCd->setText(cd->getLabel());
+}
