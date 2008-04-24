@@ -33,7 +33,7 @@ private:
 	CollisionDomainItem* cdItem;
 	
 public:
-	AddLinkForm(QWidget *parent=0);
+	AddLinkForm(QWidget *parent = 0);
 	virtual ~AddLinkForm();
 	void updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd);
 };
