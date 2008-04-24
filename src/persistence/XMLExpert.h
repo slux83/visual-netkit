@@ -20,6 +20,9 @@
 #define XMLEXPERT_H_
 
 #include <QDomDocument>
+#include <QFile>
+#include <QTextStream>
+#include "../common/CommonConfigs.h"
 
 class XMLExpert
 {

@@ -51,6 +51,6 @@ inline QList<Daemon> getDaemons()
 #define GRAPHICS_FONT QFont("Sand Serif", 10)
 
 /* Default name for XML lab configuration file */
-#define XML_DEFAULT_FILE_NAME QString("lab.xml");
+#define XML_DEFAULT_FILE_NAME QString("lab.xml")
 
 #endif /*COMMONCONFIGS_H_*/
