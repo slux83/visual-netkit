@@ -27,6 +27,7 @@
 
 class AddLinkForm : public QDialog, public Ui::AddLinkForm
 {
+	Q_OBJECT
 	
 private:
 	VirtualMachineItem* vmItem;

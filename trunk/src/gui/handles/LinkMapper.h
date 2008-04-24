@@ -24,8 +24,7 @@
 #include "../../core/HardwareInterface.h"
 #include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
-
-class AddLinkForm;
+#include "../AddLinkForm.h"
 
 class LinkMapper : QObject
 {
