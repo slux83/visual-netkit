@@ -45,6 +45,7 @@ HEADERS = src/gui/LinkItem.h \
     src/gui/handles/LabPropertyController.h \
     src/gui/handles/VmHandler.h \
     src/gui/AddVmForm.h \
+    src/gui/AddLinkForm.h \
     src/gui/VirtualMachineItem.h \
     src/gui/GraphicsView.h \
     src/gui/LabScene.h \
@@ -75,6 +76,7 @@ SOURCES = src/persistence/XMLExpert.cpp \
     src/gui/handles/LabPropertyController.cpp \
     src/gui/handles/VmHandler.cpp \
     src/gui/AddVmForm.cpp \
+    src/gui/AddLinkForm.cpp \
     src/gui/VirtualMachineItem.cpp \
     src/gui/GraphicsView.cpp \
     src/gui/LabScene.cpp \

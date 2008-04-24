@@ -17,7 +17,6 @@
  */
 
 #include "LinkMapper.h"
-#include "../AddLinkForm.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -29,7 +28,7 @@ LinkMapper* LinkMapper::instance = NULL;
  */
 LinkMapper::LinkMapper() : QObject()
 {
-	//addLinkForm = new AddLinkForm();
+	addLinkForm = new AddLinkForm();
 }
 
 /**
@@ -37,4 +36,18 @@ LinkMapper::LinkMapper() : QObject()
  */
 LinkMapper::~LinkMapper()
 {
+}
+
+
+/**
+ * Singletone get instance
+ */
+LinkMapper* LinkMapper::getInstance()
+{
+	if (instance == NULL)
+	{
+		instance = new LinkMapper();
+	}
+
+	return instance;
 }

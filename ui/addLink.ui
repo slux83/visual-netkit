@@ -35,6 +35,12 @@
        <layout class="QHBoxLayout" >
         <item>
          <widget class="QLabel" name="labelVm" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
            <string/>
           </property>
@@ -55,6 +61,12 @@
         </item>
         <item>
          <widget class="QLabel" name="labelCd" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
            <string/>
           </property>
