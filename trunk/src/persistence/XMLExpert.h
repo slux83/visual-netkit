@@ -16,41 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * This header contains some defines for general purpose
- */
+#ifndef XMLEXPERT_H_
+#define XMLEXPERT_H_
 
-#ifndef COMMONCONFIGS_H_
-#define COMMONCONFIGS_H_
+#include <QDomDocument>
 
-#include "Types.h"
-
-/* Visual Netkit Version */
-#define VISUAL_NETKIT_VERSION QString("SVN")
-
-/* Config file names */
-#define LAB_CONF QString("lab.conf")
-#define ZEBRA_DAEMONS_CONF QString("daemons")
-#define BGPD_CONF QString("bgpd.conf")
-#define RIPD_CONF QString("ripd.conf")
-
-/* Config file paths */
-#define ZEBRA_PATH QString("zebra")
-#define ETC_PATH QString("etc")
-
-/* ZEBRA Daemons list */
-inline QList<Daemon> getDaemons()
+class XMLExpert
 {
-	QList<Daemon> l;
-	l << Zebra << Bgpd << Ripd;
-	qSort(l.begin(), l.end());
-	return l;
-}
+public:
+	XMLExpert();
+	virtual ~XMLExpert();
+	static bool dumpDocument(QDomDocument *doc);
+};
 
-/* Graphics label font */
-#define GRAPHICS_FONT QFont("Sand Serif", 10)
-
-/**/
-#define XML_DEFAULT_FILE_NAME QString("lab.xml");
-
-#endif /*COMMONCONFIGS_H_*/
+#endif /*XMLEXPERT_H_*/
