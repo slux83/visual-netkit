@@ -7,6 +7,7 @@ INCLUDEPATH += . \
     src
 FORMS += ui/addCd.ui \
     ui/addVm.ui \
+    ui/addLink.ui \
     ui/main.ui \
     ui/fileEdit.ui
 QT += core \
@@ -21,9 +22,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/persistence/XMLExpert.h \
+HEADERS = src/gui/LinkItem.h \
+    src/persistence/XMLExpert.h \
     src/persistence/XMLSaver.h \
-    src/gui/LinkItem.h \
     src/gui/handles/LinkMapper.h \
     src/gui/handles/CdHandler.h \
     src/gui/handles/CdMapper.h \
