@@ -32,7 +32,7 @@
 class AddCdForm : public QDialog, public Ui::AddCdForm
 {
 	Q_OBJECT
-	
+
 private:
 	QPointF cdPos;
 	CdHandler *cdHandler;
@@ -41,7 +41,7 @@ public:
 	AddCdForm(QWidget *parent = 0);
 	virtual ~AddCdForm();
 	void setCollisionDomainPos(QPointF pos) { cdPos = pos; };
-	
+
 private slots:
 	void handleUserConfirm();
 

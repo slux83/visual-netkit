@@ -40,6 +40,12 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	vmItem = NULL;
 	
 	interfacesTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	
+	/* connects */
+	connect(addLinkButtonBox, SIGNAL(accepted()),
+			this, SLOT(handleAccept()));
+	connect(ipLineEdit, SIGNAL(textChanged(const QString &)),
+			this, SLOT(validateIp(const QString &)));
 }
 
 /**
@@ -89,4 +95,22 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 		interfacesTable->setItem(row, 1, ethContent);
 		row++;
 	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle use accept()
+ */
+void AddLinkForm::handleAccept()
+{
+	
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Check the inserted ip address
+ */
+void AddLinkForm::validateIp(const QString &text)
+{
+	
 }

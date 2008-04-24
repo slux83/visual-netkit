@@ -16,7 +16,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3" >
      <property name="title" >
-      <string>Future link</string>
+      <string>The link</string>
      </property>
      <layout class="QVBoxLayout" >
       <property name="leftMargin" >
@@ -90,7 +90,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit" />
+      <widget class="QLineEdit" name="ethNamelineEdit" />
      </item>
     </layout>
    </item>
@@ -104,7 +104,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2" />
+      <widget class="QLineEdit" name="ipLineEdit" />
      </item>
     </layout>
    </item>
@@ -118,9 +118,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3" >
+      <widget class="QLineEdit" name="broadcastLineEdit" >
        <property name="acceptDrops" >
         <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string/>
        </property>
        <property name="readOnly" >
         <bool>true</bool>
@@ -138,7 +141,7 @@
       <item>
        <layout class="QVBoxLayout" >
         <item>
-         <widget class="QRadioButton" name="radioButton" >
+         <widget class="QRadioButton" name="ethUp" >
           <property name="text" >
            <string>Up</string>
           </property>
@@ -148,7 +151,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="radioButton_2" >
+         <widget class="QRadioButton" name="ethDown" >
           <property name="text" >
            <string>Down</string>
           </property>
@@ -186,12 +189,15 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox" >
+    <widget class="QDialogButtonBox" name="addLinkButtonBox" >
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons" >
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::NoButton|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons" >
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -200,7 +206,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>addLinkButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>AddLinkForm</receiver>
    <slot>reject()</slot>
