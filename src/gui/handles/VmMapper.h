@@ -49,6 +49,7 @@ public:
 	void showAddVmForm(QPointF pos);
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
+	QMap<QString, QString> getMachineInterfaces(VirtualMachineItem* vmItem);
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);

@@ -20,6 +20,7 @@
 #include "handles/LabHandler.h"
 #include "handles/VmMapper.h"
 #include "handles/CdMapper.h"
+#include "handles/LinkMapper.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -168,21 +169,19 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			return;
 		}
 		
-		/*  */
+		/* another test */
+		if(cdItem == NULL || vmItem == NULL)
+		{
+			removeItem(link);
+			delete link;
+			link = NULL;
+			
+			return;
+		}
 		
-		/*
-		qDebug() 	<< startNode->type()
-					<< "(" 
-					<< startNode->group()
-					<< ") ----->" 
-					<< endNode->type()
-					<< "(" << endNode->group() << ")";
+		/* show the gui */
+		LinkMapper::getInstance()->showAddLinkForm(vmItem, cdItem);
 		
-		
-		SvgItemPrivate *test = dynamic_cast<SvgItemPrivate*>(startNode);
-		qDebug() << "group type:" << test->getGroup()->type();
-		*/
-
 		/* and finally, clear the fake line */
 		removeItem(link);
 		delete link;

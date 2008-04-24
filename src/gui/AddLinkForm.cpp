@@ -18,7 +18,7 @@
 
 #include "AddLinkForm.h"
 #include <QDesktopWidget>
-
+#include <QHeaderView>
 /**
  * Constructor
  */
@@ -38,6 +38,8 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	
 	cdItem = NULL;
 	vmItem = NULL;
+	
+	interfacesTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 }
 
 /**
@@ -55,7 +57,36 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 	vmItem = vm;
 	cdItem = cd;
 	
+	//just a test
+	if(vmItem == NULL || cdItem == NULL)
+	{
+		qWarning() << "AddLinkForm: vmItem or cdItem is null";
+		return;
+	}
+	
 	//update gui
 	labelVm->setText(vm->getLabel());
 	labelCd->setText(cd->getLabel());
+	
+	/* Get interfaces for the vm */
+	QMapIterator<QString, QString> iter(VmMapper::getInstance()->getMachineInterfaces(vm));
+	
+	
+	/* Render interfaces inside the table [NAME | IP] */
+	int row = 0;
+	//Clear all table items and reset the view-size
+	interfacesTable->clearContents();
+	interfacesTable->setRowCount(0);		//resize (reset) the view	
+	while(iter.hasNext())
+	{
+		iter.next();
+		interfacesTable->setRowCount(interfacesTable->rowCount() + 1);
+		QTableWidgetItem *ethName = new QTableWidgetItem();
+		QTableWidgetItem *ethContent = new QTableWidgetItem();
+		ethName->setData(Qt::DisplayRole, iter.key());
+		ethContent->setData(Qt::DisplayRole, iter.value());
+		interfacesTable->setItem(row, 0, ethName);
+		interfacesTable->setItem(row, 1, ethContent);
+		row++;
+	}
 }

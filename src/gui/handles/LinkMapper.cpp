@@ -51,3 +51,13 @@ LinkMapper* LinkMapper::getInstance()
 
 	return instance;
 }
+
+/**
+ * [PUBLIC-SLOT]
+ * Show the dialog and refresh it
+ */
+void LinkMapper::showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd)
+{
+	addLinkForm->updateItems(vm, cd);
+	addLinkForm->show();
+}

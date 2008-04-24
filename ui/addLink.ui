@@ -41,6 +41,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="layoutDirection" >
+           <enum>Qt::RightToLeft</enum>
+          </property>
           <property name="text" >
            <string/>
           </property>
@@ -163,7 +166,7 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QTableWidget" name="interfacestable" >
+       <widget class="QTableWidget" name="interfacesTable" >
         <property name="alternatingRowColors" >
          <bool>true</bool>
         </property>

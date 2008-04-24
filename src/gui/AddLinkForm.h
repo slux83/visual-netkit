@@ -23,6 +23,7 @@
 #include <QWidget>
 #include "VirtualMachineItem.h"
 #include "CollisionDomainItem.h"
+#include "handles/VmMapper.h"
 #include "ui_addLink.h"
 
 class AddLinkForm : public QDialog, public Ui::AddLinkForm
