@@ -23,6 +23,7 @@
 #include <QGraphicsItemGroup>
 #include "../../core/HardwareInterface.h"
 #include "../VirtualMachineItem.h"
+#include "../CollisionDomainItem.h"
 #include "../../core/VirtualMachine.h"
 #include "../AddLinkForm.h"
 
@@ -41,6 +42,9 @@ public:
 	LinkMapper();
 	virtual ~LinkMapper();
 	static LinkMapper* getInstance();
+
+public slots:
+	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);
 };
 
 #endif /*LINKMAPPER_H_*/
