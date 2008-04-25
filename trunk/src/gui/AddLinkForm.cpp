@@ -17,6 +17,8 @@
  */
 
 #include "AddLinkForm.h"
+#include "handles/CdMapper.h"
+#include "../common/NetworkAddress.h"
 #include <QDesktopWidget>
 #include <QHeaderView>
 /**
@@ -99,7 +101,7 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 
 /**
  * [PRIVATE-SLOT]
- * Handle use accept()
+ * Handle accept()
  */
 void AddLinkForm::handleAccept()
 {
@@ -112,5 +114,41 @@ void AddLinkForm::handleAccept()
  */
 void AddLinkForm::validateIp(const QString &text)
 {
+	QStringList splitted = text.split("/");
+	if(splitted.size() != 2)
+	{
+		broadcastLineEdit->setText(tr("invalid ip/netmask"));
+		return;
+	}
 	
+	/* get ip and netmask */
+	QString ip = splitted[0];
+	QString netmask = splitted[1];
+	
+	/* validate netmask and ip address */
+	if(!NetworkAddress::validateIp(ip) ||
+			!NetworkAddress::validateNetmask(QHostAddress(netmask)))
+	{
+		broadcastLineEdit->setText(tr("invalid ip/netmask"));
+		return;
+	}
+	
+	/* 
+	 * check if the ip is conform with the collision domain subnet
+	 * comparing the two broadcast addresses 
+	 */
+	NetworkAddress cdNetwork = CdMapper::getInstance()->getNetworkAddress(cdItem);
+	if(NetworkAddress::generateBroadcast(cdNetwork.ip(), cdNetwork.netmask()) !=
+		NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)))
+	{
+		broadcastLineEdit->setText(tr("ip/netmask must be the compatible with the subnet: ") + cdNetwork.toString(true));
+		return;
+	}
+	else
+	{
+		broadcastLineEdit->setText(
+			NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)).toString());
+		
+		return;
+	}
 }

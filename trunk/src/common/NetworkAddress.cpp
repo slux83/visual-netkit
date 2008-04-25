@@ -153,3 +153,21 @@ void NetworkAddress::setCidrNetmask(quint8 cidrNetmask)
 {
 	setNetmask(cidr2netmask(cidrNetmask));
 }
+
+/**
+ * [STATIC-PUBLIC]
+ * generate a valid broadcast address by ip and netmask
+ * 		note: assuming that ip and netmask are valid!
+ */
+QHostAddress NetworkAddress::generateBroadcast(QHostAddress ip, QHostAddress netmask)
+{
+	QHostAddress full("255.255.255.255");
+	
+	//get network
+	QHostAddress network(ip.toIPv4Address() & netmask.toIPv4Address());
+	
+	QHostAddress broadcast(network.toIPv4Address() | (~netmask.toIPv4Address() & full.toIPv4Address()));
+	
+	return broadcast;
+}
+
