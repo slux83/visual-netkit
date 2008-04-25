@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2008-04-25T16:04:10" xmi.version="1.2" >
+ <XMI.header>
+  <XMI.documentation>
+   <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
+   <XMI.exporterVersion>1.5.8</XMI.exporterVersion>
+   <XMI.exporterEncoding>UnicodeUTF8</XMI.exporterEncoding>
+  </XMI.documentation>
+  <XMI.metamodel xmi.name="UML" href="UML.xml" xmi.version="1.3" />
+ </XMI.header>
+ <XMI.content>
+  <UML:Model isSpecification="false" isLeaf="false" isRoot="false" xmi.id="m1" isAbstract="false" name="Modello UML" >
+   <UML:Namespace.ownedElement>
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="folder" isRoot="false" isAbstract="false" name="folder" />
+    <UML:Stereotype isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="datatype" isRoot="false" isAbstract="false" name="datatype" />
+    <UML:Model stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="Logical View" isRoot="false" isAbstract="false" name="Logical View" >
+     <UML:Namespace.ownedElement>
+      <UML:Package stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="Datatypes" isRoot="false" isAbstract="false" name="Datatypes" >
+       <UML:Namespace.ownedElement>
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="LFAF1wY5nm3B" isRoot="false" isAbstract="false" name="int" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="7fRhRRiZXZhm" isRoot="false" isAbstract="false" name="char" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="oygQrtl63y8x" isRoot="false" isAbstract="false" name="bool" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="WBiGEsuLXL0y" isRoot="false" isAbstract="false" name="float" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="miWKFB449kUy" isRoot="false" isAbstract="false" name="double" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="dF4eBAZfLIvX" isRoot="false" isAbstract="false" name="short" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="Apsf8qevW8Dm" isRoot="false" isAbstract="false" name="long" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="JHqQ0KOdXQGg" isRoot="false" isAbstract="false" name="unsigned int" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="ZpLu7ESF2IvA" isRoot="false" isAbstract="false" name="unsigned short" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="7X3dfGPwWFMW" isRoot="false" isAbstract="false" name="unsigned long" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="Xi946PifD3aK" isRoot="false" isAbstract="false" name="string" />
+       </UML:Namespace.ownedElement>
+      </UML:Package>
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="tZ3z4mKlW8g9" isRoot="false" isAbstract="false" name="actor" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="t8CdY6Cb3ENN" isRoot="false" isAbstract="false" name="LabScene" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="w1jquzaf8LpD" isRoot="false" isAbstract="false" name="VmMapper" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="5g3QP3N5VRL4" isRoot="false" isAbstract="false" name="AddVmForm" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="gjUxyxSdBsQ3" isRoot="false" isAbstract="false" name="VmHandler" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="2Pm5DioiBTCW" isRoot="false" isAbstract="false" name="VmFacadeController" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="Bci1mw26duL8" isRoot="false" isAbstract="false" name="Laboratory" />
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="PHPFZoAfExOh" isRoot="false" isAbstract="false" name="UndoStack" />
+     </UML:Namespace.ownedElement>
+     <XMI.extension xmi.extender="umbrello" >
+      <diagrams>
+       <diagram snapgrid="0" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="100" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1027" snapy="10" showatts="1" xmi.id="0388r9FHJvbv" documentation="" type="1" showops="1" showpackage="0" name="diagramma delle classi" localid="" showstereotype="0" showscope="1" snapcsgrid="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="850" >
+        <widgets/>
+        <messages/>
+        <associations/>
+       </diagram>
+       <diagram snapgrid="1" showattsig="1" fillcolor="#d4ffd3" linewidth="0" zoom="100" showgrid="1" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1796" snapy="10" showatts="1" xmi.id="ITUPyY1dmQXI" documentation="" type="3" showops="1" showpackage="0" name="add virtual machine" localid="jS5kvEW64Xcl" showstereotype="0" showscope="1" snapcsgrid="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#000000" canvasheight="860" >
+        <widgets>
+         <objectwidget usesdiagramfillcolor="0" width="55" x="50" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="63" usefillcolor="1" isinstance="0" xmi.id="tZ3z4mKlW8g9" decon="0" localid="0U2DCIau0JO3" multipleinstance="0" drawasactor="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="85" x="250" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="t8CdY6Cb3ENN" decon="0" localid="zuTd1R53eHLC" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="92" x="450" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="w1jquzaf8LpD" decon="0" localid="MkaaMecbraXr" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="102" x="640" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="5g3QP3N5VRL4" decon="0" localid="GPAoANdmr1RQ" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <notewidget usesdiagramfillcolor="1" width="130" x="330" fillcolor="none" y="420" linewidth="none" height="90" usefillcolor="1" isinstance="0" xmi.id="tdkDXXMXIHTV" text="The form do pre-operations to validate the input" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         <objectwidget usesdiagramfillcolor="0" width="94" x="870" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="gjUxyxSdBsQ3" decon="0" localid="tM4mFzuY4jWL" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="152" x="1220" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="2Pm5DioiBTCW" decon="0" localid="XG5SldIaFqep" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="160" x="1460" fillcolor="#d4ffd3" y="50" instancename="currentLab" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="Bci1mw26duL8" decon="0" localid="oQHyZeBdrxeH" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <objectwidget usesdiagramfillcolor="0" width="92" x="1700" fillcolor="#d4ffd3" y="50" instancename="" linewidth="none" height="28" usefillcolor="1" isinstance="0" xmi.id="PHPFZoAfExOh" decon="0" localid="jS5kvEW64Xcl" multipleinstance="0" drawasactor="0" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,1,0,0,0" linecolor="#000000" />
+         <notewidget usesdiagramfillcolor="1" width="155" x="1570" fillcolor="none" y="150" linewidth="none" height="74" usefillcolor="1" isinstance="0" xmi.id="WFpsXff7seEv" text="The undo stack object is owned by LabHandler class" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         <notewidget usesdiagramfillcolor="1" width="208" x="650" fillcolor="none" y="590" linewidth="none" height="129" usefillcolor="1" isinstance="0" xmi.id="SmpIeQsXTz55" text="When a command is pushed into the stack, its redo() is called. Redo() function delegate the mapper to complete the item insertion." usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+        </widgets>
+        <messages>
+         <messagewidget usesdiagramfillcolor="1" width="213" x="75" fillcolor="none" y="136" operation="mouseClicked(position)" linewidth="none" widgetbid="zuTd1R53eHLC" height="8" usefillcolor="1" seqnum="1" textid="u2QxFoIEgjqf" widgetaid="0U2DCIau0JO3" isinstance="0" xmi.id="9KTXNBeEJosr" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="173" x="100" fillcolor="none" y="110" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="u2QxFoIEgjqf" text="1: mouseClicked(position)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="202" x="288" fillcolor="none" y="213" operation="showAddVmForm(position)" linewidth="none" widgetbid="MkaaMecbraXr" height="8" usefillcolor="1" seqnum="2" textid="dTOfZB3FWt6B" widgetaid="zuTd1R53eHLC" isinstance="0" xmi.id="gR5IZp68XlFp" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="196" x="290" fillcolor="none" y="190" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="dTOfZB3FWt6B" text="2: showAddVmForm(position)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="203" x="499" fillcolor="none" y="213" operation="setMachinePos(position)" linewidth="none" widgetbid="GPAoANdmr1RQ" height="32" usefillcolor="1" seqnum="3" textid="vBrOcBQqabel" widgetaid="MkaaMecbraXr" isinstance="0" xmi.id="AVgeMkpPOsno" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="180" x="500" fillcolor="none" y="190" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="vBrOcBQqabel" text="3: setMachinePos(position)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="193" x="500" fillcolor="none" y="274" operation="show()" linewidth="none" widgetbid="GPAoANdmr1RQ" height="8" usefillcolor="1" seqnum="4" textid="8c1inSYO3D7z" widgetaid="MkaaMecbraXr" isinstance="0" xmi.id="Ru2mcrB1hznd" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="66" x="510" fillcolor="none" y="250" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="8c1inSYO3D7z" text="4: show()" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="612" x="75" fillcolor="none" y="164" operation="guiShowed()" linewidth="none" widgetbid="0U2DCIau0JO3" height="8" usefillcolor="1" seqnum="5" textid="uJihjH3kSAku" widgetaid="GPAoANdmr1RQ" isinstance="0" xmi.id="vAkVzvWhsHK0" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="103" x="90" fillcolor="none" y="140" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="uJihjH3kSAku" text="5: guiShowed()" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="612" x="75" fillcolor="none" y="310" operation="acceptPressed()" linewidth="none" widgetbid="GPAoANdmr1RQ" height="8" usefillcolor="1" seqnum="6" textid="3YKmnLXDWF5I" widgetaid="0U2DCIau0JO3" isinstance="0" xmi.id="p5ymyTTrklre" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="128" x="340" fillcolor="none" y="290" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="3YKmnLXDWF5I" text="6: acceptPressed()" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="224" x="692" fillcolor="none" y="333" operation="createVm(name, daemons)" linewidth="none" widgetbid="tM4mFzuY4jWL" height="8" usefillcolor="1" seqnum="7" textid="N66YwUaqrca4" widgetaid="GPAoANdmr1RQ" isinstance="0" xmi.id="avT15qyjXSeT" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="202" x="700" fillcolor="none" y="310" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="N66YwUaqrca4" text="7: createVm(name, daemons)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="387" x="917" fillcolor="none" y="363" operation="vm = createNewVirtualMachine(name, daemons)" linewidth="none" widgetbid="XG5SldIaFqep" height="65" usefillcolor="1" seqnum="8" textid="ulsdoGZXTBR4" widgetaid="tM4mFzuY4jWL" isinstance="0" xmi.id="6rOKh271EXVX" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="340" x="920" fillcolor="none" y="340" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="ulsdoGZXTBR4" text="8: vm = createNewVirtualMachine(name, daemons)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="50" x="915" fillcolor="none" y="464" operation="vmItem = new VirtualMachineItem(...)" linewidth="none" widgetbid="tM4mFzuY4jWL" height="34" usefillcolor="1" seqnum="9" textid="DoIPKnxCYppM" widgetaid="tM4mFzuY4jWL" isinstance="0" xmi.id="ypD1JmpNdDhJ" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="266" x="920" fillcolor="none" y="440" linewidth="none" posttext="" role="705" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="DoIPKnxCYppM" text="9: vmItem = new VirtualMachineItem(...)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="387" x="917" fillcolor="none" y="531" operation="addVirtualMachine(vm)" linewidth="none" widgetbid="XG5SldIaFqep" height="32" usefillcolor="1" seqnum="10" textid="6Fl3SrQgumbR" widgetaid="tM4mFzuY4jWL" isinstance="0" xmi.id="LjrHUw7BA8MF" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="180" x="920" fillcolor="none" y="510" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="6Fl3SrQgumbR" text="10: addVirtualMachine(vm)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="242" x="1297" fillcolor="none" y="589" operation="addVirtualMachine(vm)" linewidth="none" widgetbid="oQHyZeBdrxeH" height="8" usefillcolor="1" seqnum="11" textid="jihGKstBnXQZ" widgetaid="XG5SldIaFqep" isinstance="0" xmi.id="7n1th4xLyJRk" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="180" x="1300" fillcolor="none" y="570" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="jihGKstBnXQZ" text="11: addVirtualMachine(vm)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="50" x="915" fillcolor="none" y="652" operation="command = new addVmCommand(vmItem, vm)" linewidth="none" widgetbid="tM4mFzuY4jWL" height="32" usefillcolor="1" seqnum="12" textid="Dq3WiufWS630" widgetaid="tM4mFzuY4jWL" isinstance="0" xmi.id="5QolUm4Q3V9m" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="345" x="920" fillcolor="none" y="630" linewidth="none" posttext="" role="705" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="Dq3WiufWS630" text="12: command = new addVmCommand(vmItem, vm)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="837" x="917" fillcolor="none" y="717" operation="push(command)" linewidth="none" widgetbid="jS5kvEW64Xcl" height="32" usefillcolor="1" seqnum="13" textid="3BmF6Aupa0ZV" widgetaid="tM4mFzuY4jWL" isinstance="0" xmi.id="QIFqOIqnZF19" sequencemessagetype="1000" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="138" x="920" fillcolor="none" y="700" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="3BmF6Aupa0ZV" text="13: push(command)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="1248" x="497" fillcolor="none" y="802" operation="command->redo()" linewidth="none" widgetbid="MkaaMecbraXr" height="8" usefillcolor="1" seqnum="14" textid="PN8dp64CJ8n8" widgetaid="jS5kvEW64Xcl" isinstance="0" xmi.id="v39YbtIwAqy7" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="152" x="1130" fillcolor="none" y="780" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="PN8dp64CJ8n8" text="14: command->redo()" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="202" x="293" fillcolor="none" y="817" operation="addItem(vmItem)" linewidth="none" widgetbid="zuTd1R53eHLC" height="8" usefillcolor="1" seqnum="15" textid="IhKkbKGMik6F" widgetaid="MkaaMecbraXr" isinstance="0" xmi.id="NZ41u7livIlL" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="144" x="350" fillcolor="none" y="800" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="IhKkbKGMik6F" text="15: addItem(vmItem)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+         <messagewidget usesdiagramfillcolor="1" width="213" x="78" fillcolor="none" y="819" operation="itemShowed" linewidth="none" widgetbid="0U2DCIau0JO3" height="8" usefillcolor="1" seqnum="16" textid="PFfXC1NAg1Xs" widgetaid="zuTd1R53eHLC" isinstance="0" xmi.id="Oa6gHPQrjfBP" sequencemessagetype="1001" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" >
+          <floatingtext usesdiagramfillcolor="1" width="111" x="80" fillcolor="none" y="800" linewidth="none" posttext="" role="704" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="PFfXC1NAg1Xs" text="16: itemShowed" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         </messagewidget>
+        </messages>
+        <associations>
+         <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" linewidth="none" widgetbid="p5ymyTTrklre" widgetaid="tdkDXXMXIHTV" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" linecolor="none" visibilityA="200" >
+          <linepath>
+           <startpoint startx="400" starty="420" />
+           <endpoint endx="380" endy="312" />
+          </linepath>
+         </assocwidget>
+         <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" linewidth="none" widgetbid="jS5kvEW64Xcl" widgetaid="WFpsXff7seEv" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" linecolor="none" visibilityA="200" >
+          <linepath>
+           <startpoint startx="1650" starty="150" />
+           <endpoint endx="1750" endy="78" />
+          </linepath>
+         </assocwidget>
+         <assocwidget totalcounta="2" indexa="1" visibilityB="200" totalcountb="2" indexb="1" linewidth="none" widgetbid="v39YbtIwAqy7" widgetaid="SmpIeQsXTz55" roleBdoc="" documentation="" roleAdoc="" type="513" changeabilityA="900" changeabilityB="900" linecolor="none" visibilityA="200" >
+          <linepath>
+           <startpoint startx="750" starty="719" />
+           <endpoint endx="1120" endy="790" />
+           <point x="900" y="780" />
+          </linepath>
+         </assocwidget>
+        </associations>
+       </diagram>
+      </diagrams>
+     </XMI.extension>
+    </UML:Model>
+    <UML:Model stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="Use Case View" isRoot="false" isAbstract="false" name="Use Case View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="Component View" isRoot="false" isAbstract="false" name="Component View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="Deployment View" isRoot="false" isAbstract="false" name="Deployment View" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+    <UML:Model stereotype="folder" isSpecification="false" isLeaf="false" visibility="public" namespace="m1" xmi.id="Entity Relationship Model" isRoot="false" isAbstract="false" name="Entity Relationship Model" >
+     <UML:Namespace.ownedElement/>
+    </UML:Model>
+   </UML:Namespace.ownedElement>
+  </UML:Model>
+ </XMI.content>
+ <XMI.extensions xmi.extender="umbrello" >
+  <docsettings viewid="ITUPyY1dmQXI" documentation="" uniqueid="PFfXC1NAg1Xs" />
+  <listview>
+   <listitem open="1" type="800" label="Viste" >
+    <listitem open="1" type="801" id="Logical View" >
+     <listitem open="0" type="807" id="0388r9FHJvbv" label="diagramma delle classi" />
+     <listitem open="0" type="810" id="ITUPyY1dmQXI" label="add virtual machine" />
+     <listitem open="1" type="813" id="5g3QP3N5VRL4" />
+     <listitem open="1" type="813" id="t8CdY6Cb3ENN" />
+     <listitem open="1" type="813" id="Bci1mw26duL8" />
+     <listitem open="1" type="813" id="PHPFZoAfExOh" />
+     <listitem open="1" type="813" id="2Pm5DioiBTCW" />
+     <listitem open="1" type="813" id="gjUxyxSdBsQ3" />
+     <listitem open="1" type="813" id="w1jquzaf8LpD" />
+     <listitem open="1" type="813" id="tZ3z4mKlW8g9" />
+     <listitem open="0" type="830" id="Datatypes" >
+      <listitem open="1" type="829" id="oygQrtl63y8x" />
+      <listitem open="1" type="829" id="7fRhRRiZXZhm" />
+      <listitem open="1" type="829" id="miWKFB449kUy" />
+      <listitem open="1" type="829" id="WBiGEsuLXL0y" />
+      <listitem open="1" type="829" id="LFAF1wY5nm3B" />
+      <listitem open="1" type="829" id="Apsf8qevW8Dm" />
+      <listitem open="1" type="829" id="dF4eBAZfLIvX" />
+      <listitem open="1" type="829" id="Xi946PifD3aK" />
+      <listitem open="1" type="829" id="JHqQ0KOdXQGg" />
+      <listitem open="1" type="829" id="7X3dfGPwWFMW" />
+      <listitem open="1" type="829" id="ZpLu7ESF2IvA" />
+     </listitem>
+    </listitem>
+    <listitem open="1" type="802" id="Use Case View" />
+    <listitem open="1" type="821" id="Component View" />
+    <listitem open="1" type="827" id="Deployment View" />
+    <listitem open="1" type="836" id="Entity Relationship Model" />
+   </listitem>
+  </listview>
+  <codegeneration>
+   <codegenerator language="C++" />
+  </codegeneration>
+ </XMI.extensions>
+</XMI>
