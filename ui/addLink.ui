@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>465</width>
-    <height>519</height>
+    <width>558</width>
+    <height>628</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -19,6 +19,9 @@
       <string>The link</string>
      </property>
      <layout class="QVBoxLayout" >
+      <property name="spacing" >
+       <number>3</number>
+      </property>
       <property name="leftMargin" >
        <number>2</number>
       </property>
@@ -81,56 +84,93 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="label" >
-       <property name="text" >
-        <string>Hardware interface: </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="ethNamelineEdit" />
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="label_2" >
-       <property name="text" >
-        <string>Ip address/netmask:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="ipLineEdit" />
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" >
-     <item>
-      <widget class="QLabel" name="label_3" >
-       <property name="text" >
-        <string>Broadcast address: </string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="broadcastLineEdit" >
-       <property name="acceptDrops" >
-        <bool>false</bool>
-       </property>
-       <property name="text" >
-        <string/>
-       </property>
-       <property name="readOnly" >
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QGroupBox" name="groupBox_4" >
+     <property name="title" >
+      <string>Address</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>Interface name:       </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="ethNamelineEdit" />
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_2" >
+          <property name="text" >
+           <string>Ip address/netmask:</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="margin" >
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLineEdit" name="ipLineEdit" />
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="font" >
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text" >
+             <string>Note: the ip/netmask can be inserted in CIDR notation (10.0.0.1/8), or in standard notation (10.0.0.1/255.0.0.0)</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="label_3" >
+          <property name="text" >
+           <string>Broadcast address: </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="broadcastLineEdit" >
+          <property name="acceptDrops" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string/>
+          </property>
+          <property name="readOnly" >
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox" >

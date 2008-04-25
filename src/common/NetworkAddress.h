@@ -46,6 +46,7 @@ public:
 	static QHostAddress toGeneralNetwork(QHostAddress ip, QHostAddress netmask);
 	static bool validateNetmask(QHostAddress netmask);
 	static bool validateIp(QString ip);
+	static QHostAddress generateBroadcast(QHostAddress ip, QHostAddress netmask);
 };
 
 #endif /*NETWORKADDRESS_H_*/

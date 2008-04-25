@@ -75,3 +75,15 @@ void CdMapper::addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd)
 			cd->getName() + " [" + cd->getSubnet()->toString(false) + "]");
 }
 
+/**
+ * Get the network of the business element gived a view element
+ */
+NetworkAddress CdMapper::getNetworkAddress(CollisionDomainItem *cdItem)
+{
+	CollisionDomain* cd = getCD(cdItem);
+	
+	if(cd == NULL)
+		return NetworkAddress();
+	else
+		return *(cd->getSubnet());
+}

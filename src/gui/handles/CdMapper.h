@@ -47,6 +47,8 @@ public:
 	static CdMapper* getInstance();
 	void showAddCdForm(QPointF pos);
 	void addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd);
+	CollisionDomain* getCD(CollisionDomainItem *cdItem) { return mappings.value(cdItem); };
+	NetworkAddress getNetworkAddress(CollisionDomainItem *cdItem);
 };
 
 #endif /*CDMAPPER_H_*/
