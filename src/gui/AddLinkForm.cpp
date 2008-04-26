@@ -18,9 +18,10 @@
 
 #include "AddLinkForm.h"
 #include "handles/CdMapper.h"
-#include "../common/NetworkAddress.h"
+#include "handles/LinkHandler.h"
 #include <QDesktopWidget>
 #include <QHeaderView>
+
 /**
  * Constructor
  */
@@ -46,8 +47,12 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	/* connects */
 	connect(addLinkButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAccept()));
+	
 	connect(ipLineEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(validateIp(const QString &)));
+	
+	connect(this, SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool, NetworkAddress)),
+			LinkHandler::getInstance(), SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool, NetworkAddress)));
 }
 
 /**
@@ -131,8 +136,8 @@ void AddLinkForm::handleAccept()
 	/**
 	 * test the interface name
 	 */
-	if(ethNamelineEdit->text().trimmed() == "" ||
-			VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNamelineEdit->text().trimmed()))
+	if(ethNameLineEdit->text().trimmed() == "" ||
+			VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNameLineEdit->text().trimmed()))
 		
 	{
 		/* Show a warning message */
@@ -143,7 +148,26 @@ void AddLinkForm::handleAccept()
 		return;
 	}
 	
+	//if up --> state true, false otherwise
+	bool ethState = ethUp->isChecked();
 	
+	NetworkAddress address;
+	bool cidrNetmask;
+	netmask.toInt(&cidrNetmask);
+	
+	//cidr or normal netmask?
+	if(cidrNetmask)
+		address = NetworkAddress(QHostAddress(ip), netmask.toInt());
+	else
+		address = NetworkAddress(QHostAddress(ip), QHostAddress(netmask));
+	
+	address.setBroadcast(QHostAddress(broadcastLineEdit->text()));
+	
+	//emit signal and close the gui
+	emit readyToAddLink(vmItem, cdItem, ethNameLineEdit->text().trimmed(),
+			ethState, address);
+	
+	close();
 }
 
 /**

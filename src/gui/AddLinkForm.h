@@ -21,6 +21,7 @@
 
 #include <QDialog>
 #include <QWidget>
+#include "../common/NetworkAddress.h"
 #include "VirtualMachineItem.h"
 #include "CollisionDomainItem.h"
 #include "handles/VmMapper.h"
@@ -42,6 +43,10 @@ public:
 	AddLinkForm(QWidget *parent = 0);
 	virtual ~AddLinkForm();
 	void updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd);
+	
+signals:
+	void readyToAddLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
+			QString ethName, bool state, NetworkAddress address);
 };
 
 #endif /*ADDLINKFORM_H_*/

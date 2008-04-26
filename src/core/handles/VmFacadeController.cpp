@@ -28,6 +28,7 @@ VmFacadeController* VmFacadeController::instance = NULL;
  */
 VmFacadeController::VmFacadeController()
 {
+	labFacadeController = LabFacadeController::getInstance();
 }
 
 /**
@@ -70,3 +71,11 @@ VirtualMachine* VmFacadeController::createNewVirtualMachine(QString name,
 	return m;
 }
 
+/**
+ * Create and return a new hardware interface connected to `cd` collision domain
+ */
+HardwareInterface* VmFacadeController::createNewHardwareIterface(VirtualMachine *vm, QString ethName,
+			bool state, NetworkAddress address, CollisionDomain *cd)
+{
+
+}

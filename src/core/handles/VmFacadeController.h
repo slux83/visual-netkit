@@ -19,7 +19,7 @@
 #ifndef VMFACADECONTROLLER_H_
 #define VMFACADECONTROLLER_H_
 
-//#include "../factories/VirtualMachineFactory.h"
+#include "LabFacadeController.h"
 #include "../VirtualMachine.h"
 
 /**
@@ -31,12 +31,16 @@ class VmFacadeController
 	
 private:
 	static VmFacadeController *instance;
+	LabFacadeController *labFacadeController;
 	
 public:
 	VmFacadeController();
 	virtual ~VmFacadeController();
 	static VmFacadeController* getInstance();
 	VirtualMachine* createNewVirtualMachine(QString name, QList<Daemon> activeDaemons);
+	HardwareInterface * createNewHardwareIterface(VirtualMachine *vm, QString ethName,
+			bool state, NetworkAddress address, CollisionDomain *cd);
+	
 };
 
 #endif /*VMFACADECONTROLLER_H_*/
