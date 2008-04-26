@@ -108,7 +108,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ethNamelineEdit" />
+         <widget class="QLineEdit" name="ethNameLineEdit" />
         </item>
        </layout>
       </item>

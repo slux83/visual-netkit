@@ -24,7 +24,7 @@
 #include "../common/Types.h"
 
 #include <QString>
-#include <QLinkedList>
+#include <QMap>
 
 /**
  * The Virtual machine that inside NetKit it is modelled with User Mode Linux
@@ -35,14 +35,14 @@ class VirtualMachine
 public:	
 	VirtualMachine(QString newName);
 	virtual ~VirtualMachine();
-	QLinkedList<HardwareInterface *> getInterfaces();
+	QMap<QString, HardwareInterface *> getInterfaces();
 	QString getName();
 	VmType getMyType();
 	DaemonManager *getDm() { return dm; };
 
 private:
 	QString name;
-	QLinkedList<HardwareInterface *> interfaces;
+	QMap<QString, HardwareInterface *> interfaces;
 	DaemonManager *dm;
 
 };

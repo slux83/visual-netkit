@@ -47,7 +47,7 @@ QString VirtualMachine::getName()
 /**
  * Get the list of interfaces owned by this virtual machine
  */
-QLinkedList<HardwareInterface *> VirtualMachine::getInterfaces()
+QMap<QString, HardwareInterface *> VirtualMachine::getInterfaces()
 {
 	return interfaces;
 }

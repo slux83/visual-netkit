@@ -19,11 +19,30 @@
 #ifndef LINKHANDLER_H_
 #define LINKHANDLER_H_
 
-class LinkHandler
+#include <QObject>
+
+#include "../VirtualMachineItem.h"
+#include "../CollisionDomainItem.h"
+#include "../../common/NetworkAddress.h"
+#include "../../core/handles/VmFacadeController.h"
+
+class LinkHandler : public QObject
 {
+	Q_OBJECT
+	
+private:
+	static LinkHandler* instance;
+	VmFacadeController* vmFacadeController;
+	
 public:
 	LinkHandler();
 	virtual ~LinkHandler();
+	static LinkHandler* getInstance();
+	
+public slots:
+	void createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
+			QString ethName, bool state, NetworkAddress address);
+
 };
 
 #endif /*LINKHANDLER_H_*/

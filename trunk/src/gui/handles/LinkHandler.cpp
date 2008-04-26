@@ -18,10 +18,47 @@
 
 #include "LinkHandler.h"
 
-LinkHandler::LinkHandler()
+/**
+ * Init the null instance for the singletone controller
+ */
+LinkHandler* LinkHandler::instance = NULL;
+
+/**
+ * Constructor
+ */
+LinkHandler::LinkHandler() : QObject()
+{
+	/* get domain side controllers */
+	vmFacadeController = VmFacadeController::getInstance();
+}
+
+/**
+ * Deconstructor
+ */
+LinkHandler::~LinkHandler()
 {
 }
 
-LinkHandler::~LinkHandler()
+/**
+ * Singletone get instance
+ */
+LinkHandler* LinkHandler::getInstance()
 {
+	if (instance == NULL)
+	{
+		instance = new LinkHandler();
+	}
+
+	return instance;
+}
+
+/**
+ * [PUBLIC-SLOT]
+ * Handle the request for a new link beetween vm and cd
+ */
+void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
+		QString ethName, bool state, NetworkAddress address)
+{
+	qDebug() << address.toString(true) << ethName << state;
+	
 }

@@ -89,12 +89,12 @@ QMap<QString, QString> VmMapper::getMachineInterfaces(VirtualMachineItem* vmItem
 {
 	QMap<QString, QString> interfaces;
 	VirtualMachine* vm = mappings.value(vmItem);
-	QLinkedListIterator<HardwareInterface *> i(vm->getInterfaces());
+	QMapIterator<QString, HardwareInterface *> i(vm->getInterfaces());
 	
 	while(i.hasNext())
 	{
-		HardwareInterface *eth = i.next();
-		interfaces.insert(eth->getName(), eth->getAddress().toString(true));
+		i.next();
+		interfaces.insert(i.key(), i.value()->getAddress().toString(true));
 	}
 	
 	return interfaces;
