@@ -57,7 +57,7 @@ NetworkAddress::~NetworkAddress()
 }
 
 /**
- * [PRIVATE]
+ * [PUBLIC-STATIC]
  * Convert che cidr notation in common ip netmask.
  * 		=> EXAMPLE: 10.0.0.0/8 = 10.0.0.0/255.0.0.0
  */

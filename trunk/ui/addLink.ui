@@ -73,8 +73,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="cursor" >
+           <cursorShape>IBeamCursor</cursorShape>
+          </property>
           <property name="text" >
            <string/>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="textInteractionFlags" >
+           <set>Qt::LinksAccessibleByMouse|Qt::NoTextInteraction|Qt::TextSelectableByMouse</set>
           </property>
          </widget>
         </item>
