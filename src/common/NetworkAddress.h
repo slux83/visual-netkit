@@ -32,7 +32,6 @@ class NetworkAddress : public QNetworkAddressEntry
 private:
 	//this map is a mapping between ip-netmask and cidr netmask notation
 	QMap<quint8, QHostAddress> netmaskMapping;
-	QHostAddress cidr2netmask(quint8 cidrMask);
 	void fillNetmaskMap();
 	
 public:
@@ -47,6 +46,7 @@ public:
 	static bool validateNetmask(QHostAddress netmask);
 	static bool validateIp(QString ip);
 	static QHostAddress generateBroadcast(QHostAddress ip, QHostAddress netmask);
+	static QHostAddress cidr2netmask(quint8 cidrMask);
 };
 
 #endif /*NETWORKADDRESS_H_*/

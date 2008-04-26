@@ -74,7 +74,11 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 	
 	//update gui
 	labelVm->setText(vm->getLabel());
-	labelCd->setText(cd->getLabel());
+	labelCd->setText(cd->getLabel() + " (" +
+			CdMapper::getInstance()->getNetworkAddress(cd).netmask().toString() + ")");
+	
+	//Set the same ip/netmask of the collision domain selected
+	ipLineEdit->setText(CdMapper::getInstance()->getNetworkAddress(cd).toString(false));
 	
 	/* Get interfaces for the vm */
 	QMapIterator<QString, QString> iter(VmMapper::getInstance()->getMachineInterfaces(vm));
@@ -105,6 +109,40 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
  */
 void AddLinkForm::handleAccept()
 {
+	QStringList splitted = ipLineEdit->text().split("/");
+	
+	/* get ip and netmask */
+	QString ip = splitted[0];
+	QString netmask = splitted[1];
+	
+	/**
+	 * if the broadcast in correct, also the ip/netmask it is
+	 */
+	if(!NetworkAddress::validateIp(broadcastLineEdit->text()))
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+			tr("The ip/netmask seems to be incorrect.\nPlease, retry."),
+			QMessageBox::Ok);
+				
+		return;
+	}
+	
+	/**
+	 * test the interface name
+	 */
+	if(ethNamelineEdit->text().trimmed() == "" ||
+			VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNamelineEdit->text().trimmed()))
+		
+	{
+		/* Show a warning message */
+		QMessageBox::warning(this, tr("VisualNetkit - Error"),
+			tr("The interface name must be unique and not empty!\nPlease, retry."),
+			QMessageBox::Ok);
+		
+		return;
+	}
+	
 	
 }
 
@@ -125,6 +163,15 @@ void AddLinkForm::validateIp(const QString &text)
 	QString ip = splitted[0];
 	QString netmask = splitted[1];
 	
+	bool isCidr;
+	int cidrNetmask = netmask.toInt(&isCidr);
+	
+	/* the netmask is in cidr notation? */
+	if(isCidr && cidrNetmask >= 1 && cidrNetmask <=32)
+	{
+		netmask = NetworkAddress::cidr2netmask(cidrNetmask).toString();
+	}
+	
 	/* validate netmask and ip address */
 	if(!NetworkAddress::validateIp(ip) ||
 			!NetworkAddress::validateNetmask(QHostAddress(netmask)))
@@ -135,13 +182,15 @@ void AddLinkForm::validateIp(const QString &text)
 	
 	/* 
 	 * check if the ip is conform with the collision domain subnet
-	 * comparing the two broadcast addresses 
+	 * comparing the two broadcast addresses and verifying the network compatibility
 	 */
 	NetworkAddress cdNetwork = CdMapper::getInstance()->getNetworkAddress(cdItem);
-	if(NetworkAddress::generateBroadcast(cdNetwork.ip(), cdNetwork.netmask()) !=
-		NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)))
+	
+	if((NetworkAddress::generateBroadcast(cdNetwork.ip(), cdNetwork.netmask()) !=
+		NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask))) ||
+		(QHostAddress(ip) == cdNetwork.ip()))
 	{
-		broadcastLineEdit->setText(tr("ip/netmask must be the compatible with the subnet: ") + cdNetwork.toString(true));
+		broadcastLineEdit->setText(tr("ip/netmask incompatible with ") + cdNetwork.toString(true));
 		return;
 	}
 	else
