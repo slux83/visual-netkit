@@ -23,7 +23,8 @@
 #include <QString>
 
 #include "../common/NetworkAddress.h"
-class CollisionDomain;
+#include "CollisionDomain.h"
+
 class VirtualMachine;
 
 /**
@@ -37,16 +38,18 @@ private:
 	QString name;
 	VirtualMachine *myMachine;
 	CollisionDomain *domain;
+	bool state;
 	
 public:
-	HardwareInterface(VirtualMachine *m);
+	HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
+			QString ethName, NetworkAddress addr, bool interfaceState);
 	virtual ~HardwareInterface();
 	QString getName() { return name; };
 	NetworkAddress getAddress() { return address; };
 	VirtualMachine* getMyVirtualMachine() { return myMachine; };
 	CollisionDomain* getMyCollisionDomain() { return domain; };
-	void setMyCollisionDomain(CollisionDomain *cs);
-	//TODO: etc...
+	bool getState() { return state; };
+	void setMyCollisionDomain(CollisionDomain *cd);
 
 };
 

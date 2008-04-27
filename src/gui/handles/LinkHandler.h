@@ -25,6 +25,8 @@
 #include "../CollisionDomainItem.h"
 #include "../../common/NetworkAddress.h"
 #include "../../core/handles/VmFacadeController.h"
+#include "VmMapper.h"
+#include "CdMapper.h"
 
 class LinkHandler : public QObject
 {
@@ -33,6 +35,8 @@ class LinkHandler : public QObject
 private:
 	static LinkHandler* instance;
 	VmFacadeController* vmFacadeController;
+	VmMapper* vmMapper;
+	CdMapper* cdMapper;
 	
 public:
 	LinkHandler();

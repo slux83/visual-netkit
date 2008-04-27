@@ -17,6 +17,7 @@
  */
 
 #include "CollisionDomain.h"
+#include "HardwareInterface.h"
 
 /**
  * Constructor with the name
@@ -34,3 +35,12 @@ CollisionDomain::~CollisionDomain()
 {
 	delete address;
 }
+
+/**
+ * Add a peer (rapresented by the hardware interface)
+ */
+void CollisionDomain::addPeer(HardwareInterface* hi)
+{
+	peers.insert(hi->getName(), hi);
+}
+

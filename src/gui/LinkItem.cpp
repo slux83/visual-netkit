@@ -17,13 +17,27 @@
  */
 
 #include "LinkItem.h"
+#include <QPointF>
 
 /**
  * Constructor
  */
-LinkItem::LinkItem(SvgItemPrivate* start, SvgItemPrivate* end, QString label)
+LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label)
+	: QObject(), QGraphicsItemGroup()
 {
+	vm = vmItem;
+	cd = cdItem;
+	lineItem = new LineItemPrivate();
+	myLabel = new LabelItemPrivate(label);
+	myLabel->setFont(GRAPHICS_FONT);
 	
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(800);
+	
+	//set the line position
+	setLinePosition();
+	
+	addToGroup(lineItem);
 }
 
 /**
@@ -32,3 +46,20 @@ LinkItem::LinkItem(SvgItemPrivate* start, SvgItemPrivate* end, QString label)
 LinkItem::~LinkItem()
 {
 }
+
+/**
+ * [PRIVATE]
+ * Set the line start and end
+ */
+void LinkItem::setLinePosition()
+{
+	QPointF vmCenter, cdCenter;
+	vmCenter.setX(vm->getSvgPrivate()->scenePos().x());
+	vmCenter.setY(vm->getSvgPrivate()->scenePos().y());
+	cdCenter.setX(cd->getSvgPrivate()->scenePos().x());
+	cdCenter.setY(cd->getSvgPrivate()->scenePos().y());
+	
+	lineItem->setLine(QLineF(vmCenter, cdCenter));
+	
+}
+

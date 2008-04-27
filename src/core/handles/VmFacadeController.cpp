@@ -77,5 +77,10 @@ VirtualMachine* VmFacadeController::createNewVirtualMachine(QString name,
 HardwareInterface* VmFacadeController::createNewHardwareIterface(VirtualMachine *vm, QString ethName,
 			bool state, NetworkAddress address, CollisionDomain *cd)
 {
-
+	/* create the new hardware interface to connect vm to cd */
+	HardwareInterface *hi = new HardwareInterface(vm, cd, ethName, address, state);
+	vm->addHardwareInterface(hi);
+	
+	return hi;
+	
 }

@@ -1,4 +1,4 @@
-/**
+	/**
  * VisualNetkit is an advanced graphical tool for NetKit <http://www.netkit.org>
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
@@ -58,6 +58,7 @@ public:
 	virtual ~VirtualMachineItem();
 	void changeSvgFile(VmType type);
 	QString getLabel() { return vmNameLabel->text(); };
+	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
 
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };
