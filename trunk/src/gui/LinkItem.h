@@ -19,11 +19,17 @@
 #ifndef LINKITEM_H_
 #define LINKITEM_H_
 
+#include <math.h>
 #include <QGraphicsItemGroup>
 #include <QGraphicsLineItem>
 
 #include "LabelItemPrivate.h"
-#include "SvgItemPrivate.h"
+#include "VirtualMachineItem.h"
+#include "CollisionDomainItem.h"
+#include "LineItemPrivate.h"
+
+/* Pi-greco */
+static const double Pi = 3.14159;
 
 /**
  * This class is a graphic group element of type Link
@@ -35,12 +41,15 @@ class LinkItem : public QObject, public QGraphicsItemGroup
 	Q_OBJECT
 
 private:
-	QGraphicsLineItem *linkLine;
+	LineItemPrivate *lineItem;
 	LabelItemPrivate *myLabel;
-	SvgItemPrivate *startNode, *endNode;	//start and end of this "line"
+	VirtualMachineItem* vm;
+	CollisionDomainItem* cd;	//start and end of this "line"
+	
+	void setLinePosition();
 	
 public:
-	LinkItem(SvgItemPrivate* start, SvgItemPrivate* end, QString label);
+	LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label);
 	virtual ~LinkItem();
 };
 

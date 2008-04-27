@@ -32,6 +32,11 @@
 class VirtualMachine
 {
 
+private:
+	QString name;
+	QMap<QString, HardwareInterface *> interfaces;
+	DaemonManager *dm;
+
 public:	
 	VirtualMachine(QString newName);
 	virtual ~VirtualMachine();
@@ -39,11 +44,7 @@ public:
 	QString getName();
 	VmType getMyType();
 	DaemonManager *getDm() { return dm; };
-
-private:
-	QString name;
-	QMap<QString, HardwareInterface *> interfaces;
-	DaemonManager *dm;
+	void addHardwareInterface(HardwareInterface *hi) { interfaces.insert(hi->getName(), hi); };
 
 };
 

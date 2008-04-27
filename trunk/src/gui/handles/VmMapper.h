@@ -50,6 +50,7 @@ public:
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
 	QMap<QString, QString> getMachineInterfaces(VirtualMachineItem* vmItem);
+	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);

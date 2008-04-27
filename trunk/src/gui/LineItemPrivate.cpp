@@ -16,38 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HardwareInterface.h"
+#include "LineItemPrivate.h"
 
 /**
- * [HardwareInterface]
  * Constructor
  */
-HardwareInterface::HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
-		QString ethName, NetworkAddress addr, bool interfaceState)
+LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(parent)
 {
-	myMachine = m;
-	domain = cd;
-	domain->addPeer(this);
-	name = ethName;
-	state = interfaceState;
-	address = address;
 }
 
 /**
  * Deconstructor
  */
-HardwareInterface::~HardwareInterface()
+LineItemPrivate::~LineItemPrivate()
 {
-	
 }
-
-/**
- * Set my collision domain (two way)
- */
-void HardwareInterface::setMyCollisionDomain(CollisionDomain *cd)
-{
-	domain = cd;
-	domain->addPeer(this);
-}
-
-

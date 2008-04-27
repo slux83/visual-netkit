@@ -30,6 +30,10 @@ LinkHandler::LinkHandler() : QObject()
 {
 	/* get domain side controllers */
 	vmFacadeController = VmFacadeController::getInstance();
+	
+	/* get gui side controllers/mappers */
+	vmMapper = VmMapper::getInstance();
+	cdMapper = CdMapper::getInstance();
 }
 
 /**
@@ -60,5 +64,26 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 		QString ethName, bool state, NetworkAddress address)
 {
 	qDebug() << address.toString(true) << ethName << state;
+	
+	/* Get from mappers the domain objects */
+	VirtualMachine *vm = vmMapper->getMachine(vmItem);
+	CollisionDomain *cd = cdMapper->getCD(cdItem);
+	
+	//test mappings consistent
+	if(vm == NULL || cd == NULL)
+	{
+		qWarning()	<< "LinkHandler::createLink()"
+					<< "Mapping brocken Vm - Cd:" << vm << cd;
+		return;
+	}
+	
+	/**
+	 * VmFacadeController is the creator for a new hardware interface
+	 * for a virtual machine passed
+	 */
+	HardwareInterface *interface = 
+		vmFacadeController->createNewHardwareIterface(vm, ethName, state, address, cd);
+	
+	/* create the link item (view side) */
 	
 }

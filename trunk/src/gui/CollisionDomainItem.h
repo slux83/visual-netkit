@@ -56,6 +56,7 @@ public:
 	CollisionDomainItem(QString label);
 	virtual ~CollisionDomainItem();
 	QString getLabel() { return myLabel->text(); };
+	SvgItemPrivate *getSvgPrivate() { return collisionDomainSvg; };
 	
 	/* Reimpl */
 	int type() const { return UserType + CdItem; };
