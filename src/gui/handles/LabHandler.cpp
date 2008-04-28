@@ -82,6 +82,16 @@ void LabHandler::newLab()
 
 /**
  * [SLOT]
+ * Save the lab
+ */
+void LabHandler::saveLab()
+{
+	LabFacadeController::getInstance()->saveLab();
+}
+
+
+/**
+ * [SLOT]
  * Render a new lab on tree (previusely created)
  */
 void LabHandler::addCreatedLabOnTree(Laboratory *l)

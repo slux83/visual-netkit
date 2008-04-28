@@ -51,6 +51,7 @@ public:
 
 public slots:
 	void newLab();
+	void saveLab();
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);
