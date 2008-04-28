@@ -83,6 +83,9 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 	//qDebug() << boundingRect() << boundingRect().x() << boundingRect().y();
 	if (change == ItemPositionChange && scene())
 	{
+		//emit a signal
+		emit positionChanged();
+		
 		// value is the new position.
 		QPointF newPos = value.toPointF();
 		QRectF rect = scene()->sceneRect();

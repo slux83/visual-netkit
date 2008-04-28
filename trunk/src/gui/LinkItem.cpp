@@ -30,18 +30,23 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	cd = cdItem;
 	
 	lineItem = new LineItemPrivate();
-	lineItem->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setFont(GRAPHICS_FONT);
 	
-	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	//setFlags(QGraphicsItem::ItemIsSelectable);
 	setZValue(800);
 	
 	//set the line position
-	setLinePosition();
+	updateLinkPos();
 	
 	addToGroup(lineItem);
+	
+	/* connects */
+	connect(vm, SIGNAL(positionChanged()),
+			this, SLOT(updateLinkPos()));
+	connect(cd, SIGNAL(positionChanged()),
+			this, SLOT(updateLinkPos()));
 }
 
 /**
@@ -52,22 +57,24 @@ LinkItem::~LinkItem()
 }
 
 /**
- * [PRIVATE]
- * Set the line start and end
+ * [PUBLIC-SLOT]
+ * Update the link position/orientation
  */
-void LinkItem::setLinePosition()
+void LinkItem::updateLinkPos()
 {
 	QPointF vmCenter, cdCenter;
 	
 	//start point
-	vmCenter.setX(vm->getSvgPrivate()->scenePos().x());
-	vmCenter.setY(vm->getSvgPrivate()->scenePos().y());
+	vmCenter.setX(vm->getSvgPrivate()->scenePos().x() +
+			vm->getSvgPrivate()->boundingRect().width() / 2);
+	vmCenter.setY(vm->getSvgPrivate()->scenePos().y() + 
+			vm->getSvgPrivate()->boundingRect().height() / 2);
 	
 	//end point
-	cdCenter.setX(cd->getSvgPrivate()->scenePos().x());
-	cdCenter.setY(cd->getSvgPrivate()->scenePos().y());
+	cdCenter.setX(cd->getSvgPrivate()->scenePos().x() +
+			cd->getSvgPrivate()->boundingRect().width() / 2);
+	cdCenter.setY(cd->getSvgPrivate()->scenePos().y() +
+			cd->getSvgPrivate()->boundingRect().height() / 2);
 	
 	lineItem->setLine(QLineF(vmCenter, cdCenter));
-	
 }
-
