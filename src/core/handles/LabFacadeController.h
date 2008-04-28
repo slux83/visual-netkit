@@ -41,10 +41,12 @@ public:
 	virtual ~LabFacadeController();
 	static LabFacadeController * getInstance();
 	void newLaboratory();
+	void saveLab();
 	Laboratory * getCurrentLab() { return currentLab; };
 
 signals:
 	void createdNewLab(Laboratory *newLab);
+	void savedLab(Laboratory *currentLab);
 };
 
 #endif /*LABFACADECONTROLLER_H_*/

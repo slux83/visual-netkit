@@ -19,6 +19,8 @@
 #include "LabFacadeController.h"
 #include "../../gui/handles/LabHandler.h"
 
+#include "../../persistence/XMLSaver.h"
+
 /**
  * Init the null instance for the singletone controller
  */
@@ -63,7 +65,7 @@ void LabFacadeController::newLaboratory()
 	/* Check if current lab exist */
 	if(currentLab != NULL)
 	{
-		qWarning() << "Alert, a current lab allready exist!";
+		qWarning() << "Alert, a current lab already exists!";
 		return;
 		//TODO: manage this scenario (variant)
 	}
@@ -72,3 +74,22 @@ void LabFacadeController::newLaboratory()
 	
 	emit createdNewLab(currentLab);
 }
+
+
+void LabFacadeController::saveLab()
+{
+	/* Check if current lab exist */
+	if(currentLab != NULL)
+	{
+		qWarning() << "Preparing to save the current lab...";
+		XMLSaver *xs = new XMLSaver();
+		bool ok = xs->saveLab();
+		if (ok)
+			qWarning() << "Lab saved!";
+		else 
+			qWarning() << "Lab not saved...something wrong!";
+	}
+	
+	emit savedLab(currentLab);
+}
+
