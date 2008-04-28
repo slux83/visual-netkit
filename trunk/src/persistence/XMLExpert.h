@@ -24,8 +24,12 @@
 #include <QTextStream>
 #include "../common/CommonConfigs.h"
 
+/**
+ * This object is an expert of XML dump and read
+ */
 class XMLExpert
 {
+
 public:
 	XMLExpert();
 	virtual ~XMLExpert();

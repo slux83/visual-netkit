@@ -19,15 +19,22 @@
 #include "XMLExpert.h"
 #include <QDebug>
 
+/**
+ * Constructor
+ */
 XMLExpert::XMLExpert()
 {
 }
 
+/**
+ * Deconstructor
+ */
 XMLExpert::~XMLExpert()
 {
 }
 
 /**
+ * [STATIC]
  * Writes to filesystem the passed QDomDocument. If the specified file exists
  * overwrites it.
  */
@@ -50,6 +57,7 @@ bool XMLExpert::dumpDocument(QDomDocument *doc, QString *filename)
 }
 
 /**
+ * [STATIC]
  * Reads the file named "filename" and returns a QDomDocument. If the file is 
  * empty or null returns an empty QDomDocument.
  */ 
