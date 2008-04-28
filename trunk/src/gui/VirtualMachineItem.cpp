@@ -30,6 +30,9 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
 {
 	isJoin = true; //start witha joined group
 	
+	//store the item's type
+	vmType = type;
+	
 	/* Fill the filemap */
 	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
 	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
@@ -75,7 +78,7 @@ void VirtualMachineItem::changeSvgFile(VmType type)
 
 /**
  * [PROTECTED]
- * Control the moviment of this item and don't permit that it's drowed outside
+ * Controls the movements of this item and doesn't permit that it's drawed outside
  * the scene rect
  */
 QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVariant &value)

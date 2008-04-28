@@ -51,6 +51,8 @@ private:
 	QAction *deleteAction;
 	bool isJoin;
 	
+	VmType vmType;
+	
 	void initContextMenu();
 	
 public:
@@ -62,6 +64,8 @@ public:
 
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };
+	
+	VmType getVmType() { return vmType; };
 	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
