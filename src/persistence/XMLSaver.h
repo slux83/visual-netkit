@@ -20,14 +20,22 @@
 #define XMLSAVER_H_
 
 #include <QDomDocument>
+#include <QList>
+
+#include "XMLExpert.h"
 
 class XMLSaver
 {
+
+private:
+	XMLExpert *ex;
+	QDomDocument* prepareDomDocument();
+	
 public:
 	XMLSaver();	
 	virtual ~XMLSaver();
 	
-	QDomDocument* prepareDomDocument();
+	bool saveLab();
 };
 
 #endif /*XMLSAVER_H_*/

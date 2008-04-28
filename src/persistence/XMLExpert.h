@@ -29,7 +29,8 @@ class XMLExpert
 public:
 	XMLExpert();
 	virtual ~XMLExpert();
-	static bool dumpDocument(QDomDocument *doc);
+	static bool dumpDocument(QDomDocument *doc, QString *filename = 0);
+	static QDomDocument* readDocument(QString *filename);
 };
 
 #endif /*XMLEXPERT_H_*/
