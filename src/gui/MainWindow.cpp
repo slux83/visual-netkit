@@ -87,6 +87,9 @@ void MainWindow::createConnections()
 	//connect: new lab action
 	connect(actionNewLab, SIGNAL(triggered()), labHandler, SLOT(newLab()));
 	
+	//connect: save lab action
+	connect(actionSave, SIGNAL(triggered()), labHandler, SLOT(saveLab()));
+	
 	//connect: item tree lab selected
 	connect(labTree, SIGNAL(itemClicked(QTreeWidgetItem * , int)),
 			labHandler, SLOT(labTreeItemSelected(QTreeWidgetItem * , int)));
