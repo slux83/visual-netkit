@@ -38,6 +38,7 @@ public:
 	MainWindow(QWidget *parent = 0);
 	virtual ~MainWindow();
 	void unlockSceneAndActions();
+	QGraphicsView* getGraphicsView() { return this->graphicsView; };
 	
 private:
 	/* Controllers */

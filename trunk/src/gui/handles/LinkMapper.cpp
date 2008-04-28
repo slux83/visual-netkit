@@ -63,7 +63,7 @@ void LinkMapper::showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd
 }
 
 /**
- * Adde the new mapping passed
+ * Adds the new mapping passed
  */
 void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
 {
@@ -80,4 +80,13 @@ void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
 			tr("Added a new link: ") + hi->getMyVirtualMachine()->getName()
 			+ "[" + hi->getName() + "] ---> " + hi->getMyCollisionDomain()->getName());
 }
+
+/**
+ * Returns a QList of QGraphicsItemGroup objects. These objects are graphics 
+ * elments associed with the mapping.
+ */
+QList<LinkItem*> LinkMapper::getLinkItems(){
+	return mappings.keys();
+}
+
 

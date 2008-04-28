@@ -37,13 +37,14 @@ private:
 	AddLinkForm *addLinkForm;
 	
 	/* the pair: <VIEW, DOMAIN> */
-	QMap<QGraphicsItemGroup*, HardwareInterface*> mappings;
+	QMap<LinkItem*, HardwareInterface*> mappings;
 	
 public:
 	LinkMapper();
 	virtual ~LinkMapper();
 	static LinkMapper* getInstance();
 	void addNewMapping(LinkItem* linkItem, HardwareInterface* hi);
+	QList<LinkItem*> getLinkItems();
 
 public slots:
 	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);
