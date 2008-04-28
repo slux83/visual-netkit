@@ -30,6 +30,8 @@ class LineItemPrivate : public QGraphicsLineItem
 public:
 	LineItemPrivate(QGraphicsItem *parent = 0);
 	virtual ~LineItemPrivate();
+	QRectF boundingRect() const;	
+
 };
 
 #endif /*LINEITEMPRIVATE_H_*/

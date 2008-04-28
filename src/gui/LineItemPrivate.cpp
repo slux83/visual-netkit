@@ -17,12 +17,15 @@
  */
 
 #include "LineItemPrivate.h"
+#include <QPen>
+#include <QBrush>
 
 /**
  * Constructor
  */
 LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(parent)
 {
+	setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 }
 
 /**
@@ -30,4 +33,18 @@ LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(pare
  */
 LineItemPrivate::~LineItemPrivate()
 {
+}
+
+/**
+ * [REIMPL]
+ * Redefined the bounding rect
+ */
+QRectF LineItemPrivate::boundingRect() const
+{
+     qreal extra = (pen().width() + 20) / 2.0;
+     
+     return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
+                                       line().p2().y() - line().p1().y()))
+		           .normalized()
+		           .adjusted(-extra, -extra, extra, extra);
 }

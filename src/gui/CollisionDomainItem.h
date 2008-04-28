@@ -69,6 +69,9 @@ private slots:
 	void ungroupActionCalled();
 	void deleteVmActionCalled();
 	void restoreGroupActionCalled();
+	
+signals:
+	void positionChanged();
 };
 
 #endif /*COLLISIONDOMAINITEM_H_*/

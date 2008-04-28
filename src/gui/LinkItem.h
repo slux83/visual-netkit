@@ -45,12 +45,13 @@ private:
 	LabelItemPrivate *myLabel;
 	VirtualMachineItem* vm;
 	CollisionDomainItem* cd;	//start and end of this "line"
-	
-	void setLinePosition();
-	
+		
 public:
 	LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label);
 	virtual ~LinkItem();
+	
+public slots:
+	void updateLinkPos();
 };
 
 #endif /*LINKITEM_H_*/
