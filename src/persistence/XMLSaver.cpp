@@ -18,6 +18,7 @@
 
 #include "XMLSaver.h"
 #include "../gui/handles/VmMapper.h"
+#include "../gui/handles/LinkMapper.h"
 #include "../common/Types.h"
 #include "../common/CommonConfigs.h"
 #include "../gui/LinkItem.h"
@@ -66,6 +67,25 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	QDomElement scene = doc->createElement("scene");
 	root.appendChild(scene);
 	
+	//adds scene dimensions
+	QDomElement sceneDim = doc->createElement("dimensions");
+	scene.appendChild(sceneDim);
+	
+	//X position value
+	QDomElement sceneDimX = doc->createElement("x");
+	sceneDim.appendChild(sceneDimX);		
+	QDomText sceneDimXt = doc->createTextNode(QString(int(LabHandler::getInstance()->
+							getMainWindow()->getGraphicsView()->scene()->width())));
+	sceneDimX.appendChild(sceneDimXt);
+	
+	//Y position value
+	QDomElement sceneDimY = doc->createElement("y");
+	sceneDim.appendChild(sceneDimY);
+	QDomText sceneDimYt = doc->createTextNode("undefined");
+	sceneDimY.appendChild(sceneDimYt);
+	
+	
+	
 	//adds lab scene items
 	QDomElement items = doc->createElement("items");
 	scene.appendChild(items);
@@ -77,13 +97,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	QList<VirtualMachineItem *> vmlist = VmMapper::getInstance()->getVmItems();
 	if (vmlist.size() > 0) 
 	{	
-		//adding to XML all virtualmachine type items
-		QDomElement vms = doc->createElement("virtualmachines");
-		items.appendChild(vms);
-
-		//adding to XML all router type items
-		QDomElement rs = doc->createElement("routers");
-		items.appendChild(rs);
+		QDomElement vms;
+		QDomElement rs;
 		
 		for (int i=0; i<vmlist.size(); i++)
 		{
@@ -91,15 +106,35 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			
 			VmType type = dynamic_cast<VirtualMachineItem*>(vmlist.at(i))->getVmType();
 			qDebug() << type;
-			if (type == Host) {
+			
+			if (type == Host) 
+			{
+				//adds to XML all virtualmachine type items
+				if (rs.isNull()) 
+				{
+					 vms = doc->createElement("virtualmachines");
+					 items.appendChild(vms);
+				}
+				
 				//creates a new virtualmachine item node
 				item = doc->createElement("virtualmachine");
 				vms.appendChild(item);
-			} else if (type == Router) {
+			} 
+			else if (type == Router) 
+			{
+				//adds to XML all router type items
+				if (rs.isNull()) 
+				{
+					rs = doc->createElement("routers");
+					items.appendChild(rs);
+				}
+				
 				//creates a new router item node
 				item = doc->createElement("router");
 				rs.appendChild(item);
-			} else {
+			} 
+			else 
+			{
 				qWarning()	<< "Failed preparing Document in XMLSaver.cpp: "
 							<< "item type not regnized!";
 			}
@@ -117,8 +152,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			item.appendChild(pos);
 			
 			//adds x and y position
-			QDomText posx = doc->createTextNode(0);
-			QDomText posy = doc->createTextNode(0);
+			QDomText posx = doc->createTextNode("undefined");
+			QDomText posy = doc->createTextNode("undefined");
 			pos.appendChild(posx);
 			pos.appendChild(posy);
 		}
@@ -127,48 +162,48 @@ QDomDocument* XMLSaver::prepareDomDocument()
 
 	
 	//==========================================================================	
+	// getting link items
+	QList<LinkItem *> linksList = LinkMapper::getInstance()->getLinkItems();
+	
 	// adds link items
-	QList<LinkItem *> links;// = VmMapper::getInstance()->getVmItems();
-	if (links.size() > 0) 
+	if (linksList.size() > 0) 
 	{
 		//adding to XML all link type items
 		QDomElement links = doc->createElement("links");
 		items.appendChild(links);
 		
-		/*
-		for (int j=0; j < links.size(); j++) {
-			QDomElement l = doc->createElement("link");
-			links.appendChild(l);
+		//
+		for (int j=0; j < linksList.size(); j++) 
+		{
+			QDomElement link = doc->createElement("link");
+			links.appendChild(link);
 			
-			//adds link's startnode element
-			QDomElement startnode = doc->createElement("startnode");
+			//adds link's virtualmachine element
+			QDomElement virtualmachine = doc->createElement("virtualmachine");
+			link.appendChild(virtualmachine);
 			
-			SvgItemPrivate sn = dynamic_cast<SvgItemPrivate*>(link.at(j))->getStartNode();
-			QString name = sn->getLabel();
-			QDomText snt = doc->createTextNode(name);
-			label.appendChild(snt);
-			link.appendChild(startnode);
+			VirtualMachineItem *vm = linksList.at(j)->getVirtualMachineItem();
+			QDomText vmt = doc->createTextNode(vm->getLabel());
+			virtualmachine.appendChild(vmt);
 			
-			//adds link's endnode element
-			QDomElement endnode = doc->createElement("endnode");
-			SvgItemPrivate en = dynamic_cast<SvgItemPrivate*>(link.at(j))->getEndNode();
-			QString name = en->getLabel();
-			QDomText ent = doc->createTextNode(name);
-			label.appendChild(ent);
-			link.appendChild(endnode);			
+			//adds link's collisiondomain element
+			QDomElement collisiondomain = doc->createElement("collisiondomain");
+			link.appendChild(collisiondomain);
+			
+			CollisionDomainItem *cd = linksList.at(j)->getCollisionDomainItem();
+			QDomText cdt = doc->createTextNode(cd->getLabel());
+			collisiondomain.appendChild(cdt);		
+			
 			
 			//adds link's label
 			QDomElement label = doc->createElement("label");
 			link.appendChild(label);
 			
 			//adds link's label text
-			QDomText labelt = doc->createTextNode(vmlist.at(i)->getLabel());
+			QDomText labelt = doc->createTextNode(linksList.at(j)->getLabelItemPrivate()->text());
 			label.appendChild(labelt);
 		}
-		*/
 	}
-	
-	
 	
 	
 	return doc;

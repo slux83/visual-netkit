@@ -50,6 +50,11 @@ public:
 	LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label);
 	virtual ~LinkItem();
 	
+	LineItemPrivate* getLineItemPrivate() { return lineItem; };
+	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
+	VirtualMachineItem* getVirtualMachineItem() { return vm; };
+	CollisionDomainItem* getCollisionDomainItem() { return cd; };
+	
 public slots:
 	void updateLinkPos();
 };
