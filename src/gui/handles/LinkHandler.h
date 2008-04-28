@@ -27,6 +27,8 @@
 #include "../../core/handles/VmFacadeController.h"
 #include "VmMapper.h"
 #include "CdMapper.h"
+#include "../LinkItem.h"
+#include "../undoCommands/UndoCommands.h"
 
 class LinkHandler : public QObject
 {
@@ -37,6 +39,7 @@ private:
 	VmFacadeController* vmFacadeController;
 	VmMapper* vmMapper;
 	CdMapper* cdMapper;
+	LabHandler *labHandler;
 	
 public:
 	LinkHandler();

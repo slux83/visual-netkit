@@ -18,6 +18,7 @@
 
 #include "LinkItem.h"
 #include <QPointF>
+#include <QPen>
 
 /**
  * Constructor
@@ -27,7 +28,10 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 {
 	vm = vmItem;
 	cd = cdItem;
+	
 	lineItem = new LineItemPrivate();
+	lineItem->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setFont(GRAPHICS_FONT);
 	
@@ -54,8 +58,12 @@ LinkItem::~LinkItem()
 void LinkItem::setLinePosition()
 {
 	QPointF vmCenter, cdCenter;
+	
+	//start point
 	vmCenter.setX(vm->getSvgPrivate()->scenePos().x());
 	vmCenter.setY(vm->getSvgPrivate()->scenePos().y());
+	
+	//end point
 	cdCenter.setX(cd->getSvgPrivate()->scenePos().x());
 	cdCenter.setY(cd->getSvgPrivate()->scenePos().y());
 	

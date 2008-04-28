@@ -61,3 +61,23 @@ void LinkMapper::showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd
 	addLinkForm->updateItems(vm, cd);
 	addLinkForm->show();
 }
+
+/**
+ * Adde the new mapping passed
+ */
+void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
+{
+	//add mapping
+	mappings.insert(linkItem, hi);
+	LabHandler *labHandler = LabHandler::getInstance();
+	
+	//add item inside the scene
+	labHandler->getMainWindow()->graphicsView->scene()->addItem(linkItem);
+	labHandler->getMainWindow()->graphicsView->ensureVisible(linkItem);
+	
+	//update system log
+	labHandler->getMainWindow()->writeLogMessage(
+			tr("Added a new link: ") + hi->getMyVirtualMachine()->getName()
+			+ "[" + hi->getName() + "] ---> " + hi->getMyCollisionDomain()->getName());
+}
+

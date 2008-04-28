@@ -34,6 +34,7 @@ LinkHandler::LinkHandler() : QObject()
 	/* get gui side controllers/mappers */
 	vmMapper = VmMapper::getInstance();
 	cdMapper = CdMapper::getInstance();
+	labHandler = LabHandler::getInstance();
 }
 
 /**
@@ -85,5 +86,12 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 		vmFacadeController->createNewHardwareIterface(vm, ethName, state, address, cd);
 	
 	/* create the link item (view side) */
+	LinkItem *linkItem = new LinkItem(vmItem, cdItem, ethName);
+	
+	/* the undo command (redo) can accomplish the action */
+	labHandler->getUndoStack()->push(new AddLinkCommand(linkItem, interface));
+	
+	/* reset the default action (manage graph) */
+	labHandler->getMainWindow()->forceManageGraphAction();
 	
 }
