@@ -72,7 +72,7 @@
      <x>0</x>
      <y>0</y>
      <width>1026</width>
-     <height>25</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -487,7 +487,7 @@
   </action>
   <action name="actionSave" >
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/save_icon</iconset>
