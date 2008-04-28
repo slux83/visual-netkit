@@ -79,7 +79,7 @@ AddCdCommand::~AddCdCommand()
  */
 void AddCdCommand::redo()
 {
-	//show and connect view & domain machines
+	//show and connect view & domain objects
 	CdMapper::getInstance()->addNewMapping(cdItem, cd);
 }
 
@@ -87,6 +87,50 @@ void AddCdCommand::redo()
  * Undo action
  */
 void AddCdCommand::undo()
+{
+	//TODO
+}
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+AddLinkCommand::AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	linkItem = newLinkItem;
+	hi = newHi;
+	
+	/**
+	 * example:
+	 * router[eth1] ---> A
+	 */
+	setText(tr("Added a new link: ") + 
+			hi->getMyVirtualMachine()->getName() + 
+			"[" + hi->getName() + "] ---> " + hi->getMyCollisionDomain()->getName());
+}
+
+/**
+ * Deconstructor
+ */ 
+AddLinkCommand::~AddLinkCommand()
+{
+}
+
+/**
+ * Redo action
+ */
+void AddLinkCommand::redo()
+{
+	//show and connect view & domain objects
+	LinkMapper::getInstance()->addNewMapping(linkItem, hi);
+}
+
+/**
+ * Undo action
+ */
+void AddLinkCommand::undo()
 {
 	//TODO
 }

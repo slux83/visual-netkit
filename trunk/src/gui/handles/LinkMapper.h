@@ -26,6 +26,7 @@
 #include "../CollisionDomainItem.h"
 #include "../../core/VirtualMachine.h"
 #include "../AddLinkForm.h"
+#include "../LinkItem.h"
 
 class LinkMapper : QObject
 {
@@ -42,6 +43,7 @@ public:
 	LinkMapper();
 	virtual ~LinkMapper();
 	static LinkMapper* getInstance();
+	void addNewMapping(LinkItem* linkItem, HardwareInterface* hi);
 
 public slots:
 	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);

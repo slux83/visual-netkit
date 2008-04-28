@@ -25,8 +25,11 @@
 #include "../../core/VirtualMachine.h"
 #include "../CollisionDomainItem.h"
 #include "../../core/CollisionDomain.h"
+#include "../../core/HardwareInterface.h"
+#include "../LinkItem.h"
 #include "../handles/VmMapper.h"
 #include "../handles/CdMapper.h"
+#include "../handles/LinkMapper.h"
 
 /**
  * [COMMAND]
@@ -51,7 +54,6 @@ public:
 
 /******************************************************************************/
 
-
 /**
  * [COMMAND]
  * Add a collision domain command.
@@ -67,6 +69,29 @@ public:
 	AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newCd,
 			QUndoCommand *parent = 0);
 	virtual ~AddCdCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
+
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Add a link command.
+ */
+class AddLinkCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	LinkItem *linkItem;
+	HardwareInterface *hi;
+	
+public:
+	AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi,
+			QUndoCommand *parent = 0);
+	virtual ~AddLinkCommand();
 	
 	//TODO
 	void undo();
