@@ -52,6 +52,7 @@ private:
 	void createConnections();
 	void createActionGroups();
 	void createScene();
+	void initMiniatureDock();
 
 public slots:
 	void writeLogMessage(QString message);

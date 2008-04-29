@@ -170,6 +170,7 @@ void MainWindow::createScene()
 	LabScene *scene = new LabScene();
 	graphicsView->setScene(scene);
 	graphicsView->setVisible(false);
+//	initMiniatureDock();
 }
 
 /**
@@ -196,6 +197,8 @@ void MainWindow::resizeScene(QAction *action)
  */
 void MainWindow::unlockSceneAndActions()
 {
+//	labMiniature->setVisible(true);
+//	labMiniature->setDisabled(true);
 	graphicsView->setVisible(true);
 	graphicsView->setDisabled(false);
 	graphicsView->ensureVisible(0, 0, 100, 100);
@@ -207,3 +210,23 @@ void MainWindow::unlockSceneAndActions()
 	//select the default action
 	forceManageGraphAction();
 }
+
+/**
+ * [PRIVATE]
+ * init the miniature dock
+ */
+void MainWindow::initMiniatureDock()
+{
+	labMiniature->setScene(graphicsView->scene());
+	labMiniature->resize(200, 200);
+	labMiniature->fitInView(QRectF(0, 0, 200, 200), Qt::KeepAspectRatio);
+	labMiniature->setVisible(false);
+	
+/*	QSvgGenerator *gen = new QSvgGenerator();
+	gen->setFileName("~/out.svg");
+	QPainter *svgPainter = new QPainter(gen);
+	scene()->render(svgPainter);
+	svgPainter->end();
+*/
+}
+

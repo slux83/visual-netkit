@@ -86,7 +86,8 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 		vmFacadeController->createNewHardwareIterface(vm, ethName, state, address, cd);
 	
 	/* create the link item (view side) */
-	LinkItem *linkItem = new LinkItem(vmItem, cdItem, ethName);
+	QString linkLabel(ethName + " " + address.ip().toString());
+	LinkItem *linkItem = new LinkItem(vmItem, cdItem, linkLabel);
 	
 	/* the undo command (redo) can accomplish the action */
 	labHandler->getUndoStack()->push(new AddLinkCommand(linkItem, interface));
