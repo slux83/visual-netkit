@@ -40,7 +40,7 @@ bool XMLSaver::saveLab()
 QDomDocument* XMLSaver::prepareDomDocument()
 {
 	//prepare DOM document
-	QDomDocument *doc = new QDomDocument("il mio doctype");
+	QDomDocument *doc = new QDomDocument();
 	
 	//root element
 	QDomElement root = doc->createElement("lab");
@@ -74,7 +74,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	//X position value
 	QDomElement sceneDimX = doc->createElement("x");
 	sceneDim.appendChild(sceneDimX);		
-	QDomText sceneDimXt = doc->createTextNode(QString(int(LabHandler::getInstance()->
+	QDomText sceneDimXt = doc->createTextNode(QString(qRound(LabHandler::getInstance()->
 							getMainWindow()->getGraphicsView()->scene()->width())));
 	sceneDimX.appendChild(sceneDimXt);
 	
@@ -151,11 +151,17 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			QDomElement pos = doc->createElement("position");
 			item.appendChild(pos);
 			
-			//adds x and y position
-			QDomText posx = doc->createTextNode("undefined");
-			QDomText posy = doc->createTextNode("undefined");
+			QDomElement posx = doc->createElement("x");
 			pos.appendChild(posx);
+			
+			QDomElement posy = doc->createElement("y");
 			pos.appendChild(posy);
+			
+			//adds x and y position
+			QDomText posxt = doc->createTextNode("undefined");
+			QDomText posyt = doc->createTextNode("undefined");
+			posx.appendChild(posxt);
+			posy.appendChild(posyt);
 		}
 	}
 	//==========================================================================
@@ -191,8 +197,13 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			link.appendChild(collisiondomain);
 			
 			CollisionDomainItem *cd = linksList.at(j)->getCollisionDomainItem();
-			QDomText cdt = doc->createTextNode(cd->getLabel());
-			collisiondomain.appendChild(cdt);		
+			
+			//we want to take only first part of the label (the collision domain name)
+			QStringList strlist;
+			QString str(cd->getLabel());
+			strlist = str.split(QRegExp("\\s+"));
+			QDomText cdt = doc->createTextNode(strlist.at(0));
+			collisiondomain.appendChild(cdt);
 			
 			
 			//adds link's label
