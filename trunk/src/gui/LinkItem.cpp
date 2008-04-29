@@ -34,13 +34,13 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setFont(GRAPHICS_FONT);
 	
-	//setFlags(QGraphicsItem::ItemIsSelectable);
 	setZValue(800);
 	
 	//set the line position
 	updateLinkPos();
 	
 	addToGroup(lineItem);
+	addToGroup(myLabel);
 	
 	/* connects */
 	connect(vm, SIGNAL(positionChanged()),
@@ -58,11 +58,11 @@ LinkItem::~LinkItem()
 
 /**
  * [PUBLIC-SLOT]
- * Update the link position/orientation
+ * Update the link and label position/orientation
  */
 void LinkItem::updateLinkPos()
 {
-	QPointF vmCenter, cdCenter;
+	QPointF vmCenter, cdCenter, labelCenter;
 	
 	//start point
 	vmCenter.setX(vm->getSvgPrivate()->scenePos().x() +
@@ -77,4 +77,21 @@ void LinkItem::updateLinkPos()
 			cd->getSvgPrivate()->boundingRect().height() / 2);
 	
 	lineItem->setLine(QLineF(vmCenter, cdCenter));
+	
+	/* adjust the label position */
+	labelCenter.setX((cdCenter.x() + vmCenter.x()) * 0.5);
+	labelCenter.setY((cdCenter.y() + vmCenter.y()) * 0.5);
+	myLabel->setPos(labelCenter);
+	
+/*	QLineF line(p1, p2);
+	double angle = ::acos(line.dx() / line.length());
+	if (line.dy() >= 0)
+	{
+		angle = (Pi * 2) - angle;
+		QPointF lp1 = line.p1() + QPointF(sin(angle + Pi / 3),
+			cos(angle + Pi / 3));
+		QPointF lp2 = line.p1() + QPointF(sin(angle + Pi - Pi / 3),
+			cos(angle + Pi - Pi / 3));
+	}
+*/
 }
