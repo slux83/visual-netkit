@@ -62,6 +62,8 @@ public:
 	QString getLabel() { return vmNameLabel->text(); };
 	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
 
+	LabelItemPrivate* getLabelItemPrivate() { return vmNameLabel; };
+	
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };
 	
