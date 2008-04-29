@@ -18,27 +18,42 @@
 
 #include "XMLSaver.h"
 #include "../gui/handles/VmMapper.h"
+#include "../gui/handles/CdMapper.h"
 #include "../gui/handles/LinkMapper.h"
 #include "../common/Types.h"
 #include "../common/CommonConfigs.h"
 #include "../gui/LinkItem.h"
 
+/**
+ * Constructor
+ */
 XMLSaver::XMLSaver()
 {
 	ex = new XMLExpert();
 }
 
+/**
+ * Deconstructor
+ */
 XMLSaver::~XMLSaver()
 {
 }
 
+/**
+ * Laboratory save function.
+ */
 bool XMLSaver::saveLab()
 {
 	return ex->dumpDocument(prepareDomDocument(), new QString("lab.xml"));
 }
 
+/**
+ * Returns a QDomDocument representing the scene's items infos.
+ */
 QDomDocument* XMLSaver::prepareDomDocument()
 {
+	int i=0;
+	
 	//prepare DOM document
 	QDomDocument *doc = new QDomDocument();
 	
@@ -74,14 +89,15 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	//X position value
 	QDomElement sceneDimX = doc->createElement("x");
 	sceneDim.appendChild(sceneDimX);		
-	QDomText sceneDimXt = doc->createTextNode(QString(qRound(LabHandler::getInstance()->
-							getMainWindow()->getGraphicsView()->scene()->width())));
+	QDomText sceneDimXt = doc->createTextNode(QByteArray::number(LabHandler::getInstance()->
+							getMainWindow()->getGraphicsView()->scene()->width()));
 	sceneDimX.appendChild(sceneDimXt);
 	
 	//Y position value
 	QDomElement sceneDimY = doc->createElement("y");
 	sceneDim.appendChild(sceneDimY);
-	QDomText sceneDimYt = doc->createTextNode("undefined");
+	QDomText sceneDimYt = doc->createTextNode(QByteArray::number(LabHandler::getInstance()->
+			getMainWindow()->getGraphicsView()->scene()->height()));
 	sceneDimY.appendChild(sceneDimYt);
 	
 	
@@ -100,7 +116,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 		QDomElement vms;
 		QDomElement rs;
 		
-		for (int i=0; i<vmlist.size(); i++)
+		for (i=0; i<vmlist.size(); i++)
 		{
 			QDomElement item;
 			
@@ -110,7 +126,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			if (type == Host) 
 			{
 				//adds to XML all virtualmachine type items
-				if (rs.isNull()) 
+				if (vms.isNull()) 
 				{
 					 vms = doc->createElement("virtualmachines");
 					 items.appendChild(vms);
@@ -143,9 +159,29 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			QDomElement label = doc->createElement("label");
 			item.appendChild(label);
 			
+			//adds item's label text node
+			QDomElement text = doc->createElement("text");
+			label.appendChild(text);
+			
 			//adds item's label text
 			QDomText labelt = doc->createTextNode(vmlist.at(i)->getLabel());
-			label.appendChild(labelt);
+			text.appendChild(labelt);
+			
+			//adds item's label relative position
+			QDomElement rpos = doc->createElement("position");
+			label.appendChild(rpos);
+			
+			QDomElement rposx = doc->createElement("x");
+			rpos.appendChild(rposx);
+			QDomElement rposy = doc->createElement("y");
+			rpos.appendChild(rposy);
+			
+			//adds x and y position
+			QDomText rposxt = doc->createTextNode(QByteArray::number(vmlist.at(i)->getLabelItemPrivate()->pos().x()));
+			QDomText rposyt = doc->createTextNode(QByteArray::number(vmlist.at(i)->getLabelItemPrivate()->pos().y()));
+			rposx.appendChild(rposxt);
+			rposy.appendChild(rposyt);
+			
 			
 			//adds item's scene position
 			QDomElement pos = doc->createElement("position");
@@ -158,8 +194,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			pos.appendChild(posy);
 			
 			//adds x and y position
-			QDomText posxt = doc->createTextNode("undefined");
-			QDomText posyt = doc->createTextNode("undefined");
+			QDomText posxt = doc->createTextNode(QByteArray::number(vmlist.at(i)->scenePos().x()));
+			QDomText posyt = doc->createTextNode(QByteArray::number(vmlist.at(i)->scenePos().y()));
 			posx.appendChild(posxt);
 			posy.appendChild(posyt);
 		}
@@ -167,19 +203,80 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	//==========================================================================
 
 	
+	
 	//==========================================================================	
-	// getting link items
+	// adds collision domain items
+	QList<CollisionDomainItem *> cdsList = CdMapper::getInstance()->getCdItems();
+	
+	if (cdsList.size() > 0) 
+	{
+		//adding to XML all collisiondomain type items
+		QDomElement cds = doc->createElement("collisiondomains");
+		items.appendChild(cds);
+		
+		for (i=0; i < cdsList.size(); i++) 
+		{
+			// adds collisiondomain node
+			QDomElement cd = doc->createElement("collisiondomain");
+			cds.appendChild(cd);
+			
+			//adds collisiondomain's scene position
+			QDomElement pos = doc->createElement("position");
+			cd.appendChild(pos);
+			
+			QDomElement posx = doc->createElement("x");
+			pos.appendChild(posx);
+			QDomElement posy = doc->createElement("y");
+			pos.appendChild(posy);
+			
+			//adds x and y position
+			QDomText posxt = doc->createTextNode(QByteArray::number(cdsList.at(i)->scenePos().x()));
+			QDomText posyt = doc->createTextNode(QByteArray::number(cdsList.at(i)->scenePos().y()));
+			posx.appendChild(posxt);
+			posy.appendChild(posyt);
+			
+			//adds collisiondomain's label
+			QDomElement label = doc->createElement("label");
+			cd.appendChild(label);
+			
+			QDomElement text = doc->createElement("text");
+			label.appendChild(text);
+			
+			//adds collisiondomain's label text
+			QDomText labelt = doc->createTextNode(cdsList.at(i)->getLabel());
+			text.appendChild(labelt);
+			
+			//adds collisiondomain's label relative position
+			QDomElement rpos = doc->createElement("position");
+			label.appendChild(pos);
+			
+			QDomElement rposx = doc->createElement("x");
+			rpos.appendChild(rposx);
+			QDomElement rposy = doc->createElement("y");
+			rpos.appendChild(rposy);
+			
+			//adds x and y position
+			QDomText rposxt = doc->createTextNode(QByteArray::number(cdsList.at(i)->pos().x()));
+			QDomText rposyt = doc->createTextNode(QByteArray::number(cdsList.at(i)->pos().y()));
+			rposx.appendChild(rposxt);
+			rposy.appendChild(rposyt);
+		}
+	}
+	//==========================================================================	
+	
+	
+	
+	//==========================================================================	
+	// adds link items
 	QList<LinkItem *> linksList = LinkMapper::getInstance()->getLinkItems();
 	
-	// adds link items
 	if (linksList.size() > 0) 
 	{
 		//adding to XML all link type items
 		QDomElement links = doc->createElement("links");
 		items.appendChild(links);
 		
-		//
-		for (int j=0; j < linksList.size(); j++) 
+		for (i=0; i < linksList.size(); i++) 
 		{
 			QDomElement link = doc->createElement("link");
 			links.appendChild(link);
@@ -188,7 +285,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			QDomElement virtualmachine = doc->createElement("virtualmachine");
 			link.appendChild(virtualmachine);
 			
-			VirtualMachineItem *vm = linksList.at(j)->getVirtualMachineItem();
+			VirtualMachineItem *vm = linksList.at(i)->getVirtualMachineItem();
 			QDomText vmt = doc->createTextNode(vm->getLabel());
 			virtualmachine.appendChild(vmt);
 			
@@ -196,9 +293,9 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			QDomElement collisiondomain = doc->createElement("collisiondomain");
 			link.appendChild(collisiondomain);
 			
-			CollisionDomainItem *cd = linksList.at(j)->getCollisionDomainItem();
+			CollisionDomainItem *cd = linksList.at(i)->getCollisionDomainItem();
 			
-			//we want to take only first part of the label (the collision domain name)
+			//we want to store only first part of the label (the collision domain name)
 			QStringList strlist;
 			QString str(cd->getLabel());
 			strlist = str.split(QRegExp("\\s+"));
@@ -210,9 +307,27 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			QDomElement label = doc->createElement("label");
 			link.appendChild(label);
 			
+			QDomElement text = doc->createElement("text");
+			label.appendChild(text);
+			
 			//adds link's label text
-			QDomText labelt = doc->createTextNode(linksList.at(j)->getLabelItemPrivate()->text());
-			label.appendChild(labelt);
+			QDomText labelt = doc->createTextNode(linksList.at(i)->getLabelItemPrivate()->text());
+			text.appendChild(labelt);
+			
+			//adds link's label relative position
+			QDomElement rpos = doc->createElement("position");
+			label.appendChild(rpos);
+			
+			QDomElement rposx = doc->createElement("x");
+			rpos.appendChild(rposx);
+			QDomElement rposy = doc->createElement("y");
+			rpos.appendChild(rposy);
+			
+			//adds x and y position
+			QDomText rposxt = doc->createTextNode(QByteArray::number(linksList.at(i)->getLabelItemPrivate()->pos().x()));
+			QDomText rposyt = doc->createTextNode(QByteArray::number(linksList.at(i)->getLabelItemPrivate()->pos().y()));
+			rposx.appendChild(rposxt);
+			rposy.appendChild(rposyt);
 		}
 	}
 	
