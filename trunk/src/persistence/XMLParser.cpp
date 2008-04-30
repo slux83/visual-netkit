@@ -185,8 +185,13 @@ QDomDocument* XMLParser::getLabDom()
 Laboratory* XMLParser::getLaboratory()
 {
 	Laboratory *lab = new Laboratory();
-	lab->setName("");
-	lab->setDate("");
+	if (!labDom->isNull())
+	{
+		lab->setName(labInfos->value("name"));
+		lab->setDate(labInfos->value("date"));
+	} else {
+		qWarning() << "Function XMLParser::getLaboratory(): labDom is null!";
+	}
 	return lab;
 }
 
