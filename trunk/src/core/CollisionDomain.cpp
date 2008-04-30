@@ -41,6 +41,6 @@ CollisionDomain::~CollisionDomain()
  */
 void CollisionDomain::addPeer(HardwareInterface* hi)
 {
-	peers.insert(hi->getName(), hi);
+	peers.append(hi);
 }
 

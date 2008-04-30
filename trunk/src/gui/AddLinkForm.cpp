@@ -106,6 +106,10 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 		interfacesTable->setItem(row, 1, ethContent);
 		row++;
 	}
+	
+	/* Render addresses allready connected to the collision domain */
+	addressesListWidget->clear();
+	addressesListWidget->addItems(CdMapper::getInstance()->getUsedAddresses(cdItem));
 }
 
 /**
@@ -219,8 +223,12 @@ void AddLinkForm::validateIp(const QString &text)
 	}
 	else
 	{
-		broadcastLineEdit->setText(
-			NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)).toString());
+		/* allready used ip? */
+		if(CdMapper::getInstance()->getUsedAddresses(cdItem).contains(ip))
+			broadcastLineEdit->setText(tr("You have tu use a free address."));
+		else
+			broadcastLineEdit->setText(
+					NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)).toString());
 		
 		return;
 	}
