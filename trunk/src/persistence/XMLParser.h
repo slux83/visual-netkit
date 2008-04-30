@@ -40,7 +40,7 @@ private:
 	QMap<QString, QString> *labInfos;
 	QMap<QString, QString> *sceneInfos;
 	QMap<QString, QMap<QString, QString> > *vmsInfos;
-	QMap<QString, QString> *cdsInfos;
+	QMap<QString, QMap<QString, QString> > *cdsInfos;
 	QList< QMap<QString, QString> > *linksInfos;
 	QDomDocument *labDom;
 
@@ -55,7 +55,7 @@ public:
 	QMap<QString, QString> *getLabInfos() { return labInfos; };
 	QMap<QString, QString> *getSceneInfos() { return sceneInfos; };
 	QMap<QString, QMap<QString, QString> > *getVmsInfos() { return vmsInfos; };
-	QMap<QString, QString> *getCdsInfos() { return cdsInfos; };
+	QMap<QString, QMap<QString, QString> > *getCdsInfos() { return cdsInfos; };
 	QList< QMap<QString, QString> > *getLinksInfos() { return linksInfos; };
 	
 };
