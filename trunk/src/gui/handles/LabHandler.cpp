@@ -70,7 +70,7 @@ LabHandler* LabHandler::getInstance()
 
 /**
  * [SLOT]
- * Create a new lab
+ * Creates a new lab
  */
 void LabHandler::newLab()
 {
@@ -82,7 +82,16 @@ void LabHandler::newLab()
 
 /**
  * [SLOT]
- * Save the lab
+ * Opens an existent lab
+ */
+void LabHandler::openLab()
+{
+	LabFacadeController::getInstance()->openLab();
+}
+
+/**
+ * [SLOT]
+ * Saves the lab
  */
 void LabHandler::saveLab()
 {
@@ -92,7 +101,7 @@ void LabHandler::saveLab()
 
 /**
  * [SLOT]
- * Render a new lab on tree (previusely created)
+ * Renders a new lab on tree (previusely created)
  */
 void LabHandler::addCreatedLabOnTree(Laboratory *l)
 {

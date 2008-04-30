@@ -41,6 +41,7 @@ public:
 	virtual ~LabFacadeController();
 	static LabFacadeController * getInstance();
 	void newLaboratory();
+	void openLab();
 	void saveLab();
 	Laboratory * getCurrentLab() { return currentLab; };
 
