@@ -36,17 +36,26 @@ bool XMLParser::parseXML()
 	bool allok = true;
 	QString not_found("not found");
 	
+	qDebug() << "Parsing XML: ";
+	
 	// parsing XML to create QMap<QString, QString> *labInfos
+	qDebug() << "looking for lab infos... ";
 	QDomElement lab = labDom->elementsByTagName("lab").at(0).toElement();
+	labInfos = new QMap<QString, QString>();
 	labInfos->insert("name", lab.attribute("name", not_found));
 	labInfos->insert("date", lab.attribute("date", not_found));
+	qDebug() << "done!" << endl;
 	
 	// parsing XML to create QMap<QString, QString> *sceneInfos
+	qDebug() << "looking for scene infos... ";
 	lab = labDom->elementsByTagName("scene").at(0).toElement();
+	sceneInfos = new QMap<QString, QString>();
 	sceneInfos->insert("width", lab.attribute("width", not_found));
 	sceneInfos->insert("height",lab.attribute("height", not_found));
+	qDebug() << "done!" << endl;
 	
 	//looking for any item in the scene
+	qDebug() << "looking for any item in the scene..." << endl;
 	QDomElement itemsNode = labDom->elementsByTagName("items").at(0).toElement(); 
 	if (!itemsNode.isNull())
 	{
@@ -57,26 +66,32 @@ bool XMLParser::parseXML()
 		if (!vmsNodeList.isEmpty())
 		{
 			// parsing XML to create QMap<QString, QString> *vmsInfos
+			qDebug() << "	looking for virtual machines infos:" << endl;
+			vmsInfos = new QMap<QString, QString>();
 			for (i=0; i < vmsNodeList.size(); i++)
 			{
 				// adds vm position
+				qDebug() << "		looking for position... ";
 				QDomElement vmNode = vmsNodeList.at(i).toElement();
 				QDomElement pos = vmNode.elementsByTagName("position").at(0).toElement();
 				vmsInfos->insert("posx", pos.attribute("x", not_found));
 				vmsInfos->insert("posy", pos.attribute("y", not_found));
+				qDebug() << "done!" << endl;
 				
 				// adds vm label
+				qDebug() << "		looking for label... ";
 				QDomElement label = vmNode.elementsByTagName("label").at(0).toElement();
 				QDomElement labelt = label.elementsByTagName("text").at(0).toElement();
 				vmsInfos->insert("label", labelt.attribute("text", not_found));
+				qDebug() << "done" << endl;
 				
 				// adds vm label position
+				qDebug() << "		looking for label position... ";
 				QDomElement rpos = label.elementsByTagName("position").at(0).toElement();
 				vmsInfos->insert("labelposx", rpos.attribute("rposx", not_found));
 				vmsInfos->insert("labelposy", rpos.attribute("rposy", not_found));
-				
+				qDebug() << "done!" << endl;
 			}
-			
 		}
 		
 		// parsing XML to create QMap<QString, QString> *cdsInfos
@@ -91,7 +106,9 @@ bool XMLParser::parseXML()
  */
 bool XMLParser::loadXML(QString *filename)
 {
+	qDebug() << "loadXML(): reading labDom...";
 	labDom = ex->readDocument(filename);
+	qDebug() << "done!" << endl;
 	return labDom->isNull();
 }
 

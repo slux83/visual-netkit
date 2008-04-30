@@ -20,6 +20,7 @@
 #include "../../gui/handles/LabHandler.h"
 
 #include "../../persistence/XMLSaver.h"
+#include "../../persistence/XMLParser.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -75,7 +76,19 @@ void LabFacadeController::newLaboratory()
 	emit createdNewLab(currentLab);
 }
 
+/**
+ * Opens an existent laboratory. TODO
+ */
+void LabFacadeController::openLab()
+{
+	XMLParser *xp = new XMLParser();
+	xp->loadXML(new QString("lab.xml"));
+	xp->parseXML();
+}
 
+/**
+ * Saves the current laboratory. TODO
+ */
 void LabFacadeController::saveLab()
 {
 	/* Check if current lab exist */
