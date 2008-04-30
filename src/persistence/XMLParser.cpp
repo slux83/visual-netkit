@@ -95,7 +95,35 @@ bool XMLParser::parseXML()
 		}
 		
 		
-		// parsing XML to create QMap<QString, QMap<QString, QString> > *cdsInfos
+		//looking for any collision domain in the scene
+		QDomNodeList cdsNodeList = itemsNode.elementsByTagName("collisiondomain");
+		if (!cdsNodeList.isEmpty())
+		{
+			// parsing XML to create QMap<QString, QMap<QString, QString> > *cdsInfos
+			qDebug() << "looking for collision domain infos...";
+			cdsInfos = new QMap<QString, QMap<QString, QString> >();
+			for (i=0; i < cdsNodeList.size(); i++)
+			{
+				QDomElement cdNode = cdsNodeList.at(i).toElement();
+				QMap<QString, QString> cd;
+				
+				// adds cd id
+				cd.insert("id", cdNode.attribute("id", not_found));
+				
+				// adds cd position
+				cd.insert("posx", cdNode.attribute("x", not_found));
+				cd.insert("posy", cdNode.attribute("y", not_found));
+				
+				// adds cd label position
+				QDomElement label = cdNode.elementsByTagName("label").at(0).toElement();
+				cd.insert("labelposx", label.attribute("rposx", not_found));
+				cd.insert("labelposy", label.attribute("rposy", not_found));
+				
+				//default value in case of error is the iterator position i
+				cdsInfos->insert(cdNode.attribute("id", QString::number(i)), cd);
+			}
+			qDebug() << "done!";
+		}
 		
 		
 		//looking for any link in the scene
