@@ -57,6 +57,7 @@ public:
 	
 public slots:
 	void updateLinkPos();
+	void updateLinkState();
 };
 
 #endif /*LINKITEM_H_*/

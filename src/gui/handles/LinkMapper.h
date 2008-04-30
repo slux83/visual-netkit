@@ -45,6 +45,7 @@ public:
 	static LinkMapper* getInstance();
 	void addNewMapping(LinkItem* linkItem, HardwareInterface* hi);
 	QList<LinkItem*> getLinkItems();
+	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
 
 public slots:
 	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);

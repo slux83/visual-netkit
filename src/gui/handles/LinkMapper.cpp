@@ -17,6 +17,7 @@
  */
 
 #include "LinkMapper.h"
+#include "CdMapper.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -69,11 +70,18 @@ void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
 {
 	//add mapping
 	mappings.insert(linkItem, hi);
+	
+	//update the line style (up or down)
+	linkItem->updateLinkState();
+	
 	LabHandler *labHandler = LabHandler::getInstance();
 	
 	//add item inside the scene
 	labHandler->getMainWindow()->graphicsView->scene()->addItem(linkItem);
 	labHandler->getMainWindow()->graphicsView->ensureVisible(linkItem);
+	
+	//update the collision domain item state
+	CdMapper::getInstance()->updateCdCounter(hi->getMyCollisionDomain(), true);
 	
 	//update system log
 	labHandler->getMainWindow()->writeLogMessage(
@@ -85,7 +93,8 @@ void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
  * Returns a QList of QGraphicsItemGroup objects. These objects are graphics 
  * elments associed with the mapping.
  */
-QList<LinkItem*> LinkMapper::getLinkItems(){
+QList<LinkItem*> LinkMapper::getLinkItems()
+{
 	return mappings.keys();
 }
 

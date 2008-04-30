@@ -49,6 +49,7 @@ private:
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
 	bool isJoin;
+	quint16 connectedlinks;
 	
 	void initContextMenu();
 
@@ -57,7 +58,7 @@ public:
 	virtual ~CollisionDomainItem();
 	QString getLabel() { return myLabel->text(); };
 	SvgItemPrivate* getSvgPrivate() { return collisionDomainSvg; };
-	
+	void increaseDecreaseLinkCounter(bool increase);
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
 	
 	/* Reimpl */

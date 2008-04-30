@@ -30,6 +30,9 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	//the group is joined
 	isJoin = true;
 	
+	//no links connected
+	connectedlinks = 0;
+	
 	/* init label and svg item */
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setFont(GRAPHICS_FONT);
@@ -157,4 +160,20 @@ void CollisionDomainItem::restoreGroupActionCalled()
 {	
 	addToGroup(myLabel);
 	isJoin = true;
+}
+
+/**
+ * A new link is added.. update the link counter.
+ */
+void CollisionDomainItem::increaseDecreaseLinkCounter(bool increase)
+{
+	//update the counter
+	(increase)?	connectedlinks++ : connectedlinks--;
+		
+	//update the svg image
+	if(connectedlinks > 0)
+		collisionDomainSvg->renderer()->load(QString::fromUtf8(":/svg/cs_on"));
+	else
+		collisionDomainSvg->renderer()->load(QString::fromUtf8(":/svg/cs_off"));
+	
 }
