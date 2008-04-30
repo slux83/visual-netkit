@@ -17,6 +17,7 @@
  */
 
 #include "CdMapper.h"
+#include <QListIterator>
 
 /**
  * Init the null instance for the singletone controller
@@ -86,4 +87,27 @@ NetworkAddress CdMapper::getNetworkAddress(CollisionDomainItem *cdItem)
 		return NetworkAddress();
 	else
 		return *(cd->getSubnet());
+}
+
+/**
+ * Get the list of addresses attached to a specific collision domain (item)
+ */
+QStringList CdMapper::getUsedAddresses(CollisionDomainItem *cdItem)
+{
+	QStringList addresses;
+	CollisionDomain *cd = mappings.value(cdItem);
+	
+	if(cd == NULL)
+	{
+		qWarning() << "CdMapper::getUsedAddresses: *cd in NULL (mapping broken)";
+		return addresses;		
+	}
+	
+	QListIterator<HardwareInterface*> it(cd->getPeers());
+	while(it.hasNext())
+	{
+		addresses.append(it.next()->getAddress().ip().toString());
+	}
+	
+	return addresses;
 }

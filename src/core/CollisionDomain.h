@@ -33,7 +33,7 @@ class CollisionDomain
 private:
 	QString name;
 	NetworkAddress *address;
-	QMap<QString, HardwareInterface *> peers;
+	QList<HardwareInterface *> peers;
 
 public:
 	CollisionDomain(QString newName, NetworkAddress *subnet);
@@ -43,6 +43,7 @@ public:
 	QString getName() { return name; };
 	NetworkAddress* getSubnet() { return address; };
 	void addPeer(HardwareInterface* hi);
+	QList<HardwareInterface*> getPeers() { return peers; };
 };
 
 #endif /*COLLISIONDOMAIN_H_*/
