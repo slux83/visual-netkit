@@ -22,7 +22,6 @@
 #include "../gui/handles/LinkMapper.h"
 #include "../common/Types.h"
 #include "../common/CommonConfigs.h"
-#include "../gui/LinkItem.h"
 
 /**
  * Constructor
@@ -64,16 +63,22 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	
 	//==========================================================================
 	//adds lab name
+	root.setAttribute("name", LabFacadeController::getInstance()->getCurrentLab()->getName());
+	/*
 	QDomElement labname = doc->createElement("name");
 	root.appendChild(labname);
 	QDomText labnamet = doc->createTextNode(LabFacadeController::getInstance()->getCurrentLab()->getName());
 	labname.appendChild(labnamet);
+	*/
 	
 	//adds lab date
+	root.setAttribute("date", LabFacadeController::getInstance()->getCurrentLab()->getDate());
+	/*
 	QDomElement labdate = doc->createElement("date");
 	root.appendChild(labdate);
 	QDomText labdatet = doc->createTextNode(LabFacadeController::getInstance()->getCurrentLab()->getDate());
 	labdate.appendChild(labdatet);
+	*/
 	//==========================================================================
 	
 	
