@@ -51,7 +51,7 @@ public:
 	NetworkAddress getNetworkAddress(CollisionDomainItem *cdItem);
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
 	QStringList getUsedAddresses(CollisionDomainItem *cdItem);
-
+	void updateCdCounter(CollisionDomain *cd, bool increase);
 };
 
 #endif /*CDMAPPER_H_*/

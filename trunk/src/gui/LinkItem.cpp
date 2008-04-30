@@ -17,6 +17,7 @@
  */
 
 #include "LinkItem.h"
+#include "handles/LinkMapper.h"
 #include <QPointF>
 #include <QPen>
 
@@ -94,4 +95,13 @@ void LinkItem::updateLinkPos()
 			cos(angle + Pi - Pi / 3));
 	}
 */
+}
+
+/**
+ * [PUBLIC-SLOT]
+ * Update the link state
+ */
+void LinkItem::updateLinkState()
+{
+	lineItem->setLineColorByState(LinkMapper::getInstance()->getHardwareIterface(this)->getState());		
 }

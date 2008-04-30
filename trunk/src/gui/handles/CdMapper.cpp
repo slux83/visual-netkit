@@ -111,3 +111,11 @@ QStringList CdMapper::getUsedAddresses(CollisionDomainItem *cdItem)
 	
 	return addresses;
 }
+
+/**
+ * Update the counter of the collision domain item because a link is added
+ */
+void CdMapper::updateCdCounter(CollisionDomain *cd, bool increase)
+{
+	mappings.key(cd)->increaseDecreaseLinkCounter(increase);
+}

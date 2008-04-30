@@ -25,7 +25,8 @@
  */
 LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(parent)
 {
-	setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	//by default the link is up
+	setLineColorByState(true);
 }
 
 /**
@@ -47,4 +48,18 @@ QRectF LineItemPrivate::boundingRect() const
                                        line().p2().y() - line().p1().y()))
 		           .normalized()
 		           .adjusted(-extra, -extra, extra, extra);
+}
+
+/**
+ * Set the line style gived the hardware interface state
+ * up = true
+ * down = false
+ */
+void LineItemPrivate::setLineColorByState(bool state)
+{
+	if(state)
+		setPen(QPen(QBrush(Qt::black), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	else
+		setPen(QPen(QBrush(Qt::red), 3, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin));
+
 }
