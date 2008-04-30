@@ -114,6 +114,16 @@ void MainWindow::createConnections()
 			actionRedo, SLOT(setEnabled(bool)));
 	connect(labHandler->getUndoStack(), SIGNAL(canUndoChanged(bool)),
 			actionUndo, SLOT(setEnabled(bool)));
+	
+	//connect: zoom actions
+	connect(zoomSlider, SIGNAL(valueChanged(int)),
+			this, SLOT(zoomLabView(int)));
+	connect(actionZoomIn, SIGNAL(triggered()),
+				this, SLOT(zoomPlus()));
+	connect(actionZoomOut, SIGNAL(triggered()),
+					this, SLOT(zoomMinus()));
+	connect(actionZoomOriginal, SIGNAL(triggered()),
+					this, SLOT(zoomNormal()));
 
 }
 
@@ -219,7 +229,51 @@ void MainWindow::unlockSceneAndActions()
  */
 void MainWindow::initMiniatureDock()
 {
+	QTransform transform;
+	transform.scale(.2, .2);
 	labMiniature->setScene(graphicsView->scene());
-	labMiniature->scale(0.2, 0.2);
+	labMiniature->setTransform(transform);
 }
+
+/**
+ * [PRIVATE-SLOT]
+ * Change the zoom
+ */
+void MainWindow::zoomLabView(int value)
+{
+	QTransform transform;
+	transform.scale(value / 100.0, value / 100.0);
+	graphicsView->setTransform(transform);
+	zoomLabel->setText(QString::number(value) + "%");
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Zoom plus the scene
+ * (step 20)
+ */
+void MainWindow::zoomPlus()
+{
+	zoomSlider->setValue(zoomSlider->value() + 20);	
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Zoom minus the scene
+ * (step 20)
+ */
+void MainWindow::zoomMinus()
+{
+	zoomSlider->setValue(zoomSlider->value() - 20);	
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Zoom 100% the scene
+ */
+void MainWindow::zoomNormal()
+{
+	zoomSlider->setValue(100);	
+}
+
 
