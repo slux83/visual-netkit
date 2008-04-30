@@ -54,6 +54,12 @@ private:
 	void createScene();
 	void initMiniatureDock();
 
+private slots:
+	void zoomLabView(int value);
+	void zoomPlus();
+	void zoomMinus();
+	void zoomNormal();
+
 public slots:
 	void writeLogMessage(QString message);
 	void resizeScene(QAction *action);
