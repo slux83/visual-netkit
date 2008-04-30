@@ -39,9 +39,9 @@ private:
 	XMLExpert *ex;
 	QMap<QString, QString> *labInfos;
 	QMap<QString, QString> *sceneInfos;
-	QMap<QString, QString> *vmsInfos;
+	QMap<QString, QMap<QString, QString> > *vmsInfos;
 	QMap<QString, QString> *cdsInfos;
-	QMap<QString, QString> *linksInfos;
+	QList< QMap<QString, QString> > *linksInfos;
 	QDomDocument *labDom;
 
 public:
@@ -54,9 +54,9 @@ public:
 	Laboratory* getLaboratory();
 	QMap<QString, QString> *getLabInfos() { return labInfos; };
 	QMap<QString, QString> *getSceneInfos() { return sceneInfos; };
-	QMap<QString, QString> *getVmsInfos() { return vmsInfos; };
+	QMap<QString, QMap<QString, QString> > *getVmsInfos() { return vmsInfos; };
 	QMap<QString, QString> *getCdsInfos() { return cdsInfos; };
-	QMap<QString, QString> *getLinksInfos() { return linksInfos; };
+	QList< QMap<QString, QString> > *getLinksInfos() { return linksInfos; };
 	
 };
 

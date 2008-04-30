@@ -65,37 +65,67 @@ bool XMLParser::parseXML()
 		QDomNodeList vmsNodeList = itemsNode.elementsByTagName("virtualmachine");
 		if (!vmsNodeList.isEmpty())
 		{
-			// parsing XML to create QMap<QString, QString> *vmsInfos
-			qDebug() << "	looking for virtual machines infos:" << endl;
-			vmsInfos = new QMap<QString, QString>();
+			// parsing XML to create QMap< QString, QMap<QString, QString> > *vmsInfos
+			qDebug() << "looking for virtual machines infos...";
+			vmsInfos = new QMap< QString, QMap<QString, QString> >();
 			for (i=0; i < vmsNodeList.size(); i++)
 			{
-				// adds vm position
-				qDebug() << "		looking for position... ";
 				QDomElement vmNode = vmsNodeList.at(i).toElement();
-				QDomElement pos = vmNode.elementsByTagName("position").at(0).toElement();
-				vmsInfos->insert("posx", pos.attribute("x", not_found));
-				vmsInfos->insert("posy", pos.attribute("y", not_found));
-				qDebug() << "done!" << endl;
+				QMap<QString, QString> vm;
 				
-				// adds vm label
-				qDebug() << "		looking for label... ";
-				QDomElement label = vmNode.elementsByTagName("label").at(0).toElement();
-				QDomElement labelt = label.elementsByTagName("text").at(0).toElement();
-				vmsInfos->insert("label", labelt.attribute("text", not_found));
-				qDebug() << "done" << endl;
+				// adds vm id
+				vm.insert("id", vmNode.attribute("id", not_found));
+
+				// adds vm type
+				vm.insert("type", vmNode.attribute("type", not_found));
+				
+				// adds vm position
+				vm.insert("posx", vmNode.attribute("x", not_found));
+				vm.insert("posy", vmNode.attribute("y", not_found));
 				
 				// adds vm label position
-				qDebug() << "		looking for label position... ";
-				QDomElement rpos = label.elementsByTagName("position").at(0).toElement();
-				vmsInfos->insert("labelposx", rpos.attribute("rposx", not_found));
-				vmsInfos->insert("labelposy", rpos.attribute("rposy", not_found));
-				qDebug() << "done!" << endl;
+				QDomElement label = vmNode.elementsByTagName("label").at(0).toElement();
+				vm.insert("labelposx", label.attribute("rposx", not_found));
+				vm.insert("labelposy", label.attribute("rposy", not_found));
+				
+				//default value in case of error is the iterator position i
+				vmsInfos->insert(vmNode.attribute("id", QString::number(i)), vm);
 			}
+			qDebug() << "done!";
 		}
 		
-		// parsing XML to create QMap<QString, QString> *cdsInfos
-		// parsing XML to create QMap<QString, QString> *linksInfos	
+		
+		// parsing XML to create QMap<QString, QMap<QString, QString> > *cdsInfos
+		
+		
+		//looking for any link in the scene
+		QDomNodeList linksNodeList = itemsNode.elementsByTagName("link");
+		if (!linksNodeList.isEmpty())
+		{
+			// parsing XML to create QMap<QString, QString> *linksInfos	
+			qDebug() << "looking for link infos...";
+			linksInfos = new QList< QMap<QString, QString> >();
+			for (i=0; i < linksNodeList.size(); i++)
+			{
+				QDomElement linkNode = linksNodeList.at(i).toElement();
+				QMap<QString, QString> link;
+				
+				// adds link's virtualmachine
+				link.insert("virtualmachine", linkNode.attribute("virtualmachine", not_found));
+				
+				// adds link's collisiondomain
+				link.insert("collisiondomain", linkNode.attribute("collisiondomain", not_found));
+				
+				// adds vm label position
+				QDomElement label = linkNode.elementsByTagName("label").at(0).toElement();
+				link.insert("labelposx", label.attribute("rposx", not_found));
+				link.insert("labelposy", label.attribute("rposy", not_found));
+				
+				linksInfos->append(link);
+			}
+			qDebug() << "done!";
+		}
+		
 	}
 	return allok;
 }
