@@ -197,6 +197,9 @@ void MainWindow::resizeScene(QAction *action)
 	QRectF newSize = action->data().toRectF(); 
 	graphicsView->scene()->setSceneRect(newSize);
 	
+	//update the miniature scale factor
+	updateMinuatureDock((int)newSize.width());
+	
 	//Log action
 	writeLogMessage(tr("Scene resized") + " (" +
 			QByteArray::number(newSize.width()) +
@@ -232,6 +235,37 @@ void MainWindow::initMiniatureDock()
 	QTransform transform;
 	transform.scale(.2, .2);
 	labMiniature->setScene(graphicsView->scene());
+	labMiniature->setTransform(transform);
+}
+
+/**
+ * [PRIVATE]
+ * update the miniature when the scene rect is changed
+ */
+void MainWindow::updateMinuatureDock(int size)
+{
+	QTransform transform;
+	
+	//choose the correct scale factor
+	switch (size)
+	{
+		case 500:
+			transform.scale(.4, .4);
+			break;
+
+		case 1000:
+			transform.scale(.2, .2);
+			break;
+			
+		case 2000:
+			transform.scale(.1, .1);
+			break;
+		
+		case 4000:
+			transform.scale(.05, .05);
+			break;
+	}
+	
 	labMiniature->setTransform(transform);
 }
 
