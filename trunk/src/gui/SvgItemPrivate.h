@@ -45,13 +45,6 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + SvgItem; };
-	
-/*signals:
-	void svgPositionChanged();
-
-protected:
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-*/
 };
 
 #endif /*SVGITEMPRIVATE_H_*/
