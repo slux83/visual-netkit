@@ -22,7 +22,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/persistence/XMLParser.h \
+HEADERS = src/persistence/LabSaver.h \
+    src/persistence/XMLParser.h \
     src/gui/LineItemPrivate.h \
     src/gui/handles/LinkHandler.h \
     src/gui/LinkItem.h \
@@ -59,7 +60,8 @@ HEADERS = src/persistence/XMLParser.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/persistence/XMLParser.cpp \
+SOURCES = src/persistence/LabSaver.cpp \
+    src/persistence/XMLParser.cpp \
     src/gui/LineItemPrivate.cpp \
     src/gui/handles/LinkHandler.cpp \
     src/persistence/XMLExpert.cpp \
