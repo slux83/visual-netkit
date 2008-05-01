@@ -53,7 +53,8 @@ private:
 	void createActionGroups();
 	void createScene();
 	void initMiniatureDock();
-
+	void updateMinuatureDock(int size);
+	
 private slots:
 	void zoomLabView(int value);
 	void zoomPlus();
