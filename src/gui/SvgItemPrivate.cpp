@@ -27,7 +27,10 @@ SvgItemPrivate::SvgItemPrivate(const QString & fileName, QGraphicsItemGroup *gro
 {
 	myGroup = group;
 	
-	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);	
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	
+	//Disable the caching
+	setCachingEnabled(false);
 }
 
 /**
@@ -36,23 +39,3 @@ SvgItemPrivate::SvgItemPrivate(const QString & fileName, QGraphicsItemGroup *gro
 SvgItemPrivate::~SvgItemPrivate()
 {
 }
-
-/**
- * [PROTECTED]
- * Control the moviment of this item and don't permit that it's drowed outside
- * the scene rect
- */
-/*QVariant SvgItemPrivate::itemChange(GraphicsItemChange change, const QVariant &value)
-{
-	qDebug() << "boo";
-	if (change == ItemPositionChange && scene())
-	{
-		//emit a signal
-		emit svgPositionChanged();
-		qDebug() << "emitted!";
-	}
-	
-	return QGraphicsItem::itemChange(change, value);
-}
-
-*/

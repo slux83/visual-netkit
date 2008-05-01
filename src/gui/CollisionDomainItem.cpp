@@ -94,9 +94,6 @@ QVariant CollisionDomainItem::itemChange(GraphicsItemChange change, const QVaria
 	//qDebug() << boundingRect() << boundingRect().x() << boundingRect().y();
 	if (change == ItemPositionChange && scene())
 	{
-		//emit a signal
-		emit positionChanged();
-		
 		// value is the new position.
 		QPointF newPos = value.toPointF();
 		QRectF rect = scene()->sceneRect();
@@ -110,6 +107,9 @@ QVariant CollisionDomainItem::itemChange(GraphicsItemChange change, const QVaria
 		return newPos;
 	}
 	
+	//emit a signal
+	emit positionChanged();
+			
 	return QGraphicsItem::itemChange(change, value);
 }
 
