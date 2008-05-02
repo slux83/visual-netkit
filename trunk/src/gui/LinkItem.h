@@ -27,6 +27,7 @@
 #include "VirtualMachineItem.h"
 #include "CollisionDomainItem.h"
 #include "LineItemPrivate.h"
+#include "../common/Types.h"
 
 /* Pi-greco */
 static const double Pi = 3.14159;
@@ -54,6 +55,9 @@ public:
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
 	VirtualMachineItem* getVirtualMachineItem() { return vm; };
 	CollisionDomainItem* getCollisionDomainItem() { return cd; };
+	
+	/* Reimpl */
+	int type() const { return UserType + LnkItem; };
 	
 public slots:
 	void updateLinkPos();

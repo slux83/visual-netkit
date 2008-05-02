@@ -24,6 +24,7 @@
 		<file alias="delete">small_icons/delete.png</file>
 		<file alias="delete_group">small_icons/delete_group.png</file>
 		<file alias="create_group">small_icons/create_group.png</file>
+		<file alias="manage_interfaces">small_icons/manage_interfaces.png</file>
 	</qresource>
 	<qresource prefix="/svg" >
 		<file alias="cs_on">svg/collision_domain_on.svg</file>

@@ -70,7 +70,7 @@ protected:
 	
 private slots:
 	void ungroupActionCalled();
-	void deleteVmActionCalled();
+	void deleteCdActionCalled();
 	void restoreGroupActionCalled();
 	
 signals:

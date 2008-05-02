@@ -80,21 +80,10 @@ void LinkItem::updateLinkPos()
 	lineItem->setLine(QLineF(vmCenter, cdCenter));
 	
 	/* adjust the label position */
-	labelCenter.setX((cdCenter.x() + vmCenter.x()) * 0.5);
+	labelCenter.setX(((cdCenter.x() + vmCenter.x()) * 0.5) + 4);
 	labelCenter.setY((cdCenter.y() + vmCenter.y()) * 0.5);
 	myLabel->setPos(labelCenter);
 	
-/*	QLineF line(p1, p2);
-	double angle = ::acos(line.dx() / line.length());
-	if (line.dy() >= 0)
-	{
-		angle = (Pi * 2) - angle;
-		QPointF lp1 = line.p1() + QPointF(sin(angle + Pi / 3),
-			cos(angle + Pi / 3));
-		QPointF lp2 = line.p1() + QPointF(sin(angle + Pi - Pi / 3),
-			cos(angle + Pi - Pi / 3));
-	}
-*/
 }
 
 /**

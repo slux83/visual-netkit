@@ -132,10 +132,13 @@ void VirtualMachineItem::initContextMenu()
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
 	restoreGroupAction = new QAction(tr("Restore group") , this);
 	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/small/create_group")));
+	manageLinks = new QAction(tr("Manage interfaces"), this);
+	manageLinks->setIcon(QIcon(QString::fromUtf8(":/small/manage_interfaces")));
 	
 	contextMenu.addAction(ungroupAction);
 	contextMenu.addAction(restoreGroupAction);
 	contextMenu.addAction(deleteAction);
+	contextMenu.addAction(manageLinks);
 	
 	/* Connects */
 	connect(ungroupAction, SIGNAL(triggered()),
