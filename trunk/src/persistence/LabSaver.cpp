@@ -66,6 +66,7 @@ bool LabSaver::saveLabConf()
     out << prepareLabConfText();
     QApplication::restoreOverrideCursor();
 
+    qDebug() << prepareLabConfText();
     qDebug() << "File 'lab.conf' saved";
 	
 	return allok;
@@ -81,11 +82,11 @@ QString LabSaver::prepareLabConfText()
 	
 	if (currentLab != NULL)
 	{
-		text += LAB_DESCRIPTION + currentLab->getDescription() + "\n";
-		text += LAB_VERSION + currentLab->getVersion() + "\n";
-		text += LAB_AUTHOR + currentLab->getAuthors() + "\n";
-		text += LAB_EMAIL + currentLab->getEmail() + "\n";
-		text += LAB_WEB + currentLab->getWebsite() + "\n";
+		text += LAB_DESCRIPTION + "=" + currentLab->getDescription() + "\n";
+		text += LAB_VERSION + "=" + currentLab->getVersion() + "\n";
+		text += LAB_AUTHOR + "=" + currentLab->getAuthors() + "\n";
+		text += LAB_EMAIL + "=" + currentLab->getEmail() + "\n";
+		text += LAB_WEB + "=" + currentLab->getWebsite() + "\n";
 		
 		QMap<QString, VirtualMachine *> vmsmap = currentLab->getMachines();
 		QList<QString> vmsnames = vmsmap.keys();

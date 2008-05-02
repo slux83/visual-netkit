@@ -19,6 +19,7 @@
 #include "LabFacadeController.h"
 #include "../../gui/handles/LabHandler.h"
 
+#include "../../persistence/LabSaver.h"
 #include "../../persistence/XMLSaver.h"
 #include "../../persistence/XMLParser.h"
 
@@ -96,7 +97,9 @@ void LabFacadeController::saveLab()
 	{
 		qWarning() << "Preparing to save the current lab...";
 		XMLSaver *xs = new XMLSaver();
+		LabSaver *ls = new LabSaver();
 		bool ok = xs->saveLab();
+		ok = ls->saveLab();
 		if (ok)
 			qWarning() << "Lab saved!";
 		else 
