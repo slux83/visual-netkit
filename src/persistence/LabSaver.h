@@ -33,6 +33,7 @@ private:
 	bool createFolderSystem();
 	QString prepareLabConfText();
 	QString strippedName(const QString&);
+	QByteArray template2string(QString tpl);
 
 public:
 	LabSaver();

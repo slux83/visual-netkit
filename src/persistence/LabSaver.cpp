@@ -78,6 +78,8 @@ bool LabSaver::saveLabConf()
  */
 QString LabSaver::prepareLabConfText()
 {
+	template2string(QString::fromUtf8(":/tpl/lab"));
+	
 	QString text("");
 	
 	if (currentLab != NULL)
@@ -157,5 +159,32 @@ bool LabSaver::createFolderSystem()
 	return allok;
 }
 
-
+/**
+ * [PRIVATE]
+ * Get the template 'tpl' and return the entire content inside a QByteArray
+ */
+QByteArray LabSaver::template2string(QString tpl)
+{
+	QByteArray fileContent;
+	
+	QFile file(tpl);
+	
+	//open file
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return fileContent;
+	
+	//dump content
+	while (!file.atEnd())
+	{
+		fileContent.append(file.readLine());
+	}
+	
+	/* Junks for test */
+	qDebug() << "template:" << *fileContent;
+	QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
+	qDebug() << "cap:" << hostReg.cap(1);
+	/******************/
+	
+	return fileContent;
+}
 
