@@ -19,17 +19,26 @@
 #ifndef LABSAVER_H_
 #define LABSAVER_H_
 
+#include <QString>
+#include "../core/handles/LabFacadeController.h"
+
 class LabSaver
-{
+{	
+private:
+	Laboratory *currentLab;
+	QString curFile;
+	
+	bool saveLabConf();
+	bool saveRoutersConf();
+	bool createFolderSystem();
+	QString prepareLabConfText();
+	QString strippedName(const QString&);
+
 public:
 	LabSaver();
 	virtual ~LabSaver();
 	
 	bool saveLab();
-	
-private:
-	bool saveLabConf();
-	bool saveRouterConf();
 };
 
 #endif /*LABSAVER_H_*/
