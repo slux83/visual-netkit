@@ -1,0 +1,19 @@
+###
+# This file is createb by Visual Netkit <VISUAL_NETKIT_VERSION> version
+# http://www.netkit.org ~ http://code.google.com/p/visual-netkit/
+#
+
+# This file tells the zebra package 
+# which daemons to start.
+# Entries are in the format: <daemon>=(yes|no|priority)
+# where 'yes' is equivalent to infinitely low priority, and
+# lower numbers mean higher priority. Read
+# /usr/doc/zebra/README.Debian for details.
+# Daemons are: bgpd zebra ospfd ospf6d ripd ripngd
+
+zebra=<ZEBRA_STATUS>
+bgpd=<BGPD_STATUS>
+ospfd=no
+ospf6d=no
+ripd=<RIPD_STATUS>
+ripngd=no
