@@ -32,4 +32,12 @@
 		<file alias="vm_host">svg/vm_host.svg</file>
 		<file alias="vm_router">svg/vm_router.svg</file>
 	</qresource>
+	<qresource prefix="/tpl" >
+		<file alias="daemons">templates/daemons</file>
+		<file alias="zebra">templates/zebra</file>
+		<file alias="lab">templates/lab</file>
+		<file alias="ripd">templates/ripd</file>
+		<file alias="bgpd">templates/bgpd</file>
+		<file alias="startup">templates/startup</file>
+	</qresource>
 </RCC>
