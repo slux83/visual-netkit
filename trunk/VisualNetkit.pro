@@ -22,7 +22,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/persistence/LabSaver.h \
+HEADERS = src/common/LabConf.h \
+    src/persistence/LabSaver.h \
     src/persistence/XMLParser.h \
     src/gui/LineItemPrivate.h \
     src/gui/handles/LinkHandler.h \

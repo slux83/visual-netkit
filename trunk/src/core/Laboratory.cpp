@@ -74,11 +74,11 @@ void Laboratory::addMachine(VirtualMachine *vm)
  */
 void Laboratory::addCollisionDomain(CollisionDomain *cd)
 {
-	if(collisionDomais.contains(cd->getName()))
+	if(collisionDomains.contains(cd->getName()))
 	{
 		qWarning() << "Warning: Collision domain" << cd->getName() << "is allready inside the collision domain map";
 		return;
 	}
 	
-	collisionDomais.insert(cd->getName(), cd);
+	collisionDomains.insert(cd->getName(), cd);
 }

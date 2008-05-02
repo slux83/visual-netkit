@@ -58,7 +58,7 @@ private:
 	QString website;
 	QLinkedList<SuperGroup *> groups;
 	QMap<QString, VirtualMachine *> machines;
-	QMap<QString, CollisionDomain *> collisionDomais;
+	QMap<QString, CollisionDomain *> collisionDomains;
 	QDir labPath;
 	
 public:
@@ -77,6 +77,10 @@ public:
 	bool getSaveState() { return isSaved; };
 	QDir getLabPath() { return labPath; };
 	
+	QLinkedList<SuperGroup *> getGroups() { return groups; };
+	QMap<QString, VirtualMachine *> getMachines() { return machines; };
+	QMap<QString, CollisionDomain *> getCollisionDomains() { return collisionDomains; };
+	
 	/* Setter functions */
 	void setName(QString newValue) { name = newValue; };
 	void setDate(QString newValue) { date = newValue; };
@@ -90,7 +94,7 @@ public:
 	
 	/* Other functions */
 	bool vmExist(QString vmName) { return machines.contains(vmName); };
-	bool cdExist(QString cdName) { return collisionDomais.contains(cdName); };
+	bool cdExist(QString cdName) { return collisionDomains.contains(cdName); };
 	void addMachine(VirtualMachine *vm);
 	void addCollisionDomain(CollisionDomain *cd);
 };
