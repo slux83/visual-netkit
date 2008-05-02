@@ -66,7 +66,7 @@ void CollisionDomainItem::initContextMenu()
 {
 	ungroupAction = new QAction(tr("Ungroup items"), this);
 	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/small/delete_group")));
-	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
+	deleteAction = new QAction(tr("Delete Collision Domain"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
 	restoreGroupAction = new QAction(tr("Restore group") , this);
 	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/small/create_group")));
@@ -79,7 +79,7 @@ void CollisionDomainItem::initContextMenu()
 	connect(ungroupAction, SIGNAL(triggered()),
 			this, SLOT(ungroupActionCalled()));
 	connect(deleteAction, SIGNAL(triggered()),
-			this, SLOT(deleteVmActionCalled()));
+			this, SLOT(deleteCdActionCalled()));
 	connect(restoreGroupAction, SIGNAL(triggered()),
 				this, SLOT(restoreGroupActionCalled()));
 }
@@ -144,7 +144,7 @@ void CollisionDomainItem::ungroupActionCalled()
  * [PRIVATE-SLOT]
  * Delete action hanle
  */
-void CollisionDomainItem::deleteVmActionCalled()
+void CollisionDomainItem::deleteCdActionCalled()
 {
 	QMessageBox::warning(NULL,
 			tr("NOT IMPLEMENTED"),
