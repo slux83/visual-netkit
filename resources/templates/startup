@@ -1,2 +1,6 @@
+###
+# This file is createb by Visual Netkit <VISUAL_NETKIT_VERSION> version
+# http://www.netkit.org ~ http://code.google.com/p/visual-netkit/
+#
 <IFCONFIG>/sbin/ifconfig <ETH_NAME IP> netmask <NETMASK> broadcast <BROADCAST> <STATUS></IFCONFIG>
 <ZEBRA>/etc/init.d/zebra start</ZEBRA>
