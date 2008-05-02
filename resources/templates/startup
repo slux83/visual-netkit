@@ -1,0 +1,2 @@
+<IFCONFIG>/sbin/ifconfig <ETH_NAME IP> netmask <NETMASK> broadcast <BROADCAST> <STATUS></IFCONFIG>
+<ZEBRA>/etc/init.d/zebra start</ZEBRA>
