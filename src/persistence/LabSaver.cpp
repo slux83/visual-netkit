@@ -22,6 +22,7 @@
 #include "../common/LabConf.h"
 #include "../gui/handles/LabHandler.h"
 #include "../core/CollisionDomain.h"
+#include "TemplateExpert.h"
 
 LabSaver::LabSaver()
 {
@@ -66,7 +67,6 @@ bool LabSaver::saveLabConf()
     out << prepareLabConfText();
     QApplication::restoreOverrideCursor();
 
-    qDebug() << prepareLabConfText();
     qDebug() << "File 'lab.conf' saved";
 	
 	return allok;
@@ -77,56 +77,64 @@ bool LabSaver::saveLabConf()
  * Returns an empty string if no current laboratory is set.
  */
 QString LabSaver::prepareLabConfText()
-{
-	template2string(QString::fromUtf8(":/tpl/lab"));
-	
-	QString text("");
+{	
+	QByteArray labConf;
 	
 	if (currentLab != NULL)
 	{
-		text += LAB_DESCRIPTION + "=\"" + currentLab->getDescription() + "\"\n";
-		text += LAB_VERSION + "=" + currentLab->getVersion() + "\n";
-		text += LAB_AUTHOR + "=\"" + currentLab->getAuthors() + "\"\n";
-		text += LAB_EMAIL + "=" + currentLab->getEmail() + "\n";
-		text += LAB_WEB + "=" + currentLab->getWebsite() + "\n";
+		/* Get the base template */
+		labConf.append(TemplateExpert::template2string(QString::fromUtf8(":/tpl/lab")));
 		
-		QMap<QString, VirtualMachine *> vmsmap = currentLab->getMachines();
-		QList<QString> vmsnames = vmsmap.keys();
+		/* Replace Lab informations */
+		labConf.replace(QString("<DESCRIPTION>"), QByteArray().append(currentLab->getDescription()));
+		labConf.replace(QString("<VERSION>"), QByteArray().append(currentLab->getVersion()));
+		labConf.replace(QString("<AUTHOR>"), QByteArray().append(currentLab->getAuthors()));
+		labConf.replace(QString("<EMAIL>"), QByteArray().append(currentLab->getEmail()));
+		labConf.replace(QString("<WEB>"), QByteArray().append(currentLab->getWebsite()));
+	
+		/* Replace and build lab.conf content */
+		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
+		QMapIterator<QString, CollisionDomain *> cdIterator(currentLab->getCollisionDomains());
 		
-		QMap<QString, CollisionDomain *> cdsmap = currentLab->getCollisionDomains();
-		QList<QString> cdsnames = cdsmap.keys();
+		/* Get topology content */
+		QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
+		hostReg.indexIn(labConf);
+		QString hostDef = hostReg.cap(1);
+		QByteArray labTopology;
 		
-		for (int i=0; i < vmsnames.size(); i++)
+		/* iterate machines */
+		while(machineIterator.hasNext())
 		{
-			VirtualMachine *vm = vmsmap.value(vmsnames.at(i));
+			QString topologyLine(hostDef);
+			machineIterator.next();
 			
-			QString rname("unknown");
-			rname = vm->getName();
+			//replace hostname
+			topologyLine.replace(QString("<HOST>"), machineIterator.key());
 			
-			QMap<QString, HardwareInterface *> itfsmap = vm->getInterfaces();
-			QList<QString> itfsnames = itfsmap.keys();
-			
-			for (int j=0; j < itfsnames.size(); j++) 
+			QMapIterator<QString, HardwareInterface*> ethIterator(machineIterator.value()->getInterfaces());
+
+			/* Iterate interfaces */
+			while(ethIterator.hasNext())
 			{
-				QString itf("unknown");
-				itf = itfsnames.at(j);
+				QString tmp(topologyLine);
+				ethIterator.next();
 				
-				QString cd("unknown");
-				HardwareInterface *hi = itfsmap.value(itfsnames.at(j));
-				
-				cd = hi->getMyCollisionDomain()->getName();
-				
-				QString str(ROUTER_TPL);
-				str.replace("router", rname);
-				str.replace("interface", itf);
-				str.replace("collisiondomain", cd);
-				
-				text += str + "\n";
+				//TODO: extract only the ethernet number
+				tmp.replace(QString("<ETH_NUMBER>"), ethIterator.key());
+				tmp.replace(QString("<COLLISION_DOMAIN_NAME>"), 
+						ethIterator.value()->getMyCollisionDomain()->getName());
+
+				labTopology.append(tmp + "\n");	
 			}
+			
+			//separe machines definition
+			labTopology.append("\n");
+			
 		}
+		labConf = QString(labConf).replace(hostReg, labTopology).toUtf8();
 	}
 	
-	return text;
+	return labConf;
 }
 
 /**
@@ -159,32 +167,4 @@ bool LabSaver::createFolderSystem()
 	return allok;
 }
 
-/**
- * [PRIVATE]
- * Get the template 'tpl' and return the entire content inside a QByteArray
- */
-QByteArray LabSaver::template2string(QString tpl)
-{
-	QByteArray fileContent;
-	
-	QFile file(tpl);
-	
-	//open file
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-		return fileContent;
-	
-	//dump content
-	while (!file.atEnd())
-	{
-		fileContent.append(file.readLine());
-	}
-	
-	/* Junks for test */
-	qDebug() << "template:" << *fileContent;
-	QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
-	qDebug() << "cap:" << hostReg.cap(1);
-	/******************/
-	
-	return fileContent;
-}
 

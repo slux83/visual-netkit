@@ -16,29 +16,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LABSAVER_H_
-#define LABSAVER_H_
+#include "TemplateExpert.h"
 
-#include <QString>
-#include "../core/handles/LabFacadeController.h"
+/**
+ * Constructor
+ */
+TemplateExpert::TemplateExpert()
+{
+}
 
-class LabSaver
-{	
-private:
-	Laboratory *currentLab;
-	QString curFile;
+/**
+ * Deconstructor
+ */
+TemplateExpert::~TemplateExpert()
+{
+}
+
+QByteArray TemplateExpert::template2string(QString tpl)
+{
+	QByteArray fileContent;
 	
-	bool saveLabConf();
-	bool saveRoutersConf();
-	bool createFolderSystem();
-	QString prepareLabConfText();
-	QString strippedName(const QString&);
-
-public:
-	LabSaver();
-	virtual ~LabSaver();
+	QFile file(tpl);
 	
-	bool saveLab();
-};
-
-#endif /*LABSAVER_H_*/
+	//open file
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return fileContent;
+	
+	//dump content
+	while (!file.atEnd())
+	{
+		fileContent.append(file.readLine());
+	}
+	
+	/* Replace the version */
+	fileContent.replace(QString("<VISUAL_NETKIT_VERSION>"), VISUAL_NETKIT_VERSION);
+	
+	/* Junks for test */
+	//qDebug() << "template:" << *fileContent;
+	//QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
+	//qDebug() << "cap:" << hostReg.cap(1);
+	/******************/
+	
+	return fileContent;
+}
