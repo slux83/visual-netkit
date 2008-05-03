@@ -16,29 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LABSAVER_H_
-#define LABSAVER_H_
+#ifndef TEMPLATEEXPERT_H_
+#define TEMPLATEEXPERT_H_
 
-#include <QString>
-#include "../core/handles/LabFacadeController.h"
+#include <QByteArray>
+#include <QFile>
+#include "../common/CommonConfigs.h"
 
-class LabSaver
-{	
-private:
-	Laboratory *currentLab;
-	QString curFile;
-	
-	bool saveLabConf();
-	bool saveRoutersConf();
-	bool createFolderSystem();
-	QString prepareLabConfText();
-	QString strippedName(const QString&);
-
+/**
+ * The template engine
+ */
+class TemplateExpert
+{
 public:
-	LabSaver();
-	virtual ~LabSaver();
+	TemplateExpert();
+	virtual ~TemplateExpert();
 	
-	bool saveLab();
+	static QByteArray template2string(QString tpl);
 };
 
-#endif /*LABSAVER_H_*/
+#endif /*TEMPLATEEXPERT_H_*/

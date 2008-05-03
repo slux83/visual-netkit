@@ -26,7 +26,7 @@
 #include "Types.h"
 
 /* Visual Netkit Version */
-#define VISUAL_NETKIT_VERSION QString("SVN")
+#define VISUAL_NETKIT_VERSION "SVN"
 
 /* Config file names */
 #define LAB_CONF QString("lab.conf")
