@@ -48,6 +48,8 @@ public:
 	
 public slots:
 	void handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF pos);
+	void saveChangedProperty(int row, int column);
+
 	
 };
 

@@ -27,6 +27,14 @@
 
 class HardwareInterface;
 
+/* Property key for cd */
+enum CdPropertyKey
+{
+	CdName = 0,
+	CdNetwork
+};
+
+
 class CollisionDomain
 {
 

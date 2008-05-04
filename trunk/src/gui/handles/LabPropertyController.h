@@ -38,16 +38,11 @@ class LabPropertyController : public QObject
 {
 	
 private:
-	/* the pair: <VIEW, DOMAIN> */
-	QLinkedList<QTableWidgetItem *> myProperties;
 	Laboratory *lab;
 	
 public:
 	LabPropertyController();
 	virtual ~LabPropertyController();
-	
-	void addProperty(QTableWidgetItem *p) { myProperties.append(p); };
-	void clearMapping() { myProperties.clear(); };
 	bool saveChangedProperty(QTableWidgetItem *item);
 	void renderLabProperties(QTableWidget *tableWidget);
 	

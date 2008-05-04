@@ -39,23 +39,45 @@ CdPropertyController::~CdPropertyController()
  */
 void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
 {
+	if(cd == NULL)
+		return;
+	
 	/* render infos inside the property editor */
-/*
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
+	tableWidget->setRowCount(2);
 
 	QTableWidgetItem *property = new QTableWidgetItem();
 	
-	//Lab name
+	//Cd name
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, lab->getName());
-	property->setData(Qt::UserRole, Name);
+	property->setData(Qt::DisplayRole, cd->getName());
+	property->setData(Qt::UserRole, CdName);
 	tableWidget->setItem(0, 1, property);
-	addProperty(property);
-*/
+	
+	//Cd network
+	property = new QTableWidgetItem();
+	property->setData(Qt::DisplayRole, tr("Network"));
+	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+	tableWidget->setItem(1, 0, property);
+	
+	property = new QTableWidgetItem();
+	property->setData(Qt::DisplayRole, cd->getSubnet()->toString(true));
+	property->setData(Qt::UserRole, CdNetwork);
+	property->setData(Qt::ToolTipRole, cd->getSubnet()->toString(false));
+	tableWidget->setItem(1, 1, property);
 
 }
+
+/**
+ * Save a changed property
+ */
+bool CdPropertyController::saveChangedProperty(QTableWidgetItem *item)
+{
+	qDebug() << "Todo:" << item->data(Qt::DisplayRole);
+	
+	return true;
+}
+

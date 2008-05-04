@@ -99,5 +99,22 @@ void CdHandler::renderCdProperties(CollisionDomainItem *cdItem)
 	/* Clear the property editor */
 	labHandler->getMainWindow()->clearPropertyDock();
 	
+	/* Render properties */
+	propertyController->setCd(CdMapper::getInstance()->getCD(cdItem));
+	propertyController->renderCdProperties(labHandler->getMainWindow()->propertyTable);
 	
+	/* Connect the correct handler dinamically */
+	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+		this, SLOT(saveChangedProperty(int, int)));
+}
+
+/**
+ * [SLOT]
+ * Save a changed property for a collision domain
+ */
+void CdHandler::saveChangedProperty(int row, int column)
+{
+	/* Foreward action */
+	propertyController->saveChangedProperty(
+			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
