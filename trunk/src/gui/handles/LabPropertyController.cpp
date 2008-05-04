@@ -42,17 +42,19 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
 {
 	bool returnVal = false;
 	
+	/* a security check */
 	if(!myProperties.contains(item))
 	{
 		//not mine
 		return returnVal;		
 	}
+
 	
 	/* Is this property mapped with a Laboratory? */
 	if(lab == NULL)
 		return false;
 		
-	/* Select the correct property to sove inside the domain current lab */
+	/* Select the correct property to save inside the domain current lab */
 	switch (item->data(Qt::UserRole).toInt())
 	{
 		case Name:
@@ -112,8 +114,7 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
  */
 void LabPropertyController::renderLabProperties(QTableWidget *tableWidget)
 {
-	clearPropertyDock(tableWidget);
-		
+	clearMapping();
 	/* render infos inside the property editor */
 	tableWidget->setRowCount(tableWidget->rowCount() + 1);
 
@@ -222,15 +223,3 @@ void LabPropertyController::renderLabProperties(QTableWidget *tableWidget)
 	addProperty(property);
 }
 
-/**
- * Clear the content inside the property dock, and reset to 0 the rows count
- */
-void LabPropertyController::clearPropertyDock(QTableWidget *tableWidget)
-{
-	/* Clear all table items and reset the view-size */
-	tableWidget->clearContents();		//just only this slot!
-	tableWidget->setRowCount(0);		//resize (reset) the view	
-
-	//clear mappings
-	clearMapping();
-}

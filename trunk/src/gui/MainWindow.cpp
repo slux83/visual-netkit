@@ -102,8 +102,8 @@ void MainWindow::createConnections()
 			labHandler, SLOT(labTreeItemDoubleClicked(QTreeWidgetItem * , int)));
 	
 	//connect: property changed (property table)
-	connect(propertyTable, SIGNAL(cellChanged(int, int)), 
-			labHandler, SLOT(saveChangedProperty(int, int)));
+	//connect(propertyTable, SIGNAL(cellChanged(int, int)), 
+	//		labHandler, SLOT(saveChangedProperty(int, int)));
 	
 	//connect: a log event
 	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
@@ -310,4 +310,13 @@ void MainWindow::zoomNormal()
 	zoomSlider->setValue(100);	
 }
 
+/**
+ * Clear the content inside the property dock, and reset to 0 the rows count
+ */
+void MainWindow::clearPropertyDock()
+{
+	/* Clear all table items and reset the view-size */
+	propertyTable->clearContents();		//just only this slot!
+	propertyTable->setRowCount(0);		//resize (reset) the view	
 
+}

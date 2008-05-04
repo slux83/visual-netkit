@@ -39,6 +39,7 @@ public:
 	virtual ~MainWindow();
 	void unlockSceneAndActions();
 	QGraphicsView* getGraphicsView() { return this->graphicsView; };
+	void clearPropertyDock();
 	
 private:
 	/* Controllers */
