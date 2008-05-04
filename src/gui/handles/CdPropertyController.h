@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QTableWidget>
+#include <QDebug>
 #include "../../core/CollisionDomain.h"
 
 /**
@@ -35,7 +36,7 @@ private:
 public:
 	CdPropertyController();
 	virtual ~CdPropertyController();
-	//bool saveChangedProperty(QTableWidgetItem *item);
+	bool saveChangedProperty(QTableWidgetItem *item);
 	void renderCdProperties(QTableWidget *tableWidget);
 	
 	void setCd(CollisionDomain *selectedCd) { cd = selectedCd; };

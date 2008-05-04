@@ -36,7 +36,7 @@ Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
  */
 Laboratory::Laboratory()
 {
-	name = DEFAULT_LAB_NAME + "_" + QDateTime::currentDateTime().toString("yyyyMMddhhmm");
+	name = DEFAULT_LAB_NAME;
 	version = "1.0";
 	
 	/* Set the current date time */

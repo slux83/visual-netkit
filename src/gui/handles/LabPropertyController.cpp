@@ -42,14 +42,6 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
 {
 	bool returnVal = false;
 	
-	/* a security check */
-	if(!myProperties.contains(item))
-	{
-		//not mine
-		return returnVal;		
-	}
-
-	
 	/* Is this property mapped with a Laboratory? */
 	if(lab == NULL)
 		return false;
@@ -114,9 +106,8 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
  */
 void LabPropertyController::renderLabProperties(QTableWidget *tableWidget)
 {
-	clearMapping();
 	/* render infos inside the property editor */
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
+	tableWidget->setRowCount(7);
 
 	QTableWidgetItem *property = new QTableWidgetItem();
 	
@@ -124,102 +115,76 @@ void LabPropertyController::renderLabProperties(QTableWidget *tableWidget)
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getName());
 	property->setData(Qt::UserRole, Name);
 	tableWidget->setItem(0, 1, property);
-	addProperty(property);
-	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-	
+		
 	//Lab version
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Version"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(1, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getVersion());
 	property->setData(Qt::UserRole, Version);
 	tableWidget->setItem(1, 1, property);
-	addProperty(property);
-	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-	
+		
 	//Lab date
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Date"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(2, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getDate());
 	property->setData(Qt::UserRole, Date);
 	tableWidget->setItem(2, 1, property);
-	addProperty(property);
 	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-
 	//Lab description
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Description"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(3, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getDescription());
 	property->setData(Qt::UserRole, Description);
 	tableWidget->setItem(3, 1, property);
-	addProperty(property);
 	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-
 	//Lab authors
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Authors"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(4, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getAuthors());
 	property->setData(Qt::UserRole, Authors);
 	tableWidget->setItem(4, 1, property);
-	addProperty(property);
 	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-
 	//Lab email
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("E-Mail"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(5, 0, property);
-	addProperty(property);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getEmail());
 	property->setData(Qt::UserRole, Email);
 	tableWidget->setItem(5, 1, property);
-	addProperty(property);
 	
-	tableWidget->setRowCount(tableWidget->rowCount() + 1);
-
 	//Lab Website
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Website"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(6, 0, property);
-	addProperty(property);
-	
+
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, lab->getWebsite());
 	property->setData(Qt::UserRole, Website);
 	tableWidget->setItem(6, 1, property);
-	addProperty(property);
 }
 
