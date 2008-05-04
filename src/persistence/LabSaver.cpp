@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
+
 #include "LabSaver.h"
 
 #include "../common/CommonConfigs.h"
@@ -45,6 +47,8 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (!saveRoutersConf())
 		allok = false;
+	if (!createFolderSystem())
+		allok = false;
 	
 	return allok;
 }
@@ -66,8 +70,6 @@ bool LabSaver::saveLabConf()
     QApplication::setOverrideCursor(Qt::WaitCursor);
     out << prepareLabConfText();
     QApplication::restoreOverrideCursor();
-
-    qDebug() << "File 'lab.conf' saved";
 	
 	return allok;
 }
@@ -162,7 +164,33 @@ bool LabSaver::createFolderSystem()
 {
 	bool allok = true;
 	
-	//LabHandler::getInstance()->getMainWindow()->labTree. ;
+	if (currentLab != NULL)
+	{
+		// create current lab main directory
+		QDir maindir("");
+		QString curpath = maindir.absolutePath();
+		//maindir.setCurrent(curpath);
+		
+		// creates main lab dir and check if it's created
+		allok = maindir.mkdir(currentLab->getName());
+		
+		// current folder is now maindir
+		maindir.setCurrent(curpath +"/"+ currentLab->getName());
+		qDebug() << maindir.absolutePath();
+		
+		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
+		
+		/* iterates on machines */
+		while(machineIterator.hasNext())
+		{
+			machineIterator.next();
+			maindir.mkdir(machineIterator.key());
+		}
+	} 
+	else 
+	{
+		return false;
+	}
 	
 	return allok;
 }

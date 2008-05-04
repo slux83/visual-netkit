@@ -28,6 +28,9 @@
 /* Visual Netkit Version */
 #define VISUAL_NETKIT_VERSION "SVN"
 
+/* Default lab name */
+#define DEFAULT_LAB_NAME "unnamed_lab"
+
 /* Config file names */
 #define LAB_CONF QString("lab.conf")
 #define ZEBRA_DAEMONS_CONF QString("daemons")
