@@ -21,7 +21,10 @@
 
 #include "../../core/handles/LabFacadeController.h"
 #include "LabHandler.h"
+#include "CdPropertyController.h"
 #include <QPointF>
+
+class CollisionDomainItem;
 
 /**
  * This class is the controller for the collision domain operations
@@ -33,6 +36,7 @@ class CdHandler : public QObject
 private:
 	LabFacadeController *labFacadeController;
 	LabHandler *labHandler;
+	CdPropertyController *propertyController;
 	static CdHandler *instance;
 
 public:
@@ -40,6 +44,7 @@ public:
 	virtual ~CdHandler();
 	static CdHandler* getInstance();
 	bool cdNameExist(QString cdNameToCheck);
+	void renderCdProperties(CollisionDomainItem *cdItem);
 	
 public slots:
 	void handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF pos);

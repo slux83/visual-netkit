@@ -18,10 +18,44 @@
 
 #include "CdPropertyController.h"
 
-CdPropertyController::CdPropertyController()
+/**
+ * Constructor
+ */
+CdPropertyController::CdPropertyController() : QObject()
 {
+	cd = NULL;
 }
 
+/**
+ * Deconstructor
+ */
 CdPropertyController::~CdPropertyController()
 {
+	
+}
+
+/**
+ * Render lab properties inside property dock
+ */
+void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
+{
+	/* render infos inside the property editor */
+/*
+	tableWidget->setRowCount(tableWidget->rowCount() + 1);
+
+	QTableWidgetItem *property = new QTableWidgetItem();
+	
+	//Lab name
+	property->setData(Qt::DisplayRole, tr("Name"));
+	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+	tableWidget->setItem(0, 0, property);
+	addProperty(property);
+	
+	property = new QTableWidgetItem();
+	property->setData(Qt::DisplayRole, lab->getName());
+	property->setData(Qt::UserRole, Name);
+	tableWidget->setItem(0, 1, property);
+	addProperty(property);
+*/
+
 }

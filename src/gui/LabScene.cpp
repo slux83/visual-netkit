@@ -42,6 +42,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	addItem(border);
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
+	connect(this, SIGNAL(selectionChanged()), this, SLOT(handleSelection()));
 	
 	link = NULL;
 }
@@ -212,3 +213,24 @@ QGraphicsLineItem* LabScene::initNewLinkLine()
 	
 	return link;
 }
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle the selection of items 
+ */
+void LabScene::handleSelection()
+{
+	/* Get selected items */
+	QList<QGraphicsItem *> items = selectedItems();
+	if(items.size() > 0)
+	{
+		CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(items.first());
+		
+		/* Render object properties */
+		if(cdItem != NULL)
+			CdHandler::getInstance()->renderCdProperties(cdItem);
+	}
+	
+}
+
+

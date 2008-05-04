@@ -31,7 +31,10 @@ CdHandler::CdHandler()
 {
 	/* Get the controller (Domain side) */
 	labFacadeController = LabFacadeController::getInstance();
+	
+	/* view side */
 	labHandler = LabHandler::getInstance();
+	propertyController = new CdPropertyController();
 }
 
 /**
@@ -84,3 +87,17 @@ void CdHandler::handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF p
 	labHandler->getMainWindow()->forceManageGraphAction();
 }
 
+/**
+ * Handle the cditem selection and render the properties
+ */
+void CdHandler::renderCdProperties(CollisionDomainItem *cdItem)
+{
+	/* Disconnect the old handler */
+	disconnect(labHandler->getMainWindow()->propertyTable, 
+			SIGNAL(cellChanged(int, int)), 0, 0);
+	
+	/* Clear the property editor */
+	labHandler->getMainWindow()->clearPropertyDock();
+	
+	
+}

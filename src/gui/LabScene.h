@@ -36,6 +36,7 @@ private:
 	
 private slots:
 	void adjustSceneBorder(QRectF r);
+	void handleSelection();
 	
 public:
 	LabScene();

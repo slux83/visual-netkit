@@ -19,11 +19,26 @@
 #ifndef CDPROPERTYCONTROLLER_H_
 #define CDPROPERTYCONTROLLER_H_
 
-class CdPropertyController
+#include <QObject>
+#include <QTableWidget>
+#include "../../core/CollisionDomain.h"
+
+/**
+ * Class that map each property item (for a collision domain item)
+ * with the CD domain object
+ */
+class CdPropertyController : QObject
 {
+private:
+	CollisionDomain *cd;
+
 public:
 	CdPropertyController();
 	virtual ~CdPropertyController();
+	//bool saveChangedProperty(QTableWidgetItem *item);
+	void renderCdProperties(QTableWidget *tableWidget);
+	
+	void setCd(CollisionDomain *selectedCd) { cd = selectedCd; };
 };
 
 #endif /*CDPROPERTYCONTROLLER_H_*/
