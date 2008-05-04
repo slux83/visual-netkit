@@ -19,12 +19,8 @@
 #ifndef CDPROPERTYCONTROLLER_H_
 #define CDPROPERTYCONTROLLER_H_
 
-/**
- * Class that map each property item (for lab) with the lab domain object
- */
-class CdPropertyController : QObject
+class CdPropertyController
 {
-	
 public:
 	CdPropertyController();
 	virtual ~CdPropertyController();

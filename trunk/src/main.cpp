@@ -18,11 +18,6 @@
 
 #include <QApplication>
 #include "gui/MainWindow.h"
-#include "gui/handles/LabHandler.h"
-
-#include <QDomDocument>
-#include "persistence/XMLExpert.h"
-#include "persistence/XMLSaver.h"
 
 int main(int argc, char *argv[])
 {

@@ -18,6 +18,8 @@
 
 #include "Laboratory.h"
 
+#include "../common/CommonConfigs.h"
+
 /**
  * Constructor with some params
  */
@@ -34,7 +36,7 @@ Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
  */
 Laboratory::Laboratory()
 {
-	name = "unnamed_lab";
+	name = DEFAULT_LAB_NAME + "_" + QDateTime::currentDateTime().toString("yyyyMMddhhmm");
 	version = "1.0";
 	
 	/* Set the current date time */
