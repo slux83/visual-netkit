@@ -21,7 +21,6 @@
 #include "LabSaver.h"
 
 #include "../common/CommonConfigs.h"
-#include "../common/LabConf.h"
 #include "../gui/handles/LabHandler.h"
 #include "../core/CollisionDomain.h"
 #include "TemplateExpert.h"

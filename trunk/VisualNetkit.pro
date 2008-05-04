@@ -24,7 +24,6 @@ RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
 HEADERS = src/gui/handles/CdPropertyController.h \
     src/persistence/TemplateExpert.h \
-    src/common/LabConf.h \
     src/persistence/LabSaver.h \
     src/persistence/XMLParser.h \
     src/gui/LineItemPrivate.h \
