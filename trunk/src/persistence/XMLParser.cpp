@@ -162,10 +162,10 @@ bool XMLParser::parseXML()
  * Reads and store the QDomDocument representing laboratory graph.
  * This function has to be called in order to populate and use the QDomDocument.
  */
-bool XMLParser::loadXML(QString *filename)
+bool XMLParser::loadXML()
 {
 	qDebug() << "loadXML(): reading labDom...";
-	labDom = ex->readDocument(filename);
+	labDom = ex->readDocument();
 	qDebug() << "done!" << endl;
 	return labDom->isNull();
 }

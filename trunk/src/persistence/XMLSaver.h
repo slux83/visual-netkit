@@ -21,6 +21,7 @@
 
 #include <QDomDocument>
 #include <QList>
+#include <QDir>
 
 #include "XMLExpert.h"
 
@@ -28,11 +29,11 @@ class XMLSaver
 {
 
 private:
-	XMLExpert *ex;
+	QDir curPath;
 	QDomDocument* prepareDomDocument();
 	
 public:
-	XMLSaver();	
+	XMLSaver(QDir path);	
 	virtual ~XMLSaver();
 	
 	bool saveLab();

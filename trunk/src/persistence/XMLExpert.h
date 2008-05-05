@@ -21,6 +21,7 @@
 
 #include <QDomDocument>
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 #include "../common/CommonConfigs.h"
 
@@ -33,8 +34,8 @@ class XMLExpert
 public:
 	XMLExpert();
 	virtual ~XMLExpert();
-	static bool dumpDocument(QDomDocument *doc, QString *filename = 0);
-	static QDomDocument* readDocument(QString *filename);
+	static bool dumpDocument(QDomDocument *doc, QDir path);
+	static QDomDocument* readDocument();
 };
 
 #endif /*XMLEXPERT_H_*/

@@ -38,15 +38,10 @@ XMLExpert::~XMLExpert()
  * Writes to filesystem the passed QDomDocument. If the specified file exists
  * overwrites it.
  */
-bool XMLExpert::dumpDocument(QDomDocument *doc, QString *filename)
+bool XMLExpert::dumpDocument(QDomDocument *doc, QDir path)
 {	
-	QString *file;
-	if (filename->isNull() || filename->isEmpty())
-		*file = XML_DEFAULT_FILE_NAME;
-	else 
-		file = filename;
-	
-	QFile data(*file);
+	QDir::setCurrent(path.absolutePath());
+	QFile data(XML_DEFAULT_FILE_NAME);
 	if (data.open(QFile::WriteOnly | QFile::Truncate)) 
 	{
 		QTextStream out(&data);
@@ -61,25 +56,17 @@ bool XMLExpert::dumpDocument(QDomDocument *doc, QString *filename)
  * Reads the file named "filename" and returns a QDomDocument. If the file is 
  * empty or null returns an empty QDomDocument.
  */ 
-QDomDocument* XMLExpert::readDocument(QString *filename)
+QDomDocument* XMLExpert::readDocument()
 {
 	//preparo il documento
 	QDomDocument *doc = new QDomDocument();
 	
-	//controllo il valore della stringa filename
-	if (!filename->isNull() && !filename->isEmpty()) {
-		QFile data(*filename);
-		if (data.open(QFile::ReadOnly)) 
-		{
-			QTextStream in(&data);
-			QString result = in.readAll();
-			doc->setContent(result, new QString("\nError reading XML file."), 0, 0);
-			
-			// DEBUG CODE
-			//QTextStream out(stdout);
-			//out << "---- START STREAMING ----" << endl;
-			//out << doc->toString();
-		}
+	QFile data(XML_DEFAULT_FILE_NAME);
+	if (data.open(QFile::ReadOnly)) 
+	{
+		QTextStream in(&data);
+		QString result = in.readAll();
+		doc->setContent(result, new QString("\nError reading XML file."), 0, 0);
 	}
 	return doc;
 }

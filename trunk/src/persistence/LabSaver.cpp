@@ -25,8 +25,15 @@
 #include "../core/CollisionDomain.h"
 #include "TemplateExpert.h"
 
-LabSaver::LabSaver()
+/**
+ * Constructor.
+ * 
+ * Path is the directory where to save the lab root folder.
+ */
+LabSaver::LabSaver(QDir path)
 {
+	QDir::setCurrent(path.absolutePath());
+	curPath = path;
 }
 
 LabSaver::~LabSaver()
@@ -42,11 +49,11 @@ bool LabSaver::saveLab()
 	
 	currentLab = LabFacadeController::getInstance()->getCurrentLab();
 	
+	if (!createFolderSystem())
+		allok = false;
 	if (!saveLabConf())
 		allok = false;
 	if (!saveRoutersConf())
-		allok = false;
-	if (!createFolderSystem())
 		allok = false;
 	
 	return allok;
@@ -61,7 +68,7 @@ bool LabSaver::saveLabConf()
 	
 	QFile file(LAB_CONF);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        qWarning() << this << "Cannot write file " << LAB_CONF << file.errorString();
+        qWarning() << this << "Cannot write file" << LAB_CONF << ":" << file.errorString();
         return false;
     }
 
@@ -165,15 +172,15 @@ bool LabSaver::createFolderSystem()
 	if (currentLab != NULL)
 	{
 		// create current lab main directory
-		QDir maindir("");
-		QString curpath = maindir.absolutePath();
+		QDir maindir;
 		
 		// creates main lab dir and check if it's created
 		allok = maindir.mkdir(currentLab->getName());
+		qDebug() << "createfolder maindir: "<< maindir.absolutePath();
 		
 		// current folder is now maindir
-		maindir.setCurrent(curpath +"/"+ currentLab->getName());
-		qDebug() << maindir.absolutePath();
+		maindir.setCurrent(curPath.absolutePath() + QString("/") + currentLab->getName());
+		qDebug() << "createfolder maindir setcurrent: "<< maindir.absolutePath();
 		
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 		
@@ -191,5 +198,3 @@ bool LabSaver::createFolderSystem()
 	
 	return allok;
 }
-
-

@@ -20,6 +20,7 @@
 #define LABSAVER_H_
 
 #include <QString>
+#include <QDir>
 #include "../core/handles/LabFacadeController.h"
 
 class LabSaver
@@ -27,6 +28,7 @@ class LabSaver
 private:
 	Laboratory *currentLab;
 	QString curFile;
+	QDir curPath;
 	
 	bool saveLabConf();
 	bool saveRoutersConf();
@@ -35,7 +37,7 @@ private:
 	QString strippedName(const QString&);
 
 public:
-	LabSaver();
+	LabSaver(QDir path);
 	virtual ~LabSaver();
 	
 	bool saveLab();

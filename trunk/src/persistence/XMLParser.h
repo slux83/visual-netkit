@@ -49,7 +49,7 @@ public:
 	virtual ~XMLParser();
 	
 	bool parseXML();
-	bool loadXML(QString *filename);
+	bool loadXML();
 	QDomDocument* getLabDom();
 	Laboratory* getLaboratory();
 	QMap<QString, QString> *getLabInfos() { return labInfos; };
