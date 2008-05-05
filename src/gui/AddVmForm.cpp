@@ -64,6 +64,9 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 			this, SLOT(handleAcceptedSignal()));
 	connect(this, SIGNAL(userAddedVm(QString, QList<Daemon>, QPointF)),
 			vmHandler, SLOT(createVm(QString, QList<Daemon>, QPointF)));
+	connect(vmName, SIGNAL(returnPressed()),
+			this, SLOT(handleAcceptedSignal()));
+	
 }
 
 /**
