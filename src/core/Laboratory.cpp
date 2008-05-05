@@ -36,7 +36,7 @@ Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
  */
 Laboratory::Laboratory()
 {
-	name = DEFAULT_LAB_NAME;
+	name = DEFAULT_LAB_NAME + QString("_") + QDateTime::currentDateTime().toString("yyyyMMddhhmm");
 	version = "1.0";
 	
 	/* Set the current date time */
@@ -84,3 +84,5 @@ void Laboratory::addCollisionDomain(CollisionDomain *cd)
 	
 	collisionDomains.insert(cd->getName(), cd);
 }
+
+
