@@ -51,11 +51,5 @@ QByteArray TemplateExpert::template2string(QString tpl)
 	/* Replace the version */
 	fileContent.replace(QString("<VISUAL_NETKIT_VERSION>"), VISUAL_NETKIT_VERSION);
 	
-	/* Junks for test */
-	//qDebug() << "template:" << *fileContent;
-	//QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
-	//qDebug() << "cap:" << hostReg.cap(1);
-	/******************/
-	
 	return fileContent;
 }

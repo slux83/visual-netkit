@@ -51,11 +51,20 @@ void BugDumper::dumper(int code)
 
 	size = backtrace(array, 1024);
 	strings = backtrace_symbols(array, size);
+	
+	if (strings == NULL)
+	{
+		qDebug() << "backtrace_symbols return a NULL string";
+		QApplication::exit(EXIT_FAILURE);
+	}
 
 	for (i = 0; i < size; i++)
+	{
 		backTrace.append(strings[i]);
+		backTrace.append("\n");
+	}
 	
-	qDebug() << "-------------- PROGRAM CRASH --------------";
+	qDebug() << "\n\n-------------- PROGRAM CRASH --------------";
 	qDebug() << backTrace;
 	
 }
