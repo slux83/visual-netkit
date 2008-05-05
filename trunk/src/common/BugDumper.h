@@ -30,6 +30,7 @@
 /* Qt4 headers */
 #include <QDebug>
 #include <QString>
+#include <QApplication>
 
 /**
  * This class is a trace dumper expert to dump a stack-trace when the 
