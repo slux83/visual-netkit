@@ -57,6 +57,7 @@ public:
 	CollisionDomainItem(QString label);
 	virtual ~CollisionDomainItem();
 	QString getLabel() { return myLabel->text(); };
+	void setLabelCdName(QString newLabel);
 	SvgItemPrivate* getSvgPrivate() { return collisionDomainSvg; };
 	void increaseDecreaseLinkCounter(bool increase);
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };

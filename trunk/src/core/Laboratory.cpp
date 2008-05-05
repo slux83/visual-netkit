@@ -85,4 +85,11 @@ void Laboratory::addCollisionDomain(CollisionDomain *cd)
 	collisionDomains.insert(cd->getName(), cd);
 }
 
-
+/**
+ * Replace a key
+ */
+void Laboratory::updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd)
+{
+	collisionDomains.remove(oldKey);
+	collisionDomains.insert(newKey, cd);
+}

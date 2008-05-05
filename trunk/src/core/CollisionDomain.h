@@ -30,7 +30,7 @@ class HardwareInterface;
 /* Property key for cd */
 enum CdPropertyKey
 {
-	CdName = 0,
+	CdName = 100,
 	CdNetwork
 };
 
@@ -52,6 +52,7 @@ public:
 	NetworkAddress* getSubnet() { return address; };
 	void addPeer(HardwareInterface* hi);
 	QList<HardwareInterface*> getPeers() { return peers; };
+	void setName(QString newName) { name = newName; };
 };
 
 #endif /*COLLISIONDOMAIN_H_*/
