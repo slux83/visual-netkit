@@ -177,3 +177,18 @@ void CollisionDomainItem::increaseDecreaseLinkCounter(bool increase)
 		collisionDomainSvg->renderer()->load(QString::fromUtf8(":/svg/cs_off"));
 	
 }
+
+/**
+ * Set the cd name inside the label
+ */
+void CollisionDomainItem::setLabelCdName(QString newLabel)
+{
+	QStringList splittedLabel = myLabel->text().split("\n");
+	if(splittedLabel.size() != 2)
+		return;
+	
+	splittedLabel[0] = newLabel;
+	myLabel->setText(splittedLabel.join("\n"));
+}
+
+

@@ -97,6 +97,7 @@ public:
 	bool cdExist(QString cdName) { return collisionDomains.contains(cdName); };
 	void addMachine(VirtualMachine *vm);
 	void addCollisionDomain(CollisionDomain *cd);
+	void updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd);
 };
 
 #endif /*LABORATORY_H_*/

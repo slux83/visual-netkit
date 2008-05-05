@@ -17,6 +17,11 @@
  */
 
 #include "CdPropertyController.h"
+#include "CdHandler.h"
+#include "CdMapper.h"
+#include "../../core/handles/LabFacadeController.h"
+#include <QMessageBox>
+
 
 /**
  * Constructor
@@ -76,8 +81,53 @@ void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
  */
 bool CdPropertyController::saveChangedProperty(QTableWidgetItem *item)
 {
-	qDebug() << "Todo:" << item->data(Qt::DisplayRole);
+	bool ok = true;
 	
-	return true;
+	if(cd == NULL)
+		return false;
+	
+	QString itemValue = item->data(Qt::DisplayRole).toString().trimmed();
+	
+	switch(item->data(Qt::UserRole).toInt())
+	{
+		case CdName:
+			
+			/* Some checks */
+			if(ok && itemValue == "")
+			{
+				//Restore the value, and alert the user
+				item->setData(Qt::DisplayRole, cd->getName());
+				QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+		                   tr("The collision domain name must be not empty!"),
+		                   QMessageBox::Ok);
+				ok = false;
+		        
+			}
+			
+			if(ok && CdHandler::getInstance()->cdNameExist(itemValue))
+			{
+				//Restore the value, and alert the user
+				item->setData(Qt::DisplayRole, cd->getName());
+				QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+		                   tr("The collision domain name must be unique!"),
+		                   QMessageBox::Ok);
+				ok = false;
+			}
+			
+			/* save changes */
+			if(ok)
+			{
+				LabFacadeController::getInstance()->getCurrentLab()->updateCdKey(cd->getName(), itemValue, cd);
+				cd->setName(itemValue);
+				CdMapper::getInstance()->getCdItem(cd)->setLabelCdName(itemValue);
+			}
+			
+			break;
+			
+		case CdNetwork:
+			break;
+	}
+	
+	return ok;
 }
 
