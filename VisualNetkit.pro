@@ -22,7 +22,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/CdPropertyController.h \
+HEADERS = src/common/BugDumper.h \
+    src/gui/handles/CdPropertyController.h \
     src/persistence/TemplateExpert.h \
     src/persistence/LabSaver.h \
     src/persistence/XMLParser.h \
@@ -62,7 +63,8 @@ HEADERS = src/gui/handles/CdPropertyController.h \
     src/core/CollisionDomain.h \
     src/core/SuperGroup.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/CdPropertyController.cpp \
+SOURCES = src/common/BugDumper.cpp \
+    src/gui/handles/CdPropertyController.cpp \
     src/persistence/TemplateExpert.cpp \
     src/persistence/LabSaver.cpp \
     src/persistence/XMLParser.cpp \

@@ -16,20 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include "gui/MainWindow.h"
-#include "common/BugDumper.h"
+#ifndef BUGDUMPER_H_
+#define BUGDUMPER_H_
 
-int main(int argc, char *argv[])
+/* ISO headers */
+#include <unistd.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <execinfo.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Qt4 headers */
+#include <QDebug>
+#include <QString>
+
+/**
+ * This class is a trace dumper expert to dump a stack-trace when the 
+ * program crash 
+ */
+class BugDumper
 {
-	QApplication app(argc, argv);
-	MainWindow *win = new MainWindow();
+private:
+	static void dumper(int code);
 	
-	/* Create the bug dumper object */
-	BugDumper *dumper = new BugDumper();
-	Q_UNUSED(dumper);
-	
-	win->show();
-	
-	return app.exec();
-}
+public:
+	BugDumper();
+	virtual ~BugDumper();
+};
+
+#endif /*BUGDUMPER_H_*/
