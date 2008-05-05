@@ -16,20 +16,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include "gui/MainWindow.h"
-#include "common/BugDumper.h"
+#include "BugDumper.h"
 
-int main(int argc, char *argv[])
+/**
+ * Constructor
+ */
+BugDumper::BugDumper()
 {
-	QApplication app(argc, argv);
-	MainWindow *win = new MainWindow();
+	//connect the sigsegv signal to the dumper
+	signal(SIGSEGV, dumper);
+}
+
+/**
+ * Deconstructor
+ */
+BugDumper::~BugDumper()
+{
+}
+
+/**
+ * Print a stack trace when program crash
+ */
+void BugDumper::dumper(int code)
+{
+	QString backTrace;
+	/* Ignore other signals */
+	signal(code, SIG_IGN); 
 	
-	/* Create the bug dumper object */
-	BugDumper *dumper = new BugDumper();
-	Q_UNUSED(dumper);
+	/* manage signal */
+	void *array[1024];
+	size_t size;
+	char **strings;
+	size_t i;
+
+	size = backtrace(array, 1024);
+	strings = backtrace_symbols(array, size);
+
+	for (i = 0; i < size; i++)
+		backTrace.append(strings[i]);
 	
-	win->show();
+	qDebug() << "-------------- PROGRAM CRASH --------------";
+	qDebug() << backTrace;
 	
-	return app.exec();
 }
