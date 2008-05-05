@@ -25,10 +25,12 @@
 
 /**
  * Constructor
+ * 
+ * Path is the lab root folder.
  */
-XMLSaver::XMLSaver()
+XMLSaver::XMLSaver(QDir path)
 {
-	ex = new XMLExpert();
+	curPath = path;
 }
 
 /**
@@ -40,10 +42,12 @@ XMLSaver::~XMLSaver()
 
 /**
  * Laboratory save function.
+ * 
+ * Path is the lab root folder.
  */
 bool XMLSaver::saveLab()
 {
-	return ex->dumpDocument(prepareDomDocument(), new QString("lab.xml"));
+	return XMLExpert::dumpDocument(prepareDomDocument(), curPath);
 }
 
 /**
@@ -224,7 +228,6 @@ QDomDocument* XMLSaver::prepareDomDocument()
 			}
 		}
 	}
-	
 	
 	return doc;
 }

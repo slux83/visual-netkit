@@ -95,7 +95,8 @@ void LabHandler::openLab()
  */
 void LabHandler::saveLab()
 {
-	LabFacadeController::getInstance()->saveLab();
+	
+	LabFacadeController::getInstance()->saveLab(QDir("/home/paolo/svn/visual-netkit/trunk/"));
 }
 
 
