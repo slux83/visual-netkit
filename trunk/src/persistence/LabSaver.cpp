@@ -167,7 +167,6 @@ bool LabSaver::createFolderSystem()
 		// create current lab main directory
 		QDir maindir("");
 		QString curpath = maindir.absolutePath();
-		//maindir.setCurrent(curpath);
 		
 		// creates main lab dir and check if it's created
 		allok = maindir.mkdir(currentLab->getName());
