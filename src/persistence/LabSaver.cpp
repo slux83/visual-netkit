@@ -95,7 +95,6 @@ QString LabSaver::prepareLabConfText()
 	
 		/* Replace and build lab.conf content */
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
-		QMapIterator<QString, CollisionDomain *> cdIterator(currentLab->getCollisionDomains());
 		
 		/* Get topology content */
 		QRegExp hostReg("<TOPOLOGY>(.+)</TOPOLOGY>");
