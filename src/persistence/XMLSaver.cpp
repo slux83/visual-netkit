@@ -179,8 +179,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				cd.appendChild(label);
 				
 				//adds collisiondomain's label relative position
-				label.setAttribute("x", QString(QByteArray::number(cdsList.at(i)->pos().x())));
-				label.setAttribute("y", QString(QByteArray::number(cdsList.at(i)->pos().y())));
+				label.setAttribute("x", QString(QByteArray::number(cdsList.at(i)->getLabelItemPrivate()->pos().x())));
+				label.setAttribute("y", QString(QByteArray::number(cdsList.at(i)->getLabelItemPrivate()->pos().y())));
 			}
 		}
 		//==========================================================================	
