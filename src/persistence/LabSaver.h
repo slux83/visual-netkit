@@ -33,6 +33,7 @@ private:
 	bool saveLabConf();
 	bool saveRoutersConf();
 	bool createFolderSystem();
+	bool saveStartups();
 	QString prepareLabConfText();
 	QString strippedName(const QString &fullFileName);
 
