@@ -28,7 +28,7 @@
  * 
  * Path is the lab root folder.
  */
-XMLSaver::XMLSaver(QDir path)
+XMLSaver::XMLSaver(const QString &path)
 {
 	curPath = path;
 }
@@ -55,7 +55,7 @@ bool XMLSaver::saveLab()
  */
 QDomDocument* XMLSaver::prepareDomDocument()
 {
-	int i=0;
+	int i = 0;
 	
 	//prepare DOM document
 	QDomDocument *doc = new QDomDocument();
@@ -95,7 +95,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	
 	//adds lab scene items if any. (Note: at least the green border line is in the list)
 	QList<QGraphicsItem *> itemsList = LabHandler::getInstance()->getMainWindow()->getGraphicsView()->scene()->items();
-	if (!itemsList.isEmpty() && itemsList.size()>1) 
+	if (!itemsList.isEmpty() && itemsList.size() > 1) 
 	{
 		QDomElement items = doc->createElement("items");
 		scene.appendChild(items);

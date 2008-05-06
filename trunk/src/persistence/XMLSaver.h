@@ -29,11 +29,11 @@ class XMLSaver
 {
 
 private:
-	QDir curPath;
+	QString curPath;
 	QDomDocument* prepareDomDocument();
 	
 public:
-	XMLSaver(QDir path);	
+	XMLSaver(const QString & path);	
 	virtual ~XMLSaver();
 	
 	bool saveLab();

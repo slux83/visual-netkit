@@ -82,37 +82,30 @@ void LabFacadeController::newLaboratory()
  */
 void LabFacadeController::openLab()
 {
-	XMLParser xp;
-	xp.loadXML();
-	xp.parseXML();
+//	XMLParser xp;
+//	xp.loadXML();
+//	xp.parseXML();
 }
 
 /**
  * Saves the current laboratory. TODO
  */
-void LabFacadeController::saveLab(QDir savePath)
+void LabFacadeController::saveLab(const QString &savePath)
 {
 	/* Check if current lab exist */
 	if(currentLab != NULL)
 	{
-		qWarning() << "Preparing to save the current lab...";
-		bool ok;
-		
+		// TODO: delegate to different thread
 		// saves lab structure dirs and files
-		LabSaver *ls = new LabSaver(savePath);		// TODO: delegate to different thread
-		ok = ls->saveLab();
-		
+		LabSaver ls(savePath);
 		// saves lab XML
-		XMLSaver *xs = new XMLSaver(savePath);
-		ok = xs->saveLab();
+		XMLSaver xs(savePath + "/" + currentLab->getName());
 		
-		if (ok)
+		if (ls.saveLab() && xs.saveLab())
 			qWarning() << "Lab saved!";
 		else 
 			qWarning() << "Lab not saved...something wrong!";
 		
-		delete ls;
-		delete xs;
 	}
 	
 	emit savedLab(currentLab);

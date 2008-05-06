@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QStringList>
 #include "LabPropertyController.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "../../core/Laboratory.h"
@@ -52,7 +53,7 @@ public:
 public slots:
 	void newLab();
 	void openLab();
-	void saveLab();
+	void saveLab(const QStringList &selectedFiles);
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemSelected(QTreeWidgetItem * item, int column);

@@ -38,17 +38,22 @@ XMLExpert::~XMLExpert()
  * Writes to filesystem the passed QDomDocument. If the specified file exists
  * overwrites it.
  */
-bool XMLExpert::dumpDocument(QDomDocument *doc, QDir path)
+bool XMLExpert::dumpDocument(QDomDocument *doc, QString path)
 {	
-	QDir::setCurrent(path.absolutePath());
-	QFile data(XML_DEFAULT_FILE_NAME);
+	QFile data(path + "/" + XML_DEFAULT_FILE_NAME);
+	bool returnVal = false;
+	
 	if (data.open(QFile::WriteOnly | QFile::Truncate)) 
 	{
 		QTextStream out(&data);
 	    doc->save(out, 4, QDomNode::EncodingFromDocument);
-	    return true;
+	    returnVal = true;
 	}
-	return false;
+	
+	//delete the dom
+	delete doc;
+	
+	return returnVal;
 }
 
 /**
@@ -68,6 +73,7 @@ QDomDocument* XMLExpert::readDocument()
 		QString result = in.readAll();
 		doc->setContent(result, new QString("\nError reading XML file."), 0, 0);
 	}
+	
 	return doc;
 }
 

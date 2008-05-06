@@ -42,7 +42,7 @@ public:
 	static LabFacadeController * getInstance();
 	void newLaboratory();
 	void openLab();
-	void saveLab(QDir savePath);
+	void saveLab(QString const &savePath);
 	Laboratory * getCurrentLab() { return currentLab; };
 
 signals:
