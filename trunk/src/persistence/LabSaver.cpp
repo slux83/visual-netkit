@@ -52,8 +52,16 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (!saveLabConf())
 		allok = false;
+	if(!saveStartups())
+		allok = false;
 	if (!saveRoutersConf())
 		allok = false;
+	
+	/* remove the lab */
+	if(!allok)
+	{
+		//TODO: clear the junk lab 
+	}
 	
 	return allok;
 }
@@ -94,17 +102,84 @@ bool LabSaver::saveStartups()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
-		QFile startup(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
-		if (!startup.open(QFile::WriteOnly | QFile::Text)) {
+		QFile startup(curPath + "/" + currentLab->getName() + "/" + machineIterator.key() + ".startup");
+
+		if(!startup.open(QFile::WriteOnly | QFile::Text))
+		{
 			qWarning()	<< "Cannot write startup file"
 						<< machineIterator.key() + ".startup"
 						<< ":" << startup.errorString();
 			return false;
 		}
+		
+		QTextStream out(&startup);
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+		out << prepareStartupText(machineIterator.value());
+		QApplication::restoreOverrideCursor();
 	}
+	
+	return returnVal;
 }
 
 /**
+ * [PRIVATE]
+ * Prepare and return the string represent the startup file for *vm
+ */
+QString LabSaver::prepareStartupText(VirtualMachine *vm)
+{
+	QString startupText = TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
+	QString ifconfigContent;
+	
+	/* Reg expressions */
+	QRegExp ifconfigReg("<IFCONFIG>(.+)</IFCONFIG>");
+	QRegExp zebraReg("<ZEBRA>(.+)</ZEBRA>");
+	
+	/* Get the ifconfig line */
+	ifconfigReg.indexIn(startupText);
+	QString ifconfigLine = ifconfigReg.cap(1);
+	
+	/* iterate all interfaces */
+	QListIterator<HardwareInterface*> ethIterator(vm->getInterfaces().values());
+	while(ethIterator.hasNext())
+	{
+		HardwareInterface *hi = ethIterator.next();
+		QString temp = ifconfigLine;	//clone line
+		QString status;
+		
+		/* replace infos */
+		temp.replace("<ETH_NAME>", hi->getName());
+		temp.replace("<IP>", hi->getAddress().ip().toString());
+		temp.replace("<NETMASK>", hi->getAddress().netmask().toString());
+		temp.replace("<BROADCAST>", hi->getAddress().broadcast().toString());
+		
+		(hi->getState())? status = "up" : status = "down";
+		temp.replace("<STATUS>", status);
+		
+		/* append */
+		ifconfigContent.append(temp + "\n");
+	}
+	
+	/* Replace the ifconfig content inside <IFCONFIG> tags */
+	startupText.replace(ifconfigReg, ifconfigContent);
+	
+	/* Check if zebra is up */
+	if(vm->getDm()->getVmType() == Router)
+	{
+		zebraReg.indexIn(startupText);
+		startupText.replace(zebraReg, zebraReg.cap(1));
+	}
+	else
+	{
+		/* zebra init not needed */
+		startupText.replace(zebraReg, "");
+	}
+
+	return startupText;
+	
+}
+
+/**
+ * [PRIVATE]
  * Prepares and returns lab.conf file text.
  * Returns an empty string if no current laboratory is set.
  */
@@ -149,9 +224,10 @@ QString LabSaver::prepareLabConfText()
 			{
 				QString tmp(topologyLine);
 				ethIterator.next();
-				
-				//TODO: extract only the ethernet number
-				tmp.replace(QString("<ETH_NUMBER>"), ethIterator.key());
+
+				QString ethNumber = ethIterator.key();
+				ethNumber.replace("eth", "");
+				tmp.replace(QString("<ETH_NUMBER>"), ethNumber);
 				tmp.replace(QString("<COLLISION_DOMAIN_NAME>"), 
 						ethIterator.value()->getMyCollisionDomain()->getName());
 
