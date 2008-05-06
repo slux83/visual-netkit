@@ -93,10 +93,11 @@ void LabHandler::openLab()
  * [SLOT]
  * Saves the lab
  */
-void LabHandler::saveLab()
+void LabHandler::saveLab(const QStringList &selectedFiles)
 {
-	
-	LabFacadeController::getInstance()->saveLab(QDir("/home/paolo/svn/visual-netkit/trunk/"));
+	qDebug() << "where save the lab:" <<  selectedFiles.first();
+			
+	LabFacadeController::getInstance()->saveLab(selectedFiles.first());
 }
 
 

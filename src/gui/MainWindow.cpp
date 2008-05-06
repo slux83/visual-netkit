@@ -22,6 +22,7 @@
 #include "GraphicsView.h"
 #include <QHeaderView>
 #include <QActionGroup>
+#include <QDir>
 
 /**
  * Constructor
@@ -44,6 +45,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	//by default don't show the dock for logging
 	dockLog->setVisible(false);
 	
+	/* init the file dialog (save mode) */
+	saveFileDialog = new QFileDialog(this, tr("Save laboratory"), QDir::homePath(), "");
+	saveFileDialog->setFileMode(QFileDialog::DirectoryOnly);
+	
 	//populte the 'View' menu
 	populateViewMenu();
 	
@@ -53,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	//status bar show a ready state
 	statusBar()->showMessage(tr("Ready"));
+
 }
 
 /**
@@ -91,7 +97,11 @@ void MainWindow::createConnections()
 	connect(actionOpenLab, SIGNAL(triggered()), labHandler, SLOT(openLab()));
 	
 	//connect: save lab action
-	connect(actionSave, SIGNAL(triggered()), labHandler, SLOT(saveLab()));
+	connect(actionSave, SIGNAL(triggered()), this, SLOT(showSaveFileDialog()));
+	
+	//connect: the save file dialog to the controller handler
+	connect(saveFileDialog, SIGNAL(filesSelected(const QStringList &)),
+			labHandler, SLOT(saveLab(const QStringList &)));
 	
 	//connect: item tree lab selected
 	connect(labTree, SIGNAL(itemClicked(QTreeWidgetItem * , int)),

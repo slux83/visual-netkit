@@ -26,6 +26,7 @@ class LabHandler;
 
 #include <QWidget>
 #include <QTreeWidget>
+#include <QFileDialog>
 
 /**
  * The main window class
@@ -49,6 +50,9 @@ private:
 	/* Action groups */
 	QActionGroup *labItemGroup, *sceneSizeGroup, *graphZoomGroup;
 	
+	/* The file chooser to select where save a lab */
+	QFileDialog *saveFileDialog;
+	
 	void populateViewMenu();
 	void createConnections();
 	void createActionGroups();
@@ -61,6 +65,7 @@ private slots:
 	void zoomPlus();
 	void zoomMinus();
 	void zoomNormal();
+	void showSaveFileDialog() { saveFileDialog->show(); };
 
 public slots:
 	void writeLogMessage(QString message);

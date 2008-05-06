@@ -28,16 +28,16 @@ class LabSaver
 private:
 	Laboratory *currentLab;
 	QString curFile;
-	QDir curPath;
+	QString curPath;
 	
 	bool saveLabConf();
 	bool saveRoutersConf();
 	bool createFolderSystem();
 	QString prepareLabConfText();
-	QString strippedName(const QString&);
+	QString strippedName(const QString &fullFileName);
 
 public:
-	LabSaver(QDir path);
+	LabSaver(const QString &path);
 	virtual ~LabSaver();
 	
 	bool saveLab();

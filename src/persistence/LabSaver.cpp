@@ -30,9 +30,8 @@
  * 
  * Path is the directory where to save the lab root folder.
  */
-LabSaver::LabSaver(QDir path)
+LabSaver::LabSaver(const QString & path)
 {
-	QDir::setCurrent(path.absolutePath());
 	curPath = path;
 }
 
@@ -66,7 +65,7 @@ bool LabSaver::saveLabConf()
 {
 	bool allok = true;
 	
-	QFile file(LAB_CONF);
+	QFile file(curPath + "/" + currentLab->getName() + "/" + LAB_CONF);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         qWarning() << this << "Cannot write file" << LAB_CONF << ":" << file.errorString();
         return false;
@@ -145,7 +144,8 @@ QString LabSaver::prepareLabConfText()
 }
 
 /**
- * The strippedName() function call around curFile shortens the file name to exclude the path.
+ * The strippedName() function call around curFile shortens
+ * the file name to exclude the path.
  */
 QString LabSaver::strippedName(const QString &fullFileName)
 {
@@ -154,12 +154,12 @@ QString LabSaver::strippedName(const QString &fullFileName)
 
 /**
  * Saves passed router or host configuration to filesystem.
- * This function creates both routerX.conf file and routerX folder (including subdirectories and subfiles).
+ * This function creates both routerX.conf file and routerX folder
+ * (including subdirectories and subfiles).
  */
 bool LabSaver::saveRoutersConf()
 {
-	bool allok = true;
-	return allok;
+	return true;
 }
 
 /**
@@ -168,19 +168,12 @@ bool LabSaver::saveRoutersConf()
 bool LabSaver::createFolderSystem()
 {
 	bool allok = true;
+	QDir rootDir;
 	
 	if (currentLab != NULL)
 	{
-		// create current lab main directory
-		QDir maindir;
-		
 		// creates main lab dir and check if it's created
-		allok = maindir.mkdir(currentLab->getName());
-		qDebug() << "createfolder maindir: "<< maindir.absolutePath();
-		
-		// current folder is now maindir
-		maindir.setCurrent(curPath.absolutePath() + QString("/") + currentLab->getName());
-		qDebug() << "createfolder maindir setcurrent: "<< maindir.absolutePath();
+		allok = rootDir.mkdir(curPath + "/" + currentLab->getName());
 		
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 		
@@ -188,7 +181,7 @@ bool LabSaver::createFolderSystem()
 		while(machineIterator.hasNext())
 		{
 			machineIterator.next();
-			maindir.mkdir(machineIterator.key());
+			rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
 		}
 	} 
 	else 
