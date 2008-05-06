@@ -118,6 +118,8 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
  */
 void AddLinkForm::handleAccept()
 {
+	QRegExp validateEthName("^eth[0-9]+");
+	
 	QStringList splitted = ipLineEdit->text().split("/");
 	
 	/* get ip and netmask */
@@ -140,17 +142,18 @@ void AddLinkForm::handleAccept()
 	/**
 	 * test the interface name
 	 */
-	if(ethNameLineEdit->text().trimmed() == "" ||
+	if(!validateEthName.exactMatch(ethNameLineEdit->text().trimmed()) ||
 			VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNameLineEdit->text().trimmed()))
 		
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
-			tr("The interface name must be unique and not empty!\nPlease, retry."),
+			tr("The interface name must be unique and only eth[0-9]+ are correct names!\nPlease, retry."),
 			QMessageBox::Ok);
 		
 		return;
 	}
+	
 	
 	//if up --> state true, false otherwise
 	bool ethState = ethUp->isChecked();
