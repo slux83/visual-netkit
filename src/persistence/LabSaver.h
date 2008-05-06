@@ -35,6 +35,7 @@ private:
 	bool createFolderSystem();
 	bool saveStartups();
 	QString prepareLabConfText();
+	QString prepareStartupText(VirtualMachine *vm);
 	QString strippedName(const QString &fullFileName);
 
 public:
