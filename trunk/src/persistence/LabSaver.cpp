@@ -58,7 +58,8 @@ bool LabSaver::saveLab()
 	return allok;
 }
 
-/**
+/** 
+ * [PRIVATE]
  * Saves current lab configuration to lab.conf file.
  */
 bool LabSaver::saveLabConf()
@@ -66,17 +67,41 @@ bool LabSaver::saveLabConf()
 	bool allok = true;
 	
 	QFile file(curPath + "/" + currentLab->getName() + "/" + LAB_CONF);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        qWarning() << this << "Cannot write file" << LAB_CONF << ":" << file.errorString();
+	if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
+    	qWarning() << this << "Cannot write file" << LAB_CONF << ":" << file.errorString();
         return false;
     }
 
-    QTextStream out(&file);
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    out << prepareLabConfText();
-    QApplication::restoreOverrideCursor();
+	QTextStream out(&file);
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	out << prepareLabConfText();
+	QApplication::restoreOverrideCursor();
 	
 	return allok;
+}
+
+/**
+ * [PRIVATE]
+ * Save all startup files if any
+ */
+bool LabSaver::saveStartups()
+{
+	bool returnVal = true;
+	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
+	
+	/* save all startups */
+	while(machineIterator.hasNext())
+	{
+		machineIterator.next();
+		QFile startup(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+		if (!startup.open(QFile::WriteOnly | QFile::Text)) {
+			qWarning()	<< "Cannot write startup file"
+						<< machineIterator.key() + ".startup"
+						<< ":" << startup.errorString();
+			return false;
+		}
+	}
 }
 
 /**
