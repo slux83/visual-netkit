@@ -177,6 +177,7 @@
    <addaction name="actionNewLab" />
    <addaction name="actionOpenLab" />
    <addaction name="actionSave" />
+   <addaction name="actionSaveAs" />
    <addaction name="separator" />
    <addaction name="actionUndo" />
    <addaction name="actionRedo" />
@@ -588,7 +589,7 @@
   </action>
   <action name="actionSave" >
    <property name="enabled" >
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/save_icon</iconset>
@@ -598,6 +599,9 @@
    </property>
   </action>
   <action name="actionSaveAs" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >:/menu/save_as_icon</iconset>
    </property>

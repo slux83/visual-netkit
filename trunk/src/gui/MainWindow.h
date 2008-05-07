@@ -66,6 +66,7 @@ private slots:
 	void zoomMinus();
 	void zoomNormal();
 	void showSaveFileDialog() { saveFileDialog->show(); };
+	void saveModifiedLab();
 
 public slots:
 	void writeLogMessage(QString message);

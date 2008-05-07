@@ -90,7 +90,7 @@ void LabFacadeController::openLab()
 /**
  * Saves the current laboratory. TODO
  */
-void LabFacadeController::saveLab(const QString &savePath)
+bool LabFacadeController::saveLab(const QString &savePath)
 {
 	/* Check if current lab exist */
 	if(currentLab != NULL)
@@ -102,12 +102,18 @@ void LabFacadeController::saveLab(const QString &savePath)
 		XMLSaver xs(savePath + "/" + currentLab->getName());
 		
 		if (ls.saveLab() && xs.saveLab())
-			qWarning() << "Lab saved!";
-		else 
+		{
+			qDebug() << "Lab saved!";
+			return true;
+		}
+		else
+		{
 			qWarning() << "Lab not saved...something wrong!";
+			return false;
+		}
 		
 	}
 	
-	emit savedLab(currentLab);
+	return false;
 }
 
