@@ -127,13 +127,13 @@ void VirtualMachineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 void VirtualMachineItem::initContextMenu()
 {
 	ungroupAction = new QAction(tr("Ungroup items"), this);
-	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/small/delete_group")));
+	ungroupAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete_group")));
 	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
-	deleteAction->setIcon(QIcon(QString::fromUtf8(":/small/delete")));
+	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	restoreGroupAction = new QAction(tr("Restore group") , this);
-	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/small/create_group")));
+	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/menu/create_group")));
 	manageLinks = new QAction(tr("Manage interfaces"), this);
-	manageLinks->setIcon(QIcon(QString::fromUtf8(":/small/manage_interfaces")));
+	manageLinks->setIcon(QIcon(QString::fromUtf8(":/menu/manage_interfaces")));
 	
 	contextMenu.addAction(ungroupAction);
 	contextMenu.addAction(restoreGroupAction);
