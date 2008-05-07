@@ -26,6 +26,12 @@
 		<file alias="create_group">small_icons/create_group.png</file>
 		<file alias="manage_interfaces">small_icons/manage_interfaces.png</file>
 	</qresource>
+	<qresource prefix="/medium" >
+		<file alias="lab_home">medium_icons/lab_home.png</file>
+		<file alias="eth">medium_icons/eth.png</file>
+		<file alias="vm">medium_icons/vm.png</file>
+		<file alias="cd">medium_icons/cd.png</file>
+	</qresource>
 	<qresource prefix="/svg" >
 		<file alias="cs_on">svg/collision_domain_on.svg</file>
 		<file alias="cs_off">svg/collision_domain_off.svg</file>

@@ -152,6 +152,9 @@ void LabHandler::addCreatedLabOnTree(Laboratory *l)
 	
 	//unlock scene and actions
 	mainWindow->unlockSceneAndActions();
+	
+	/* Add on scene tree */
+	SceneTreeMapper::getInstance()->createRootElement();
 }
 
 /**
@@ -245,7 +248,6 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	
 	root->addChild(elem);
 	root->addChild(startupConf);
-
 	
 	emit logEvent(tr("Created a new virtual machine: ") + m->getName());
 	
