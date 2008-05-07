@@ -97,7 +97,8 @@ void MainWindow::createConnections()
 	connect(actionOpenLab, SIGNAL(triggered()), labHandler, SLOT(openLab()));
 	
 	//connect: save lab action
-	connect(actionSave, SIGNAL(triggered()), this, SLOT(showSaveFileDialog()));
+	connect(actionSaveAs, SIGNAL(triggered()), this, SLOT(showSaveFileDialog()));
+	connect(actionSave, SIGNAL(triggered()), this, SLOT(saveModifiedLab()));
 	
 	//connect: the save file dialog to the controller handler
 	connect(saveFileDialog, SIGNAL(filesSelected(const QStringList &)),
@@ -110,11 +111,7 @@ void MainWindow::createConnections()
 	//connect: item tree lab double clicked
 	connect(labTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)),
 			labHandler, SLOT(labTreeItemDoubleClicked(QTreeWidgetItem * , int)));
-	
-	//connect: property changed (property table)
-	//connect(propertyTable, SIGNAL(cellChanged(int, int)), 
-	//		labHandler, SLOT(saveChangedProperty(int, int)));
-	
+
 	//connect: a log event
 	connect(labHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
 	connect(vmHandler, SIGNAL(logEvent(QString)), this, SLOT(writeLogMessage(QString)));
@@ -230,6 +227,10 @@ void MainWindow::unlockSceneAndActions()
 	menuGraph->setDisabled(false);
 	graphZoomGroup->setDisabled(false);
 	
+	/* save and save as... */
+	actionSave->setDisabled(false);
+	actionSaveAs->setDisabled(false);
+	
 	//select the default action
 	forceManageGraphAction();
 	
@@ -329,4 +330,20 @@ void MainWindow::clearPropertyDock()
 	propertyTable->clearContents();		//just only this slot!
 	propertyTable->setRowCount(0);		//resize (reset) the view	
 
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Save a modified lab (allready saved as)
+ */
+void MainWindow::saveModifiedLab()
+{
+	if(!LabHandler::getInstance()->getLabState())
+	{
+		showSaveFileDialog();
+	}
+	else
+	{
+		//TODO
+	}
 }

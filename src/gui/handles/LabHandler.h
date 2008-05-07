@@ -49,6 +49,7 @@ public:
 	void setMainWindow(MainWindow *w);
 	UndoStack *getUndoStack() { return undoStack; };
 	MainWindow* getMainWindow() { return mainWindow; };
+	bool getLabState();
 
 public slots:
 	void newLab();

@@ -97,7 +97,19 @@ void LabHandler::saveLab(const QStringList &selectedFiles)
 {
 	qDebug() << "where save the lab:" <<  selectedFiles.first();
 			
-	LabFacadeController::getInstance()->saveLab(selectedFiles.first());
+	if(LabFacadeController::getInstance()->saveLab(selectedFiles.first()))
+	{
+		//ok, lab saved! save state and refresh window header text
+		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
+		currLab->setSavedState(true);
+		currLab->setLabPath(selectedFiles.first() + "/" + currLab->getName());
+		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
+		mainWindow->writeLogMessage(tr("Lab saved as: ") + currLab->getLabPath().absolutePath());
+	}
+	else
+	{
+		//TODO: show to the user a warning with the description problem
+	}
 }
 
 
@@ -302,3 +314,13 @@ void LabHandler::saveChangedProperty(int row, int column)
 	propertyController->saveChangedProperty(mainWindow->propertyTable->item(row, column));
 }
 
+/**
+ * Get the lab save state
+ */
+bool LabHandler::getLabState()
+{
+	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
+		return false;
+	
+	return LabFacadeController::getInstance()->getCurrentLab()->getSaveState();
+}
