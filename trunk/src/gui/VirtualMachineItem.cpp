@@ -179,6 +179,7 @@ void VirtualMachineItem::deleteVmActionCalled()
  */
 void VirtualMachineItem::restoreGroupActionCalled()
 {	
-	addToGroup(vmNameLabel);
+	if(!isJoin)
+		addToGroup(vmNameLabel);
 	isJoin = true;
 }

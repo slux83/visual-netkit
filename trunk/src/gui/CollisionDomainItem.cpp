@@ -157,8 +157,9 @@ void CollisionDomainItem::deleteCdActionCalled()
  * Restore the group
  */
 void CollisionDomainItem::restoreGroupActionCalled()
-{	
-	addToGroup(myLabel);
+{
+	if(!isJoin)
+		addToGroup(myLabel);
 	isJoin = true;
 }
 

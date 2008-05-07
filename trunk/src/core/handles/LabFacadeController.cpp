@@ -18,6 +18,8 @@
 
 #include "LabFacadeController.h"
 #include "../../gui/handles/LabHandler.h"
+#include "../../gui/handles/VmMapper.h"
+#include "../../gui/handles/CdMapper.h"
 
 #include "../../persistence/LabSaver.h"
 #include "../../persistence/XMLSaver.h"
@@ -95,6 +97,10 @@ bool LabFacadeController::saveLab(const QString &savePath)
 	/* Check if current lab exist */
 	if(currentLab != NULL)
 	{
+		/* join all items inside the scene */
+		VmMapper::getInstance()->ensureAllItemsAreJoined();
+		CdMapper::getInstance()->ensureAllItemsAreJoined();
+		
 		// TODO: delegate to different thread
 		// saves lab structure dirs and files
 		LabSaver ls(savePath);

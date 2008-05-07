@@ -51,6 +51,7 @@ public:
 	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
 	QMap<QString, QString> getMachineInterfaces(VirtualMachineItem* vmItem);
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
+	void ensureAllItemsAreJoined();
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);

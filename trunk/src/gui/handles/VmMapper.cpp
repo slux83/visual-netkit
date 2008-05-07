@@ -18,6 +18,7 @@
 
 #include "VmMapper.h"
 #include "LabHandler.h"
+#include <QListIterator>
 
 /**
  * Init the null instance for the singletone controller
@@ -99,3 +100,15 @@ QMap<QString, QString> VmMapper::getMachineInterfaces(VirtualMachineItem* vmItem
 	
 	return interfaces;
 }
+
+/**
+ * Ensure that all graphics items are in a joined state (label is joined inside
+ * the group)
+ */
+void VmMapper::ensureAllItemsAreJoined()
+{
+	QListIterator<VirtualMachineItem*> itemIterator(mappings.keys());
+	while(itemIterator.hasNext())
+		itemIterator.next()->restoreGroupActionCalled();
+}
+
