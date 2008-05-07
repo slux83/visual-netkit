@@ -53,6 +53,8 @@ public:
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
 	QStringList getUsedAddresses(CollisionDomainItem *cdItem);
 	void updateCdCounter(CollisionDomain *cd, bool increase);
+	void ensureAllItemsAreJoined();
+
 };
 
 #endif /*CDMAPPER_H_*/

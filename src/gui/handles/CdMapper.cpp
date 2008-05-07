@@ -119,3 +119,14 @@ void CdMapper::updateCdCounter(CollisionDomain *cd, bool increase)
 {
 	mappings.key(cd)->increaseDecreaseLinkCounter(increase);
 }
+
+/**
+ * Ensure that all graphics items are in a joined state (label is joined inside
+ * the group)
+ */
+void CdMapper::ensureAllItemsAreJoined()
+{
+	QListIterator<CollisionDomainItem*> itemIterator(mappings.keys());
+	while(itemIterator.hasNext())
+		itemIterator.next()->restoreGroupActionCalled();
+}

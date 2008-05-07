@@ -75,7 +75,7 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	
-private slots:
+public slots:
 	void ungroupActionCalled();
 	void deleteVmActionCalled();
 	void restoreGroupActionCalled();
