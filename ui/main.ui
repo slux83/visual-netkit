@@ -413,7 +413,7 @@
   </widget>
   <widget class="QDockWidget" name="dockTreeView" >
    <property name="windowTitle" >
-    <string>Tree View</string>
+    <string>Scene Elements</string>
    </property>
    <attribute name="dockWidgetArea" >
     <number>2</number>
@@ -433,7 +433,22 @@
       <number>3</number>
      </property>
      <item>
-      <widget class="QTreeView" name="sceneTree" />
+      <widget class="QTreeWidget" name="sceneTree" >
+       <property name="iconSize" >
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="columnCount" >
+        <number>1</number>
+       </property>
+       <column>
+        <property name="text" >
+         <string>Tree View</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>

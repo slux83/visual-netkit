@@ -77,7 +77,10 @@ void VmMapper::addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm)
 	LabHandler *labHandler = LabHandler::getInstance();
 	labHandler->getMainWindow()->graphicsView->scene()->addItem(vmItem);
 	labHandler->getMainWindow()->graphicsView->ensureVisible(vmItem);
-		
+	
+	/* add vm inside the scene tree */
+	SceneTreeMapper::getInstance()->addVmElement(vmItem);
+	
 	//emit signal
 	emit newMappingCreated(vm);
 }

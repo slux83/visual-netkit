@@ -22,6 +22,7 @@
 #include "../VirtualMachineItem.h"
 #include "../../core/VirtualMachine.h"
 #include "../AddVmForm.h"
+#include "SceneTreeMapper.h"
 
 #include <QObject>
 #include <QDebug>

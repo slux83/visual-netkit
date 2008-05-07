@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QStringList>
 #include "LabPropertyController.h"
+#include "SceneTreeMapper.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "../../core/Laboratory.h"
 #include "../MainWindow.h"
