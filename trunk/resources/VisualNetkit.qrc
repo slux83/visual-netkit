@@ -16,15 +16,15 @@
 		<file alias="zoom_out_icon">menu_icons/zoom_out.png</file>
 		<file alias="zoom_original_icon">menu_icons/zoom_original.png</file>
 		<file alias="mouse_icon">menu_icons/mouse.png</file>
+		<file alias="manage_interfaces">menu_icons/manage_interfaces.png</file>
+		<file alias="delete">menu_icons/delete.png</file>
+		<file alias="delete_group">menu_icons/delete_group.png</file>
+		<file alias="create_group">menu_icons/create_group.png</file>
 	</qresource>
 	<qresource prefix="/small" >
 		<file alias="folder_root">small_icons/folder_root.png</file>
 		<file alias="folder_vm">small_icons/folder_vm.png</file>
 		<file alias="file_conf">small_icons/file_conf.png</file>
-		<file alias="delete">small_icons/delete.png</file>
-		<file alias="delete_group">small_icons/delete_group.png</file>
-		<file alias="create_group">small_icons/create_group.png</file>
-		<file alias="manage_interfaces">small_icons/manage_interfaces.png</file>
 	</qresource>
 	<qresource prefix="/medium" >
 		<file alias="lab_home">medium_icons/lab_home.png</file>
