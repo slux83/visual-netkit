@@ -108,7 +108,10 @@ void LabHandler::saveLab(const QStringList &selectedFiles)
 	}
 	else
 	{
-		//TODO: show to the user a warning with the description problem
+		/* Show a warning message */
+		QMessageBox::warning(mainWindow, tr("VisualNetkit - Error"),
+				tr("There was a problem saving the laboratory data.\nPlease check your access rights on the directory that you have choosed."),
+				QMessageBox::Ok);
 	}
 }
 

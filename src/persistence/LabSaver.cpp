@@ -48,13 +48,13 @@ bool LabSaver::saveLab()
 	
 	currentLab = LabFacadeController::getInstance()->getCurrentLab();
 	
-	if (!createFolderSystem())
+	if (allok && !createFolderSystem())
 		allok = false;
-	if (!saveLabConf())
+	if (allok && !saveLabConf())
 		allok = false;
-	if(!saveStartups())
+	if(allok && !saveStartups())
 		allok = false;
-	if (!saveRoutersConf())
+	if (allok && !saveRoutersConf())
 		allok = false;
 	
 	/* remove the lab */
@@ -77,7 +77,7 @@ bool LabSaver::saveLabConf()
 	QFile file(curPath + "/" + currentLab->getName() + "/" + LAB_CONF);
 	if (!file.open(QFile::WriteOnly | QFile::Text))
     {
-    	qWarning() << this << "Cannot write file" << LAB_CONF << ":" << file.errorString();
+    	qWarning() << "Cannot write file" << LAB_CONF << ":" << file.errorString();
         return false;
     }
 

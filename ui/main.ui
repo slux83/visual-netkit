@@ -433,7 +433,7 @@
       <number>3</number>
      </property>
      <item>
-      <widget class="QTreeView" name="treeView_2" />
+      <widget class="QTreeView" name="sceneTree" />
      </item>
     </layout>
    </widget>
