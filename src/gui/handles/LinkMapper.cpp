@@ -18,6 +18,7 @@
 
 #include "LinkMapper.h"
 #include "CdMapper.h"
+#include "SceneTreeMapper.h"
 
 /**
  * Init the null instance for the singletone controller
@@ -82,6 +83,9 @@ void LinkMapper::addNewMapping(LinkItem *linkItem, HardwareInterface* hi)
 	
 	//update the collision domain item state
 	CdMapper::getInstance()->updateCdCounter(hi->getMyCollisionDomain(), true);
+	
+	//add the eth/link inside the scene tree
+	SceneTreeMapper::getInstance()->addEthernetElement(linkItem);
 	
 	//update system log
 	labHandler->getMainWindow()->writeLogMessage(
