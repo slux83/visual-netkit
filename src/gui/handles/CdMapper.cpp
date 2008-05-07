@@ -17,6 +17,7 @@
  */
 
 #include "CdMapper.h"
+#include "SceneTreeMapper.h"
 #include <QListIterator>
 
 /**
@@ -74,6 +75,9 @@ void CdMapper::addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd)
 	
 	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain: ") +
 			cd->getName() + " [" + cd->getSubnet()->toString(false) + "]");
+	
+	/* Add element inside the scene tree */
+	SceneTreeMapper::getInstance()->addCdElement(cdItem);
 }
 
 /**
