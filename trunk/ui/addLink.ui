@@ -105,21 +105,31 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>2</number>
+        </property>
         <item>
          <widget class="QLabel" name="label" >
           <property name="text" >
-           <string>Interface name:       </string>
+           <string>Interface name:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="ethNameLineEdit" />
+         <widget class="QSpinBox" name="ethNumberSpinBox" >
+          <property name="prefix" >
+           <string>eth</string>
+          </property>
+          <property name="maximum" >
+           <number>128</number>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QVBoxLayout" >
         <item>
          <widget class="QLabel" name="label_2" >
           <property name="text" >
@@ -134,9 +144,26 @@
          </widget>
         </item>
         <item>
-         <layout class="QVBoxLayout" >
+         <layout class="QHBoxLayout" >
           <item>
-           <widget class="QLineEdit" name="ipLineEdit" />
+           <layout class="QVBoxLayout" >
+            <item>
+             <widget class="QLineEdit" name="ipLineEdit" />
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QLabel" name="label_4" >
@@ -161,7 +188,10 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" >
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>2</number>
+        </property>
         <item>
          <widget class="QLabel" name="label_3" >
           <property name="text" >
@@ -195,6 +225,9 @@
      <layout class="QVBoxLayout" >
       <item>
        <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>2</number>
+        </property>
         <item>
          <widget class="QRadioButton" name="ethUp" >
           <property name="text" >

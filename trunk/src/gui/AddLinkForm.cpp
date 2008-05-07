@@ -142,13 +142,11 @@ void AddLinkForm::handleAccept()
 	/**
 	 * test the interface name
 	 */
-	if(!validateEthName.exactMatch(ethNameLineEdit->text().trimmed()) ||
-			VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNameLineEdit->text().trimmed()))
-		
+	if(VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNumberSpinBox->prefix() + ethNumberSpinBox->value()))
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
-			tr("The interface name must be unique and only eth[0-9]+ are correct names!\nPlease, retry."),
+			tr("The interface name must be unique!\nPlease, retry."),
 			QMessageBox::Ok);
 		
 		return;
@@ -171,7 +169,8 @@ void AddLinkForm::handleAccept()
 	address.setBroadcast(QHostAddress(broadcastLineEdit->text()));
 	
 	//emit signal and close the gui
-	emit readyToAddLink(vmItem, cdItem, ethNameLineEdit->text().trimmed(),
+	emit readyToAddLink(vmItem, cdItem, 
+			QString(ethNumberSpinBox->prefix() + QString::number(ethNumberSpinBox->value())),
 			ethState, address);
 	
 	close();
