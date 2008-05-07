@@ -142,7 +142,7 @@ void AddLinkForm::handleAccept()
 	/**
 	 * test the interface name
 	 */
-	if(VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNumberSpinBox->prefix() + ethNumberSpinBox->value()))
+	if(VmMapper::getInstance()->getMachineInterfaces(vmItem).contains(ethNumberSpinBox->prefix() + QString::number(ethNumberSpinBox->value())))
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
