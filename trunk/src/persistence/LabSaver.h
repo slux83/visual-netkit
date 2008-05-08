@@ -29,6 +29,7 @@ private:
 	Laboratory *currentLab;
 	QString curFile;
 	QString curPath;
+	QString errorString;
 	
 	bool saveLabConf();
 	bool saveRoutersConf();
@@ -43,6 +44,7 @@ public:
 	virtual ~LabSaver();
 	
 	bool saveLab();
+	QString getErrorString() { return errorString; };
 };
 
 #endif /*LABSAVER_H_*/

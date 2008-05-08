@@ -52,7 +52,7 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (allok && !saveLabConf())
 		allok = false;
-	if(allok && !saveStartups())
+	if (allok && !saveStartups())
 		allok = false;
 	if (allok && !saveRoutersConf())
 		allok = false;
@@ -78,7 +78,8 @@ bool LabSaver::saveLabConf()
 	if (!file.open(QFile::WriteOnly | QFile::Text))
     {
     	qWarning() << "Cannot write file" << LAB_CONF << ":" << file.errorString();
-        return false;
+        errorString = "Cannot write file " + LAB_CONF + ": " + file.errorString();
+    	return false;
     }
 
 	QTextStream out(&file);
@@ -109,6 +110,9 @@ bool LabSaver::saveStartups()
 			qWarning()	<< "Cannot write startup file"
 						<< machineIterator.key() + ".startup"
 						<< ":" << startup.errorString();
+			errorString = "Cannot write startup file " +
+							machineIterator.key() + ".startup: " +
+							startup.errorString();
 			return false;
 		}
 		
@@ -279,14 +283,17 @@ bool LabSaver::createFolderSystem()
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 		
 		/* iterates on machines */
-		while(machineIterator.hasNext())
+		while(machineIterator.hasNext() && allok)
 		{
 			machineIterator.next();
-			rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+			allok = rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+			if (!allok)
+				errorString = "Cannot create dir '" + curPath + "/" + currentLab->getName() + "/" + machineIterator.key() + "'.";
 		}
 	} 
 	else 
 	{
+		errorString = "Current lab is NULL!";
 		return false;
 	}
 	
