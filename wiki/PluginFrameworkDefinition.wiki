@@ -1,0 +1,16 @@
+#summary Cosa un plugin puo' richiedere/offrire
+#labels Featured,Phase-Requirements,Phase-Design
+
+= Plugin framework definition =
+
+== Introduzione ==
+
+Va detto prima di ogni cosa che il tool nella sua versione base, ossia senza la presenza di qualsiasi plug-in, puo' dare all'utente la possibilita' di creare e definire la struttura topologica di una rete di computers (vista a livello 2).
+
+Tale rete e' quindi composta da 3 elementi base: Virtual Machines, Collision Domain e links tra questi (dave i links rappresentano interfacce ethernet di una virtual machine). 
+
+Le infarmazioni celate dietro a questi 3 componenti, sono solamente le loro etichette che sono viste come identificatori (nomi) univoci nel loro genere.
+
+== Funzionalita' offerte ai plugins ==
+
+E' importante definire la linea di demarcazione tra cosa puo' e cosa non puo' richiedere un plugin al sistema.
