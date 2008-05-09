@@ -14,3 +14,5 @@ Le infarmazioni celate dietro a questi 3 componenti, sono solamente le loro etic
 == Funzionalita' offerte ai plugins ==
 
 E' importante definire la linea di demarcazione tra cosa puo' e cosa non puo' richiedere un plugin al sistema.
+
+Un plugin e' sostanzialmente una caratterizzazione di qualche tipo applicata a uno o piu' dei tre componenti fondamentali citati prima. Quindi in base al tipo di "plugin applicato" ad un elemento, tale plugin sara' responsabile ad offrire ulteriori caratteristiche all'elemento a cui e' applicato, rendendolo via via sempre meno generico (ossia salendo la pila ISO-OSI).
