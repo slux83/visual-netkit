@@ -46,3 +46,5 @@ Questo ci porta a fare alcune considerazioni:
  # L'elemento grafico deve prevedere la possibilita' di mostrare una label per ogni plugin (se necessario);
  # L'elemento grafico deve dare la possibilita' all'utente di selezionare i plugins che vuole siano "attivi" per quel determinato elemento
  # Ogni volta selezionato l'elemento grafica (tramite il tree scene view) nella property dock devono apparire sia gli attributi base che tutti gli attributi dettati dai vari plugins attivi su quel componente, opportunamente distinti.
+
+Per concludere il sistema deve poter colloquiare con tutte le instanze proxy dei vari plugins attivi nonche' prevedere un meccanismo di riconoscimento delle dipendenze tra plugins applicati ad un stesso elemento base. Tale informazione di "dipendenza" risiede all'interno del plugin.
