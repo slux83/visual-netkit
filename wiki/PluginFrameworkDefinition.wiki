@@ -33,3 +33,9 @@ Il plugin deve quindi offrire:
  * Il plugin puo' avere un meccanismo di "monitoring" sui file di configurazione di cui lui e' responsabile; tale sistema di monitoraggio puo' provvedere ad aggiornare le informazioni dell'elemento/i in real-time. (Si pensi all'intervento dell'utente che modifica le informazioni di un file di configurazione al di fuori dell'IDE).
 
 === Cosa il sistema offre ai plugins ===
+
+Ogni volta che si sceglie di ampliare le caratteristiche di un elemento base (VirtualMachine, CollisionDomain, HardwareInterface) tramite l'applicazione di un determinato plugin ad esso, il sistema provvede a passare il riferimento dell'oggetto base al plugin stesso.
+
+Per come e' strutturato a basso livello il sistema, partendo da un qualsiasi elemento e' possibile raggiungere tutti gli altri nodi qualora la rete creata (ossia il lab) rappresenti un grafo connesso. In questo modo un plugin puo' sostanzialmente ha un grado di liberta' molto elevato potendo agire su piu' oggetti oltre che quello a cui e' stato assegnato. Tuttavia questa e' una possibilita' che offre il sistema, ma non e' detto che sia sempre necessaria.
+
+Come ipotizzato ogni plugin conosce uno (o piu' indirettamente) degli oggetti base situati nello strato business del sistema. Il sistema tuttavia deve fornire la possibilita' al plugin di interagire con gli oggetti "grafici" che rappresentano graficamente all'utente lo stato degli oggetti di business (ossia gli elementi di base)
