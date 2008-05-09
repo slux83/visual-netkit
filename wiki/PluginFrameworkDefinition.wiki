@@ -11,8 +11,12 @@ Tale rete e' quindi composta da 3 elementi base: Virtual Machines, Collision Dom
 
 Le infarmazioni celate dietro a questi 3 componenti, sono solamente le loro etichette che sono viste come identificatori (nomi) univoci nel loro genere.
 
-== Funzionalita' offerte ai plugins ==
+== Definizione di un plug-in ==
 
 E' importante definire la linea di demarcazione tra cosa puo' e cosa non puo' richiedere un plugin al sistema.
 
-Un plugin e' sostanzialmente una caratterizzazione di qualche tipo applicata a uno o piu' dei tre componenti fondamentali citati prima. Quindi in base al tipo di "plugin applicato" ad un elemento, tale plugin sara' responsabile ad offrire ulteriori caratteristiche all'elemento a cui e' applicato, rendendolo via via sempre meno generico (ossia salendo la pila ISO-OSI).
+Un plugin e' sostanzialmente una caratterizzazione di qualche tipo, applicata a uno o piu' dei tre componenti fondamentali citati prima. Quindi in base al tipo di "plugin applicato" ad un elemento, tale plugin sara' responsabile ad offrire ulteriori caratteristiche all'elemento a cui e' applicato, rendendolo via via sempre meno generico (ossia salendo la pila ISO-OSI). Su un elemento possono essere attivi piu' plugins, dove ognuno di questi plasma una parte di comportamento ma stando attenti a non creare conflitti tra i vari plugins attivi sul medesimo componente.
+
+La natura di un plugin, ossia qual'e' il suo compito e su quali elementi e' applicato, viene definita in vari modi:
+ * una volta scelto un componente, l'utente decide se a questo va associato un certo plugin; questo implica che il plugin opera sull'oggetto richiedente
+ * un plugin puo' essere un plugin di gruppo, ossia puo' operare su piu' componenti e addirittura sulla totalita' del laboratorio. Questo processo e' deciso dal plugin stesso, che dopo essere stato creato per operare su un determinato componente, puo' egli stesso chiedere al sistema di essere "collegato" ad altri componenti. (si pensi alla macchina virtuale e alle interfacce di rete collegate ad essa)
