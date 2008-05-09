@@ -20,3 +20,12 @@ Un plugin e' sostanzialmente una caratterizzazione di qualche tipo, applicata a 
 La natura di un plugin, ossia qual'e' il suo compito e su quali elementi e' applicato, viene definita in vari modi:
  * una volta scelto un componente, l'utente decide se a questo va associato un certo plugin; questo implica che il plugin opera sull'oggetto richiedente
  * un plugin puo' essere un plugin di gruppo, ossia puo' operare su piu' componenti e addirittura sulla totalita' del laboratorio. Questo processo e' deciso dal plugin stesso, che dopo essere stato creato per operare su un determinato componente, puo' egli stesso chiedere al sistema di essere "collegato" ad altri componenti. (si pensi alla macchina virtuale e alle interfacce di rete collegate ad essa)
+
+=== Un plugin deve offrire... ===
+
+Ogni plugin deve offrire alcune caratteristiche al sistema che provvedera' ad applicare tali azioni verso gli elementi di cui il plugin e' responsabile, caratterizzandone il comportamento.
+Il plugin deve quindi offrire:
+
+ * una lista (coppie key-value) di proprieta' di cui l'elemento dovra' disporre;
+ * una descrizione (meta-descrizione) di queste proprieta' per far si che il sistema riesca a ricavarne una interfaccia grafica per la manipolazione; ad esempio esporre i valiri di default, ecc... Il controllo su tali valori e' per giunta delegato al plugin stesso, e la "connessione" tra l'interfaccia grafica e il plugin-handler e' delegato al sistema di gestione dei plugins.
+ * Il plugin deve offrire eventuali templates testuali (files di configurazione o parti di essi) nonche' il path di collocazione all'interno del laboratorio; Se il laboratorio possiede gia' quel determinato file di configurazione, il sistema stesso dovra' provvedere ad effettuare un marge (nella maggior parte dei casi un append) tra il file esistente e le informazioni offerte dal plugin.
