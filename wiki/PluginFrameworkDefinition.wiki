@@ -48,3 +48,15 @@ Questo ci porta a fare alcune considerazioni:
  # Ogni volta selezionato l'elemento grafica (tramite il tree scene view) nella property dock devono apparire sia gli attributi base che tutti gli attributi dettati dai vari plugins attivi su quel componente, opportunamente distinti.
 
 Per concludere il sistema deve poter colloquiare con tutte le instanze proxy dei vari plugins attivi nonche' prevedere un meccanismo di riconoscimento delle dipendenze tra plugins applicati ad un stesso elemento base. Tale informazione di "dipendenza" risiede all'interno del plugin.
+
+=== Come funziona l'architettura ===
+
+# L'oggetto X di tipo PluginProxy viene dichiarato e viene invocato il costruttore
+# Il costruttore registra un nuovo mapping presso il plugin manager/controller per il plugin del tipo BasicMappingFactory<Plugin, X> e le relative informazioni (nome, eventuali dipendenze...).
+# L'utente specifica se il plugin X debba essere incluso (o verrà comunque sempre incluso dall'applicazione e poi usato o meno) in un file di configurazione o a runtime in una adeguata struttura dati.
+# Per risolvere le dipendenze, il manager/controller viene invocato e ritorna una lista di PluginProxy dps delle dipendenze. Il metodo creator del PluginProxy Y (ove Y è un elemento tra le dipendenze) viene invocato per creare l'oggetto. Si ripetono gli stessi passi per ogni plugin Y in dps.
+
+
+
+
+
