@@ -1,0 +1,12 @@
+
+### Requirements ###
+- You have to install Qt >= 4.3.4
+
+### Compiling the program ###
+- enter inside the plugins/ directory
+- type `qmake` command and `make` to compile the plugin
+- type `cd ..` to step over
+- type `qmake` command and `make` to compile the program
+- run it with `./plugin_framework` and relax :D
+
+Slux <slux83@gmail.com>
