@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2008-05-13T19:07:13" xmi.version="1.2" >
+<XMI xmlns:UML="http://schema.omg.org/spec/UML/1.3" verified="false" timestamp="2008-05-14T12:16:51" xmi.version="1.2" >
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://uml.sf.net</XMI.exporter>
@@ -162,6 +162,7 @@
         <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="CgvgJmWOU2QC" isRoot="false" isAbstract="false" name="PluginInterface*" />
         <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="dSzSaS2OJADR" isRoot="false" isAbstract="false" name="CreatePlugin_t*" elementReference="U9UVHAhQYKWw" />
         <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="pu57vKGFmFBN" isRoot="false" isAbstract="false" name="PluginVirtualProxy*" />
+        <UML:DataType stereotype="datatype" isSpecification="false" isLeaf="false" visibility="public" namespace="Datatypes" xmi.id="CVKvzTYBthBC" isRoot="false" isAbstract="false" name="QSetting" />
        </UML:Namespace.ownedElement>
       </UML:Package>
       <UML:Package isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="WrJfQUNjpIqW" isRoot="false" isAbstract="false" name="gui" >
@@ -2270,53 +2271,47 @@ This object is an expert of XML dump and read" isSpecification="false" isLeaf="f
       <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="gqHcKb2cD5xz" isRoot="false" isAbstract="false" name="QMap" />
       <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="rXj4cg1vCYvd" isRoot="false" isAbstract="false" name="VMProxy" />
       <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="JVqzN1ePC2wy" isRoot="false" isAbstract="false" name="QString" />
-      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="KHnyx0oVyYgX" isRoot="false" isAbstract="false" name="PluginVirtualProxy" >
+      <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="KHnyx0oVyYgX" isRoot="false" isAbstract="false" name="PluginHandlerProxy" >
        <UML:GeneralizableElement.generalization>
         <UML:Generalization xmi.idref="d8mhGquaTfN5" />
        </UML:GeneralizableElement.generalization>
+       <UML:Classifier.feature>
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="SMlXPAW5GGWd" isRoot="false" isAbstract="false" isQuery="false" name="getVmMapper" >
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="pEwjmfJ4LncK" type="nYrCA75W36dI" />
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="VSnqDP9F9PR3" isRoot="false" isAbstract="false" isQuery="false" name="changeGraphicsLabel" >
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter isSpecification="false" visibility="private" xmi.id="peQdbFofd2yF" value="" type="JVqzN1ePC2wy" name="label" />
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="fomOf1qKlWBf" isRoot="false" isAbstract="false" isQuery="false" name="saveProperty" >
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter isSpecification="false" visibility="private" xmi.id="BQ82LNOHM6wU" value="" type="EhmS2wuyYrJ6" name="property" />
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+       </UML:Classifier.feature>
       </UML:Class>
       <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="bOX2KHBlhoka" isRoot="false" isAbstract="false" name="DomainItem" />
       <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="1PxanTc7klqR" client="YM6dcSv3f1l9" name="" supplier="gYaTuS5MyxUH" />
       <UML:Interface stereotype="interface" isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="oNjDXHEfPzmH" isRoot="false" isAbstract="true" name="PluginInterface" >
        <UML:Classifier.feature>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="fgHBB4DoR9Jy" isRoot="false" isAbstract="true" isQuery="false" name="genName" >
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="NnMurha3L45R" isRoot="false" isAbstract="true" isQuery="false" name="getConfigFile" >
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter kind="return" xmi.id="O08AIopXzyZC" type="JVqzN1ePC2wy" />
+          <UML:Parameter kind="return" xmi.id="" type="JVqzN1ePC2wy" />
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="cluyxtcjFLwk" isRoot="false" isAbstract="true" isQuery="false" name="getDescription" >
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="np1DdYOGKAfz" isRoot="false" isAbstract="true" isQuery="false" name="getPluginSettings" >
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter kind="return" xmi.id="n0K6ywrrsmiU" type="JVqzN1ePC2wy" />
+          <UML:Parameter kind="return" xmi.id="2XSMdOoPBncn" type="CVKvzTYBthBC" />
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="EdU18T0fenfy" isRoot="false" isAbstract="true" isQuery="false" name="getVersion" >
+        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="J03d9gdJCxC9" isRoot="false" isAbstract="true" isQuery="false" name="getConfigPath" >
          <UML:BehavioralFeature.parameter>
-          <UML:Parameter kind="return" xmi.id="Y57Aqk6fMyLn" type="JVqzN1ePC2wy" />
+          <UML:Parameter kind="return" xmi.id="OiKGNTSQ1uke" type="JVqzN1ePC2wy" />
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="rcsgTkSBDw7z" isRoot="false" isAbstract="true" isQuery="false" name="getDeps" />
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="NnMurha3L45R" isRoot="false" isAbstract="true" isQuery="false" name="getConfigFile" />
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="glztg6q1tCvi" isRoot="false" isAbstract="true" isQuery="false" name="setCurrentLab" >
-         <UML:BehavioralFeature.parameter>
-          <UML:Parameter isSpecification="false" visibility="private" xmi.id="uUlDYqc4tjEh" value="" type="u7jMSuvx4uRr" name="lab" />
-         </UML:BehavioralFeature.parameter>
-        </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="fh2WrvEjPxuy" isRoot="false" isAbstract="true" isQuery="false" name="setVmMapper" >
-         <UML:BehavioralFeature.parameter>
-          <UML:Parameter isSpecification="false" visibility="private" xmi.id="mX2fEHLgZfVq" value="" type="nYrCA75W36dI" name="vmMapper" />
-         </UML:BehavioralFeature.parameter>
-        </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="J7nggbhLGjp8" isRoot="false" isAbstract="true" isQuery="false" name="setCdMapper" >
-         <UML:BehavioralFeature.parameter>
-          <UML:Parameter isSpecification="false" visibility="private" xmi.id="e3p4yi0kF2OR" value="" type="JxsYRIZ1Rqa1" name="cdMapper" />
-         </UML:BehavioralFeature.parameter>
-        </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="Hj8rMdffkQJQ" isRoot="false" isAbstract="true" isQuery="false" name="setLinkMapper" >
-         <UML:BehavioralFeature.parameter>
-          <UML:Parameter isSpecification="false" visibility="private" xmi.id="10jIhYOMZBOX" value="" type="I2NrP4YOK04z" name="linkMapper" />
-         </UML:BehavioralFeature.parameter>
-        </UML:Operation>
-        <UML:Operation isSpecification="false" isLeaf="false" visibility="public" xmi.id="tOI6OgYgNgVj" isRoot="false" isAbstract="true" isQuery="false" name="getApplicability" />
        </UML:Classifier.feature>
       </UML:Interface>
       <UML:Class stereotype="interface" isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="6pMeDgBP4gGQ" isRoot="false" isAbstract="false" name="SimplePlugin" >
@@ -2367,8 +2362,8 @@ This object is an expert of XML dump and read" isSpecification="false" isLeaf="f
       <UML:Abstraction isSpecification="false" visibility="public" namespace="Logical View" xmi.id="K3zzLTWC5x1P" client="6pMeDgBP4gGQ" name="" supplier="oNjDXHEfPzmH" />
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="dMcipUI9zt8F" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="6LiDHXZq2h48" aggregation="none" type="KHnyx0oVyYgX" name="" multiplicity="1" />
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="6CLdnneQ8E6v" aggregation="none" type="oNjDXHEfPzmH" name="proxy for" multiplicity="1" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="BYm6qcJ4X0AO" aggregation="none" type="KHnyx0oVyYgX" name="" multiplicity="1" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="UxJhl4pZXcyF" aggregation="none" type="oNjDXHEfPzmH" name="proxy for" multiplicity="1" />
        </UML:Association.connection>
       </UML:Association>
       <UML:Class isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="5dFDsKYaXp64" isRoot="false" isAbstract="false" name="QLibrary" />
@@ -2387,12 +2382,14 @@ This object is an expert of XML dump and read" isSpecification="false" isLeaf="f
       </UML:Class>
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="hndbbN9ODVJe" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="m8qOuJJ6dOmH" aggregation="none" type="EM7ifb5MJOWP" name="" />
-        <UML:AssociationEnd isSpecification="false" visibility="private" changeability="changeable" isNavigable="true" xmi.id="xrdEE9ctwFUV" aggregation="none" type="KHnyx0oVyYgX" name="QMap&lt;VirtualMachine*, PluginVirtualProxy*>" multiplicity="0...*" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="NwuuZr9UBKdc" aggregation="none" type="EM7ifb5MJOWP" name="" />
+        <UML:AssociationEnd isSpecification="false" visibility="private" changeability="changeable" isNavigable="true" xmi.id="PPC5vqX3m3ih" aggregation="none" type="KHnyx0oVyYgX" name="QMap&lt;VirtualMachine*, PluginVirtualProxy*>" multiplicity="0...*" />
        </UML:Association.connection>
       </UML:Association>
       <UML:Package isSpecification="false" isLeaf="false" visibility="public" namespace="Logical View" xmi.id="FHripKnFawpH" isRoot="false" isAbstract="false" name="System" >
        <UML:Namespace.ownedElement>
+        <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="h98jbozALIBf" client="FHripKnFawpH" name="" supplier="EM7ifb5MJOWP" />
+        <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="Udu90I9IjG5q" client="FHripKnFawpH" name="" supplier="EM7ifb5MJOWP" />
         <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="h98jbozALIBf" client="FHripKnFawpH" name="" supplier="EM7ifb5MJOWP" />
         <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="Udu90I9IjG5q" client="FHripKnFawpH" name="" supplier="EM7ifb5MJOWP" />
        </UML:Namespace.ownedElement>
@@ -2419,22 +2416,22 @@ This object is an expert of XML dump and read" isSpecification="false" isLeaf="f
       <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="6rlJjhWQwxFI" client="TjfozMgCgxJS" name="" supplier="KHnyx0oVyYgX" />
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="N08IxOaqhgbL" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="ZqXRJHdLcsQl" aggregation="none" type="EM7ifb5MJOWP" name="" />
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="1Ny26UiRUrjP" aggregation="none" type="TjfozMgCgxJS" name="" multiplicity="*" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="N9eRUqOcbQWN" aggregation="none" type="EM7ifb5MJOWP" name="" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="96rane5e81b7" aggregation="none" type="TjfozMgCgxJS" name="" multiplicity="*" />
        </UML:Association.connection>
       </UML:Association>
       <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="Udu90I9IjG5q" client="FHripKnFawpH" name="" supplier="EM7ifb5MJOWP" />
       <UML:Dependency isSpecification="false" visibility="public" namespace="Logical View" xmi.id="ecovOMrOozN2" client="EM7ifb5MJOWP" name="" supplier="KHnyx0oVyYgX" />
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="UTXXsr1P7xfx" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="hQum5MkB3qnN" aggregation="none" type="EM7ifb5MJOWP" name="" />
-        <UML:AssociationEnd isSpecification="false" visibility="private" changeability="changeable" isNavigable="true" xmi.id="3N8PlxlEOHlH" aggregation="none" type="KHnyx0oVyYgX" name="" multiplicity="*" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="I9X2oXTBg6b8" aggregation="none" type="EM7ifb5MJOWP" name="" />
+        <UML:AssociationEnd isSpecification="false" visibility="private" changeability="changeable" isNavigable="true" xmi.id="wzlWOFrVLi56" aggregation="none" type="KHnyx0oVyYgX" name="" multiplicity="*" />
        </UML:Association.connection>
       </UML:Association>
       <UML:Association isSpecification="false" visibility="public" namespace="Logical View" xmi.id="PBQYV7YcsxQo" name="" >
        <UML:Association.connection>
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="N3V9kZ3qMsgQ" aggregation="none" type="oNjDXHEfPzmH" name="" />
-        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="7kBcxgkKr8qN" aggregation="none" type="KHnyx0oVyYgX" name="controlled by" multiplicity="1" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="false" xmi.id="M8jS9IaRR7RF" aggregation="none" type="oNjDXHEfPzmH" name="" />
+        <UML:AssociationEnd isSpecification="false" visibility="public" changeability="changeable" isNavigable="true" xmi.id="cvPG10Pxx8TL" aggregation="none" type="KHnyx0oVyYgX" name="controlled by" multiplicity="1" />
        </UML:Association.connection>
       </UML:Association>
      </UML:Namespace.ownedElement>
@@ -2478,7 +2475,7 @@ This object is an expert of XML dump and read" isSpecification="false" isLeaf="f
        </diagram>
        <diagram snapgrid="1" showattsig="1" fillcolor="#ffffc0" linewidth="0" zoom="75" showgrid="0" showopsig="1" usefillcolor="1" snapx="10" canvaswidth="1678" snapy="10" showatts="1" xmi.id="n1fPyWXSSwMC" documentation="" type="1" showops="1" showpackage="0" name="pluginFramework" localid="" showstereotype="0" showscope="1" snapcsgrid="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" canvasheight="1289" >
         <widgets>
-         <interfacewidget usesdiagramfillcolor="0" width="292" x="50" fillcolor="#ffffc0" y="90" drawascircle="0" showopsigs="601" linewidth="none" height="225" usefillcolor="1" showpubliconly="0" isinstance="0" xmi.id="oNjDXHEfPzmH" showoperations="1" showpackage="0" showscope="1" showstereotype="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,1,0,0,0,0" linecolor="#ff0000" />
+         <interfacewidget usesdiagramfillcolor="0" width="216" x="90" fillcolor="#ffffc0" y="150" drawascircle="0" showopsigs="601" linewidth="none" height="99" usefillcolor="1" showpubliconly="0" isinstance="0" xmi.id="oNjDXHEfPzmH" showoperations="1" showpackage="0" showscope="1" showstereotype="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,75,1,0,0,0,0" linecolor="#ff0000" />
          <classwidget usesdiagramfillcolor="0" width="82" showattsigs="601" x="330" fillcolor="#ffffc0" y="1110" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="hOWpuJXAa5Jz" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" />
          <classwidget usesdiagramfillcolor="0" width="78" showattsigs="601" x="440" fillcolor="#ffffc0" y="1110" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="cXA373pCrpln" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" />
          <classwidget usesdiagramfillcolor="0" width="88" showattsigs="601" x="210" fillcolor="#ffffc0" y="1110" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="7tdPzBjeaDUS" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" />
@@ -2488,13 +2485,14 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
          <boxwidget usesdiagramfillcolor="1" width="896" x="120" fillcolor="none" y="910" linewidth="none" height="375" usefillcolor="1" isinstance="0" xmi.id="cxHh8G4pwsaN" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#000000" />
          <boxwidget usesdiagramfillcolor="1" width="1674" x="0" fillcolor="none" y="0" linewidth="none" height="845" usefillcolor="1" isinstance="0" xmi.id="cxHh8G4pwsaN" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#000000" />
          <floatingtext usesdiagramfillcolor="1" width="329" x="660" fillcolor="none" y="920" linewidth="none" posttext="" role="700" height="30" usefillcolor="1" pretext="" isinstance="0" xmi.id="NqPHnYt3pg3M" text="Plugin Layer (external library)" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,16,-1,5,50,0,0,0,0,0" linecolor="none" />
-         <classwidget usesdiagramfillcolor="0" width="147" showattsigs="601" x="490" fillcolor="#ffffc0" y="180" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="KHnyx0oVyYgX" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="#ff0000" />
-         <classwidget usesdiagramfillcolor="1" width="556" showattsigs="601" x="940" fillcolor="none" y="470" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="EM7ifb5MJOWP" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+         <classwidget usesdiagramfillcolor="0" width="310" showattsigs="601" x="400" fillcolor="#ffffc0" y="160" showopsigs="601" linewidth="none" height="81" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="KHnyx0oVyYgX" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="#ff0000" />
+         <classwidget usesdiagramfillcolor="1" width="556" showattsigs="601" x="940" fillcolor="none" y="470" showopsigs="601" linewidth="none" height="63" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="EM7ifb5MJOWP" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          <packagewidget usesdiagramfillcolor="1" width="169" x="1140" fillcolor="none" y="650" linewidth="none" height="111" usefillcolor="1" isinstance="0" xmi.id="FHripKnFawpH" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="none" />
-         <classwidget usesdiagramfillcolor="0" width="403" showattsigs="601" x="430" fillcolor="#ffffc0" y="470" showopsigs="601" linewidth="none" height="54" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="TjfozMgCgxJS" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="#ff0000" />
-         <classwidget usesdiagramfillcolor="1" width="74" showattsigs="601" x="660" fillcolor="none" y="310" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="5dFDsKYaXp64" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,75,0,0,0,0,0" linecolor="none" />
+         <classwidget usesdiagramfillcolor="0" width="403" showattsigs="601" x="430" fillcolor="#ffffc0" y="470" showopsigs="601" linewidth="none" height="54" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="TjfozMgCgxJS" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="0" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="#ff0000" />
+         <classwidget usesdiagramfillcolor="1" width="74" showattsigs="601" x="660" fillcolor="none" y="310" showopsigs="601" linewidth="none" height="36" usefillcolor="1" showpubliconly="0" showattributes="1" isinstance="0" xmi.id="5dFDsKYaXp64" showoperations="1" showpackage="0" showscope="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          <floatingtext usesdiagramfillcolor="1" width="431" x="1230" fillcolor="none" y="20" linewidth="none" posttext="" role="700" height="33" usefillcolor="1" pretext="" isinstance="0" xmi.id="pOx8rtInVY1F" text="Application (plugin framework) Layer" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,17,-1,5,50,0,0,0,0,0" linecolor="none" />
          <notewidget usesdiagramfillcolor="1" width="143" x="560" fillcolor="none" y="660" linewidth="none" height="58" usefillcolor="1" isinstance="0" xmi.id="1GMSAdcBviJk" text="Lazy approach on plugin load" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+         <notewidget usesdiagramfillcolor="1" width="411" x="180" fillcolor="none" y="1190" linewidth="none" height="75" usefillcolor="1" isinstance="0" xmi.id="2orFYltHUfjf" text="Metadatas like plugin name, description, dependencies, plugin version, properties etc... are stored inside the plugin.conf file inside the plugin as extern &quot;C&quot; function" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
         </widgets>
         <messages/>
         <associations>
@@ -2519,7 +2517,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="oNjDXHEfPzmH" widgetaid="6pMeDgBP4gGQ" xmi.id="K3zzLTWC5x1P" type="511" linecolor="none" >
           <linepath>
            <startpoint startx="370" starty="930" />
-           <endpoint endx="200" endy="315" />
+           <endpoint endx="200" endy="249" />
            <point x="200" y="890" />
           </linepath>
          </assocwidget>
@@ -2532,12 +2530,12 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
          </assocwidget>
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="oNjDXHEfPzmH" widgetaid="KHnyx0oVyYgX" xmi.id="dMcipUI9zt8F" type="512" linecolor="none" >
           <linepath>
-           <startpoint startx="490" starty="200" />
-           <endpoint endx="342" endy="200" />
+           <startpoint startx="400" starty="200" />
+           <endpoint endx="306" endy="200" />
           </linepath>
-          <floatingtext usesdiagramfillcolor="1" width="16" x="461" fillcolor="none" y="171" linewidth="none" posttext="" role="701" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="DmCQASuOdw6T" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
-          <floatingtext usesdiagramfillcolor="1" width="16" x="369" fillcolor="none" y="169" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="Wg16m7dxrnN1" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
-          <floatingtext usesdiagramfillcolor="1" width="75" x="350" fillcolor="none" y="210" linewidth="none" posttext="" role="710" height="22" usefillcolor="1" pretext="+" isinstance="0" xmi.id="C8JHFvomapqM" text="proxy for" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="16" x="370" fillcolor="none" y="170" linewidth="none" posttext="" role="701" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="oMaES2T2xqJw" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="16" x="334" fillcolor="none" y="170" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="qgtooL79eyod" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="75" x="314" fillcolor="none" y="210" linewidth="none" posttext="" role="710" height="22" usefillcolor="1" pretext="+" isinstance="0" xmi.id="NJqh1tnM1WoB" text="proxy for" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          </assocwidget>
          <assocwidget totalcounta="3" indexa="2" totalcountb="2" indexb="1" linewidth="none" widgetbid="5dFDsKYaXp64" widgetaid="TjfozMgCgxJS" xmi.id="pvF2nBT7d3Nw" type="500" linecolor="none" >
           <linepath>
@@ -2548,7 +2546,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
          <assocwidget totalcounta="3" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="KHnyx0oVyYgX" widgetaid="TjfozMgCgxJS" xmi.id="6rlJjhWQwxFI" type="502" linecolor="none" >
           <linepath>
            <startpoint startx="560" starty="470" />
-           <endpoint endx="560" endy="216" />
+           <endpoint endx="560" endy="241" />
           </linepath>
          </assocwidget>
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="TjfozMgCgxJS" widgetaid="EM7ifb5MJOWP" xmi.id="N08IxOaqhgbL" type="512" linecolor="none" >
@@ -2556,7 +2554,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
            <startpoint startx="940" starty="500" />
            <endpoint endx="833" endy="500" />
           </linepath>
-          <floatingtext usesdiagramfillcolor="1" width="15" x="833" fillcolor="none" y="479" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="3YGdOfMQ2KQ6" text="*" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="15" x="830" fillcolor="none" y="480" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="razr6m2t6c5Y" text="*" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          </assocwidget>
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="EM7ifb5MJOWP" widgetaid="FHripKnFawpH" xmi.id="Udu90I9IjG5q" type="502" linecolor="none" >
           <linepath>
@@ -2573,20 +2571,20 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="KHnyx0oVyYgX" widgetaid="EM7ifb5MJOWP" xmi.id="UTXXsr1P7xfx" type="512" linecolor="none" >
           <linepath>
            <startpoint startx="1220" starty="470" />
-           <endpoint endx="637" endy="200" />
+           <endpoint endx="710" endy="200" />
            <point x="1220" y="200" />
           </linepath>
-          <floatingtext usesdiagramfillcolor="1" width="15" x="640" fillcolor="none" y="180" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="PpwQdjnh4u6p" text="*" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="15" x="713" fillcolor="none" y="180" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="cWbZNsVBYNxK" text="*" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          </assocwidget>
          <assocwidget totalcounta="2" indexa="1" totalcountb="2" indexb="1" linewidth="none" widgetbid="KHnyx0oVyYgX" widgetaid="oNjDXHEfPzmH" xmi.id="PBQYV7YcsxQo" type="512" linecolor="none" >
           <linepath>
-           <startpoint startx="200" starty="90" />
-           <endpoint endx="560" endy="180" />
+           <startpoint startx="200" starty="150" />
+           <endpoint endx="560" endy="160" />
            <point x="200" y="50" />
            <point x="560" y="50" />
           </linepath>
-          <floatingtext usesdiagramfillcolor="1" width="16" x="560" fillcolor="none" y="140" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="3SuSpjalZW4H" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
-          <floatingtext usesdiagramfillcolor="1" width="101" x="570" fillcolor="none" y="80" linewidth="none" posttext="" role="710" height="22" usefillcolor="1" pretext="+" isinstance="0" xmi.id="wsyIkcipMrPH" text="controlled by" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="16" x="560" fillcolor="none" y="120" linewidth="none" posttext="" role="702" height="22" usefillcolor="1" pretext="" isinstance="0" xmi.id="fhllIqIuLtUi" text="1" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
+          <floatingtext usesdiagramfillcolor="1" width="101" x="570" fillcolor="none" y="60" linewidth="none" posttext="" role="710" height="22" usefillcolor="1" pretext="+" isinstance="0" xmi.id="g5RI1Gvqqthu" text="controlled by" usesdiagramusefillcolor="1" font="Bitstream Vera Sans,10,-1,5,50,0,0,0,0,0" linecolor="none" />
          </assocwidget>
         </associations>
        </diagram>
@@ -2657,7 +2655,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello" >
-  <docsettings viewid="n1fPyWXSSwMC" documentation="" uniqueid="3SuSpjalZW4H" />
+  <docsettings viewid="n1fPyWXSSwMC" documentation="" uniqueid="OiKGNTSQ1uke" />
   <listview>
    <listitem open="1" type="800" label="Viste" >
     <listitem open="1" type="801" id="Logical View" >
@@ -2671,7 +2669,11 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
       <listitem open="0" type="814" id="erJGseADoU5R" />
       <listitem open="0" type="815" id="nEapyVr560tc" />
      </listitem>
-     <listitem open="1" type="813" id="KHnyx0oVyYgX" />
+     <listitem open="1" type="813" id="KHnyx0oVyYgX" >
+      <listitem open="0" type="815" id="SMlXPAW5GGWd" />
+      <listitem open="0" type="815" id="VSnqDP9F9PR3" />
+      <listitem open="0" type="815" id="fomOf1qKlWBf" />
+     </listitem>
      <listitem open="1" type="813" id="5dFDsKYaXp64" />
      <listitem open="1" type="813" id="gqHcKb2cD5xz" />
      <listitem open="1" type="813" id="Gm2GL1oSErvJ" />
@@ -2688,16 +2690,9 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
      <listitem open="1" type="813" id="rXj4cg1vCYvd" />
      <listitem open="1" type="813" id="hOWpuJXAa5Jz" />
      <listitem open="1" type="817" id="oNjDXHEfPzmH" >
-      <listitem open="0" type="815" id="fgHBB4DoR9Jy" />
-      <listitem open="0" type="815" id="cluyxtcjFLwk" />
-      <listitem open="0" type="815" id="EdU18T0fenfy" />
-      <listitem open="0" type="815" id="rcsgTkSBDw7z" />
       <listitem open="0" type="815" id="NnMurha3L45R" />
-      <listitem open="0" type="815" id="glztg6q1tCvi" />
-      <listitem open="0" type="815" id="fh2WrvEjPxuy" />
-      <listitem open="0" type="815" id="J7nggbhLGjp8" />
-      <listitem open="0" type="815" id="Hj8rMdffkQJQ" />
-      <listitem open="0" type="815" id="tOI6OgYgNgVj" />
+      <listitem open="0" type="815" id="np1DdYOGKAfz" />
+      <listitem open="0" type="815" id="J03d9gdJCxC9" />
      </listitem>
      <listitem open="1" type="818" id="FHripKnFawpH" />
      <listitem open="0" type="818" id="VGKzJc4hV21F" >
@@ -3161,7 +3156,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
        <listitem open="0" type="814" id="piMhTPfgjlUA" />
        <listitem open="1" type="815" id="x43V6pCQ5zP0" />
       </listitem>
-      <listitem open="0" type="817" id="YM6dcSv3f1l9" >
+      <listitem open="1" type="817" id="YM6dcSv3f1l9" >
        <listitem open="0" type="815" id="oFrxhkYjCEqN" />
        <listitem open="0" type="815" id="ULpVN2xkcAMP" />
        <listitem open="0" type="815" id="4BQYmn3mfra1" />
@@ -3229,6 +3224,7 @@ the newInstance() functions are marked as extern &quot;C&quot;, and these are re
       <listitem open="0" type="829" id="FVnJ8440dTGx" />
       <listitem open="0" type="829" id="4OhXHutvGcSx" />
       <listitem open="0" type="829" id="O6Lpz6UxbCrk" />
+      <listitem open="1" type="829" id="CVKvzTYBthBC" />
       <listitem open="0" type="829" id="iPlJzAtSNYep" />
       <listitem open="0" type="829" id="YEE98AodE3IU" />
       <listitem open="0" type="829" id="IY4d4hSW3Ou5" />
