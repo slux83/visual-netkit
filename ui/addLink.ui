@@ -5,14 +5,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
-    <height>707</height>
+    <width>566</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="minimumSize" >
    <size>
-    <width>600</width>
-    <height>650</height>
+    <width>550</width>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle" >
@@ -22,7 +22,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3" >
      <property name="title" >
-      <string>The link</string>
+      <string>The Future Link</string>
      </property>
      <layout class="QVBoxLayout" >
       <property name="spacing" >
@@ -56,15 +56,21 @@
           <property name="text" >
            <string/>
           </property>
+          <property name="alignment" >
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="Line" name="line" >
           <property name="frameShadow" >
-           <enum>QFrame::Plain</enum>
+           <enum>QFrame::Sunken</enum>
           </property>
           <property name="lineWidth" >
-           <number>3</number>
+           <number>4</number>
           </property>
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
@@ -88,6 +94,12 @@
           <property name="scaledContents" >
            <bool>false</bool>
           </property>
+          <property name="alignment" >
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap" >
+           <bool>true</bool>
+          </property>
           <property name="textInteractionFlags" >
            <set>Qt::LinksAccessibleByMouse|Qt::NoTextInteraction|Qt::TextSelectableByMouse</set>
           </property>
@@ -99,18 +111,21 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4" >
+    <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>Address</string>
+      <string>Hardware Interface</string>
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <layout class="QVBoxLayout" >
-        <property name="spacing" >
-         <number>2</number>
-        </property>
+       <layout class="QHBoxLayout" >
         <item>
-         <widget class="QLabel" name="label" >
+         <widget class="QLabel" name="label_2" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
            <string>Interface name:</string>
           </property>
@@ -129,105 +144,23 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" >
+       <layout class="QHBoxLayout" >
         <item>
-         <widget class="QLabel" name="label_2" >
+         <widget class="QLabel" name="label" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text" >
-           <string>Ip address/netmask:</string>
+           <string>Interace state: </string>
           </property>
           <property name="alignment" >
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="margin" >
-           <number>0</number>
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item>
-         <layout class="QHBoxLayout" >
-          <item>
-           <layout class="QVBoxLayout" >
-            <item>
-             <widget class="QLineEdit" name="ipLineEdit" />
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_4" >
-            <property name="font" >
-             <font>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text" >
-             <string>Note: the ip/netmask can be inserted in CIDR notation (10.0.0.1/8), or in standard notation (10.0.0.1/255.0.0.0)</string>
-            </property>
-            <property name="alignment" >
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-            <property name="wordWrap" >
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" >
-        <property name="spacing" >
-         <number>2</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_3" >
-          <property name="text" >
-           <string>Broadcast address: </string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="broadcastLineEdit" >
-          <property name="acceptDrops" >
-           <bool>false</bool>
-          </property>
-          <property name="text" >
-           <string/>
-          </property>
-          <property name="readOnly" >
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox" >
-     <property name="title" >
-      <string>Interface state</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <layout class="QVBoxLayout" >
-        <property name="spacing" >
-         <number>2</number>
-        </property>
         <item>
          <widget class="QRadioButton" name="ethUp" >
           <property name="text" >
@@ -263,39 +196,9 @@
         </property>
         <column>
          <property name="text" >
-          <string>Interface</string>
+          <string>Interface Name</string>
          </property>
         </column>
-        <column>
-         <property name="text" >
-          <string>Address</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBox_5" >
-     <property name="title" >
-      <string>Collision domain used addresses</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <item>
-       <widget class="QListWidget" name="addressesListWidget" >
-        <property name="toolTip" >
-         <string>This list represent the addresses used by other hardware interfaces connected to the collision domain selected.</string>
-        </property>
-        <property name="alternatingRowColors" >
-         <bool>true</bool>
-        </property>
-        <property name="selectionMode" >
-         <enum>QAbstractItemView::NoSelection</enum>
-        </property>
-        <property name="sortingEnabled" >
-         <bool>true</bool>
-        </property>
        </widget>
       </item>
      </layout>
