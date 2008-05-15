@@ -61,7 +61,12 @@ HEADERS = src/gui/handles/SceneTreeMapper.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/SceneTreeMapper.cpp \
+SOURCES = src/core/DaemonManager.cpp \
+    src/core/SuperGroup.cpp \
+    testing/plugin_framework/main.cpp \
+    testing/plugin_framework/plugins/plugin1/Plugin.cpp \
+    testing/plugin_framework/plugins/plugin2/Plugin2.cpp \
+    src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
     src/gui/handles/CdPropertyController.cpp \
     src/persistence/TemplateExpert.cpp \
@@ -83,7 +88,6 @@ SOURCES = src/gui/handles/SceneTreeMapper.cpp \
     src/core/handles/VmFacadeController.cpp \
     src/gui/undoCommands/UndoCommands.cpp \
     src/gui/UndoStack.cpp \
-    src/common/NetworkAddress.cpp \
     src/core/handles/LabFacadeController.cpp \
     src/gui/handles/LabHandler.cpp \
     src/gui/handles/LabPropertyController.cpp \
