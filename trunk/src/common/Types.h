@@ -19,33 +19,6 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
-/**
- * Enumeration for daemons
- */
-enum Daemon
-{
-	Zebra = 0,	//Zebra must be the first!
-	Ripd = 1,
-	Bgpd = 2
-};
-
-/**
- * Enumeration for virtual machines
- */
-enum VmType
-{
-	Host = 0,
-	Router = 1
-};
-
-/**
- * Enumeration for Super Groups
- */
-enum SuperGroupType
-{
-	AutonomousSystemType = 0,
-	Uncategorized = 1
-};
 
 /**
  * Enumeration for graphics item groups
