@@ -21,7 +21,6 @@
 
 #include <QDialog>
 #include <QWidget>
-#include "../common/NetworkAddress.h"
 #include "VirtualMachineItem.h"
 #include "CollisionDomainItem.h"
 #include "handles/VmMapper.h"
@@ -37,7 +36,6 @@ private:
 	
 private slots:
 	void handleAccept();
-	void validateIp(const QString &text);
 	
 public:
 	AddLinkForm(QWidget *parent = 0);
@@ -46,7 +44,7 @@ public:
 	
 signals:
 	void readyToAddLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-			QString ethName, bool state, NetworkAddress address);
+			QString ethName, bool state);
 };
 
 #endif /*ADDLINKFORM_H_*/

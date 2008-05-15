@@ -51,8 +51,8 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	connect(ipLineEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(validateIp(const QString &)));
 	
-	connect(this, SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool, NetworkAddress)),
-			LinkHandler::getInstance(), SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool, NetworkAddress)));
+	connect(this, SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)),
+			LinkHandler::getInstance(), SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)));
 }
 
 /**
@@ -79,17 +79,13 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 	
 	//update gui
 	labelVm->setText(vm->getLabel());
-	labelCd->setText(cd->getLabel() + " (" +
-			CdMapper::getInstance()->getNetworkAddress(cd).netmask().toString() + ")");
-	
-	//Set the same ip/netmask of the collision domain selected
-	ipLineEdit->setText(CdMapper::getInstance()->getNetworkAddress(cd).toString(false));
+	labelCd->setText(cd->getLabel());
 	
 	/* Get interfaces for the vm */
 	QMapIterator<QString, QString> iter(VmMapper::getInstance()->getMachineInterfaces(vm));
 	
 	
-	/* Render interfaces inside the table [NAME | IP] */
+	/* Render interfaces inside the table [NAME] */
 	int row = 0;
 	//Clear all table items and reset the view-size
 	interfacesTable->clearContents();
@@ -99,17 +95,10 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 		iter.next();
 		interfacesTable->setRowCount(interfacesTable->rowCount() + 1);
 		QTableWidgetItem *ethName = new QTableWidgetItem();
-		QTableWidgetItem *ethContent = new QTableWidgetItem();
 		ethName->setData(Qt::DisplayRole, iter.key());
-		ethContent->setData(Qt::DisplayRole, iter.value());
 		interfacesTable->setItem(row, 0, ethName);
-		interfacesTable->setItem(row, 1, ethContent);
 		row++;
 	}
-	
-	/* Render addresses allready connected to the collision domain */
-	addressesListWidget->clear();
-	addressesListWidget->addItems(CdMapper::getInstance()->getUsedAddresses(cdItem));
 }
 
 /**
@@ -119,25 +108,6 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 void AddLinkForm::handleAccept()
 {
 	QRegExp validateEthName("^eth[0-9]+");
-	
-	QStringList splitted = ipLineEdit->text().split("/");
-	
-	/* get ip and netmask */
-	QString ip = splitted[0];
-	QString netmask = splitted[1];
-	
-	/**
-	 * if the broadcast in correct, also the ip/netmask it is
-	 */
-	if(!NetworkAddress::validateIp(broadcastLineEdit->text()))
-	{
-		/* Show a warning message */
-		QMessageBox::warning(this, tr("VisualNetkit - Error"),
-			tr("The ip/netmask seems to be incorrect.\nPlease, retry."),
-			QMessageBox::Ok);
-				
-		return;
-	}
 	
 	/**
 	 * test the interface name
@@ -152,92 +122,14 @@ void AddLinkForm::handleAccept()
 		return;
 	}
 	
-	
 	//if up --> state true, false otherwise
 	bool ethState = ethUp->isChecked();
-	
-	NetworkAddress address;
-	bool cidrNetmask;
-	netmask.toInt(&cidrNetmask);
-	
-	//cidr or normal netmask?
-	if(cidrNetmask)
-		address = NetworkAddress(QHostAddress(ip), netmask.toInt());
-	else
-		address = NetworkAddress(QHostAddress(ip), QHostAddress(netmask));
-	
-	address.setBroadcast(QHostAddress(broadcastLineEdit->text()));
 	
 	//emit signal and close the gui
 	emit readyToAddLink(vmItem, cdItem, 
 			QString(ethNumberSpinBox->prefix() + QString::number(ethNumberSpinBox->value())),
-			ethState, address);
+			ethState);
 	
 	close();
 }
 
-/**
- * [PRIVATE-SLOT]
- * Check the inserted ip address
- */
-void AddLinkForm::validateIp(const QString &text)
-{
-	QStringList splitted = text.split("/");
-	if(splitted.size() != 2)
-	{
-		broadcastLineEdit->setText(tr("invalid ip/netmask"));
-		return;
-	}
-	
-	/* get ip and netmask */
-	QString ip = splitted[0];
-	QString netmask = splitted[1];
-	
-	bool isCidr;
-	int cidrNetmask = netmask.toInt(&isCidr);
-	
-	/* the netmask is in cidr notation? */
-	if(isCidr && cidrNetmask >= 1 && cidrNetmask <=32)
-	{
-		netmask = NetworkAddress::cidr2netmask(cidrNetmask).toString();
-	}
-	
-	//TODO
-	/* validate netmask and ip address */
-	/*
-	if(!NetworkAddress::validateIp(ip) ||
-			!NetworkAddress::validateNetmask(QHostAddress(netmask)))
-	{
-		broadcastLineEdit->setText(tr("invalid ip/netmask"));
-		return;
-	}
-	*/
-	
-	//TODO
-	/* 
-	 * check if the ip is conform with the collision domain subnet
-	 * comparing the two broadcast addresses and verifying the network compatibility
-	 */
-	/*
-	NetworkAddress cdNetwork = CdMapper::getInstance()->getNetworkAddress(cdItem);
-	
-	if((NetworkAddress::generateBroadcast(cdNetwork.ip(), cdNetwork.netmask()) !=
-		NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask))) ||
-		(QHostAddress(ip) == cdNetwork.ip()))
-	{
-		broadcastLineEdit->setText(tr("ip/netmask incompatible with ") + cdNetwork.toString(true));
-		return;
-	}
-	else
-	{
-		// allready used ip? 
-		if(CdMapper::getInstance()->getUsedAddresses(cdItem).contains(ip))
-			broadcastLineEdit->setText(tr("You have tu use a free address."));
-		else
-			broadcastLineEdit->setText(
-					NetworkAddress::generateBroadcast(QHostAddress(ip), QHostAddress(netmask)).toString());
-		
-		return;
-	}
-	*/
-}
