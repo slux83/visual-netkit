@@ -26,7 +26,7 @@
 
 #include <QObject>
 #include <QDebug>
-#include <QMap>
+#include <QStringList>
 
 /**
  * This class is the singleton controller for the virtual machines.
@@ -50,7 +50,7 @@ public:
 	void showAddVmForm(QPointF pos);
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
-	QMap<QString, QString> getMachineInterfaces(VirtualMachineItem* vmItem);
+	QStringList getMachineInterfaces(VirtualMachineItem* vmItem);
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
 	void ensureAllItemsAreJoined();
 
