@@ -62,10 +62,8 @@ LinkHandler* LinkHandler::getInstance()
  * Handle the request for a new link beetween vm and cd
  */
 void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-		QString ethName, bool state, NetworkAddress address)
-{
-	qDebug() << address.toString(true) << ethName << state;
-	
+		QString ethName, bool state)
+{	
 	/* Get from mappers the domain objects */
 	VirtualMachine *vm = vmMapper->getMachine(vmItem);
 	CollisionDomain *cd = cdMapper->getCD(cdItem);
@@ -83,10 +81,10 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	 * for a virtual machine passed
 	 */
 	HardwareInterface *interface = 
-		vmFacadeController->createNewHardwareIterface(vm, ethName, state, address, cd);
+		vmFacadeController->createNewHardwareIterface(vm, ethName, state, cd);
 	
 	/* create the link item (view side) */
-	QString linkLabel(ethName + " " + address.ip().toString());
+	QString linkLabel(ethName);
 	LinkItem *linkItem = new LinkItem(vmItem, cdItem, linkLabel);
 	
 	/* the undo command (redo) can accomplish the action */

@@ -82,8 +82,8 @@ void SceneTreeMapper::addCdElement(CollisionDomainItem* cdItem)
 {
 	QTreeWidgetItem* elem = new QTreeWidgetItem();
 	
-	//show only the collision domain name, not the entire network
-	elem->setData(0, Qt::DisplayRole, cdItem->getLabel().split("\n").first());
+	//show the collision domain name
+	elem->setData(0, Qt::DisplayRole, cdItem->getLabel());
 	elem->setIcon(0, QIcon(CD_ICON));
 	rootElement->addChild(elem);
 	rootElement->setExpanded(true);
@@ -100,9 +100,9 @@ void SceneTreeMapper::addEthernetElement(LinkItem* linkItem)
 {
 	QTreeWidgetItem* elem = new QTreeWidgetItem();
 	
-	//show only the ethernet name, not the entire address
+	//show the ethernet name
 	elem->setData(0, Qt::DisplayRole,
-			linkItem->getLabelItemPrivate()->text().split(" ").first());
+			linkItem->getLabelItemPrivate()->text());
 	elem->setIcon(0, QIcon(ETH_ICON));
 	
 	//add as child of its vm

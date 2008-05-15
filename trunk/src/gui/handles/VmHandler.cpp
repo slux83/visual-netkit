@@ -70,11 +70,10 @@ bool VmHandler::vmNameExist(QString vmNameToCheck)
  * [SLOT]
  * Create a new vm
  */
-void VmHandler::createVm(QString vmNewName, QList<Daemon> activeDaemons, QPointF pos)
+void VmHandler::createVm(QString vmNewName, QPointF pos)
 {
 	/* Create the view and domain objects */
-	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName,
-			activeDaemons);
+	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName);
 	
 	VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getName(), vm->getMyType());
 	
