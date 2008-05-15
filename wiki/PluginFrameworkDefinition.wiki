@@ -61,6 +61,7 @@ Per concludere il sistema deve poter colloquiare con tutte le instanze proxy dei
 {{{
 [General]
 name=PlugiName
+type=vm|cd|link
 description=Plugin destription
 version=1.0
 dependencies=plugin1 plugin2 plugin3
