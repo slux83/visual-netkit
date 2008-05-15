@@ -202,18 +202,23 @@ void AddLinkForm::validateIp(const QString &text)
 		netmask = NetworkAddress::cidr2netmask(cidrNetmask).toString();
 	}
 	
+	//TODO
 	/* validate netmask and ip address */
+	/*
 	if(!NetworkAddress::validateIp(ip) ||
 			!NetworkAddress::validateNetmask(QHostAddress(netmask)))
 	{
 		broadcastLineEdit->setText(tr("invalid ip/netmask"));
 		return;
 	}
+	*/
 	
+	//TODO
 	/* 
 	 * check if the ip is conform with the collision domain subnet
 	 * comparing the two broadcast addresses and verifying the network compatibility
 	 */
+	/*
 	NetworkAddress cdNetwork = CdMapper::getInstance()->getNetworkAddress(cdItem);
 	
 	if((NetworkAddress::generateBroadcast(cdNetwork.ip(), cdNetwork.netmask()) !=
@@ -225,7 +230,7 @@ void AddLinkForm::validateIp(const QString &text)
 	}
 	else
 	{
-		/* allready used ip? */
+		// allready used ip? 
 		if(CdMapper::getInstance()->getUsedAddresses(cdItem).contains(ip))
 			broadcastLineEdit->setText(tr("You have tu use a free address."));
 		else
@@ -234,4 +239,5 @@ void AddLinkForm::validateIp(const QString &text)
 		
 		return;
 	}
+	*/
 }
