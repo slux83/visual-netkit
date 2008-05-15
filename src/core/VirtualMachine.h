@@ -20,7 +20,6 @@
 #define VIRTUALMACHINE_H_
 
 #include "HardwareInterface.h"
-#include "../common/Types.h"
 
 #include <QString>
 #include <QMap>
@@ -40,7 +39,6 @@ public:
 	virtual ~VirtualMachine();
 	QMap<QString, HardwareInterface *> getInterfaces();
 	QString getName();
-	VmType getMyType();
 	void addHardwareInterface(HardwareInterface *hi) { interfaces.insert(hi->getName(), hi); };
 
 };

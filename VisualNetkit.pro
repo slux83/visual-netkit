@@ -61,10 +61,7 @@ HEADERS = src/gui/handles/SceneTreeMapper.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = testing/plugin_framework/main.cpp \
-    testing/plugin_framework/plugins/plugin1/Plugin.cpp \
-    testing/plugin_framework/plugins/plugin2/Plugin2.cpp \
-    src/gui/handles/SceneTreeMapper.cpp \
+SOURCES = src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
     src/gui/handles/CdPropertyController.cpp \
     src/persistence/TemplateExpert.cpp \

@@ -47,7 +47,7 @@ public:
 	void renderCdProperties(CollisionDomainItem *cdItem);
 	
 public slots:
-	void handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF pos);
+	void handleAddNewCd(QString cdName, QPointF pos);
 	void saveChangedProperty(int row, int column);
 
 	

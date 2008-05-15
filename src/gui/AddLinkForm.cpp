@@ -82,7 +82,7 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 	labelCd->setText(cd->getLabel());
 	
 	/* Get interfaces for the vm */
-	QMapIterator<QString, QString> iter(VmMapper::getInstance()->getMachineInterfaces(vm));
+	QStringListIterator iter(VmMapper::getInstance()->getMachineInterfaces(vm));
 	
 	
 	/* Render interfaces inside the table [NAME] */
@@ -92,10 +92,9 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
 	interfacesTable->setRowCount(0);		//resize (reset) the view	
 	while(iter.hasNext())
 	{
-		iter.next();
 		interfacesTable->setRowCount(interfacesTable->rowCount() + 1);
 		QTableWidgetItem *ethName = new QTableWidgetItem();
-		ethName->setData(Qt::DisplayRole, iter.key());
+		ethName->setData(Qt::DisplayRole, iter.next());
 		interfacesTable->setItem(row, 0, ethName);
 		row++;
 	}
