@@ -23,14 +23,13 @@
  * Constructor
  */
 HardwareInterface::HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
-		QString ethName, NetworkAddress addr, bool interfaceState)
+		QString ethName, bool interfaceState)
 {
 	myMachine = m;
 	domain = cd;
 	domain->addPeer(this);
 	name = ethName;
 	state = interfaceState;
-	address = addr;
 }
 
 /**

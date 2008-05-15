@@ -19,10 +19,7 @@
 #ifndef HARDWAREINTERFACE_H_
 #define HARDWAREINTERFACE_H_
 
-#include <QNetworkAddressEntry>
 #include <QString>
-
-#include "../common/NetworkAddress.h"
 #include "CollisionDomain.h"
 
 class VirtualMachine;
@@ -34,7 +31,6 @@ class HardwareInterface
 {
 
 private:
-	NetworkAddress address;
 	QString name;
 	VirtualMachine *myMachine;
 	CollisionDomain *domain;
@@ -42,10 +38,9 @@ private:
 	
 public:
 	HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
-			QString ethName, NetworkAddress addr, bool interfaceState);
+			QString ethName, bool interfaceState);
 	virtual ~HardwareInterface();
 	QString getName() { return name; };
-	NetworkAddress getAddress() { return address; };
 	VirtualMachine* getMyVirtualMachine() { return myMachine; };
 	CollisionDomain* getMyCollisionDomain() { return domain; };
 	bool getState() { return state; };

@@ -25,7 +25,6 @@
 VirtualMachine::VirtualMachine(QString newName)
 {
 	name = newName;
-	dm = new DaemonManager();
 }
 
 /**

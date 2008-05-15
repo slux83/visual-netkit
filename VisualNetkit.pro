@@ -56,12 +56,10 @@ HEADERS = src/gui/handles/SceneTreeMapper.h \
     src/gui/VirtualMachineItem.h \
     src/gui/GraphicsView.h \
     src/gui/LabScene.h \
-    src/core/DaemonManager.h \
     src/gui/MainWindow.h \
     src/core/VirtualMachine.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
-    src/core/SuperGroup.h \
     src/core/Laboratory.h
 SOURCES = src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
@@ -95,11 +93,9 @@ SOURCES = src/gui/handles/SceneTreeMapper.cpp \
     src/gui/VirtualMachineItem.cpp \
     src/gui/GraphicsView.cpp \
     src/gui/LabScene.cpp \
-    src/core/DaemonManager.cpp \
     src/main.cpp \
     src/gui/MainWindow.cpp \
     src/core/VirtualMachine.cpp \
     src/core/HardwareInterface.cpp \
-    src/core/SuperGroup.cpp \
     src/core/CollisionDomain.cpp \
     src/core/Laboratory.cpp

@@ -20,7 +20,6 @@
 #define VIRTUALMACHINE_H_
 
 #include "HardwareInterface.h"
-#include "DaemonManager.h"
 #include "../common/Types.h"
 
 #include <QString>
@@ -35,7 +34,6 @@ class VirtualMachine
 private:
 	QString name;
 	QMap<QString, HardwareInterface *> interfaces;
-	DaemonManager *dm;
 
 public:	
 	VirtualMachine(QString newName);
@@ -43,7 +41,6 @@ public:
 	QMap<QString, HardwareInterface *> getInterfaces();
 	QString getName();
 	VmType getMyType();
-	DaemonManager *getDm() { return dm; };
 	void addHardwareInterface(HardwareInterface *hi) { interfaces.insert(hi->getName(), hi); };
 
 };
