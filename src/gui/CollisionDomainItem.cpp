@@ -184,12 +184,7 @@ void CollisionDomainItem::increaseDecreaseLinkCounter(bool increase)
  */
 void CollisionDomainItem::setLabelCdName(QString newLabel)
 {
-	QStringList splittedLabel = myLabel->text().split("\n");
-	if(splittedLabel.size() != 2)
-		return;
-	
-	splittedLabel[0] = newLabel;
-	myLabel->setText(splittedLabel.join("\n"));
+	myLabel->setText(newLabel);
 }
 
 
