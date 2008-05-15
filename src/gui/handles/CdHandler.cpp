@@ -69,12 +69,12 @@ bool CdHandler::cdNameExist(QString cdNameToCheck)
  * [PUBLIC-SLOT]
  * Handle the signal for inserte a new collision domain
  */
-void CdHandler::handleAddNewCd(QString cdName, NetworkAddress *subnet, QPointF pos)
+void CdHandler::handleAddNewCd(QString cdName, QPointF pos)
 {	
 	/* Create the view and domain objects */
-	CollisionDomain *cd = new CollisionDomain(cdName, subnet);
+	CollisionDomain *cd = new CollisionDomain(cdName);
 	
-	CollisionDomainItem *cdItem = new CollisionDomainItem(cdName + "\n" + subnet->toString(true));
+	CollisionDomainItem *cdItem = new CollisionDomainItem(cdName);
 	
 	cdItem->setPos(pos);	//place the item wher user clicked
 	

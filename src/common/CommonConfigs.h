@@ -33,22 +33,6 @@
 
 /* Config file names */
 #define LAB_CONF QString("lab.conf")
-#define ZEBRA_DAEMONS_CONF QString("daemons")
-#define BGPD_CONF QString("bgpd.conf")
-#define RIPD_CONF QString("ripd.conf")
-
-/* Config file paths */
-#define ZEBRA_PATH QString("zebra")
-#define ETC_PATH QString("etc")
-
-/* ZEBRA Daemons list */
-inline QList<Daemon> getDaemons()
-{
-	QList<Daemon> l;
-	l << Zebra << Bgpd << Ripd;
-	qSort(l.begin(), l.end());
-	return l;
-}
 
 /* Graphics label font */
 #define GRAPHICS_FONT QFont("Sand Serif", 10)

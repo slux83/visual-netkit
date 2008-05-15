@@ -23,7 +23,6 @@
 
 #include "../VirtualMachineItem.h"
 #include "../CollisionDomainItem.h"
-#include "../../common/NetworkAddress.h"
 #include "../../core/handles/VmFacadeController.h"
 #include "VmMapper.h"
 #include "CdMapper.h"
@@ -48,7 +47,7 @@ public:
 	
 public slots:
 	void createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-			QString ethName, bool state, NetworkAddress address);
+			QString ethName, bool state);
 
 };
 

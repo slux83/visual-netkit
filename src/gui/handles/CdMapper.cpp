@@ -73,47 +73,10 @@ void CdMapper::addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd)
 	labHandler->getMainWindow()->graphicsView->scene()->addItem(cdItem);
 	labHandler->getMainWindow()->graphicsView->ensureVisible(cdItem);
 	
-	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain: ") +
-			cd->getName() + " [" + cd->getSubnet()->toString(false) + "]");
+	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain ");
 	
 	/* Add element inside the scene tree */
 	SceneTreeMapper::getInstance()->addCdElement(cdItem);
-}
-
-/**
- * Get the network of the business element gived a view element
- */
-NetworkAddress CdMapper::getNetworkAddress(CollisionDomainItem *cdItem)
-{
-	CollisionDomain* cd = getCD(cdItem);
-	
-	if(cd == NULL)
-		return NetworkAddress();
-	else
-		return *(cd->getSubnet());
-}
-
-/**
- * Get the list of addresses attached to a specific collision domain (item)
- */
-QStringList CdMapper::getUsedAddresses(CollisionDomainItem *cdItem)
-{
-	QStringList addresses;
-	CollisionDomain *cd = mappings.value(cdItem);
-	
-	if(cd == NULL)
-	{
-		qWarning() << "CdMapper::getUsedAddresses: *cd in NULL (mapping broken)";
-		return addresses;		
-	}
-	
-	QListIterator<HardwareInterface*> it(cd->getPeers());
-	while(it.hasNext())
-	{
-		addresses.append(it.next()->getAddress().ip().toString());
-	}
-	
-	return addresses;
 }
 
 /**
