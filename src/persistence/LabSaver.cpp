@@ -152,9 +152,6 @@ QString LabSaver::prepareStartupText(VirtualMachine *vm)
 		
 		/* replace infos */
 		temp.replace("<ETH_NAME>", hi->getName());
-		//temp.replace("<IP>", hi->getAddress().ip().toString());
-		//temp.replace("<NETMASK>", hi->getAddress().netmask().toString());
-		//temp.replace("<BROADCAST>", hi->getAddress().broadcast().toString());
 		
 		(hi->getState())? status = "up" : status = "down";
 		temp.replace("<STATUS>", status);

@@ -49,9 +49,7 @@ public:
 	void addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd);
 	CollisionDomain* getCD(CollisionDomainItem *cdItem) { return mappings.value(cdItem); };
 	CollisionDomainItem* getCdItem(CollisionDomain *cd) { return mappings.key(cd); };
-	NetworkAddress getNetworkAddress(CollisionDomainItem *cdItem);
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
-	QStringList getUsedAddresses(CollisionDomainItem *cdItem);
 	void updateCdCounter(CollisionDomain *cd, bool increase);
 	void ensureAllItemsAreJoined();
 
