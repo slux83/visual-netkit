@@ -63,8 +63,7 @@ AddCdCommand::AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newC
 {
 	cdItem = newCdItem;
 	cd = newCd;
-	setText(tr("Added a new collision domain: ") + cd->getName() +
-			"[" + cd->getSubnet()->toString(true) + "]");
+	setText(tr("Added a new collision domain: ") + cd->getName());
 }
 
 /**
