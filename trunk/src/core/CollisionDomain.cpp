@@ -22,10 +22,9 @@
 /**
  * Constructor with the name
  */
-CollisionDomain::CollisionDomain(QString newName, NetworkAddress *subnet)
+CollisionDomain::CollisionDomain(QString newName)
 {
 	name = newName;
-	address = subnet;
 }
 
 /**

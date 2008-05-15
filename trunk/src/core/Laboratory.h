@@ -19,7 +19,6 @@
 #ifndef LABORATORY_H_
 #define LABORATORY_H_
 
-#include "SuperGroup.h"
 #include "VirtualMachine.h"
 
 #include <QString>
@@ -56,7 +55,6 @@ private:
 	QString authors;
 	QString email;
 	QString website;
-	QLinkedList<SuperGroup *> groups;
 	QMap<QString, VirtualMachine *> machines;
 	QMap<QString, CollisionDomain *> collisionDomains;
 	QDir labPath;
@@ -77,7 +75,6 @@ public:
 	bool getSaveState() { return isSaved; };
 	QDir getLabPath() { return labPath; };
 	
-	QLinkedList<SuperGroup *> getGroups() { return groups; };
 	QMap<QString, VirtualMachine *> getMachines() { return machines; };
 	QMap<QString, CollisionDomain *> getCollisionDomains() { return collisionDomains; };
 	

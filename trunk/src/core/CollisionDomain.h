@@ -19,11 +19,8 @@
 #ifndef COLLISIONDOMAIN_H_
 #define COLLISIONDOMAIN_H_
 
-#include <QNetworkAddressEntry>
 #include <QMap>
 #include <QString>
-
-#include "../common/NetworkAddress.h"
 
 class HardwareInterface;
 
@@ -40,16 +37,14 @@ class CollisionDomain
 
 private:
 	QString name;
-	NetworkAddress *address;
 	QList<HardwareInterface *> peers;
 
 public:
-	CollisionDomain(QString newName, NetworkAddress *subnet);
+	CollisionDomain(QString newName);
 	virtual ~CollisionDomain();
 	
 	/* Setter and getter functions */
 	QString getName() { return name; };
-	NetworkAddress* getSubnet() { return address; };
 	void addPeer(HardwareInterface* hi);
 	QList<HardwareInterface*> getPeers() { return peers; };
 	void setName(QString newName) { name = newName; };
