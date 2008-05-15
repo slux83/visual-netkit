@@ -89,16 +89,16 @@ void VmMapper::addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm)
  * Get the interfaces for the machine passed
  * name -> ip/netmask
  */
-QMap<QString, QString> VmMapper::getMachineInterfaces(VirtualMachineItem* vmItem)
+QStringList VmMapper::getMachineInterfaces(VirtualMachineItem* vmItem)
 {
-	QMap<QString, QString> interfaces;
+	QStringList interfaces;
 	VirtualMachine* vm = mappings.value(vmItem);
 	QMapIterator<QString, HardwareInterface *> i(vm->getInterfaces());
 	
 	while(i.hasNext())
 	{
 		i.next();
-		interfaces.insert(i.key(), i.value()->getAddress().toString(true));
+		interfaces.append(i.key());
 	}
 	
 	return interfaces;
