@@ -263,7 +263,12 @@ bool LabSaver::createFolderSystem()
 	if (currentLab != NULL)
 	{
 		// creates main lab dir and check if it's created
-		allok = rootDir.mkdir(curPath + "/" + currentLab->getName());
+		if(!rootDir.exists(curPath + "/" + currentLab->getName()))
+		{
+			allok = rootDir.mkdir(curPath + "/" + currentLab->getName());
+			if(!allok)
+				errorString = "Cannot create root dir '" + curPath + "/" + currentLab->getName() + "'.";
+		}
 		
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 		
@@ -271,7 +276,9 @@ bool LabSaver::createFolderSystem()
 		while(machineIterator.hasNext() && allok)
 		{
 			machineIterator.next();
-			allok = rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+			if(!rootDir.exists(curPath + "/" + currentLab->getName() + "/" + machineIterator.key()))
+				allok = rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+			
 			if (!allok)
 				errorString = "Cannot create dir '" + curPath + "/" + currentLab->getName() + "/" + machineIterator.key() + "'.";
 		}
