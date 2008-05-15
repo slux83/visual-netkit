@@ -48,9 +48,6 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	connect(addLinkButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAccept()));
 	
-	connect(ipLineEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(validateIp(const QString &)));
-	
 	connect(this, SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)),
 			LinkHandler::getInstance(), SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)));
 }
