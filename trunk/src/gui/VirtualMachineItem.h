@@ -42,7 +42,6 @@ class VirtualMachineItem : public QObject, public QGraphicsItemGroup
 	Q_OBJECT
 	
 private:
-	QMap<VmType, QString> svgFiles;
 	SvgItemPrivate *vmSvg;
 	LabelItemPrivate *vmNameLabel;
 	QMenu contextMenu;
@@ -52,15 +51,12 @@ private:
 	QAction *manageLinks;
 	
 	bool isJoin;
-	
-	VmType vmType;
-	
+		
 	void initContextMenu();
 	
 public:
-	VirtualMachineItem(QString label, VmType type = Host) ;
+	VirtualMachineItem(QString label) ;
 	virtual ~VirtualMachineItem();
-	void changeSvgFile(VmType type);
 	QString getLabel() { return vmNameLabel->text(); };
 	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
 
@@ -68,8 +64,6 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };
-	
-	VmType getVmType() { return vmType; };
 	
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

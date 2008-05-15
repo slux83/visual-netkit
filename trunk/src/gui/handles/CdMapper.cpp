@@ -73,7 +73,7 @@ void CdMapper::addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd)
 	labHandler->getMainWindow()->graphicsView->scene()->addItem(cdItem);
 	labHandler->getMainWindow()->graphicsView->ensureVisible(cdItem);
 	
-	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain ");
+	labHandler->getMainWindow()->writeLogMessage(tr("Created a new collision domain "));
 	
 	/* Add element inside the scene tree */
 	SceneTreeMapper::getInstance()->addCdElement(cdItem);

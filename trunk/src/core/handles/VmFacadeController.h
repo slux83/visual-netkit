@@ -37,9 +37,9 @@ public:
 	VmFacadeController();
 	virtual ~VmFacadeController();
 	static VmFacadeController* getInstance();
-	VirtualMachine* createNewVirtualMachine(QString name, QList<Daemon> activeDaemons);
+	VirtualMachine* createNewVirtualMachine(QString name);
 	HardwareInterface * createNewHardwareIterface(VirtualMachine *vm, QString ethName,
-			bool state, NetworkAddress address, CollisionDomain *cd);
+			bool state, CollisionDomain *cd);
 	
 };
 

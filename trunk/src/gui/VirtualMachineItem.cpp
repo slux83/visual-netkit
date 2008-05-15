@@ -25,20 +25,13 @@
  * Contructor
  * by default, this svg item is showed as VmHost
  */
-VirtualMachineItem::VirtualMachineItem(QString label, VmType type) 
+VirtualMachineItem::VirtualMachineItem(QString label) 
 	: QObject(), QGraphicsItemGroup()
 {
 	isJoin = true; //start witha joined group
 	
-	//store the item's type
-	vmType = type;
-	
-	/* Fill the filemap */
-	svgFiles.insert(Host, QString::fromUtf8(":/svg/vm_host"));
-	svgFiles.insert(Router, QString::fromUtf8(":/svg/vm_router"));
-	
 	/* Set the default svg file: VmHost */
-	vmSvg = new SvgItemPrivate(svgFiles.value(type), this);
+	vmSvg = new SvgItemPrivate(QString::fromUtf8(":/svg/vm_host"), this);
 	vmNameLabel = new LabelItemPrivate(label);
 	vmNameLabel->setPos(0, 52);
 	vmNameLabel->setFont(GRAPHICS_FONT);
@@ -59,21 +52,6 @@ VirtualMachineItem::VirtualMachineItem(QString label, VmType type)
  */
 VirtualMachineItem::~VirtualMachineItem()
 {
-}
-
-/**
- * [PUBLIC]
- * Change the visualization for this vm
- */
-void VirtualMachineItem::changeSvgFile(VmType type)
-{
-	if(!svgFiles.contains(type))
-	{
-		qWarning() << "VmType" << type << "NOT FOUND INSIDE THE MAP";
-		return;
-	}
-	
-	vmSvg->renderer()->load(svgFiles.value(type));
 }
 
 /**

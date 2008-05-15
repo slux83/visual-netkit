@@ -26,7 +26,7 @@
 #include <QMap>
 #include <QDateTime>
 #include <QDir>
-
+#include <QDebug>
 
 /* Property key for lab */
 enum PropertyKey

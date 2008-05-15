@@ -127,9 +127,6 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds item's id
 				item.setAttribute("id", vmlist.at(i)->getLabel());
 				
-				//adds item's type
-				item.setAttribute("type", QString::number(vmlist.at(i)->getVmType()));
-				
 				//adds item's scene position
 				item.setAttribute("x", QString(QByteArray::number(vmlist.at(i)->scenePos().x())));
 				item.setAttribute("y", QString(QByteArray::number(vmlist.at(i)->scenePos().y())));

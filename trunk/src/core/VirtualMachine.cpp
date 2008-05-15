@@ -51,10 +51,3 @@ QMap<QString, HardwareInterface *> VirtualMachine::getInterfaces()
 	return interfaces;
 }
 
-/**
- * Get my vm type
- */
-VmType VirtualMachine::getMyType()
-{
-	return dm->getVmType();
-}

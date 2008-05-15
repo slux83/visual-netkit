@@ -162,18 +162,6 @@ QString LabSaver::prepareStartupText(VirtualMachine *vm)
 	
 	/* Replace the ifconfig content inside <IFCONFIG> tags */
 	startupText.replace(ifconfigReg, ifconfigContent);
-	
-	/* Check if zebra is up */
-	if(vm->getDm()->getVmType() == Router)
-	{
-		zebraReg.indexIn(startupText);
-		startupText.replace(zebraReg, zebraReg.cap(1));
-	}
-	else
-	{
-		/* zebra init not needed */
-		startupText.replace(zebraReg, "");
-	}
 
 	return startupText;
 	

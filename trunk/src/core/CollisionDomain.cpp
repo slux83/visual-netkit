@@ -32,7 +32,6 @@ CollisionDomain::CollisionDomain(QString newName)
  */
 CollisionDomain::~CollisionDomain()
 {
-	delete address;
 }
 
 /**
