@@ -46,7 +46,6 @@ HEADERS = src/gui/handles/SceneTreeMapper.h \
     src/gui/undoCommands/UndoCommands.h \
     src/gui/UndoStack.h \
     src/common/Errors.h \
-    src/common/NetworkAddress.h \
     src/common/Types.h \
     src/core/handles/LabFacadeController.h \
     src/gui/handles/LabHandler.h \
