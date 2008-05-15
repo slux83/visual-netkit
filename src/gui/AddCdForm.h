@@ -23,7 +23,6 @@
 #include <QDebug>
 #include <QPointF>
 #include "ui_addCd.h"
-#include "../common/NetworkAddress.h"
 #include "handles/CdHandler.h"
 
 /**
@@ -46,7 +45,7 @@ private slots:
 	void handleUserConfirm();
 
 signals:
-	void userAddCd(QString cdName, NetworkAddress *subnet, QPointF pos);
+	void userAddCd(QString cdName, QPointF pos);
 };
 
 

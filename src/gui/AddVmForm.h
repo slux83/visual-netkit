@@ -39,12 +39,8 @@ private:
 	QLabel *vmType;
 	VmHandler *vmHandler;
 	QPointF machinePos;
-	
-	void fillDaemonsList();
-	QList<Daemon> getSelectedDaemons();
 
 private slots:
-	void updateVmPreview(QTreeWidgetItem * item, int column);
 	void handleAcceptedSignal();
 	
 public:
@@ -53,7 +49,7 @@ public:
 	void setMachinePos(QPointF pos) { machinePos = pos; };
 	
 signals:
-	void userAddedVm(QString vmNewName, QList<Daemon> activeDaemons, QPointF pos);
+	void userAddedVm(QString vmNewName, QPointF pos);
 };
 
 #endif /*ADDVMFORM_H_*/

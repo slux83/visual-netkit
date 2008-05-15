@@ -23,9 +23,6 @@
 #include <QRect>
 #include <QMessageBox>
 
-/* Pattern to search all daemons on the tree */
-#define REGEXP_ALL_DAEMONS QString("Zebra|Ripd|Bgpd")
-
 /**
  * Contructor
  */
@@ -33,7 +30,6 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 {
 	/* Connect the UI resource to this QWidget */
 	setupUi(this);
-	fillDaemonsList();
 	
 	/* Get the controller instance */
 	vmHandler = VmHandler::getInstance();
@@ -46,24 +42,11 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 				width(),
 				height());
 	
-	/* Set the vm preview image */
-	spacePreview = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-	vmType = new QLabel(tr("Type: ") + "Host");
-	vmPreview = new QSvgWidget(QString::fromUtf8(":/svg/vm_host"));
-	vmPreview->setFixedSize(48, 48);
-	
-	previewGroup->layout()->setAlignment(Qt::AlignHCenter);
-	previewGroup->layout()->addWidget(vmPreview);
-	previewGroup->layout()->addWidget(vmType);
-	previewGroup->layout()->addItem(spacePreview);
-	
 	/* Connections */
-	connect(daemonsList, SIGNAL(itemChanged(QTreeWidgetItem *, int)),
-			this, SLOT(updateVmPreview(QTreeWidgetItem *, int)));
 	connect(addVmButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAcceptedSignal()));
-	connect(this, SIGNAL(userAddedVm(QString, QList<Daemon>, QPointF)),
-			vmHandler, SLOT(createVm(QString, QList<Daemon>, QPointF)));
+	connect(this, SIGNAL(userAddedVm(QString, QPointF)),
+			vmHandler, SLOT(createVm(QString, QPointF)));
 	connect(vmName, SIGNAL(returnPressed()),
 			this, SLOT(handleAcceptedSignal()));
 	
@@ -74,94 +57,6 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
  */
 AddVmForm::~AddVmForm()
 {
-}
-
-/**
- * [PRIVATE]
- * Add the daemons to the list view
- */
-void AddVmForm::fillDaemonsList()
-{	
-	
-	QTreeWidgetItem *zebraItem;
-	QTreeWidgetItem *ripd, *bgpd;
-	
-	//Zebra
-	zebraItem = new QTreeWidgetItem();
-	zebraItem->setData(0, Qt::DisplayRole, "Zebra");
-	zebraItem->setData(0, Qt::UserRole, Zebra);
-	zebraItem->setCheckState (0, Qt::Unchecked);
-	
-	//Ripd
-	ripd = new QTreeWidgetItem();
-	ripd->setData(0, Qt::DisplayRole, "Ripd");
-	ripd->setData(0, Qt::UserRole, Ripd);
-	ripd->setCheckState (0, Qt::Unchecked);
-	zebraItem->addChild(ripd);
-	
-	//Bgpd
-	bgpd = new QTreeWidgetItem();
-	bgpd->setData(0, Qt::DisplayRole, "Bgpd");
-	bgpd->setData(0, Qt::UserRole, Bgpd);
-	bgpd->setCheckState (0, Qt::Unchecked);
-	zebraItem->addChild(bgpd);
-	
-	//Ospfd
-/*	ospfd = new QTreeWidgetItem();
-	ospfd->setData(0, Qt::DisplayRole, "Ospfd");
-	ospfd->setData(0, Qt::UserRole, Ospfd);
-	ospfd->setCheckState (0, Qt::Unchecked);
-	zebraItem->addChild(ospfd);
-	
-	//Ospf6d
-	ospf6d = new QTreeWidgetItem();
-	ospf6d->setData(0, Qt::DisplayRole, "Ospf6d");
-	ospf6d->setData(0, Qt::UserRole, Ospf6d);
-	ospf6d->setCheckState (0, Qt::Unchecked);
-	zebraItem->addChild(ospf6d);
-	
-	//Ripngd
-	ripngd = new QTreeWidgetItem();
-	ripngd->setData(0, Qt::DisplayRole, "Ripngd");
-	ripngd->setData(0, Qt::UserRole, Ripngd);
-	ripngd->setCheckState (0, Qt::Unchecked);
-	zebraItem->addChild(ripngd);
-*/	
-	daemonsList->addTopLevelItem(zebraItem);
-	daemonsList->expandItem(zebraItem);	//expand the level
-	
-}
-
-/**
- * [PRIVATE-SLOT]
- * Check the user daemon choise, and update the preview
- */
-void AddVmForm::updateVmPreview(QTreeWidgetItem *item, int column)
-{
-	Q_UNUSED(item)
-	Q_UNUSED(column)
-	
-	/* Get all items */
-	QList<QTreeWidgetItem *> items = daemonsList->findItems(
-			REGEXP_ALL_DAEMONS,	Qt::MatchRegExp | Qt::MatchRecursive, 0);
-	
-	bool routerDaemonChecked = false;
-	foreach(QTreeWidgetItem *item, items)
-	{
-		if(item->checkState(0) == Qt::Checked)
-			routerDaemonChecked = true;
-	}
-	
-	if(routerDaemonChecked)
-	{
-		vmPreview->load(QString::fromUtf8(":/svg/vm_router"));
-		vmType->setText(tr("Type: ") + "Router");
-	}
-	else
-	{
-		vmPreview->load(QString::fromUtf8(":/svg/vm_host"));
-		vmType->setText(tr("Type: ") + "Host");
-	}
 }
 
 /**
@@ -201,31 +96,9 @@ void AddVmForm::handleAcceptedSignal()
 	if(allCorrect)
 	{
 		/* Ok, get active daemons and foward the request */
-		emit userAddedVm(newVmName, getSelectedDaemons(), machinePos);
+		emit userAddedVm(newVmName, machinePos);
 		
 		vmName->clear();
 		close();
 	}
-}
-
-/**
- * [PRIVATE]
- * Return the list of selected daemons
- */
-QList<Daemon> AddVmForm::getSelectedDaemons()
-{
-	QList<Daemon> activeDaemons;
-	
-	/* Get all items */
-	QList<QTreeWidgetItem *> items = daemonsList->findItems(
-			REGEXP_ALL_DAEMONS,	Qt::MatchRegExp | Qt::MatchRecursive, 0);
-	
-	//scan
-	foreach(QTreeWidgetItem *item, items)
-	{
-		if(item->checkState(0) == Qt::Checked)
-			activeDaemons.append((Daemon)item->data(0, Qt::UserRole).toInt());
-	}
-	
-	return activeDaemons;
 }
