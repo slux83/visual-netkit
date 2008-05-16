@@ -40,26 +40,26 @@ bool PluginProxy::changeGraphicsLabel(QString label)
 
 bool PluginProxy::saveProperty(QTableWidgetItem* property)
 {
-	
+	return true;
 }
 
 QMap< QString, QString > PluginProxy::getPluginProperties()
 {
-	return NULL;
+	return QMap<QString, QString>();
 }
 
 QString PluginProxy::getTemplate()
 {
-	return NULL;
+	return QString();
 }
 
 QString PluginProxy::getTemplatePath()
 {
-	return NULL;
+	return QString();
 }
 
-QSettings PluginProxy::getQSettings()
+/*QSettings PluginProxy::getSettings()
 {
-	return NULL;
+	return QObject();
 }
-
+*/
