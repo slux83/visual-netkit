@@ -22,7 +22,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/SceneTreeMapper.h \
+HEADERS = src/plugin_framework/PluginLoaderFactory.h \
+    src/gui/handles/SceneTreeMapper.h \
     src/common/BugDumper.h \
     src/gui/handles/CdPropertyController.h \
     src/persistence/TemplateExpert.h \
@@ -61,7 +62,8 @@ HEADERS = src/gui/handles/SceneTreeMapper.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/SceneTreeMapper.cpp \
+SOURCES = src/plugin_framework/PluginLoaderFactory.cpp \
+    src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
     src/gui/handles/CdPropertyController.cpp \
     src/persistence/TemplateExpert.cpp \
