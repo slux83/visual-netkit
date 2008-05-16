@@ -67,15 +67,16 @@ version=1.0
 dependencies=plugin1 plugin2 plugin3
 author=author1 author2 author3
 
-[Property Name1]
+[Properties]
+[PropName1]
 p_default_value=DefaultValue1
 p_description=PropertyDescription1
 
-[Property Name2]
+[PropName2]
 p_default_value=DefaultValue2
 p_description=PropertyDescription2
 
-[Property Name3]
+[PropName3]
 p_default_value=DefaultValue3
 p_description=PropertyDescription3
 }}}
