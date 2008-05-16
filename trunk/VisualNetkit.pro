@@ -25,7 +25,6 @@ CONFIG += debug
 HEADERS = src/plugin_framework/PluginInterface.h \
     src/plugin_framework/PluginProxy.h \
     src/plugin_framework/PluginLoaderFactory.h \
-    src/plugin_framework/PluginLoaderFactory.h \
     src/gui/handles/SceneTreeMapper.h \
     src/common/BugDumper.h \
     src/gui/handles/CdPropertyController.h \
@@ -66,7 +65,6 @@ HEADERS = src/plugin_framework/PluginInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
 SOURCES = src/plugin_framework/PluginProxy.cpp \
-    src/plugin_framework/PluginLoaderFactory.cpp \
     src/plugin_framework/PluginLoaderFactory.cpp \
     src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
