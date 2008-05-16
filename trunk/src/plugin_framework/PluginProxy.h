@@ -22,8 +22,9 @@
 #include <QString>
 #include <QMap>
 #include <QSettings>
+#include <QTableWidgetItem>
 
-#include "PluginInterface.h"
+class PluginInterface;
 
 class PluginProxy
 {
@@ -39,7 +40,7 @@ public:
 	QMap< QString, QString > getPluginProperties();
 	QString getTemplate();
 	QString getTemplatePath();
-	QSettings getQSettings();
+//	QSettings getSettings();
 };
 
 #endif /*PLUGINPROXY_H_*/

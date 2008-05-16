@@ -59,7 +59,10 @@ bool PluginLoaderFactory::initPluginLibrary()
 	}
 	
 	//init the instance, and get the QSetting
-	PluginProxy *fakeProxy = createPluginFactory();
-	fakeProxy->get
+	PluginInterface *tester = createPluginFactory();
+	QSettings pluginSetting = tester->getSettings();
+	
+	/* Validate settings */
+	
 	
 }

@@ -64,7 +64,8 @@ HEADERS = src/plugin_framework/PluginInterface.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/plugin_framework/PluginProxy.cpp \
+SOURCES = src/plugin_framework/PluginInterface.cpp \
+    src/plugin_framework/PluginProxy.cpp \
     src/plugin_framework/PluginLoaderFactory.cpp \
     src/gui/handles/SceneTreeMapper.cpp \
     src/common/BugDumper.cpp \
