@@ -22,7 +22,14 @@
 #include <QLibrary>
 #include <QObject>
 #include <QSettings>
+#include <QDebug>
 #include "PluginInterface.h"
+
+/**
+ *  the types of factories
+ */
+typedef PluginInterface* createPlugin_t();
+typedef void destroyPlugin_t(PluginInterface*);
 
 /**
  * This clas is a loader for a single external plugin
@@ -40,11 +47,5 @@ public:
 	PluginProxy * createPlugin(QObject *baseElement);
 	bool initPluginLibrary();
 };
-
-/**
- *  the types of factories
- */
-typedef PluginInterface* createPlugin_t();
-typedef void destroyPlugin_t(PluginInterface*);
 
 #endif /*PLUGINLOADERFACTORY_H_*/

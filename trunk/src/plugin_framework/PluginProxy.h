@@ -40,7 +40,7 @@ public:
 	QMap< QString, QString > getPluginProperties();
 	QString getTemplate();
 	QString getTemplatePath();
-//	QSettings getSettings();
+	QSettings* getPluginSettings();
 };
 
 #endif /*PLUGINPROXY_H_*/

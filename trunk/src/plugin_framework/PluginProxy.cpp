@@ -17,6 +17,7 @@
  */
 
 #include "PluginProxy.h"
+#include "PluginInterface.h"
 
 /**
  * Constructor
@@ -58,8 +59,8 @@ QString PluginProxy::getTemplatePath()
 	return QString();
 }
 
-/*QSettings PluginProxy::getSettings()
+QSettings* PluginProxy::getPluginSettings()
 {
-	return QObject();
+	return pluginInterface->getMySettings();
 }
-*/
+
