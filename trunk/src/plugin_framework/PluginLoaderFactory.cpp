@@ -65,6 +65,30 @@ bool PluginLoaderFactory::initPluginLibrary()
 	QSettings* pluginSetting = tester->getMySettings();
 	
 	/* Validate settings */
+	pluginSetting->beginGroup("General");
+	QStringList generalKeys = pluginSetting->allKeys();
+	qDebug() << "keys:" << generalKeys;
 	
+	//validate keys (General)
+	if(	!generalKeys.contains("name") ||
+		!generalKeys.contains("type") ||
+		!generalKeys.contains("description") ||
+		!generalKeys.contains("version") ||
+		!generalKeys.contains("author") ||
+		!generalKeys.contains("deps"))
+	{
+		qWarning() << "Plugin" << fileName() << "have unvalid config file (General section)";
+		return false;
+	}
+	
+	//type must is 'vm' or 'cd' or 'link'
+	QRegExp typeValidator("vm|cd|link");
+	if(!typeValidator.exactMatch(pluginSetting->value("type").toString()))
+	{
+		qWarning() << "Plugin" << fileName() << "have unvalid type (General section)";
+		return false;
+	}
+	
+	//TODO: plugin name must be unique
 	
 }
