@@ -32,10 +32,9 @@ protected:
 public:
 	PluginInterface(PluginProxy *proxy);
 	virtual QString getConfigFile() = 0;
-	virtual QString getPluginSettings() = 0;
 	virtual QString getConfigPath() = 0;
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
-	virtual QSettings getQSettings() = 0;
+	virtual QSettings* getMySettings() = 0;
 	virtual QString getTemplatePath() = 0;
 	virtual QString getTemplate() = 0;
 	virtual QMap<QString, QString> getPluginProperties() = 0;

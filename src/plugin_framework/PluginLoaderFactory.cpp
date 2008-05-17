@@ -40,7 +40,9 @@ PluginLoaderFactory::~PluginLoaderFactory()
  */
 PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
 {
+	//TODO
 	
+	return new PluginProxy();
 }
 
 /**
@@ -54,13 +56,13 @@ bool PluginLoaderFactory::initPluginLibrary()
 	if(!createPluginFactory || !destroyPluginFactory)
 	{
 		qWarning()	<< "ERROR: cannot resolve factories for plugin:"
-					<< fileName() << "\n" << loader.errorString();
+					<< fileName() << "\n" << errorString();
 		return false;
 	}
 	
 	//init the instance, and get the QSetting
 	PluginInterface *tester = createPluginFactory();
-	QSettings pluginSetting = tester->getSettings();
+	QSettings* pluginSetting = tester->getMySettings();
 	
 	/* Validate settings */
 	
