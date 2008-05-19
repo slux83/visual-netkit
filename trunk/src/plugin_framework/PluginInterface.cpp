@@ -18,8 +18,20 @@
 
 #include "PluginInterface.h"
 
+/**
+ * Constructor
+ */
 PluginInterface::PluginInterface(PluginProxy *proxy)
 {
 	pluginProxy = proxy;
 	pluginProxy->setPluginInterface(this);
 }
+
+/**
+ * Deconstructor
+ */
+PluginInterface::~PluginInterface()
+{
+	delete pluginProxy;
+}
+
