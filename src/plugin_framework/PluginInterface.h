@@ -23,6 +23,12 @@
 #include <QSettings>
 #include "PluginProxy.h"
 
+/**
+ *  the types of factories
+ */
+typedef PluginInterface* createPlugin_t(PluginProxy *proxy);
+typedef void destroyPlugin_t(PluginInterface*);
+
 class PluginInterface
 {
 	
@@ -41,11 +47,6 @@ public:
 	virtual QMap<QString, QString> getPluginProperties() = 0;
 };
 
-/**
- *  the types of factories
- */
-typedef PluginInterface* createPlugin_t();
-typedef void destroyPlugin_t(PluginInterface*);
 
 #endif /*PLUGIN_INTERFACE_H_*/
 

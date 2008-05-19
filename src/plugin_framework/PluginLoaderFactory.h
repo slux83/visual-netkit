@@ -25,11 +25,6 @@
 #include <QDebug>
 #include "PluginInterface.h"
 
-/**
- *  the types of factories
- */
-typedef PluginInterface* createPlugin_t(PluginProxy *proxy);
-typedef void destroyPlugin_t(PluginInterface*);
 
 /**
  * This clas is a loader for a single external plugin
