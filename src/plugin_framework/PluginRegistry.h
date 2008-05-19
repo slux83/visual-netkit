@@ -16,30 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGIN_INTERFACE_H_
-#define PLUGIN_INTERFACE_H_
+#ifndef PLUGINREGISTRY_H_
+#define PLUGINREGISTRY_H_
 
-#include <QTableWidgetItem>
-#include <QSettings>
-#include "PluginProxy.h"
+#include <QMap>
 
-class PluginInterface
+class PluginRegistry
 {
-	
-protected:
-	PluginProxy *pluginProxy;
+private:
+	PluginRegistry *instance;
+	QMap< QString, QObject* > associations;
 	
 public:
-	PluginInterface(PluginProxy *proxy);
-	virtual ~PluginInterface();
-	virtual QString getConfigFile() = 0;
-	virtual QString getConfigPath() = 0;
-	virtual bool saveProperty(QTableWidgetItem* property) = 0;
-	virtual QSettings* getMySettings() = 0;
-	virtual QString getTemplatePath() = 0;
-	virtual QString getTemplate() = 0;
-	virtual QMap<QString, QString> getPluginProperties() = 0;
+	PluginRegistry();
+	virtual ~PluginRegistry();
+	
+	bool fetchPlugins();
+	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
 };
 
-#endif /*PLUGIN_INTERFACE_H_*/
-
+#endif /*PLUGINREGISTRY_H_*/
