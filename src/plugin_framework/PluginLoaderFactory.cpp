@@ -41,8 +41,10 @@ PluginLoaderFactory::~PluginLoaderFactory()
 PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
 {
 	//TODO
+	PluginProxy *proxy = new PluginProxy();
+	createPluginFactory(proxy);
 	
-	return new PluginProxy();
+	return proxy;
 }
 
 /**
@@ -50,6 +52,8 @@ PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
  */
 bool PluginLoaderFactory::initPluginLibrary()
 {
+	bool retVal = true;
+	
 	createPluginFactory = (createPlugin_t *)resolve("createPlugin");
 	destroyPluginFactory = (destroyPlugin_t *)resolve("destroyPlugin");
 	
@@ -61,7 +65,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 	}
 	
 	//init the instance, and get the QSetting
-	PluginInterface *tester = createPluginFactory();
+	PluginInterface *tester = createPluginFactory(new PluginProxy());
 	QSettings* pluginSetting = tester->getMySettings();
 	
 	/* Validate settings */
@@ -70,26 +74,28 @@ bool PluginLoaderFactory::initPluginLibrary()
 	qDebug() << "keys:" << generalKeys;
 	
 	//validate keys (General)
-	if(	!generalKeys.contains("name") ||
+	if(retVal && (!generalKeys.contains("name") ||
 		!generalKeys.contains("type") ||
 		!generalKeys.contains("description") ||
 		!generalKeys.contains("version") ||
 		!generalKeys.contains("author") ||
-		!generalKeys.contains("deps"))
+		!generalKeys.contains("deps")))
 	{
 		qWarning() << "Plugin" << fileName() << "have unvalid config file (General section)";
-		return false;
+		retVal = false;
 	}
 	
 	//type must is 'vm' or 'cd' or 'link'
 	QRegExp typeValidator("vm|cd|link");
-	if(!typeValidator.exactMatch(pluginSetting->value("type").toString()))
+	if(retVal && !typeValidator.exactMatch(pluginSetting->value("type").toString()))
 	{
 		qWarning() << "Plugin" << fileName() << "have unvalid type (General section)";
-		return false;
+		retVal = false;
 	}
 	
 	//TODO: plugin name must be unique
 	
-	return true;
+	delete tester;
+	
+	return retVal;
 }
