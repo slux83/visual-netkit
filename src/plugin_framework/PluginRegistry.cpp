@@ -90,11 +90,14 @@ bool PluginRegistry::fetchPlugins()
 	QDir pluginDir(DEFAULT_PLUGIN_DIR);
 	if (!pluginDir.exists())
 	{
-		qWarning("Cannot find the plugin directory");
+		qWarning() << "Cannot find the plugin directory" << DEFAULT_PLUGIN_DIR;
+		qDebug() << pluginDir.path();
 		allok = false;
 	}	
 	else
 	{
+		pluginDir.setFilter( QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot );
+
 		// gets plugins list in the dir
 		QStringList list = pluginDir.entryList();
 		QRegExp rx("*.so");

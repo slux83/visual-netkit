@@ -22,8 +22,8 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
-#include "../plugin_framework/PluginInterface.h"
-#include "../plugin_framework/PluginProxy.h"
+#include "PluginInterface.h"
+#include "PluginProxy.h"
 
 /**
  * A simple plugin that do nothing
@@ -34,7 +34,7 @@ class Plugin : public PluginInterface
 private:
 	QString description, name, tpl, templatePath, configPath, configFile;
 	QMap<QString, QString> properties;
-	QSettings* mysettings;
+	QSettings* mySettings;
 	PluginProxy *myProxy;
 	
 public:
@@ -45,7 +45,7 @@ public:
 	QString getConfigFile() { return configFile; };
 	QString getConfigPath() { return configPath; };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
-	QSettings* getMySettings() { return mysettings; };
+	QSettings* getMySettings() { return mySettings; };
 	QString getTemplatePath() { return templatePath; };
 	QString getTemplate() { return tpl; };
 	QMap<QString, QString> getPluginProperties() { return properties; };
