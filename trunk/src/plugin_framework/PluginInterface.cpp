@@ -21,4 +21,5 @@
 PluginInterface::PluginInterface(PluginProxy *proxy)
 {
 	pluginProxy = proxy;
+	pluginProxy->setPluginInterface(this);
 }

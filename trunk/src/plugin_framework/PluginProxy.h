@@ -28,7 +28,7 @@ class PluginInterface;
 
 class PluginProxy
 {
-protected:
+private:
 	PluginInterface *pluginInterface;
 	
 public:
@@ -41,6 +41,7 @@ public:
 	QString getTemplate();
 	QString getTemplatePath();
 	QSettings* getPluginSettings();
+	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 };
 
 #endif /*PLUGINPROXY_H_*/
