@@ -12,7 +12,7 @@ DESTDIR = ../../../bin/plugins
 INCLUDEPATH += . \
     ../../plugin_framework
 
-RESOURCES = resources/plugin.qrc
+RESOURCES = resources/resources.qrc
 
 # Input
 HEADERS += Plugin.h

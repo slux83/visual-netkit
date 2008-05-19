@@ -21,7 +21,7 @@
 /* constructor */
 Plugin::Plugin() : PluginInterface()
 {
-	mySettings = new QSettings(":/ini", QSettings::IniFormat);
+	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
 	myProxy = NULL;
 	name = "I'm a Plugin";
 	description = "I'm doing nothing :3 But i'm here!";
