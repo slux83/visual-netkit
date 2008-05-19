@@ -104,10 +104,6 @@ void MainWindow::createConnections()
 	connect(saveFileDialog, SIGNAL(filesSelected(const QStringList &)),
 			labHandler, SLOT(saveLab(const QStringList &)));
 	
-	//connect: item tree lab selected
-	connect(labTree, SIGNAL(itemClicked(QTreeWidgetItem * , int)),
-			labHandler, SLOT(labTreeItemSelected(QTreeWidgetItem * , int)));
-	
 	//connect: item tree lab double clicked
 	connect(labTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)),
 			labHandler, SLOT(labTreeItemDoubleClicked(QTreeWidgetItem * , int)));

@@ -51,6 +51,7 @@ public:
 	UndoStack *getUndoStack() { return undoStack; };
 	MainWindow* getMainWindow() { return mainWindow; };
 	bool getLabState();
+	void prepareRenderLabProperties();
 
 public slots:
 	void newLab();
@@ -58,7 +59,6 @@ public slots:
 	void saveLab(const QStringList &selectedFiles);
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
-	void labTreeItemSelected(QTreeWidgetItem * item, int column);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
 	void saveChangedProperty(int row, int column);
 

@@ -192,31 +192,24 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	emit logEvent(tr("Created a new virtual machine: ") + m->getName());
 	
 }
+
 /**
- * [SLOT]
- * Manage the selection of an element inside the tree (lab tree)
+ * Prepare the handler and foreward the render action to propertyController
  */
-void LabHandler::labTreeItemSelected(QTreeWidgetItem * item, int column)
+void LabHandler::prepareRenderLabProperties()
 {
-	Q_UNUSED(column);
+	/* Clear the property editor */
+	mainWindow->clearPropertyDock();
 	
-	if(item->data(0, Qt::UserRole) == "lab_element")
-	{
-		qDebug() << "Laboratory element selected";
-		
-		/* Clear the property editor */
-		mainWindow->clearPropertyDock();
-		
-		/* Disconnect the old handler */
-		disconnect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 0, 0);
-		
-		/* Render properties */
-		propertyController->renderLabProperties(mainWindow->propertyTable);
-		
-		/* Connect the correct handler dinamically */
-		connect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 
-			this, SLOT(saveChangedProperty(int, int)));
-	}
+	/* Disconnect the old handler */
+	disconnect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 0, 0);
+	
+	/* Render properties */
+	propertyController->renderLabProperties(mainWindow->propertyTable);
+	
+	/* Connect the correct handler dinamically */
+	connect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 
+		this, SLOT(saveChangedProperty(int, int)));
 }
 
 /**
