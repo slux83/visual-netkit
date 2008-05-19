@@ -31,6 +31,7 @@ protected:
 	
 public:
 	PluginInterface(PluginProxy *proxy);
+	virtual ~PluginInterface();
 	virtual QString getConfigFile() = 0;
 	virtual QString getConfigPath() = 0;
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
