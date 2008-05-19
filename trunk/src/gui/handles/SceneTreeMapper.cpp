@@ -17,6 +17,7 @@
  */
 
 #include "SceneTreeMapper.h"
+#include "CdHandler.h"
 
 /* Init che instance field to NULL */
 SceneTreeMapper* SceneTreeMapper::instance = NULL;
@@ -28,6 +29,10 @@ SceneTreeMapper::SceneTreeMapper() : QObject()
 {
 	rootElement = new QTreeWidgetItem();
 	sceneTree = LabHandler::getInstance()->getMainWindow()->sceneTree;
+	
+	//connect the handler
+	connect(sceneTree, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+			this, SLOT(handleItemClicked(QTreeWidgetItem*, int)));
 }
 
 /**
@@ -111,4 +116,38 @@ void SceneTreeMapper::addEthernetElement(LinkItem* linkItem)
 	
 	/* save inside the map */
 	linkMap.insert(linkItem, elem);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * - handle che tree click
+ * - connect the future handler (for property changes)
+ * - delegate the property render
+ */
+void SceneTreeMapper::handleItemClicked(QTreeWidgetItem *item, int column)
+{
+	Q_UNUSED(column);
+	
+	/* find where *item is mapped */
+	if(item == rootElement)
+	{
+		//mapped with the laboratory
+		LabHandler::getInstance()->prepareRenderLabProperties();
+	}
+	
+	if(linkMap.key(item, NULL) != NULL)
+	{
+		//mapped with a linkItem
+	}
+	
+	if(cdMap.key(item, NULL) != NULL)
+	{
+		//mapped with a collision domain item
+		CdHandler::getInstance()->renderCdProperties(cdMap.key(item));
+	}
+	
+	if(vmMap.key(item, NULL) != NULL)
+	{
+		//mapped with a virtual machine item
+	}
 }

@@ -224,11 +224,11 @@ void LabScene::handleSelection()
 	QList<QGraphicsItem *> items = selectedItems();
 	if(items.size() > 0)
 	{
-		CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(items.first());
+		//CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(items.first());
 		
 		/* Render object properties */
-		if(cdItem != NULL)
-			CdHandler::getInstance()->renderCdProperties(cdItem);
+		//if(cdItem != NULL)
+			//CdHandler::getInstance()->renderCdProperties(cdItem);
 	}
 	
 }

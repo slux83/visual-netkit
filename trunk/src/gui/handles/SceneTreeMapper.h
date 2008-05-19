@@ -51,6 +51,9 @@ private:
 	QMap<CollisionDomainItem*, QTreeWidgetItem*> cdMap;
 	QMap<LinkItem*, QTreeWidgetItem*> linkMap;
 	QTreeWidgetItem *rootElement;
+	
+private slots:
+	void handleItemClicked(QTreeWidgetItem *item, int column);
 
 public:
 	SceneTreeMapper();
