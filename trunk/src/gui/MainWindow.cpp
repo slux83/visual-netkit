@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	setupUi(this);
 	
 	/* Some settings */
-	showMaximized();
 	createActionGroups();
 	propertyTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	

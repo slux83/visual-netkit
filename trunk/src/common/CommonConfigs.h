@@ -35,7 +35,7 @@
 #define LAB_CONF QString("lab.conf")
 
 /* Graphics label font */
-#define GRAPHICS_FONT QFont("Sand Serif", 10)
+#define GRAPHICS_FONT QFont("Sand Serif", 10, QFont::Bold)
 
 /* Default name for XML lab configuration file */
 #define XML_DEFAULT_FILE_NAME QString("lab.xml")
