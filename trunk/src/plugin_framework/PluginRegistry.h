@@ -21,18 +21,30 @@
 
 #include <QMap>
 #include <QObject>
+#include "PluginProxy.h"
+#include "PluginLoaderFactory.h"
+#include "../core/VirtualMachine.h"
+#include "../core/CollisionDomain.h"
+#include "../core/HardwareInterface.h"
 
 class PluginRegistry
 {
 private:
-	PluginRegistry *instance;
-	QMap< QString, QObject* > associations;
+	static PluginRegistry *instance;
+	
+	QMap<QString, PluginLoaderFactory*> factories;
+	QMap<VirtualMachine*, PluginProxy*> vmAssociations;
+	QMap<CollisionDomain*, PluginProxy*> cdAssociations;
+	QMap<HardwareInterface*, PluginProxy*> hiAssociations;
+	
+protected:
+	QString getPluginPath(QString pluginName);	//TODO
 	
 public:
 	PluginRegistry();
 	virtual ~PluginRegistry();
 	
-	PluginRegistry* getInstance();
+	static PluginRegistry* getInstance();
 	
 	bool fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
