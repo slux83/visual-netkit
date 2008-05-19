@@ -25,7 +25,6 @@
 
 class PluginInterface
 {
-	
 //protected:
 //	PluginProxy *pluginProxy;
 	

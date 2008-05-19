@@ -39,8 +39,6 @@ private:
 public:
 	Plugin();
 	~Plugin() { delete myProxy; };
-	QString getDescription() { return QString(name + QString(", ") + description); };
-
 	QString getConfigFile() { return configFile; };
 	QString getConfigPath() { return configPath; };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
