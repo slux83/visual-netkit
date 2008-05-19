@@ -91,4 +91,5 @@ bool PluginLoaderFactory::initPluginLibrary()
 	
 	//TODO: plugin name must be unique
 	
+	return true;
 }
