@@ -19,7 +19,7 @@
 #include "Plugin.h"
 
 /* constructor */
-Plugin::Plugin()
+Plugin::Plugin(PluginProxy *proxy) : PluginInterface(proxy)
 {
 	name = "I'm a Plugin";
 	description = "I'm doing nothing :3 But i'm here!";
