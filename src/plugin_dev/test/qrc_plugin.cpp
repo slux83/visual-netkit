@@ -1,8 +1,13 @@
 /****************************************************************************
 ** Resource object code
 **
+<<<<<<< .mine
+** Created: Mon May 19 21:18:44 2008
+**      by: The Resource Compiler for Qt version 4.3.4
+=======
 ** Created: Mon May 19 21:14:35 2008
 **      by: The Resource Compiler for Qt version 4.3.3
+>>>>>>> .r403
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -10,7 +15,7 @@
 #include <QtCore/qglobal.h>
 
 static const unsigned char qt_resource_data[] = {
-  // /home/paolo/svn/visual-netkit/trunk/src/plugin_dev/test/resources/plugin.ini
+  // /home/slux/sviluppo/C++/visual-netkit/trunk/src/plugin_dev/test/resources/plugin.ini
   0x0,0x0,0x0,0x6c,
   0x5b,
   0x47,0x65,0x6e,0x65,0x72,0x61,0x6c,0x5d,0xa,0x6e,0x61,0x6d,0x65,0x3d,0x54,0x65,
