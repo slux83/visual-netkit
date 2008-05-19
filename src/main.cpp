@@ -20,41 +20,35 @@
 #include <QSplashScreen>
 #include "gui/MainWindow.h"
 #include "common/BugDumper.h"
-
-#include <QThread>
+#include "plugin_framework/PluginRegistry.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
-	MainWindow *win = new MainWindow();
 	
-	/* Create the bug dumper object */
-	BugDumper *dumper = new BugDumper();
-	Q_UNUSED(dumper);
-	
-	// Load splashscreen image and window
+	// Load splashscreen
 	QPixmap pixmap(":/splashscreens/ss_00");
 	QSplashScreen splash(pixmap);
+	splash.setWindowFlags(Qt::WindowStaysOnTopHint);
+	splash.setWindowFlags(Qt::SplashScreen);
 	splash.show();
-
-	// Loading some items
-	splash.showMessage("Loaded modules");
-	qDebug() << "Loaded modules";
-
-	app.processEvents();
-
-	// Establishing connections
-	splash.showMessage("Established connections");
-	qDebug() << "Established connections";
 	
-	app.processEvents();
+	//creating main gui
+	MainWindow *win = new MainWindow();
+	splash.showMessage("Loading main GUI");
+	qDebug() << "Loading main GUI";
 	
-	for(int i=0; i<150000; i++)
-	{
-		i--;
-		i++;
-	}
-		
+	/* Creates the bug dumper object */
+	BugDumper *dumper = new BugDumper();
+	Q_UNUSED(dumper);
+	splash.showMessage("Loading bug dumper");
+	qDebug() << "Loading bug dumper";
+	
+	PluginRegistry::getInstance()->fetchPlugins();
+	splash.showMessage("Loading plugins");
+	qDebug() << "Loading plugins";
+	
+	sleep(5);
 	
 	win->show();
 	splash.finish(win);
