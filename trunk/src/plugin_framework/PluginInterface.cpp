@@ -27,11 +27,4 @@ PluginInterface::PluginInterface(PluginProxy *proxy)
 	pluginProxy->setPluginInterface(this);
 }
 
-/**
- * Deconstructor
- */
-PluginInterface::~PluginInterface()
-{
-	delete pluginProxy;
-}
 

@@ -35,10 +35,11 @@ private:
 	QString description, name, tpl, templatePath, configPath, configFile;
 	QMap<QString, QString> properties;
 	QSettings* mysettings;
+	PluginProxy *myProxy;
 	
 public:
 	Plugin(PluginProxy *proxy);
-	~Plugin() {};
+	~Plugin() { delete myProxy; };
 	QString getDescription() { return QString(name + QString(", ") + description); };
 
 	QString getConfigFile() { return configFile; };
