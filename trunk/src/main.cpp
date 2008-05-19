@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	PluginRegistry::getInstance()->fetchPlugins();
 	
 	splash.finish(win);
-	win->showMaximized();
+	win->setWindowState(Qt::WindowMaximized);
 	win->show();
 	
 	
