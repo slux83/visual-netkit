@@ -38,16 +38,16 @@ private:
 	
 public:
 	Plugin(PluginProxy *proxy);
-	virtual ~Plugin() {};
+	~Plugin() {};
 	QString getDescription() { return QString(name + QString(", ") + description); };
 
-	virtual QString getConfigFile() { return configFile; };
-	virtual QString getConfigPath() { return configPath; };
-	virtual bool saveProperty(QTableWidgetItem* property) { return false; };
-	virtual QSettings* getMySettings() { return mysettings; };
-	virtual QString getTemplatePath() { return templatePath; };
-	virtual QString getTemplate() { return tpl; };
-	virtual QMap<QString, QString> getPluginProperties() { return properties; };
+	QString getConfigFile() { return configFile; };
+	QString getConfigPath() { return configPath; };
+	bool saveProperty(QTableWidgetItem* property) { return false; };
+	QSettings* getMySettings() { return mysettings; };
+	QString getTemplatePath() { return templatePath; };
+	QString getTemplate() { return tpl; };
+	QMap<QString, QString> getPluginProperties() { return properties; };
 };
 
 
