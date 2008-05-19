@@ -41,8 +41,9 @@ PluginLoaderFactory::~PluginLoaderFactory()
 PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
 {
 	//TODO
+	PluginInterface *p = createPluginFactory();
 	PluginProxy *proxy = new PluginProxy();
-	createPluginFactory(proxy);
+	p->setProxy(proxy);
 	
 	return proxy;
 }
@@ -65,7 +66,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 	}
 	
 	//init the instance, and get the QSetting
-	PluginInterface *tester = createPluginFactory(new PluginProxy());
+	PluginInterface *tester = createPluginFactory();
 	QSettings* pluginSetting = tester->getMySettings();
 	
 	/* Validate settings */
@@ -94,8 +95,6 @@ bool PluginLoaderFactory::initPluginLibrary()
 	}
 	
 	//TODO: plugin name must be unique
-	
-	delete tester;
-	
+		
 	return retVal;
 }

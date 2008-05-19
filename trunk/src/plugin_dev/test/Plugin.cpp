@@ -19,10 +19,10 @@
 #include "Plugin.h"
 
 /* constructor */
-Plugin::Plugin(PluginProxy *proxy) : PluginInterface(proxy)
+Plugin::Plugin() : PluginInterface()
 {
 	mySettings = new QSettings();
-	myProxy = proxy;
+	myProxy = NULL;
 	name = "I'm a Plugin";
 	description = "I'm doing nothing :3 But i'm here!";
 }

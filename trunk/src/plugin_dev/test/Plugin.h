@@ -23,7 +23,6 @@
 #include <QString>
 #include <QSettings>
 #include "PluginInterface.h"
-#include "PluginProxy.h"
 
 /**
  * A simple plugin that do nothing
@@ -38,7 +37,7 @@ private:
 	PluginProxy *myProxy;
 	
 public:
-	Plugin(PluginProxy *proxy);
+	Plugin();
 	~Plugin() { delete myProxy; };
 	QString getDescription() { return QString(name + QString(", ") + description); };
 
@@ -49,15 +48,16 @@ public:
 	QString getTemplatePath() { return templatePath; };
 	QString getTemplate() { return tpl; };
 	QMap<QString, QString> getPluginProperties() { return properties; };
+	void setProxy(PluginProxy *proxy) { myProxy = proxy; };
 };
 
 
 /******************* PLUGIN FACTORIES ***********************/
 
 /* Factory (creator) */
-extern "C" PluginInterface* createPlugin(PluginProxy *proxy)
+extern "C" PluginInterface* createPlugin()
 {
-    return new Plugin(proxy);
+    return new Plugin();
 }
 
 /* Factory (destroyer) */

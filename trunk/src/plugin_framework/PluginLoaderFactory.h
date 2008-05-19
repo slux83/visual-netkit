@@ -25,7 +25,6 @@
 #include <QDebug>
 #include "PluginInterface.h"
 
-
 /**
  * This clas is a loader for a single external plugin
  */

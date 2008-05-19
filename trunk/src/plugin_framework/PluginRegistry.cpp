@@ -85,7 +85,7 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 bool PluginRegistry::fetchPlugins()
 {
 	bool allok = true;
-	
+					
 	// checks if directory exists
 	QDir pluginDir(DEFAULT_PLUGIN_DIR);
 	if (!pluginDir.exists())
