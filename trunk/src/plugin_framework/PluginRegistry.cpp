@@ -77,20 +77,25 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 	return proxy;
 }
 
+/**
+ * 
+ */
 bool PluginRegistry::fetchPlugins()
 {
 	bool allok = true;
-	//factories.insert(pluginName, new PluginLoaderFactory(getPluginPath()));
+	
+	/*
+	controlla se esiste la cartella (senò la crea - per ora)
+	./plugins
+	prendo so
+	per ognuno creo loaderfact e gli passo il path
+	*/
+	/*
+	PluginLoaderFactory factory = new PluginLoaderFactory();
+	factory.initPluginLibrary();
+	*/
+	//factories.insert(pluginName, factory);
 	return allok;
 }
 
-/**
- * [PROTECTED]
- * Returns passed plugin file path.
- */
-//TODO
-QString getPluginPath(QString pluginName)
-{
-	return "";
-}
 
