@@ -80,13 +80,13 @@ bool PluginLoaderFactory::initPluginLibrary()
 		!generalKeys.contains("description") ||
 		!generalKeys.contains("version") ||
 		!generalKeys.contains("author") ||
-		!generalKeys.contains("deps")))
+		!generalKeys.contains("dependencies")))
 	{
 		qWarning() << "Plugin" << fileName() << "have unvalid config file (General section)";
 		retVal = false;
 	}
 	
-	//type must is 'vm' or 'cd' or 'link'
+	//type must be 'vm' or 'cd' or 'link'
 	QRegExp typeValidator("vm|cd|link");
 	if(retVal && !typeValidator.exactMatch(pluginSetting->value("type").toString()))
 	{
