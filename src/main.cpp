@@ -26,32 +26,34 @@ int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	
-	// Load splashscreen
-	QPixmap pixmap(":/splashscreens/ss_00");
+	/* Load splashscreen */
+	QPixmap pixmap(":/splashscreens/ss_10");
 	QSplashScreen splash(pixmap);
 	splash.setWindowFlags(Qt::WindowStaysOnTopHint);
 	splash.setWindowFlags(Qt::SplashScreen);
 	splash.show();
+	splash.showMessage("Starting...");
 	
-	//creating main gui
-	MainWindow *win = new MainWindow();
+	/* creating main gui */
 	splash.showMessage("Loading main GUI");
 	qDebug() << "Loading main GUI";
+	MainWindow *win = new MainWindow();
 	
 	/* Creates the bug dumper object */
-	BugDumper *dumper = new BugDumper();
-	Q_UNUSED(dumper);
 	splash.showMessage("Loading bug dumper");
 	qDebug() << "Loading bug dumper";
+	BugDumper *dumper = new BugDumper();
+	Q_UNUSED(dumper);
 	
-	PluginRegistry::getInstance()->fetchPlugins();
+	/* Load plugins */
 	splash.showMessage("Loading plugins");
 	qDebug() << "Loading plugins";
+	PluginRegistry::getInstance()->fetchPlugins();
 	
-	sleep(5);
-	
-	win->show();
 	splash.finish(win);
+	win->showMaximized();
+	win->show();
+	
 	
 	return app.exec();
 }
