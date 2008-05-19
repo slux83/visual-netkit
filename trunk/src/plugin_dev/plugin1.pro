@@ -10,7 +10,5 @@ INCLUDEPATH += . \
     ../plugin_framework
 
 # Input
-HEADERS += Plugin.h \
-    Plugin.h
-SOURCES += Plugin.cpp \
-    Plugin.cpp
+HEADERS += Plugin.h 
+SOURCES += Plugin.cpp 

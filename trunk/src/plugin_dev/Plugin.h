@@ -23,6 +23,7 @@
 #include <QString>
 #include <QSettings>
 #include "../plugin_framework/PluginInterface.h"
+#include "../plugin_framework/PluginProxy.h"
 
 /**
  * A simple plugin that do nothing
@@ -36,7 +37,7 @@ private:
 	QSettings* mysettings;
 	
 public:
-	Plugin();
+	Plugin(PluginProxy *proxy);
 	virtual ~Plugin() {};
 	QString getDescription() { return QString(name + QString(", ") + description); };
 
@@ -53,9 +54,9 @@ public:
 /******************* PLUGIN FACTORIES ***********************/
 
 /* Factory (creator) */
-extern "C" PluginInterface* createPlugin()
+extern "C" PluginInterface* createPlugin(PluginProxy *proxy)
 {
-    return new Plugin();
+    return new Plugin(proxy);
 }
 
 /* Factory (destroyer) */
