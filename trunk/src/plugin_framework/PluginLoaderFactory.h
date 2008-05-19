@@ -28,7 +28,7 @@
 /**
  *  the types of factories
  */
-typedef PluginInterface* createPlugin_t();
+typedef PluginInterface* createPlugin_t(PluginProxy *proxy);
 typedef void destroyPlugin_t(PluginInterface*);
 
 /**
