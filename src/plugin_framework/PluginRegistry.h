@@ -37,17 +37,17 @@ private:
 	QMap<CollisionDomain*, PluginProxy*> cdAssociations;
 	QMap<HardwareInterface*, PluginProxy*> hiAssociations;
 	
-protected:
-	QString getPluginPath(QString pluginName);	//TODO
-	
 public:
 	PluginRegistry();
 	virtual ~PluginRegistry();
-	
 	static PluginRegistry* getInstance();
 	
 	bool fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
+	
+	PluginProxy* getVmProxy(VirtualMachine* vm) { return vmAssociations.value(vm); };
+	PluginProxy* getCdProxy(CollisionDomain* cd) { return cdAssociations.value(cd); };
+	PluginProxy* getHiProxy(HardwareInterface* hi) { return hiAssociations.value(hi); };
 };
 
 #endif /*PLUGINREGISTRY_H_*/
