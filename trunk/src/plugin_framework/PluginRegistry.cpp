@@ -16,30 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGIN_INTERFACE_H_
-#define PLUGIN_INTERFACE_H_
+#include "PluginRegistry.h"
+#include <QMap>
 
-#include <QTableWidgetItem>
-#include <QSettings>
-#include "PluginProxy.h"
-
-class PluginInterface
+/**
+ * Constructor
+ */
+PluginRegistry::PluginRegistry()
 {
-	
-protected:
-	PluginProxy *pluginProxy;
-	
-public:
-	PluginInterface(PluginProxy *proxy);
-	virtual ~PluginInterface();
-	virtual QString getConfigFile() = 0;
-	virtual QString getConfigPath() = 0;
-	virtual bool saveProperty(QTableWidgetItem* property) = 0;
-	virtual QSettings* getMySettings() = 0;
-	virtual QString getTemplatePath() = 0;
-	virtual QString getTemplate() = 0;
-	virtual QMap<QString, QString> getPluginProperties() = 0;
-};
+}
 
-#endif /*PLUGIN_INTERFACE_H_*/
+/**
+ * Deconstructor
+ */
+PluginRegistry::~PluginRegistry()
+{
+}
+
+/**
+ * Singleton
+ */
+PluginRegistry* PluginRegistry::getInstance()
+{
+	if (instance == NULL) 
+	{
+		instance = new PluginRegistry();
+	}
+	return instance;
+}
+
+/**
+ * Registers a plugin proxy in the register and returns it.
+ */
+PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseElement)
+{
+	PluginProxy proxy = PluginLoaderFactory::createPlugin(baseElement);
+	associations.insert(pluginName, baseElement);
+	return proxy;
+}
 

@@ -17,8 +17,11 @@
  */
 
 #include <QApplication>
+#include <QSplashScreen>
 #include "gui/MainWindow.h"
 #include "common/BugDumper.h"
+
+#include <QThread>
 
 int main(int argc, char *argv[])
 {
@@ -29,7 +32,32 @@ int main(int argc, char *argv[])
 	BugDumper *dumper = new BugDumper();
 	Q_UNUSED(dumper);
 	
+	// Load splashscreen image and window
+	QPixmap pixmap(":/splashscreens/ss_00");
+	QSplashScreen splash(pixmap);
+	splash.show();
+
+	// Loading some items
+	splash.showMessage("Loaded modules");
+	qDebug() << "Loaded modules";
+
+	app.processEvents();
+
+	// Establishing connections
+	splash.showMessage("Established connections");
+	qDebug() << "Established connections";
+	
+	app.processEvents();
+	
+	for(int i=0; i<150000; i++)
+	{
+		i--;
+		i++;
+	}
+		
+	
 	win->show();
+	splash.finish(win);
 	
 	return app.exec();
 }
