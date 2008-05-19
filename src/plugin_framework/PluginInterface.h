@@ -23,21 +23,15 @@
 #include <QSettings>
 #include "PluginProxy.h"
 
-/**
- *  the types of factories
- */
-typedef PluginInterface* createPlugin_t(PluginProxy *proxy);
-typedef void destroyPlugin_t(PluginInterface*);
-
 class PluginInterface
 {
 	
-protected:
-	PluginProxy *pluginProxy;
+//protected:
+//	PluginProxy *pluginProxy;
 	
 public:
-	PluginInterface(PluginProxy *proxy);
-	virtual ~PluginInterface();
+	//virtual PluginInterface(PluginProxy *proxy) = 0;
+	virtual ~PluginInterface() = 0;
 	virtual QString getConfigFile() = 0;
 	virtual QString getConfigPath() = 0;
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
@@ -45,7 +39,14 @@ public:
 	virtual QString getTemplatePath() = 0;
 	virtual QString getTemplate() = 0;
 	virtual QMap<QString, QString> getPluginProperties() = 0;
+	virtual void setProxy(PluginProxy *proxy) = 0;
 };
+
+/**
+ *  the types of factories
+ */
+typedef PluginInterface* createPlugin_t();
+typedef void destroyPlugin_t(PluginInterface*);
 
 
 #endif /*PLUGIN_INTERFACE_H_*/
