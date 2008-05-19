@@ -16,8 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "PluginRegistry.h"
 #include <QMap>
+
+#include "PluginRegistry.h"
+#include "PluginLoaderFactory.h"
+
+
+/* Init che instance field to NULL */
+PluginRegistry* PluginRegistry::instance = NULL;
 
 /**
  * Constructor
@@ -34,6 +40,7 @@ PluginRegistry::~PluginRegistry()
 }
 
 /**
+ * [STATIC]
  * Singleton
  */
 PluginRegistry* PluginRegistry::getInstance()
@@ -49,9 +56,41 @@ PluginRegistry* PluginRegistry::getInstance()
  * Registers a plugin proxy in the register and returns it.
  */
 PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseElement)
-{
-	PluginProxy proxy = PluginLoaderFactory::createPlugin(baseElement);
-	associations.insert(pluginName, baseElement);
+{	
+	PluginProxy* proxy = factories.value(pluginName)->createPlugin(baseElement);
+	
+	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(baseElement);
+	if ( vm != NULL ) {
+		vmAssociations.insert(vm, proxy);
+	}
+	
+	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(baseElement);
+	if ( cd != NULL ) {
+		cdAssociations.insert(cd, proxy);
+	}
+	
+	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(baseElement);
+	if ( hi != NULL ) {
+		hiAssociations.insert(hi, proxy);
+	}
+	
 	return proxy;
+}
+
+bool PluginRegistry::fetchPlugins()
+{
+	bool allok = true;
+	//factories.insert(pluginName, new PluginLoaderFactory(getPluginPath()));
+	return allok;
+}
+
+/**
+ * [PROTECTED]
+ * Returns passed plugin file path.
+ */
+//TODO
+QString getPluginPath(QString pluginName)
+{
+	return "";
 }
 
