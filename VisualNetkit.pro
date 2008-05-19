@@ -66,6 +66,7 @@ HEADERS = src/plugin_framework/PluginRegistry.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
 SOURCES = src/plugin_framework/PluginRegistry.cpp \
+	src/plugin_framework/PluginInterface.cpp \
     src/plugin_framework/PluginProxy.cpp \
     src/plugin_framework/PluginLoaderFactory.cpp \
     src/gui/handles/SceneTreeMapper.cpp \
