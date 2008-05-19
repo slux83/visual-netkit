@@ -17,6 +17,9 @@
  */
 
 #include "Plugin.h"
+#include <QDebug>
+#include <QResource>
+#include <QFile>
 
 /* constructor */
 Plugin::Plugin() : PluginInterface()
@@ -25,4 +28,30 @@ Plugin::Plugin() : PluginInterface()
 	myProxy = NULL;
 	name = "I'm a Plugin";
 	description = "I'm doing nothing :3 But i'm here!";
+}
+
+
+/**
+ * Returns the plugin template if resource file exists, otherwise returns an empty QString.
+ */
+QString Plugin::getTemplate()
+{
+	QResource resource(":/basic_tpl");
+	QString tplPath = resource.absoluteFilePath();
+	
+	// if resource file path is not null
+	if (!tplPath.isNull()) 
+	{
+		QFile data(tplPath);
+		if (data.open(QFile::ReadOnly)) 
+		{
+			// if file exists, read it
+			QTextStream in(&data);
+			tpl = in.readAll();
+		}	
+	} else {
+		return "";
+	}
+		
+	return tpl;
 }
