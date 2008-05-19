@@ -17,12 +17,14 @@
  */
 
 #include <QMap>
+#include <QDir>
 
 #include "PluginRegistry.h"
 #include "PluginLoaderFactory.h"
+#include "../common/CommonConfigs.h"
 
 
-/* Init che instance field to NULL */
+/* Init the instance field to NULL */
 PluginRegistry* PluginRegistry::instance = NULL;
 
 /**
@@ -78,22 +80,45 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 }
 
 /**
- * 
+ * Fetches all plugins in the plugin directory.
  */
 bool PluginRegistry::fetchPlugins()
 {
 	bool allok = true;
-	/*
-	controlla se esiste la cartella (senò la crea - per ora)
-	./plugins
-	prendo so
-	per ognuno creo loaderfact e gli passo il path
-	*/
-	/*
-	PluginLoaderFactory factory = new PluginLoaderFactory();
-	factory.initPluginLibrary();
-	*/
-	//factories.insert(pluginName, factory);
+	
+	// checks if directory exists
+	QDir pluginDir(DEFAULT_PLUGIN_DIR);
+	if (!pluginDir.exists())
+	{
+		qWarning("Cannot find the plugin directory");
+		allok = false;
+	}	
+	else
+	{
+		// gets plugins list in the dir
+		QStringList list = pluginDir.entryList();
+		QRegExp rx("*.so");
+		rx.setPatternSyntax(QRegExp::Wildcard);
+		QStringList filteredList = list.filter(rx);
+		if (!filteredList.empty()) 
+		{
+			for (int i = 0; i < filteredList.size(); i++)
+			{
+				//loads the i-th plugin
+				qDebug() << "Loading" << filteredList.at(i);
+				qDebug() << pluginDir.filePath(filteredList.at(i));
+				
+				//inserts plugin and factory in factories map
+				PluginLoaderFactory* factory = new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
+				factory->initPluginLibrary();
+				factories.insert(filteredList.at(i), factory);
+			}
+		} else {
+			qWarning() << "Non ci sono plugin nella cartella" << DEFAULT_PLUGIN_DIR;
+			allok = false;
+		}
+	}
+	
 	return allok;
 }
 

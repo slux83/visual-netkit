@@ -40,4 +40,7 @@
 /* Default name for XML lab configuration file */
 #define XML_DEFAULT_FILE_NAME QString("lab.xml")
 
+/* Default plugin folder */
+#define DEFAULT_PLUGIN_DIR QString("./plugins")
+
 #endif /*COMMONCONFIGS_H_*/
