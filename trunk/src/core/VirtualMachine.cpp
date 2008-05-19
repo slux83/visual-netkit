@@ -22,7 +22,7 @@
  * [VirtualMachine]
  * Base contructor
  */
-VirtualMachine::VirtualMachine(QString newName)
+VirtualMachine::VirtualMachine(QString newName) : QObject()
 {
 	name = newName;
 }

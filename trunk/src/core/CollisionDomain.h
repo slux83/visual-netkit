@@ -21,6 +21,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QObject>
 
 class HardwareInterface;
 
@@ -32,7 +33,7 @@ enum CdPropertyKey
 };
 
 
-class CollisionDomain
+class CollisionDomain : public QObject
 {
 
 private:
