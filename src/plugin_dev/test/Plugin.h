@@ -44,7 +44,7 @@ public:
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplatePath() { return templatePath; };
-	QString getTemplate() { return tpl; };
+	QString getTemplate();
 	QMap<QString, QString> getPluginProperties() { return properties; };
 	void setProxy(PluginProxy *proxy) { myProxy = proxy; };
 };
