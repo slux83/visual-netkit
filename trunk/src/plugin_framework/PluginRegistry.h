@@ -20,6 +20,7 @@
 #define PLUGINREGISTRY_H_
 
 #include <QMap>
+#include <QObject>
 
 class PluginRegistry
 {
@@ -30,6 +31,8 @@ private:
 public:
 	PluginRegistry();
 	virtual ~PluginRegistry();
+	
+	PluginRegistry* getInstance();
 	
 	bool fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
