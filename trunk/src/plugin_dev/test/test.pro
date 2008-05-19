@@ -12,6 +12,8 @@ DESTDIR = ../../../bin/plugins
 INCLUDEPATH += . \
     ../../plugin_framework
 
+RESOURCES = resources/plugin.qrc
+
 # Input
 HEADERS += Plugin.h
 SOURCES += Plugin.cpp
