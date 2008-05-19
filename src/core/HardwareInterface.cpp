@@ -23,7 +23,7 @@
  * Constructor
  */
 HardwareInterface::HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
-		QString ethName, bool interfaceState)
+		QString ethName, bool interfaceState) : QObject()
 {
 	myMachine = m;
 	domain = cd;

@@ -21,13 +21,14 @@
 
 #include "HardwareInterface.h"
 
+#include <QObject>
 #include <QString>
 #include <QMap>
 
 /**
  * The Virtual machine that inside NetKit it is modelled with User Mode Linux
  */
-class VirtualMachine
+class VirtualMachine : public QObject
 {
 
 private:

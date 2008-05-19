@@ -23,6 +23,7 @@
  * Constructor with the name
  */
 CollisionDomain::CollisionDomain(QString newName)
+	: QObject()
 {
 	name = newName;
 }

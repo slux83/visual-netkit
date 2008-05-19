@@ -19,6 +19,7 @@
 #ifndef HARDWAREINTERFACE_H_
 #define HARDWAREINTERFACE_H_
 
+#include <QObject>
 #include <QString>
 #include "CollisionDomain.h"
 
@@ -27,7 +28,7 @@ class VirtualMachine;
 /**
  * HardwareInteface (like ethernet, wireless, ect...)
  */
-class HardwareInterface
+class HardwareInterface : public QObject
 {
 
 private:
