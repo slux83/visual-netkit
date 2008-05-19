@@ -83,7 +83,6 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 bool PluginRegistry::fetchPlugins()
 {
 	bool allok = true;
-	
 	/*
 	controlla se esiste la cartella (senò la crea - per ora)
 	./plugins
