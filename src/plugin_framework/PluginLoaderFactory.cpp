@@ -40,12 +40,9 @@ PluginLoaderFactory::~PluginLoaderFactory()
  */
 PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
 {
-	//TODO
 	PluginInterface *p = createPluginFactory();
-	PluginProxy *proxy = new PluginProxy();
-	p->setProxy(proxy);
 	
-	return proxy;
+	return p->getProxy();
 }
 
 /**

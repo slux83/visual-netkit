@@ -23,6 +23,7 @@
 #include <QString>
 #include <QSettings>
 #include "PluginInterface.h"
+#include "PluginProxy.h"
 
 /**
  * A simple plugin that do nothing
@@ -46,7 +47,7 @@ public:
 	QString getTemplatePath() { return templatePath; };
 	QString getTemplate();
 	QMap<QString, QString> getPluginProperties() { return properties; };
-	void setProxy(PluginProxy *proxy) { myProxy = proxy; };
+	PluginProxy* getProxy() { return myProxy; };
 };
 
 

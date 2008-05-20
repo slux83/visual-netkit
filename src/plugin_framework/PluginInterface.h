@@ -38,7 +38,7 @@ public:
 	virtual QString getTemplatePath() = 0;
 	virtual QString getTemplate() = 0;
 	virtual QMap<QString, QString> getPluginProperties() = 0;
-	virtual void setProxy(PluginProxy *proxy) = 0;
+	virtual PluginProxy* getProxy() = 0;
 };
 
 /**
