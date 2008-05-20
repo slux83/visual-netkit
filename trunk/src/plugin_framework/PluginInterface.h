@@ -29,9 +29,7 @@ class PluginInterface
 //	PluginProxy *pluginProxy;
 	
 public:
-	//virtual PluginInterface(PluginProxy *proxy) = 0;
 	virtual ~PluginInterface() = 0;
-	virtual QString getConfigFile() = 0;
 	virtual QString getConfigPath() = 0;
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
 	virtual QSettings* getMySettings() = 0;
