@@ -25,15 +25,11 @@
 
 class PluginInterface
 {
-//protected:
-//	PluginProxy *pluginProxy;
-	
 public:
 	virtual ~PluginInterface() = 0;
-	virtual QString getConfigPath() = 0;
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
 	virtual QSettings* getMySettings() = 0;
-	virtual QString getTemplatePath() = 0;
+	virtual QString getTemplateLocation() = 0;
 	virtual QString getTemplate() = 0;
 	virtual QMap<QString, QString> getPluginProperties() = 0;
 	virtual PluginProxy* getProxy() = 0;

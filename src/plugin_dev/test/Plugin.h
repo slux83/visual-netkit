@@ -40,10 +40,9 @@ private:
 public:
 	Plugin();
 	~Plugin() { delete myProxy; };
-	QString getConfigPath() { return QString(); };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
-	QString getTemplatePath() { return QString(); };
+	QString getTemplateLocation() { return QString(); };
 	QString getTemplate();
 	QMap<QString, QString> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
