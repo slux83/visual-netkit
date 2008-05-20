@@ -68,22 +68,10 @@ QString Plugin::getTemplateLocation()
 }
 
 /**
- * Returns plugin properties map
- */
-QMap<QString,QString> Plugin::getPluginProperties() 
-{
-	if (properties == NULL)
-	{
-		fetchProperties();
-	}
-	return properties;
-}
-
-/**
  * Fetches plugin properties and stores them in the properties map.
  */
 bool Plugin::fetchProperties()
 {
-	allok = true;
+	bool allok = true;
 	return allok;
 }
