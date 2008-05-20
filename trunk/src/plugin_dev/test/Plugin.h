@@ -35,7 +35,7 @@ private:
 	QMap<QString, QString> properties;
 	QSettings* mySettings;
 	PluginProxy *myProxy;
-	
+
 	bool fetchProperties();
 	
 public:
@@ -45,7 +45,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
-	QMap<QString, QString> getPluginProperties();
+	QMap<QString, QString> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 };
 
