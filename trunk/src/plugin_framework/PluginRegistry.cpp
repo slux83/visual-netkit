@@ -125,4 +125,22 @@ bool PluginRegistry::fetchPlugins()
 	return allok;
 }
 
-
+QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
+{
+	QObject* be;
+	
+	be = vmAssociations.key(proxy, NULL);
+	if( be != NULL )
+		return be;
+	
+	be = cdAssociations.key(proxy, NULL);
+	if( be != NULL )
+		return be;
+	be = hiAssociations.key(proxy, NULL);
+	if( be != NULL )
+		return be;
+	
+	qWarning() << "PluginRegistry: unknown return type for PluginProxy!";
+	
+	return be;
+}

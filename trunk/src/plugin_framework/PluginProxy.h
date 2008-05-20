@@ -24,6 +24,8 @@
 #include <QSettings>
 #include <QTableWidgetItem>
 
+#include "PluginRegistry.h"
+
 class PluginInterface;
 
 class PluginProxy
@@ -42,6 +44,7 @@ public:
 	QString getTemplatePath();
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
+	QObject* getBaseElement() { return PluginRegistry::getInstance()->getBaseElement(this); };
 };
 
 #endif /*PLUGINPROXY_H_*/

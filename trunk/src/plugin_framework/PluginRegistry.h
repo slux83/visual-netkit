@@ -48,6 +48,8 @@ public:
 	PluginProxy* getVmProxy(VirtualMachine* vm) { return vmAssociations.value(vm); };
 	PluginProxy* getCdProxy(CollisionDomain* cd) { return cdAssociations.value(cd); };
 	PluginProxy* getHiProxy(HardwareInterface* hi) { return hiAssociations.value(hi); };
+	
+	QObject* getBaseElement(PluginProxy* proxy);
 };
 
 #endif /*PLUGINREGISTRY_H_*/
