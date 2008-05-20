@@ -28,6 +28,9 @@ PluginsSharedArea::PluginsSharedArea() : QGraphicsTextItem()
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1099);
 	setFont(GRAPHICS_FONT_SHARED);
+	
+	connect(this, SIGNAL(needAreaRepaint()),
+			this, SLOT(updateArea()));
 }
 
 /**

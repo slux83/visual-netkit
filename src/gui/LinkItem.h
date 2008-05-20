@@ -28,6 +28,7 @@
 #include "CollisionDomainItem.h"
 #include "LineItemPrivate.h"
 #include "../common/Types.h"
+#include "PluginsSharedArea.h"
 
 /* Pi-greco */
 static const double Pi = 3.14159;
@@ -44,6 +45,7 @@ class LinkItem : public QObject, public QGraphicsItemGroup
 private:
 	LineItemPrivate *lineItem;
 	LabelItemPrivate *myLabel;
+	PluginsSharedArea *pluginsSharedArea;
 	VirtualMachineItem* vm;
 	CollisionDomainItem* cd;	//start and end of this "line"
 		

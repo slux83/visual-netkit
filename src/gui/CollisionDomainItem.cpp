@@ -37,11 +37,16 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	myLabel = new LabelItemPrivate(label);
 	myLabel->setPos(0, 35);
 	
+	/* init shared area */
+	pluginsSharedArea = new PluginsSharedArea();
+	pluginsSharedArea->setPos(0, 50);
+	
 	//by default the svg collision domain is marked as unconnected icon
 	collisionDomainSvg = new SvgItemPrivate(QString::fromUtf8(":/svg/cs_off"), this);
 	
 	addToGroup(collisionDomainSvg);
 	addToGroup(myLabel);
+	addToGroup(pluginsSharedArea);
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
@@ -135,6 +140,7 @@ void CollisionDomainItem::ungroupActionCalled()
 {	
 	//The svg item remain inside the group!
 	removeFromGroup(myLabel);
+	removeFromGroup(pluginsSharedArea);
 	isJoin = false;
 }
 
@@ -158,7 +164,10 @@ void CollisionDomainItem::deleteCdActionCalled()
 void CollisionDomainItem::restoreGroupActionCalled()
 {
 	if(!isJoin)
+	{
 		addToGroup(myLabel);
+		addToGroup(pluginsSharedArea);
+	}
 	isJoin = true;
 }
 
@@ -186,4 +195,12 @@ void CollisionDomainItem::setLabelCdName(QString newLabel)
 	myLabel->setText(newLabel);
 }
 
+/**
+ * [SLOT]
+ * change the plugin line inside the shared area
+ */
+void CollisionDomainItem::setPluginLine(QString pluginName, QString content)
+{
+	pluginsSharedArea->changeMyLine(pluginName, content);
+}
 
