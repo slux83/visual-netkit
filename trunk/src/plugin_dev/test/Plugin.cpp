@@ -95,6 +95,7 @@ bool Plugin::fetchProperties()
 		qWarning() << "Non ci sono sottogruppi per la proprieta'" << "\"properties\"";
 		allok = false;
 	}
+	mySettings->endGroup();
 	
 	return allok;
 }
