@@ -7,6 +7,10 @@ TARGET =
 DEPENDPATH += .
 
 DESTDIR = ../../../bin/plugins
+MOC_DIR = build/moc
+RCC_DIR = build/rcc
+UI_DIR = build/ui
+OBJECTS_DIR = build/obj
 
 # including also the PluginInterface.h
 INCLUDEPATH += . \
