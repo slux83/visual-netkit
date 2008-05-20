@@ -69,7 +69,6 @@ bool PluginLoaderFactory::initPluginLibrary()
 	/* Validate settings */
 	pluginSetting->beginGroup("global");
 	QStringList generalKeys = pluginSetting->childKeys();
-	qDebug() << generalKeys;
 	
 	//validate keys (General)
 	if(retVal && (!generalKeys.contains("name") ||

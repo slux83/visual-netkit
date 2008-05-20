@@ -92,7 +92,7 @@ bool Plugin::fetchProperties()
 			properties.insert(p_name, pp);
 		}
 	} else {
-		qWarning() << "Non ci sono sottogruppi per la proprieta'" << "\"properties\"";
+		qWarning() << "No subtypes for property'" << "\"properties\"";
 		allok = false;
 	}
 	mySettings->endGroup();
