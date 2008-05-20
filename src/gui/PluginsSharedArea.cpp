@@ -17,16 +17,55 @@
  */
 
 #include "PluginsSharedArea.h"
+#include "../common/CommonConfigs.h"
+#include <QFont>
 
+/**
+ * Costructor
+ */
 PluginsSharedArea::PluginsSharedArea() : QGraphicsTextItem()
 {
+	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(1099);
+	setFont(GRAPHICS_FONT_SHARED);
 }
 
+/**
+ * Deconstructor
+ */
 PluginsSharedArea::~PluginsSharedArea()
 {
 }
 
+/**
+ * Change a plugin line
+ * Called by the plugin proxy
+ */
 void PluginsSharedArea::changeMyLine(QString pluginName, QString content)
 {
-	//pluginsArea
+	pluginsArea.insert(pluginName, content);
+	
+	//need a repaint. emit the signal
+	emit needAreaRepaint();
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Repaint/Recreate the shared text area
+ */
+void PluginsSharedArea::updateArea()
+{
+	/* get all contents */
+	QStringList contents(pluginsArea.values());
+	
+	if(contents.size() == 0)
+	{
+		//hide the label area
+		setVisible(false);
+	}
+	else
+	{
+		this->setPlainText(contents.join("\n"));
+		setVisible(true);
+	}
 }

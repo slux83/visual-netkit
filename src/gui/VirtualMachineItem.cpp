@@ -34,7 +34,6 @@ VirtualMachineItem::VirtualMachineItem(QString label)
 	vmSvg = new SvgItemPrivate(QString::fromUtf8(":/svg/vm_host"), this);
 	vmNameLabel = new LabelItemPrivate(label);
 	vmNameLabel->setPos(0, 52);
-	vmNameLabel->setFont(GRAPHICS_FONT);
 	
 	/* Add svg and label to this group */	
 	addToGroup(vmSvg);
