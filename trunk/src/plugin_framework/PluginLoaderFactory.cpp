@@ -38,7 +38,7 @@ PluginLoaderFactory::~PluginLoaderFactory()
  * Factory function that return a new instance of the plugin proxy
  * NOTE: the sistem registry is the caller
  */
-PluginProxy * PluginLoaderFactory::createPlugin(QObject *baseElement)
+PluginProxy * PluginLoaderFactory::createPlugin()
 {
 	PluginInterface *p = createPluginFactory();
 	

@@ -59,7 +59,7 @@ PluginRegistry* PluginRegistry::getInstance()
  */
 PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseElement)
 {	
-	PluginProxy* proxy = factories.value(pluginName)->createPlugin(baseElement);
+	PluginProxy* proxy = factories.value(pluginName)->createPlugin();
 	
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(baseElement);
 	if ( vm != NULL ) {

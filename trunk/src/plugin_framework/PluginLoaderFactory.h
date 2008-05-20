@@ -38,7 +38,7 @@ private:
 public:
 	PluginLoaderFactory(const QString &fileName, QObject *parent = 0);
 	virtual ~PluginLoaderFactory();
-	PluginProxy* createPlugin(QObject *baseElement);
+	PluginProxy* createPlugin();
 	bool initPluginLibrary();
 };
 
