@@ -18,6 +18,7 @@
 
 #include "PluginProxy.h"
 #include "PluginInterface.h"
+#include "PluginRegistry.h"
 
 /**
  * Constructor
@@ -64,3 +65,7 @@ QSettings* PluginProxy::getPluginSettings()
 	return pluginInterface->getMySettings();
 }
 
+QObject* PluginProxy::getBaseElement()
+{
+	return PluginRegistry::getInstance()->getBaseElement(this);
+}

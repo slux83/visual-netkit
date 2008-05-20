@@ -22,7 +22,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/plugin_framework/PluginRegistry.h \
+HEADERS = src/gui/PluginsSharedArea.h \
+    src/plugin_framework/PluginRegistry.h \
     src/plugin_framework/PluginInterface.h \
     src/plugin_framework/PluginProxy.h \
     src/plugin_framework/PluginLoaderFactory.h \
@@ -65,7 +66,8 @@ HEADERS = src/plugin_framework/PluginRegistry.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/plugin_framework/PluginRegistry.cpp \
+SOURCES = src/gui/PluginsSharedArea.cpp \
+    src/plugin_framework/PluginRegistry.cpp \
     src/plugin_framework/PluginProxy.cpp \
     src/plugin_framework/PluginLoaderFactory.cpp \
     src/gui/handles/SceneTreeMapper.cpp \
