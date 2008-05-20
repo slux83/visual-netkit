@@ -116,7 +116,7 @@ bool PluginRegistry::fetchPlugins()
 				factories.insert(filteredList.at(i), factory);
 			}
 		} else {
-			qWarning() << "Non ci sono plugin nella cartella" << DEFAULT_PLUGIN_DIR;
+			qWarning() << "No plugins in" << DEFAULT_PLUGIN_DIR;
 			allok = false;
 		}
 	}
