@@ -112,7 +112,11 @@ bool PluginRegistry::fetchPlugins()
 				
 				//inserts plugin and factory in factories map
 				PluginLoaderFactory* factory = new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
-				factory->initPluginLibrary();
+				if (!factory->initPluginLibrary()) 
+				{
+					delete factory;
+					return false;
+				}
 				factories.insert(filteredList.at(i), factory);
 			}
 		} else {
