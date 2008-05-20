@@ -32,7 +32,7 @@ class Plugin : public PluginInterface
 {
 	
 private:
-	QString description, name, tpl, templatePath, configPath, configFile;
+	QString templatePath;
 	QMap<QString, QString> properties;
 	QSettings* mySettings;
 	PluginProxy *myProxy;
@@ -40,11 +40,11 @@ private:
 public:
 	Plugin();
 	~Plugin() { delete myProxy; };
-	QString getConfigFile() { return configFile; };
-	QString getConfigPath() { return configPath; };
+	QString getConfigFile() { return QString(); };
+	QString getConfigPath() { return QString(); };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
-	QString getTemplatePath() { return templatePath; };
+	QString getTemplatePath() { return QString(); };
 	QString getTemplate();
 	QMap<QString, QString> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };

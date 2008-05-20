@@ -26,32 +26,27 @@ Plugin::Plugin() : PluginInterface()
 {
 	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
 	myProxy = new PluginProxy();
-	name = "I'm a Plugin";
-	description = "I'm doing nothing :3 But i'm here!";
 }
 
 
 /**
- * Returns the plugin template if resource file exists, otherwise returns an empty QString.
+ * Returns the plugin template if resource file exists,
+ * otherwise returns an empty QString.
  */
 QString Plugin::getTemplate()
 {
-	QResource resource(":/basic_tpl");
-	QString tplPath = resource.absoluteFilePath();
+	QString templateContent;
 	
-	// if resource file path is not null
-	if (!tplPath.isNull()) 
+	QFile data(":/basic_tpl");
+	if (data.open(QFile::ReadOnly)) 
 	{
-		QFile data(tplPath);
-		if (data.open(QFile::ReadOnly)) 
-		{
-			// if file exists, read it
-			QTextStream in(&data);
-			tpl = in.readAll();
-		}	
-	} else {
-		return "";
+		QTextStream in(&data);
+		templateContent = in.readAll();
+	}
+	else
+	{
+		qWarning() << "The plugin getTemplate() failed:" << data.errorString();
 	}
 		
-	return tpl;
+	return templateContent;
 }
