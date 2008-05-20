@@ -59,7 +59,7 @@ Per concludere il sistema deve poter colloquiare con tutte le instanze proxy dei
 === Plugin configuration file ===
 
 {{{
-[General]
+[global]
 name=PlugiName
 type=vm|cd|link
 description=Plugin destription
@@ -67,7 +67,7 @@ version=1.0
 dependencies=plugin1 plugin2 plugin3
 author=author1 author2 author3
 
-[Properties]
+[properties]
 propName1\p_default_value=DefaultValue1
 propName1\p_description=PropertyDescription1
 
