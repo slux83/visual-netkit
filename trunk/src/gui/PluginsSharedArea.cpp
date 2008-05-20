@@ -16,33 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGINPROXY_H_
-#define PLUGINPROXY_H_
+#include "PluginsSharedArea.h"
 
-#include <QString>
-#include <QMap>
-#include <QSettings>
-#include <QTableWidgetItem>
-
-class PluginInterface;
-
-class PluginProxy
+PluginsSharedArea::PluginsSharedArea() : QGraphicsTextItem()
 {
-private:
-	PluginInterface *pluginInterface;
-	
-public:
-	PluginProxy();
-	virtual ~PluginProxy();
+}
 
-	bool changeGraphicsLabel(QString label);
-	bool saveProperty(QTableWidgetItem* property);
-	QMap< QString, QString > getPluginProperties();
-	QString getTemplate();
-	QString getTemplatePath();
-	QSettings* getPluginSettings();
-	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
-	QObject* getBaseElement();
-};
+PluginsSharedArea::~PluginsSharedArea()
+{
+}
 
-#endif /*PLUGINPROXY_H_*/
+void PluginsSharedArea::changeMyLine(QString pluginName, QString content)
+{
+	//pluginsArea
+}

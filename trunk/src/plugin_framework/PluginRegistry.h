@@ -21,11 +21,12 @@
 
 #include <QMap>
 #include <QObject>
-#include "PluginProxy.h"
 #include "PluginLoaderFactory.h"
 #include "../core/VirtualMachine.h"
 #include "../core/CollisionDomain.h"
 #include "../core/HardwareInterface.h"
+
+class PluginProxy;
 
 class PluginRegistry
 {

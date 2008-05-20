@@ -16,33 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGINPROXY_H_
-#define PLUGINPROXY_H_
+#ifndef PLUGINSSHAREDAREA_H_
+#define PLUGINSSHAREDAREA_H_
 
-#include <QString>
+#include <QGraphicsTextItem>
 #include <QMap>
-#include <QSettings>
-#include <QTableWidgetItem>
+#include <QString>
 
-class PluginInterface;
-
-class PluginProxy
+/**
+ * This class is an extension of QGraphiscTextItem and contain a multi-line
+ * area managed by plugins
+ */
+class PluginsSharedArea : public QGraphicsTextItem
 {
+	Q_OBJECT
+	
 private:
-	PluginInterface *pluginInterface;
+	//key:		PluginName
+	//value:	PluginManagedLine
+	QMap<QString, QString> pluginsArea;
+	
+private slots:
+	void updateArea(){};
+	
+signals:
+	void needAreaRepaint();
 	
 public:
-	PluginProxy();
-	virtual ~PluginProxy();
-
-	bool changeGraphicsLabel(QString label);
-	bool saveProperty(QTableWidgetItem* property);
-	QMap< QString, QString > getPluginProperties();
-	QString getTemplate();
-	QString getTemplatePath();
-	QSettings* getPluginSettings();
-	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
-	QObject* getBaseElement();
+	PluginsSharedArea();
+	virtual ~PluginsSharedArea();
+	void changeMyLine(QString pluginName, QString content);
 };
 
-#endif /*PLUGINPROXY_H_*/
+#endif /*PLUGINSSHAREDAREA_H_*/
