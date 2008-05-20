@@ -23,4 +23,5 @@ RESOURCES = resources/resources.qrc
 HEADERS += Plugin.h
 SOURCES += Plugin.cpp \
 	../../plugin_framework/PluginProxy.cpp \
-	../../core/VirtualMachine.cpp
+	../../core/VirtualMachine.cpp \
+	../../plugin_framework/PluginProperties.cpp

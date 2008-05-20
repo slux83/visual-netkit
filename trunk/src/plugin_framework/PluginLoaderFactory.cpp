@@ -69,6 +69,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 	/* Validate settings */
 	pluginSetting->beginGroup("global");
 	QStringList generalKeys = pluginSetting->childKeys();
+	qDebug() << generalKeys;
 	
 	//validate keys (General)
 	if(retVal && (!generalKeys.contains("name") ||
@@ -78,7 +79,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 		!generalKeys.contains("author") ||
 		!generalKeys.contains("dependencies")))
 	{
-		qWarning() << "Plugin" << fileName() << "have unvalid config file (General section)";
+		qWarning() << "Plugin" << fileName() << "have unvalid config file (global section)";
 		retVal = false;
 	}
 	

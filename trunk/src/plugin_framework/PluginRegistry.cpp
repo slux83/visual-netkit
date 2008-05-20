@@ -63,17 +63,17 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 	
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(baseElement);
 	if ( vm != NULL ) {
-		vmAssociations.insert(vm, proxy);
+		vmAssociations.insertMulti(vm, proxy);
 	}
 	
 	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(baseElement);
 	if ( cd != NULL ) {
-		cdAssociations.insert(cd, proxy);
+		cdAssociations.insertMulti(cd, proxy);
 	}
 	
 	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(baseElement);
 	if ( hi != NULL ) {
-		hiAssociations.insert(hi, proxy);
+		hiAssociations.insertMulti(hi, proxy);
 	}
 	
 	return proxy;
