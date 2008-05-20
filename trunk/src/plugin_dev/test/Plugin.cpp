@@ -53,7 +53,7 @@ QString Plugin::getTemplate()
 }
 
 /**
- * Get the path where save/append the templace content
+ * Returns the path where save/append the template content
  */
 QString Plugin::getTemplateLocation()
 {
@@ -65,4 +65,25 @@ QString Plugin::getTemplateLocation()
 	}
 	
 	return QString(vm->getName() + "/etc/basic.conf");
+}
+
+/**
+ * Returns plugin properties map
+ */
+QMap<QString,QString> Plugin::getPluginProperties() 
+{
+	if (properties == NULL)
+	{
+		fetchProperties();
+	}
+	return properties;
+}
+
+/**
+ * Fetches plugin properties and stores them in the properties map.
+ */
+bool Plugin::fetchProperties()
+{
+	allok = true;
+	return allok;
 }

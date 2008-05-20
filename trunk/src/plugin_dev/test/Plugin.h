@@ -36,6 +36,8 @@ private:
 	QSettings* mySettings;
 	PluginProxy *myProxy;
 	
+	bool fetchProperties();
+	
 public:
 	Plugin();
 	~Plugin() { delete myProxy; };
@@ -43,7 +45,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
-	QMap<QString, QString> getPluginProperties() { return properties; };
+	QMap<QString, QString> getPluginProperties();
 	PluginProxy* getProxy() { return myProxy; };
 };
 
