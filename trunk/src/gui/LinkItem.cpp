@@ -34,6 +34,8 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	
 	myLabel = new LabelItemPrivate(label);
 	
+	pluginsSharedArea = new PluginsSharedArea();
+	
 	setZValue(800);
 	
 	//set the line position
@@ -41,6 +43,7 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	
 	addToGroup(lineItem);
 	addToGroup(myLabel);
+	addToGroup(pluginsSharedArea);
 	
 	/* connects */
 	connect(vm, SIGNAL(positionChanged()),
@@ -82,6 +85,11 @@ void LinkItem::updateLinkPos()
 	labelCenter.setX(((cdCenter.x() + vmCenter.x()) * 0.5) + 4);
 	labelCenter.setY((cdCenter.y() + vmCenter.y()) * 0.5);
 	myLabel->setPos(labelCenter);
+	
+	/* adjust the label shared area */
+	labelCenter.setX(((cdCenter.x() + vmCenter.x()) * 0.5) + 4);
+	labelCenter.setY(((cdCenter.y() + vmCenter.y()) * 0.5) + 14);
+	pluginsSharedArea->setPos(labelCenter);
 	
 }
 

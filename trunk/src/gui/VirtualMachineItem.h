@@ -31,6 +31,7 @@
 #include "../common/CommonConfigs.h"
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
+#include "PluginsSharedArea.h"
 
 /**
  * This class is a graphic group element of type Virtual Machine
@@ -44,6 +45,7 @@ class VirtualMachineItem : public QObject, public QGraphicsItemGroup
 private:
 	SvgItemPrivate *vmSvg;
 	LabelItemPrivate *vmNameLabel;
+	PluginsSharedArea *pluginsSharedArea;
 	QMenu contextMenu;
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
@@ -73,6 +75,7 @@ public slots:
 	void ungroupActionCalled();
 	void deleteVmActionCalled();
 	void restoreGroupActionCalled();
+	void setPluginLine(QString pluginName, QString content);
 	
 signals:
 	void positionChanged();

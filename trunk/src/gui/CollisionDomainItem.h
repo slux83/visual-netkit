@@ -30,6 +30,7 @@
 
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
+#include "PluginsSharedArea.h"
 #include "../common/CommonConfigs.h"
 
 /**
@@ -44,6 +45,7 @@ class CollisionDomainItem : public QObject, public QGraphicsItemGroup
 private:
 	SvgItemPrivate *collisionDomainSvg;
 	LabelItemPrivate *myLabel;
+	PluginsSharedArea *pluginsSharedArea;
 	QMenu contextMenu;
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
@@ -73,6 +75,7 @@ public slots:
 	void ungroupActionCalled();
 	void deleteCdActionCalled();
 	void restoreGroupActionCalled();
+	void setPluginLine(QString pluginName, QString content);
 	
 signals:
 	void positionChanged();

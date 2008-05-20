@@ -34,10 +34,14 @@ VirtualMachineItem::VirtualMachineItem(QString label)
 	vmSvg = new SvgItemPrivate(QString::fromUtf8(":/svg/vm_host"), this);
 	vmNameLabel = new LabelItemPrivate(label);
 	vmNameLabel->setPos(0, 52);
+	/* init shared area */
+	pluginsSharedArea = new PluginsSharedArea();
+	pluginsSharedArea->setPos(0, 50);
 	
 	/* Add svg and label to this group */	
 	addToGroup(vmSvg);
 	addToGroup(vmNameLabel);
+	addToGroup(pluginsSharedArea);
 	
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1000);
@@ -134,6 +138,7 @@ void VirtualMachineItem::ungroupActionCalled()
 {	
 	//The svg item remain inside the group!
 	removeFromGroup(vmNameLabel);
+	removeFromGroup(pluginsSharedArea);
 	isJoin = false;
 }
 
@@ -157,6 +162,18 @@ void VirtualMachineItem::deleteVmActionCalled()
 void VirtualMachineItem::restoreGroupActionCalled()
 {	
 	if(!isJoin)
+	{
 		addToGroup(vmNameLabel);
+		addToGroup(pluginsSharedArea);
+	}
 	isJoin = true;
+}
+
+/**
+ * [SLOT]
+ * change the plugin line inside the shared area
+ */
+void VirtualMachineItem::setPluginLine(QString pluginName, QString content)
+{
+	pluginsSharedArea->changeMyLine(pluginName, content);
 }
