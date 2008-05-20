@@ -40,7 +40,6 @@ private:
 public:
 	Plugin();
 	~Plugin() { delete myProxy; };
-	QString getConfigFile() { return QString(); };
 	QString getConfigPath() { return QString(); };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
