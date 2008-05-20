@@ -16,17 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Plugin.h"
-#include "VirtualMachine.h"
 #include <QDebug>
 #include <QResource>
 #include <QFile>
 
-/* constructor */
+#include "Plugin.h"
+#include "VirtualMachine.h"
+
+/** 
+ * Constructor 
+ */
 Plugin::Plugin() : PluginInterface()
 {
 	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
 	myProxy = new PluginProxy();
+	fetchProperties();
 }
 
 
@@ -73,5 +77,25 @@ QString Plugin::getTemplateLocation()
 bool Plugin::fetchProperties()
 {
 	bool allok = true;
+	
+	mySettings->beginGroup("properties");
+	QStringList childgroups = mySettings->childGroups();
+	if (!childgroups.empty()) 
+	{
+		for (int i = 0; i < childgroups.size(); i++)
+		{
+			QString p_name = childgroups.at(i);
+			QString p_default_value = mySettings->value(childgroups.at(i) + "/p_default_value").toString();
+			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
+			
+			PluginProperties *pp = new PluginProperties(p_name, p_default_value, p_description);
+			properties.insert(p_name, pp);
+		}
+	} else {
+		qWarning() << "Non ci sono sottogruppi per la proprieta'" << "\"properties\"";
+		allok = false;
+	}
+	
 	return allok;
 }
+

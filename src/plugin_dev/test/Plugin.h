@@ -25,6 +25,8 @@
 #include "PluginInterface.h"
 #include "PluginProxy.h"
 
+#include "PluginProperties.h"
+
 /**
  * A simple plugin that do nothing
  */
@@ -32,7 +34,7 @@ class Plugin : public PluginInterface
 {
 	
 private:
-	QMap<QString, QString> properties;
+	QMap<QString, PluginProperties*> properties;
 	QSettings* mySettings;
 	PluginProxy *myProxy;
 
@@ -45,7 +47,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
-	QMap<QString, QString> getPluginProperties() { return properties; };
+	QMap<QString, PluginProperties*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 };
 
