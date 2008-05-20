@@ -32,7 +32,6 @@ class Plugin : public PluginInterface
 {
 	
 private:
-	QString templatePath;
 	QMap<QString, QString> properties;
 	QSettings* mySettings;
 	PluginProxy *myProxy;
@@ -42,7 +41,7 @@ public:
 	~Plugin() { delete myProxy; };
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
-	QString getTemplateLocation() { return QString(); };
+	QString getTemplateLocation();
 	QString getTemplate();
 	QMap<QString, QString> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };

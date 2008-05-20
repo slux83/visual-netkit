@@ -50,3 +50,15 @@ QString Plugin::getTemplate()
 		
 	return templateContent;
 }
+
+QString Plugin::getTemplateLocation()
+{
+	QString name = dynamic_cast<VirtualMachine*>(myProxy->getBaseElement())->getName();
+	if (name.isNull() || name.isEmpty())
+	{
+		qWarning() << "Plugin::getTemplateLocation(): null or empty VirtualMachine name.";
+		return QString("");
+	}
+	
+	return QString(name + "/etc/basic.tpl");
+}
