@@ -112,12 +112,12 @@ bool PluginRegistry::fetchPlugins()
 				
 				//inserts plugin and factory in factories map
 				PluginLoaderFactory* factory = new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
-				if (!factory->initPluginLibrary()) 
+				if (factory->initPluginLibrary()) 
 				{
+					factories.insert(filteredList.at(i), factory);
+				} else {
 					delete factory;
-					return false;
 				}
-				factories.insert(filteredList.at(i), factory);
 			}
 		} else {
 			qWarning() << "No plugins in" << DEFAULT_PLUGIN_DIR;
