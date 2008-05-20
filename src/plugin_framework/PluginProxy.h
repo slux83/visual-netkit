@@ -24,6 +24,8 @@
 #include <QSettings>
 #include <QTableWidgetItem>
 
+#include "PluginProperties.h"
+
 class PluginInterface;
 
 class PluginProxy
@@ -37,9 +39,9 @@ public:
 
 	bool changeGraphicsLabel(QString label);
 	bool saveProperty(QTableWidgetItem* property);
-	QMap< QString, QString > getPluginProperties();
+	QMap< QString, PluginProperties* > getPluginProperties();
 	QString getTemplate();
-	QString getTemplatePath();
+	QString getTemplateLocation();
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 	QObject* getBaseElement();

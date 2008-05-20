@@ -45,19 +45,28 @@ bool PluginProxy::saveProperty(QTableWidgetItem* property)
 	return true;
 }
 
-QMap< QString, QString > PluginProxy::getPluginProperties()
+/**
+ * Returns the associated plugin properties.
+ */
+QMap< QString, PluginProperties* > PluginProxy::getPluginProperties()
 {
-	return QMap<QString, QString>();
+	return pluginInterface->getPluginProperties();
 }
 
+/**
+ * Returns the plugin template.
+ */
 QString PluginProxy::getTemplate()
 {
-	return QString();
+	return pluginInterface->getTemplate();
 }
 
-QString PluginProxy::getTemplatePath()
+/**
+ * Returns template location where to save the file.
+ */
+QString PluginProxy::getTemplateLocation()
 {
-	return QString();
+	return pluginInterface->getTemplateLocation();
 }
 
 QSettings* PluginProxy::getPluginSettings()
