@@ -33,7 +33,6 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	lineItem = new LineItemPrivate();
 	
 	myLabel = new LabelItemPrivate(label);
-	myLabel->setFont(GRAPHICS_FONT);
 	
 	setZValue(800);
 	

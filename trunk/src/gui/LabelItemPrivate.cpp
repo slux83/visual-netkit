@@ -17,6 +17,8 @@
  */
 
 #include "LabelItemPrivate.h"
+#include "../common/CommonConfigs.h"
+#include <QFont>
 
 /**
  * Constructor
@@ -26,8 +28,12 @@ LabelItemPrivate::LabelItemPrivate(const QString &text, QGraphicsItem *parent)
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1100);
+	setFont(GRAPHICS_FONT);
 }
 
+/**
+ * Deconstructor
+ */ 
 LabelItemPrivate::~LabelItemPrivate()
 {
 }

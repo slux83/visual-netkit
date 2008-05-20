@@ -35,7 +35,6 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	
 	/* init label and svg item */
 	myLabel = new LabelItemPrivate(label);
-	myLabel->setFont(GRAPHICS_FONT);
 	myLabel->setPos(0, 35);
 	
 	//by default the svg collision domain is marked as unconnected icon

@@ -37,7 +37,7 @@ private:
 	QMap<QString, QString> pluginsArea;
 	
 private slots:
-	void updateArea(){};
+	void updateArea();
 	
 signals:
 	void needAreaRepaint();
