@@ -1,6 +1,6 @@
 /**
- * A simple plugin architecture.
- * Copyright (C) 2008  Alessio Di Fazio
+ * A simple test plugin for Visual Netkit 
+ * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
