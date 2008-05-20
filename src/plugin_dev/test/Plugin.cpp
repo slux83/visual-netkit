@@ -17,6 +17,7 @@
  */
 
 #include "Plugin.h"
+#include "VirtualMachine.h"
 #include <QDebug>
 #include <QResource>
 #include <QFile>
@@ -51,14 +52,17 @@ QString Plugin::getTemplate()
 	return templateContent;
 }
 
+/**
+ * Get the path where save/append the templace content
+ */
 QString Plugin::getTemplateLocation()
 {
-	QString name = dynamic_cast<VirtualMachine*>(myProxy->getBaseElement())->getName();
-	if (name.isNull() || name.isEmpty())
+	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(myProxy->getBaseElement());
+	if (vm == NULL)
 	{
-		qWarning() << "Plugin::getTemplateLocation(): null or empty VirtualMachine name.";
-		return QString("");
+		qWarning() << "Plugin::getTemplateLocation(): null VirtualMachine name.";
+		return QString();
 	}
 	
-	return QString(name + "/etc/basic.tpl");
+	return QString(vm->getName() + "/etc/basic.conf");
 }

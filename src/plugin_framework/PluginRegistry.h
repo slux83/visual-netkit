@@ -28,6 +28,9 @@
 
 class PluginProxy;
 
+/**
+ * The sistem registry that offer a directory service
+ */
 class PluginRegistry
 {
 private:

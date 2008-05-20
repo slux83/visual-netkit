@@ -109,7 +109,6 @@ bool PluginRegistry::fetchPlugins()
 			{
 				//loads the i-th plugin
 				qDebug() << "Loading" << filteredList.at(i);
-				qDebug() << pluginDir.filePath(filteredList.at(i));
 				
 				//inserts plugin and factory in factories map
 				PluginLoaderFactory* factory = new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
@@ -125,6 +124,9 @@ bool PluginRegistry::fetchPlugins()
 	return allok;
 }
 
+/**
+ * Get the associated base element, passed the proxy
+ */
 QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
 {
 	QObject* be;

@@ -14,11 +14,13 @@ OBJECTS_DIR = build/obj
 
 # including also the PluginInterface.h
 INCLUDEPATH += . \
-    ../../plugin_framework
+    ../../plugin_framework \
+    ../../core
 
 RESOURCES = resources/resources.qrc
 
 # Input
 HEADERS += Plugin.h
 SOURCES += Plugin.cpp \
-	../../plugin_framework/PluginProxy.cpp
+	../../plugin_framework/PluginProxy.cpp \
+	../../core/VirtualMachine.cpp
