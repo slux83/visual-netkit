@@ -22,10 +22,9 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
-#include "PluginInterface.h"
-#include "PluginProxy.h"
-
-#include "PluginProperties.h"
+#include "../../plugin_framework/PluginInterface.h"
+#include "../../plugin_framework/PluginProxy.h"
+#include "../../plugin_framework/PluginProperties.h"
 
 /**
  * A simple plugin that do nothing
@@ -50,6 +49,7 @@ public:
 	QString getTemplate();
 	QMap<QString, PluginProperties*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
+	
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 };
@@ -66,7 +66,8 @@ extern "C" PluginInterface* createPlugin()
 /* Factory (destroyer) */
 extern "C" void destroyPlugin(PluginInterface* p)
 {
-    delete p;
+	delete p;
+	qDebug() << "Plugin destroyed";
 }
 
 
