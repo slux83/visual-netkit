@@ -77,3 +77,4 @@ propName2/p_description=PropertyDescription2
 propName3/p_default_value=DefaultValue3
 propName3/p_description=PropertyDescription3
 }}}
+*NOTE:* se il valore di una proprieta' richiede piu' parole e caratteri separati da uno spazio (vedi dependencies), ricordarsi di avvolgere il tutto con un doppio apice.
