@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGINPROPERTIES_H_
-#define PLUGINPROPERTIES_H_
+#ifndef PLUGINPROPERTY_H_
+#define PLUGINPROPERTY_H_
 
 #include <QString>
 
-class PluginProperties
+class PluginProperty
 {
 private:
 	QString name;
@@ -30,10 +30,10 @@ private:
 	QString value;
 	
 public:
-	PluginProperties();
-	PluginProperties(QString pluginName, QString defValue, QString desc);
-	PluginProperties(QString pluginName, QString defValue, QString initValue, QString desc);
-	virtual ~PluginProperties();
+	PluginProperty();
+	PluginProperty(QString pluginName, QString defValue, QString desc);
+	PluginProperty(QString pluginName, QString defValue, QString initValue, QString desc);
+	virtual ~PluginProperty();
 	
 	QString getName() { return name; };
 	QString getDefaultValue() { return defaultValue; };
@@ -46,4 +46,4 @@ public:
 	void setDescription(QString &d) { description = d; };
 };
 
-#endif /*PLUGINPROPERTIES_H_*/
+#endif /*PLUGINPROPERTY_H_*/

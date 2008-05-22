@@ -54,6 +54,8 @@ public:
 	PluginProxy* getHiProxy(HardwareInterface* hi) { return hiAssociations.value(hi); };
 	
 	QObject* getBaseElement(PluginProxy* proxy);
+	
+	QList<PluginLoaderFactory*> getAllPluginFactories() { return factories.values(); };
 };
 
 #endif /*PLUGINREGISTRY_H_*/

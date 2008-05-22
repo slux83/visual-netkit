@@ -24,6 +24,7 @@
 #include <QSettings>
 #include <QDebug>
 #include "PluginInterface.h"
+#include "PluginProperty.h"
 
 /**
  * This clas is a loader for a single external plugin
@@ -34,12 +35,14 @@ private:
 	createPlugin_t* createPluginFactory;
 	destroyPlugin_t* destroyPluginFactory;
 	QString name, description, version, deps, author, type;
+	QList<PluginProperty*> properties;	//a copy for a fast access
 	
 public:
 	PluginLoaderFactory(const QString &fileName, QObject *parent = 0);
 	virtual ~PluginLoaderFactory();
 	PluginProxy* createPlugin();
 	bool initPluginLibrary();
+	QList<PluginProperty*> getPropertiesDescription() { return properties; };
 };
 
 #endif /*PLUGINLOADERFACTORY_H_*/

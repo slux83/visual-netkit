@@ -104,7 +104,7 @@ bool Plugin::fetchProperties()
 			QString p_default_value = mySettings->value(childgroups.at(i) + "/p_default_value").toString();
 			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
 			
-			PluginProperties *pp = new PluginProperties(p_name, p_default_value, p_description);
+			PluginProperty *pp = new PluginProperty(p_name, p_default_value, p_description);
 			properties.insert(p_name, pp);
 		}
 	} else {

@@ -52,7 +52,7 @@ bool PluginProxy::saveProperty(QTableWidgetItem* property)
 /**
  * Returns the associated plugin properties.
  */
-QMap< QString, PluginProperties* > PluginProxy::getPluginProperties()
+QMap< QString, PluginProperty* > PluginProxy::getPluginProperties()
 {
 	return pluginInterface->getPluginProperties();
 }
@@ -103,6 +103,6 @@ void PluginProxy::setPluginGroupID(qint32 id)
  */
 qint32 PluginProxy::getPluginGroupID()
 {
-	pluginInterface->getGroupID();
+	return pluginInterface->getGroupID();
 }
 

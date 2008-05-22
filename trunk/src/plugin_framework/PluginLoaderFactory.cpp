@@ -32,6 +32,7 @@ PluginLoaderFactory::PluginLoaderFactory(const QString &fileName, QObject *paren
  */
 PluginLoaderFactory::~PluginLoaderFactory()
 {
+	qDeleteAll(properties);
 }
 
 /**
@@ -82,6 +83,14 @@ bool PluginLoaderFactory::initPluginLibrary()
 		retVal = false;
 	}
 	
+	/* save global infos */
+	name = pluginSetting->value("name").toString();
+	type = pluginSetting->value("type").toString();
+	description = pluginSetting->value("description").toString();
+	version = pluginSetting->value("version").toString();
+	author = pluginSetting->value("author").toString();
+	deps = pluginSetting->value("dependencies").toString();
+	
 	//type must be 'vm' or 'cd' or 'link'
 	QRegExp typeValidator("vm|cd|link");
 	if(retVal && !typeValidator.exactMatch(pluginSetting->value("type").toString()))
@@ -93,6 +102,18 @@ bool PluginLoaderFactory::initPluginLibrary()
 	//TODO: plugin name must be unique
 	
 	pluginSetting->endGroup();
+	
+	/* copy all properties for fast info access */
+	QListIterator<PluginProperty *>propIterator(tester->getPluginProperties().values());
+	while(propIterator.hasNext())
+	{
+		//Clone property
+		PluginProperty *original = propIterator.next();
+		PluginProperty *clone =
+			new PluginProperty(name, original->getDefaultValue(), original->getDescription());
+		properties.append(clone);
+	}
+	
 	
 	destroyPluginFactory(tester);
 	

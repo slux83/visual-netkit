@@ -24,7 +24,7 @@
 #include <QSettings>
 #include "PluginInterface.h"
 #include "PluginProxy.h"
-#include "PluginProperties.h"
+#include "PluginProperty.h"
 #include "VirtualMachine.h"
 
 /**
@@ -34,7 +34,7 @@ class Plugin : public PluginInterface
 {
 	
 private:
-	QMap<QString, PluginProperties*> properties;
+	QMap<QString, PluginProperty*> properties;
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
@@ -48,7 +48,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
-	QMap<QString, PluginProperties*> getPluginProperties() { return properties; };
+	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
