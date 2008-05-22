@@ -26,5 +26,5 @@ SOURCES += Plugin.cpp \
 	../../core/VirtualMachine.cpp \
 	../../core/HardwareInterface.cpp \
 	../../core/CollisionDomain.cpp \
-	../../plugin_framework/PluginProperties.cpp \
+	../../plugin_framework/PluginProperty.cpp \
 	../../plugin_framework/PluginRegistry.cpp \

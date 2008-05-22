@@ -16,19 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "PluginProperties.h"
+#include "PluginProperty.h"
 
 /** 
  * Constructor [empty]
  */
-PluginProperties::PluginProperties()
+PluginProperty::PluginProperty()
 {
 }
 
 /** 
  * Constructor with some args
  */
-PluginProperties::PluginProperties(QString pluginName, QString defValue, QString desc)
+PluginProperty::PluginProperty(QString pluginName, QString defValue, QString desc)
 {
 	name = pluginName;
 	defaultValue = defValue;
@@ -40,7 +40,7 @@ PluginProperties::PluginProperties(QString pluginName, QString defValue, QString
 /** 
  * Constructor with full args
  */
-PluginProperties::PluginProperties(QString pluginName, QString defValue,
+PluginProperty::PluginProperty(QString pluginName, QString defValue,
 		QString initValue, QString desc)
 {
 	name = pluginName;
@@ -52,6 +52,6 @@ PluginProperties::PluginProperties(QString pluginName, QString defValue,
 /** 
  * Deconstructor 
  */
-PluginProperties::~PluginProperties()
+PluginProperty::~PluginProperty()
 {
 }

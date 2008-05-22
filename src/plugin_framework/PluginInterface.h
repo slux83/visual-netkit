@@ -23,7 +23,7 @@
 #include <QSettings>
 
 class PluginProxy;
-class PluginProperties;
+class PluginProperty;
 
 class PluginInterface
 {
@@ -33,7 +33,7 @@ public:
 	virtual QSettings* getMySettings() = 0;
 	virtual QString getTemplateLocation() = 0;
 	virtual QString getTemplate() = 0;
-	virtual QMap<QString, PluginProperties*> getPluginProperties() = 0;
+	virtual QMap<QString, PluginProperty*> getPluginProperties() = 0;
 	virtual PluginProxy* getProxy() = 0;
 	
 	//If unused, return -1 inside the plugin implementation
