@@ -21,7 +21,7 @@
 #include <QFile>
 
 #include "Plugin.h"
-#include "VirtualMachine.h"
+
 
 /** 
  * Constructor 

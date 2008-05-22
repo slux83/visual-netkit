@@ -22,8 +22,8 @@
 #include <QTableWidgetItem>
 #include <QSettings>
 
-#include "PluginProxy.h"
-#include "PluginProperties.h"
+class PluginProxy;
+class PluginProperties;
 
 class PluginInterface
 {
