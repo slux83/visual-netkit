@@ -44,9 +44,12 @@ bool PluginProxy::changeGraphicsLabel(QString label)
 	return true;
 }
 
-bool PluginProxy::saveProperty(QTableWidgetItem* property)
+/**
+ * Just foreward the call
+ */
+bool PluginProxy::saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg)
 {
-	return true;
+	return pluginInterface->saveProperty(property, pluginAlertMsg);
 }
 
 /**

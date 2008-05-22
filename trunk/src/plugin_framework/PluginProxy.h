@@ -38,7 +38,7 @@ public:
 	virtual ~PluginProxy();
 
 	bool changeGraphicsLabel(QString label);
-	bool saveProperty(QTableWidgetItem* property);
+	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL);
 	QMap< QString, PluginProperty* > getPluginProperties();
 	QString getTemplate();
 	QString getTemplateLocation();
