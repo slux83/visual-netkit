@@ -93,5 +93,8 @@ bool PluginLoaderFactory::initPluginLibrary()
 	//TODO: plugin name must be unique
 	
 	pluginSetting->endGroup();
+	
+	destroyPluginFactory(tester);
+	
 	return retVal;
 }

@@ -20,7 +20,7 @@ INCLUDEPATH += . \
 RESOURCES = resources/resources.qrc
 
 # Input
-HEADERS += Plugin.h
+HEADERS += Plugin.h 
 SOURCES += Plugin.cpp \
 	../../plugin_framework/PluginProxy.cpp \
 	../../core/VirtualMachine.cpp \

@@ -28,7 +28,7 @@
 class PluginInterface
 {
 public:
-	virtual ~PluginInterface() = 0;
+	virtual ~PluginInterface() {};
 	virtual bool saveProperty(QTableWidgetItem* property) = 0;
 	virtual QSettings* getMySettings() = 0;
 	virtual QString getTemplateLocation() = 0;
