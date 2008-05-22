@@ -35,14 +35,15 @@ class Plugin : public PluginInterface
 	
 private:
 	QMap<QString, PluginProperties*> properties;
-	QSettings* mySettings;
+	QSettings *mySettings;
 	PluginProxy *myProxy;
+	QString myName;
 
 	bool fetchProperties();
 	
 public:
 	Plugin();
-	~Plugin() { delete myProxy; };
+	virtual ~Plugin();
 	bool saveProperty(QTableWidgetItem* property) { return false; };
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();

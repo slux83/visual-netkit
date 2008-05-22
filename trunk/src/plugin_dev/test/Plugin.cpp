@@ -29,10 +29,25 @@
 Plugin::Plugin() : PluginInterface()
 {
 	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
+	
+	/* Save the name of this plugin for future uses */
+	mySettings->beginGroup("global");
+	myName = mySettings->value("name").toString();
+	mySettings->endGroup();
+	
 	myProxy = new PluginProxy();
 	fetchProperties();
 }
 
+/**
+ * Deconstructor
+ */
+Plugin::~Plugin()
+{
+	delete myProxy;
+	qDeleteAll(properties);
+	delete mySettings;
+}
 
 /**
  * Returns the plugin template if resource file exists,
@@ -80,6 +95,7 @@ bool Plugin::fetchProperties()
 	
 	mySettings->beginGroup("properties");
 	QStringList childgroups = mySettings->childGroups();
+
 	if (!childgroups.empty()) 
 	{
 		for (int i = 0; i < childgroups.size(); i++)
@@ -92,7 +108,7 @@ bool Plugin::fetchProperties()
 			properties.insert(p_name, pp);
 		}
 	} else {
-		qWarning() << "No subtypes for property'" << "\"properties\"";
+		qWarning() << "No properties for plugin:" << myName;
 		allok = false;
 	}
 	mySettings->endGroup();

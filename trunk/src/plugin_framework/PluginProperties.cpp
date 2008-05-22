@@ -19,19 +19,33 @@
 #include "PluginProperties.h"
 
 /** 
- * Constructor 
+ * Constructor [empty]
  */
 PluginProperties::PluginProperties()
 {
 }
 
 /** 
- * Constructor 
+ * Constructor with some args
  */
-PluginProperties::PluginProperties(QString pluginname, QString defvalue, QString desc)
+PluginProperties::PluginProperties(QString pluginName, QString defValue, QString desc)
 {
-	name = pluginname;
-	defaultValue = defvalue;
+	name = pluginName;
+	defaultValue = defValue;
+	value = defValue;
+	description = desc;
+}
+
+
+/** 
+ * Constructor with full args
+ */
+PluginProperties::PluginProperties(QString pluginName, QString defValue,
+		QString initValue, QString desc)
+{
+	name = pluginName;
+	defaultValue = defValue;
+	value = initValue;
 	description = desc;
 }
 
