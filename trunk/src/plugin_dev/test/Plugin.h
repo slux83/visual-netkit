@@ -49,6 +49,8 @@ public:
 	QString getTemplate();
 	QMap<QString, PluginProperties*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
+	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
+	qint32 getGroupID() { return -1; /* Unused */ };
 };
 
 

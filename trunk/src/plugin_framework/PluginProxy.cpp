@@ -69,12 +69,36 @@ QString PluginProxy::getTemplateLocation()
 	return pluginInterface->getTemplateLocation();
 }
 
+/**
+ * Return the settings for plugin 
+ */
 QSettings* PluginProxy::getPluginSettings()
 {
 	return pluginInterface->getMySettings();
 }
 
+/**
+ * Return the base element attached to the plugin
+ */
 QObject* PluginProxy::getBaseElement()
 {
 	return PluginRegistry::getInstance()->getBaseElement(this);
 }
+
+/**
+ * Set the plugin group ID
+ */
+void PluginProxy::setPluginGroupID(qint32 id)
+{
+	pluginInterface->setGroupID(id);
+}
+
+/**
+ * Get the plugin group ID
+ * NOTE: return -1 if unused
+ */
+qint32 PluginProxy::getPluginGroupID()
+{
+	pluginInterface->getGroupID();
+}
+
