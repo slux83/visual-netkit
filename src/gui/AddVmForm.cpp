@@ -17,6 +17,7 @@
  */
 
 #include "AddVmForm.h"
+#include "../plugin_framework/PluginRegistry.h"
 #include "../common/Types.h"
 #include <QDesktopWidget>
 #include <QTreeWidgetItem>
@@ -49,6 +50,12 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 			vmHandler, SLOT(createVm(QString, QPointF)));
 	connect(vmName, SIGNAL(returnPressed()),
 			this, SLOT(handleAcceptedSignal()));
+	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
+				this, SLOT(showPluginInfos(QListWidgetItem *)));
+	
+	/* Init plugin chooser */
+	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
+	fillPluginChooser();
 	
 }
 
@@ -102,3 +109,57 @@ void AddVmForm::handleAcceptedSignal()
 		close();
 	}
 }
+
+/**
+ * [PRIVATE]
+ * fill the plugin chooser with a list of checkboxs
+ */
+void AddVmForm::fillPluginChooser()
+{
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		//it's a mine plugin?
+		if(factory->getType() != "vm")
+			continue; //Skeep this plugin
+		
+		//create entry
+		QListWidgetItem *pluginItem = new QListWidgetItem();
+		pluginItem->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
+		pluginItem->setData(Qt::DisplayRole, factory->getName());	//it's the unique ID
+		pluginItem->setData(Qt::ToolTipRole, tr("Select this plugin to show extra infos."));
+		pluginItem->setCheckState(Qt::Unchecked);
+		
+		pluginsList->addItem(pluginItem);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * show the infos of the selected plugin
+ */
+void AddVmForm::showPluginInfos(QListWidgetItem *item)
+{
+	QString selectedPluginName = item->data(Qt::DisplayRole).toString();
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		if(factory->getName() == selectedPluginName)
+		{
+			/* Render infos */
+			p_name->setText(factory->getName());
+			p_description->setText(factory->getDescription());
+			p_deps->setText(factory->getDeps());
+			p_author->setText(factory->getAuthor());
+			p_version->setText(factory->getVersion());
+			
+			break;
+		}
+	}
+}
+
+

@@ -43,6 +43,15 @@ public:
 	PluginProxy* createPlugin();
 	bool initPluginLibrary();
 	QList<PluginProperty*> getPropertiesDescription() { return properties; };
+	
+	/* Getter functions */
+	QString getType() { return type; };
+	QString getName() { return name; };
+	QString getDescription() { return description; };
+	QString getVersion() { return version; };
+	QString getDeps() { return deps; };
+	QString getAuthor() { return author; };
+	
 };
 
 #endif /*PLUGINLOADERFACTORY_H_*/
