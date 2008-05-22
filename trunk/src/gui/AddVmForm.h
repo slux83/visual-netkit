@@ -25,6 +25,7 @@
 #include <QDebug>
 #include "ui_addVm.h"
 #include "handles/VmHandler.h"
+#include "../plugin_framework/PluginLoaderFactory.h"
 
 /**
  * This class implement the form for add vm action
@@ -39,9 +40,13 @@ private:
 	QLabel *vmType;
 	VmHandler *vmHandler;
 	QPointF machinePos;
+	QList<PluginLoaderFactory *> availablePlugins;
 
+	void fillPluginChooser();
+	
 private slots:
 	void handleAcceptedSignal();
+	void showPluginInfos(QListWidgetItem *item);
 	
 public:
 	AddVmForm(QWidget *parent = 0);
