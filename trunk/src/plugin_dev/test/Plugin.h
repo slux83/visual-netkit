@@ -22,9 +22,10 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
-#include "../../plugin_framework/PluginInterface.h"
-#include "../../plugin_framework/PluginProxy.h"
-#include "../../plugin_framework/PluginProperties.h"
+#include "PluginInterface.h"
+#include "PluginProxy.h"
+#include "PluginProperties.h"
+#include "VirtualMachine.h"
 
 /**
  * A simple plugin that do nothing

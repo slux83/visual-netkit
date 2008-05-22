@@ -24,4 +24,7 @@ HEADERS += Plugin.h
 SOURCES += Plugin.cpp \
 	../../plugin_framework/PluginProxy.cpp \
 	../../core/VirtualMachine.cpp \
-	../../plugin_framework/PluginProperties.cpp
+	../../core/HardwareInterface.cpp \
+	../../core/CollisionDomain.cpp \
+	../../plugin_framework/PluginProperties.cpp \
+	../../plugin_framework/PluginRegistry.cpp \
