@@ -27,19 +27,23 @@ private:
 	QString name;
 	QString defaultValue;
 	QString description;
+	QString value;
 	
 public:
 	PluginProperties();
-	PluginProperties(QString pluginname, QString defvalue, QString desc);
+	PluginProperties(QString pluginName, QString defValue, QString desc);
+	PluginProperties(QString pluginName, QString defValue, QString initValue, QString desc);
 	virtual ~PluginProperties();
 	
 	QString getName() { return name; };
 	QString getDefaultValue() { return defaultValue; };
 	QString getDescription() { return description; };
+	QString getValue() { return value; };
 	
-	void setName(QString n) { name = n; };
-	void setDefaultValue(QString d) { defaultValue = d; };
-	void setDescription(QString d) { description = d; };
+	void setName(QString &n) { name = n; };
+	void setDefaultValue(QString &d) { defaultValue = d; };
+	void setValue(QString &d) { value = d; };
+	void setDescription(QString &d) { description = d; };
 };
 
 #endif /*PLUGINPROPERTIES_H_*/
