@@ -45,6 +45,8 @@ public:
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 	QObject* getBaseElement();
+	void setPluginGroupID(qint32 id);	
+	qint32 getPluginGroupID();
 };
 
 #endif /*PLUGINPROXY_H_*/
