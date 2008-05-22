@@ -62,7 +62,8 @@ Per concludere il sistema deve poter colloquiare con tutte le instanze proxy dei
 [global]
 name=PlugiName
 type=vm|cd|link
-description="a long Plugin destription"
+description="a long Plugin destription
+that take more then a single line!"
 version=1.0
 dependencies="plugin1 plugin2 plugin3"
 author="author1, author2, author3"
