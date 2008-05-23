@@ -36,6 +36,9 @@ VmHandler::VmHandler() : QObject()
 	
 	/* Get controller (View side) */
 	labHandler = LabHandler::getInstance();
+	
+	pluginPropDialog = new InitPluginsPropertiesDialog(
+			PluginRegistry::getInstance()->getAllPluginFactories());
 }
 
 /**
@@ -71,7 +74,8 @@ bool VmHandler::vmNameExist(QString vmNameToCheck)
  * [SLOT]
  * Create a new vm
  */
-void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins, QPointF pos)
+void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins, 
+		bool manuallyInit, QPointF pos)
 {
 	/* Create the view and domain objects */
 	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName);
@@ -100,6 +104,13 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins, QPointF
 	
 	/* reset the default action (manage graph) */
 	labHandler->getMainWindow()->forceManageGraphAction();
+	
+	/* now check if the user want init manually the plugins properties */
+	if(manuallyInit && selectedPlugins.size() > 0)
+	{
+		pluginPropDialog->buildGuiByPlugins(vmPlugins);
+		pluginPropDialog->setVisible(true);
+	}
 	
 }
 

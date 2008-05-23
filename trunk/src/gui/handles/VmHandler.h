@@ -24,6 +24,7 @@
 #include "../../core/handles/LabFacadeController.h"
 #include "../../core/handles/VmFacadeController.h"
 #include "../../core/VirtualMachine.h"
+#include "../InitPluginsPropertiesDialog.h"
 #include "LabHandler.h"
 
 /**
@@ -38,6 +39,7 @@ private:
 	LabFacadeController *labFacadeController;
 	VmFacadeController *vmFacadeController;
 	LabHandler *labHandler;
+	InitPluginsPropertiesDialog *pluginPropDialog;
 	
 public:
 	VmHandler();
@@ -49,7 +51,7 @@ signals:
 	void logEvent(QString message);
 
 public slots:
-	void createVm(QString vmNewName, QStringList selectedPlugins, QPointF pos);
+	void createVm(QString vmNewName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);
 };
 
 #endif /*VMHANDLER_H_*/
