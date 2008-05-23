@@ -60,6 +60,7 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };
+	//QRectF boundingRect() const;
 	
 public slots:
 	void updateLinkPos();

@@ -37,6 +37,7 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	pluginsSharedArea = new PluginsSharedArea();
 	
 	setZValue(800);
+	//setFlags(QGraphicsItem::ItemIsSelectable);
 	
 	//set the line position
 	updateLinkPos();
@@ -66,7 +67,7 @@ LinkItem::~LinkItem()
 void LinkItem::updateLinkPos()
 {
 	QPointF vmCenter, cdCenter, labelCenter;
-	
+
 	//start point
 	vmCenter.setX(vm->getSvgPrivate()->scenePos().x() +
 			vm->getSvgPrivate()->boundingRect().width() / 2);
@@ -101,3 +102,24 @@ void LinkItem::updateLinkState()
 {
 	lineItem->setLineColorByState(LinkMapper::getInstance()->getHardwareIterface(this)->getState());		
 }
+
+/**
+ * [REIMPL]
+ * Redefined the bounding rect
+ */
+/*
+QRectF LinkItem::boundingRect() const
+{
+	QRectF	bRect(lineItem->line().p1(), 
+			QSizeF	(
+					lineItem->line().p2().x() - lineItem->line().p1().x(),
+					lineItem->line().p2().y() - lineItem->line().p1().y()
+					)
+				);
+	bRect.normalized();
+	qDebug() << bRect;
+	return bRect;
+
+}
+*/
+
