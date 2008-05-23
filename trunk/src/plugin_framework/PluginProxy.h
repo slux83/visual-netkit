@@ -37,7 +37,7 @@ public:
 	PluginProxy();
 	virtual ~PluginProxy();
 
-	bool changeGraphicsLabel(QString label);
+	void changeGraphicsLabel(QString label);
 	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL);
 	QMap< QString, PluginProperty* > getPluginProperties();
 	QString getTemplate();
@@ -45,7 +45,7 @@ public:
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 	QObject* getBaseElement();
-	void setPluginGroupID(qint32 id);	
+	void setPluginGroupID(qint32 id);
 	qint32 getPluginGroupID();
 };
 

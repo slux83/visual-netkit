@@ -54,6 +54,8 @@ public:
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
 	void ensureAllItemsAreJoined();
 
+	void changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &pluginName);
+
 signals:
 	void newMappingCreated(VirtualMachine *machine);
 };

@@ -95,7 +95,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 	QRegExp typeValidator("vm|cd|link");
 	if(retVal && !typeValidator.exactMatch(pluginSetting->value("type").toString()))
 	{
-		qWarning() << "Plugin" << fileName() << "have unvalid type (General section)";
+		qWarning() << "Plugin" << fileName() << "have unvalid type (global section)";
 		retVal = false;
 	}
 	
@@ -113,7 +113,6 @@ bool PluginLoaderFactory::initPluginLibrary()
 			new PluginProperty(name, original->getDefaultValue(), original->getDescription());
 		properties.append(clone);
 	}
-	
 	
 	destroyPluginFactory(tester);
 	
