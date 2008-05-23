@@ -52,6 +52,8 @@ public:
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
 	void updateCdCounter(CollisionDomain *cd, bool increase);
 	void ensureAllItemsAreJoined();
+	
+	void changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &pluginName);
 
 };
 

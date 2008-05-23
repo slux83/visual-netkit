@@ -115,3 +115,19 @@ void VmMapper::ensureAllItemsAreJoined()
 		itemIterator.next()->restoreGroupActionCalled();
 }
 
+/**
+ * Changes the label associated to the pluginName for the VirtualMachineItem associated with vm.
+ */
+void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &pluginName)
+{
+	VirtualMachineItem *vmi = mappings.key(vm);
+	if (vmi == NULL)
+	{
+		qWarning() << "VmMapper::changeGraphicsLabel: null pointer to VirtualMachineItem.";
+		return;
+	}
+	
+	vmi->setPluginLine(pluginName, label);
+	
+}
+

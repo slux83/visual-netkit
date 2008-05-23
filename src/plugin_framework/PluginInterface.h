@@ -33,6 +33,8 @@ public:
 	/**
 	 * pluginAlertMsg is a pointer to QString to show to the user an alert
 	 * if the returned value is false.
+	 * If it is initialized, the function returns the result of consistency check.
+	 * If any check is failed, it returns false and an error string.
 	 * If the pluginAlertMsg doesn't passed (default as NULL) the property is
 	 * saved without any consistent check, and allways return TRUE.
 	 */
@@ -47,6 +49,8 @@ public:
 	//If unused, return -1 inside the plugin implementation
 	virtual void setGroupID(qint32 id) = 0;	
 	virtual qint32 getGroupID() = 0;
+	
+	virtual QString getName() = 0;
 };
 
 /**
