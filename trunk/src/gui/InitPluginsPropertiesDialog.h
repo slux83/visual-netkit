@@ -16,48 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ADDVMFORM_H_
-#define ADDVMFORM_H_
+#ifndef INITPLUGINSPROPERTIESDIALOG_H_
+#define INITPLUGINSPROPERTIESDIALOG_H_
 
-#include <QWidget>
-#include <QSvgWidget>
-#include <QSpacerItem>
 #include <QDebug>
-#include "ui_addVm.h"
-#include "handles/VmHandler.h"
-#include "InitPluginsPropertiesDialog.h"
+#include <QWidget>
+#include "ui_initPluginsProperties.h"
 #include "../plugin_framework/PluginLoaderFactory.h"
 
 /**
- * This class implement the form for add vm action
+ * This gui is a dialog that initialize the plugins properties
  */
-class AddVmForm : public QWidget, public Ui::AddVmForm
+class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProperties
 {
 	Q_OBJECT
-	
-private:
-	QSpacerItem *spacePreview;
-	QSvgWidget *vmPreview;
-	QLabel *vmType;
-	VmHandler *vmHandler;
-	QPointF machinePos;
-	QList<PluginLoaderFactory *> availablePlugins;
-	InitPluginsPropertiesDialog *pluginPropDialog;
 
-	void fillPluginChooser();
-	QStringList getSelectedPlugins();
-	
-private slots:
-	void handleAcceptedSignal();
-	void showPluginInfos(QListWidgetItem *item);
-	
+private:
+	QList<PluginLoaderFactory *> availablePlugins;
+
 public:
-	AddVmForm(QWidget *parent = 0);
-	virtual ~AddVmForm();
-	void setMachinePos(QPointF pos) { machinePos = pos; };
-	
-signals:
-	void userAddedVm(QString vmNewName, QStringList selectedPlugins, QPointF pos);
+	InitPluginsPropertiesDialog(const QList<PluginLoaderFactory *> plugins, QWidget *parent = 0);
+	void updatePluginsToolBox(QStringList selectedPlugins);
+	virtual ~InitPluginsPropertiesDialog();
 };
 
-#endif /*ADDVMFORM_H_*/
+#endif /*INITPLUGINSPROPERTIESDIALOG_H_*/

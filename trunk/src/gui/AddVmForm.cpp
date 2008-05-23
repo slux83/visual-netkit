@@ -57,6 +57,8 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
 	fillPluginChooser();
 	
+	/* Iinit the plugin properties dialog */
+	pluginPropDialog = new InitPluginsPropertiesDialog(availablePlugins);
 }
 
 /**
@@ -104,6 +106,11 @@ void AddVmForm::handleAcceptedSignal()
 	{
 		/* Ok, get active plugins and foward the request */
 		QStringList selPlugins = getSelectedPlugins();
+		
+		/* Init manually the properties? */
+		if(selPlugins.size() > 0 && initPropertiesCheck->checkState() == Qt::Unchecked)
+			pluginPropDialog->setVisible(true);
+		
 		emit userAddedVm(newVmName, selPlugins, machinePos);
 		vmName->clear();
 		close();

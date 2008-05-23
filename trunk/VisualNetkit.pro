@@ -9,7 +9,8 @@ FORMS += ui/addCd.ui \
     ui/addVm.ui \
     ui/addLink.ui \
     ui/main.ui \
-    ui/fileEdit.ui
+    ui/fileEdit.ui \
+    ui/initPluginsProperties.ui
 QT += core \
     gui \
     network \
@@ -22,7 +23,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/plugin_framework/PluginProperty.h \
+HEADERS = src/gui/InitPluginsPropertiesDialog.h \
+    src/plugin_framework/PluginProperty.h \
     src/gui/PluginsSharedArea.h \
     src/plugin_framework/PluginRegistry.h \
     src/plugin_framework/PluginInterface.h \
@@ -67,7 +69,8 @@ HEADERS = src/plugin_framework/PluginProperty.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/plugin_framework/PluginProperty.cpp \
+SOURCES = src/gui/InitPluginsPropertiesDialog.cpp \
+    src/plugin_framework/PluginProperty.cpp \
     src/gui/PluginsSharedArea.cpp \
     src/plugin_framework/PluginRegistry.cpp \
     src/plugin_framework/PluginProxy.cpp \
