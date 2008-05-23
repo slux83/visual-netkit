@@ -46,8 +46,8 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	/* Connections */
 	connect(addVmButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAcceptedSignal()));
-	connect(this, SIGNAL(userAddedVm(QString, QStringList, QPointF)),
-			vmHandler, SLOT(createVm(QString, QStringList, QPointF)));
+	connect(this, SIGNAL(userAddedVm(QString, QStringList, bool, QPointF)),
+			vmHandler, SLOT(createVm(QString, QStringList, bool, QPointF)));
 	connect(vmName, SIGNAL(returnPressed()),
 			this, SLOT(handleAcceptedSignal()));
 	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
@@ -56,9 +56,6 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	/* Init plugin chooser */
 	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
 	fillPluginChooser();
-	
-	/* Iinit the plugin properties dialog */
-	pluginPropDialog = new InitPluginsPropertiesDialog(availablePlugins);
 }
 
 /**
@@ -107,11 +104,8 @@ void AddVmForm::handleAcceptedSignal()
 		/* Ok, get active plugins and foward the request */
 		QStringList selPlugins = getSelectedPlugins();
 		
-		/* Init manually the properties? */
-		if(selPlugins.size() > 0 && initPropertiesCheck->checkState() == Qt::Unchecked)
-			pluginPropDialog->setVisible(true);
-		
-		emit userAddedVm(newVmName, selPlugins, machinePos);
+		emit userAddedVm(newVmName, selPlugins,
+				(initPropertiesCheck->checkState() == Qt::Unchecked), machinePos);
 		vmName->clear();
 		close();
 	}

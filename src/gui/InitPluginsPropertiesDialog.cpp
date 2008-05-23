@@ -18,6 +18,9 @@
 
 #include "InitPluginsPropertiesDialog.h"
 
+/**
+ * Constructor
+ */
 InitPluginsPropertiesDialog::InitPluginsPropertiesDialog(
 		const QList<PluginLoaderFactory *> plugins, QWidget *parent) : QDialog(parent)
 {
@@ -28,6 +31,24 @@ InitPluginsPropertiesDialog::InitPluginsPropertiesDialog(
 	availablePlugins = plugins;
 }
 
+/**
+ * Decontructor
+ */
 InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
 {
+	
 }
+
+/**
+ * Build the widgets based on plugins properties's structure
+ */
+void InitPluginsPropertiesDialog::buildGuiByPlugins(QList<PluginProxy*> plugins)
+{
+	QListIterator<PluginProxy *> it(plugins);
+	
+	while(it.hasNext())
+	{
+		qDebug() << it.next();
+	}
+}
+

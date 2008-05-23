@@ -33,11 +33,13 @@ class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProper
 
 private:
 	QList<PluginLoaderFactory *> availablePlugins;
+	QList<PluginProxy *> pluginsToManage;
 
 public:
 	InitPluginsPropertiesDialog(const QList<PluginLoaderFactory *> plugins, QWidget *parent = 0);
 	void updatePluginsToolBox(QStringList selectedPlugins);
 	virtual ~InitPluginsPropertiesDialog();
+	void buildGuiByPlugins(QList<PluginProxy*> plugins);
 };
 
 #endif /*INITPLUGINSPROPERTIESDIALOG_H_*/

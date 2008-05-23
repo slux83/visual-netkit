@@ -25,7 +25,6 @@
 #include <QDebug>
 #include "ui_addVm.h"
 #include "handles/VmHandler.h"
-#include "InitPluginsPropertiesDialog.h"
 #include "../plugin_framework/PluginLoaderFactory.h"
 
 /**
@@ -42,7 +41,6 @@ private:
 	VmHandler *vmHandler;
 	QPointF machinePos;
 	QList<PluginLoaderFactory *> availablePlugins;
-	InitPluginsPropertiesDialog *pluginPropDialog;
 
 	void fillPluginChooser();
 	QStringList getSelectedPlugins();
@@ -57,7 +55,7 @@ public:
 	void setMachinePos(QPointF pos) { machinePos = pos; };
 	
 signals:
-	void userAddedVm(QString vmNewName, QStringList selectedPlugins, QPointF pos);
+	void userAddedVm(QString vmNewName, QStringList selectedPlugins, bool manualInit, QPointF pos);
 };
 
 #endif /*ADDVMFORM_H_*/
