@@ -48,6 +48,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
+	QString getName() { return myName; };
 	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	

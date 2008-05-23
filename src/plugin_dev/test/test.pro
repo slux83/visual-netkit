@@ -5,14 +5,12 @@
 TEMPLATE = lib
 TARGET = 
 DEPENDPATH += .
-
 DESTDIR = ../../../bin/plugins
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 
-# including also the PluginInterface.h
 INCLUDEPATH += . \
     ../../plugin_framework \
     ../../core
@@ -20,11 +18,13 @@ INCLUDEPATH += . \
 RESOURCES = resources/resources.qrc
 
 # Input
-HEADERS += Plugin.h 
+HEADERS += Plugin.h \
+	../../plugin_framework/PluginProxy.h
+
 SOURCES += Plugin.cpp \
 	../../plugin_framework/PluginProxy.cpp \
 	../../core/VirtualMachine.cpp \
 	../../core/HardwareInterface.cpp \
 	../../core/CollisionDomain.cpp \
 	../../plugin_framework/PluginProperty.cpp \
-	../../plugin_framework/PluginRegistry.cpp \
+	../../plugin_framework/PluginRegistry.cpp

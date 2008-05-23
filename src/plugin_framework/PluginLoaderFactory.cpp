@@ -17,6 +17,8 @@
  */
 
 #include "PluginLoaderFactory.h"
+#include "../gui/handles/VmMapper.h"
+#include "PluginRegistry.h"
 
 /**
  * Constructor
@@ -42,6 +44,13 @@ PluginLoaderFactory::~PluginLoaderFactory()
 PluginProxy * PluginLoaderFactory::createPlugin()
 {
 	PluginInterface *p = createPluginFactory();
+	p->getProxy()->setRegistry(PluginRegistry::getInstance());
+	
+	/* Connect the proxy signals with some system components */
+	connect(p->getProxy(),
+			SIGNAL(needLabelChanged(VirtualMachine*, QString, QString)),
+			VmMapper::getInstance(),
+			SLOT(changeGraphicsLabel(VirtualMachine*, QString, QString)));
 	
 	return p->getProxy();
 }

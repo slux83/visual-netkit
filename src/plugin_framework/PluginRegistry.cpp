@@ -151,6 +151,7 @@ QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
 	be = cdAssociations.key(proxy, NULL);
 	if( be != NULL )
 		return be;
+	
 	be = hiAssociations.key(proxy, NULL);
 	if( be != NULL )
 		return be;

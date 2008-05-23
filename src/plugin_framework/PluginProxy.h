@@ -22,22 +22,27 @@
 #include <QString>
 #include <QMap>
 #include <QSettings>
+#include <QObject>
 #include <QTableWidgetItem>
 
+#include "../core/VirtualMachine.h"
 #include "PluginProperty.h"
 
+class PluginRegistry;
 class PluginInterface;
 
-class PluginProxy
+class PluginProxy : public QObject
 {
+	Q_OBJECT
+	
 private:
 	PluginInterface *pluginInterface;
+	PluginRegistry *registry;
 	
 public:
 	PluginProxy();
 	virtual ~PluginProxy();
 
-	void changeGraphicsLabel(QString label);
 	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL);
 	QMap< QString, PluginProperty* > getPluginProperties();
 	QString getTemplate();
@@ -47,6 +52,11 @@ public:
 	QObject* getBaseElement();
 	void setPluginGroupID(qint32 id);
 	qint32 getPluginGroupID();
+	void changeGraphicsLabel(QString label);
+	void setRegistry(PluginRegistry *pluginRegistry) { registry = pluginRegistry; };
+	
+signals:
+	void needLabelChanged(VirtualMachine *vm, QString pluginName, QString label);
 };
 
 #endif /*PLUGINPROXY_H_*/
