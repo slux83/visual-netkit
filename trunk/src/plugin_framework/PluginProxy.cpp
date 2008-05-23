@@ -20,23 +20,12 @@
 #include "PluginInterface.h"
 #include "PluginRegistry.h"
 
-#include "../gui/handles/VmMapper.h"
-#include "../gui/handles/CdMapper.h"
-#include "../gui/handles/LinkMapper.h"
-
-#include "../gui/VirtualMachineItem.h"
-#include "../gui/CollisionDomainItem.h"
-#include "../gui/LinkItem.h"
-
-#include "../core/VirtualMachine.h"
-#include "../core/CollisionDomain.h"
-#include "../core/HardwareInterface.h"
-
 /**
  * Constructor
  */
-PluginProxy::PluginProxy()
+PluginProxy::PluginProxy() : QObject()
 {
+	registry = NULL;
 }
 
 /**
@@ -57,19 +46,20 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(getBaseElement());
 	if (vm != NULL)
 	{
-		VmMapper::getInstance()->changeGraphicsLabel(vm, QString("ipv4 su vm"), pluginInterface->getName());
+		emit needLabelChanged(vm, pluginInterface->getName(), label);
+		//VmMapper::getInstance()->changeGraphicsLabel(vm, QString("ipv4 su vm"), pluginInterface->getName());
 	}
 	
 	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(getBaseElement());
 	if (cd != NULL)
 	{
-		CdMapper::getInstance()->changeGraphicsLabel(cd, QString("ipv4 su cd"), pluginInterface->getName());
+		//CdMapper::getInstance()->changeGraphicsLabel(cd, QString("ipv4 su cd"), pluginInterface->getName());
 	}
 	
 	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(getBaseElement());
 	if (hi != NULL)
 	{
-		LinkMapper::getInstance()->changeGraphicsLabel(hi, QString("ipv4 su link"), pluginInterface->getName());
+		//LinkMapper::getInstance()->changeGraphicsLabel(hi, QString("ipv4 su link"), pluginInterface->getName());
 	}
 }
 
@@ -118,7 +108,12 @@ QSettings* PluginProxy::getPluginSettings()
  */
 QObject* PluginProxy::getBaseElement()
 {
-	return PluginRegistry::getInstance()->getBaseElement(this);
+//	if(registry != NULL)
+//	{
+//		qDebug() << "factories" << registry->getAllPluginFactories().size();
+//		return registry->getBaseElement(this);
+//	}
+//	return NULL;
 }
 
 /**

@@ -37,6 +37,8 @@ Plugin::Plugin() : PluginInterface()
 	
 	myProxy = new PluginProxy();
 	fetchProperties();
+	
+	myProxy->changeGraphicsLabel("hello from test");
 }
 
 /**

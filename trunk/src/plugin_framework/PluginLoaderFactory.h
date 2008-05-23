@@ -25,12 +25,14 @@
 #include <QDebug>
 #include "PluginInterface.h"
 #include "PluginProperty.h"
+#include "PluginProxy.h"
 
 /**
  * This clas is a loader for a single external plugin
  */
 class PluginLoaderFactory : public QLibrary
 {
+	
 private:
 	createPlugin_t* createPluginFactory;
 	destroyPlugin_t* destroyPluginFactory;

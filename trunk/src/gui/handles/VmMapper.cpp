@@ -116,10 +116,13 @@ void VmMapper::ensureAllItemsAreJoined()
 }
 
 /**
+ * [SLOT]
  * Changes the label associated to the pluginName for the VirtualMachineItem associated with vm.
  */
-void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &pluginName)
+void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString pluginName, QString label)
 {
+	qDebug() << vm->getName() << pluginName << label;
+/*	
 	VirtualMachineItem *vmi = mappings.key(vm);
 	if (vmi == NULL)
 	{
@@ -128,6 +131,6 @@ void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &
 	}
 	
 	vmi->setPluginLine(pluginName, label);
-	
+*/	
 }
 
