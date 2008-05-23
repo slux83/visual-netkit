@@ -46,8 +46,8 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	/* Connections */
 	connect(addVmButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAcceptedSignal()));
-	connect(this, SIGNAL(userAddedVm(QString, QPointF)),
-			vmHandler, SLOT(createVm(QString, QPointF)));
+	connect(this, SIGNAL(userAddedVm(QString, QStringList, QPointF)),
+			vmHandler, SLOT(createVm(QString, QStringList, QPointF)));
 	connect(vmName, SIGNAL(returnPressed()),
 			this, SLOT(handleAcceptedSignal()));
 	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
@@ -102,9 +102,9 @@ void AddVmForm::handleAcceptedSignal()
 	/* Clear vm name and close this form */
 	if(allCorrect)
 	{
-		/* Ok, get active daemons and foward the request */
-		emit userAddedVm(newVmName, machinePos);
-		
+		/* Ok, get active plugins and foward the request */
+		QStringList selPlugins = getSelectedPlugins();
+		emit userAddedVm(newVmName, selPlugins, machinePos);
 		vmName->clear();
 		close();
 	}
@@ -151,15 +151,38 @@ void AddVmForm::showPluginInfos(QListWidgetItem *item)
 		if(factory->getName() == selectedPluginName)
 		{
 			/* Render infos */
-			p_name->setText(factory->getName());
-			p_description->setText(factory->getDescription());
-			p_deps->setText(factory->getDeps());
-			p_author->setText(factory->getAuthor());
-			p_version->setText(factory->getVersion());
+			pName->setText(factory->getName());
+			pDescription->setText(factory->getDescription());
+			pDeps->setText(factory->getDeps());
+			pAuthor->setText(factory->getAuthor());
+			pVersion->setText(factory->getVersion());
 			
 			break;
 		}
 	}
 }
 
+/**
+ * [PRIVATE]
+ * Get the selected plugins
+ */
+QStringList AddVmForm::getSelectedPlugins()
+{
+	QStringList selectedPlugins;
+	
+	/* Get all list items and select only selected */
+	QList<QListWidgetItem *> listItems =
+		pluginsList->findItems(".+", Qt::MatchRegExp);
+	
+	QListIterator<QListWidgetItem *> itemIter(listItems);
+	while(itemIter.hasNext())
+	{
+		QListWidgetItem * item = itemIter.next();
+		//save the plugin name if the plugin is checked
+		if(item->checkState() == Qt::Checked)
+			selectedPlugins.append(item->data(Qt::DisplayRole).toString());
+	}
+	
+	return selectedPlugins;
+}
 

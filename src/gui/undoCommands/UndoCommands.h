@@ -41,9 +41,10 @@ class AddVmCommand : public QObject, public QUndoCommand
 private:
 	VirtualMachineItem *vmItem;
 	VirtualMachine *vm;
+	QList<PluginProxy*> plugins;	//the plugins used with the vm
 	
 public:
-	AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
+	AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm, QList<PluginProxy *> pList,
 			QUndoCommand *parent = 0);
 	virtual ~AddVmCommand();
 	

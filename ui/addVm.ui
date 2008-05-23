@@ -128,7 +128,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="p_name" >
+            <widget class="QLabel" name="pName" >
              <property name="layoutDirection" >
               <enum>Qt::LeftToRight</enum>
              </property>
@@ -164,7 +164,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="p_version" >
+            <widget class="QLabel" name="pVersion" >
              <property name="layoutDirection" >
               <enum>Qt::LeftToRight</enum>
              </property>
@@ -200,7 +200,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="p_description" >
+            <widget class="QLabel" name="pDescription" >
              <property name="layoutDirection" >
               <enum>Qt::LeftToRight</enum>
              </property>
@@ -236,7 +236,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="p_deps" >
+            <widget class="QLabel" name="pDeps" >
              <property name="layoutDirection" >
               <enum>Qt::LeftToRight</enum>
              </property>
@@ -272,7 +272,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="p_author" >
+            <widget class="QLabel" name="pAuthor" >
              <property name="layoutDirection" >
               <enum>Qt::LeftToRight</enum>
              </property>

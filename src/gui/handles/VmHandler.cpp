@@ -17,6 +17,7 @@
  */
 
 #include "VmHandler.h"
+#include "../../plugin_framework/PluginRegistry.h"
 #include "../undoCommands/UndoCommands.h"
 
 /**
@@ -70,7 +71,7 @@ bool VmHandler::vmNameExist(QString vmNameToCheck)
  * [SLOT]
  * Create a new vm
  */
-void VmHandler::createVm(QString vmNewName, QPointF pos)
+void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins, QPointF pos)
 {
 	/* Create the view and domain objects */
 	VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(vmNewName);
@@ -79,10 +80,23 @@ void VmHandler::createVm(QString vmNewName, QPointF pos)
 	
 	vmItem->setPos(pos);	//place the new machine where user clicked
 	
+	/* Create plugins and attach these to the vm */
+	QList<PluginProxy *> vmPlugins;
+	QStringListIterator iter(selectedPlugins);
+	PluginRegistry* registry = PluginRegistry::getInstance();
+	
+	/* Save proxies for undo command */
+	while(iter.hasNext())
+	{
+		PluginProxy* proxy;
+		if((proxy = registry->registerPlugin(iter.next(), vm)) != NULL)
+			vmPlugins.append(proxy);
+	}
+	
 	labFacadeController->getCurrentLab()->addMachine(vm);
 	
 	/* the undo command (redo) can accomplish the action */
-	labHandler->getUndoStack()->push(new AddVmCommand(vmItem, vm));
+	labHandler->getUndoStack()->push(new AddVmCommand(vmItem, vm, vmPlugins));
 	
 	/* reset the default action (manage graph) */
 	labHandler->getMainWindow()->forceManageGraphAction();
