@@ -56,9 +56,18 @@ PluginRegistry* PluginRegistry::getInstance()
 
 /**
  * Registers a plugin proxy in the register and returns it.
+ * 
+ * @return the proxy of the registered element, or NULL if the plugins name
+ * doesn't extst.
  */
 PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseElement)
 {	
+	if(!factories.contains(pluginName))
+	{
+		qWarning() << "Plugin:" << pluginName << "not found its Factory.";
+		return NULL;
+	}
+	
 	PluginProxy* proxy = factories.value(pluginName)->createPlugin();
 	
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(baseElement);
@@ -114,7 +123,7 @@ bool PluginRegistry::fetchPlugins()
 				PluginLoaderFactory* factory = new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
 				if (factory->initPluginLibrary()) 
 				{
-					factories.insert(filteredList.at(i), factory);
+					factories.insert(factory->getName(), factory);
 				} else {
 					delete factory;
 				}

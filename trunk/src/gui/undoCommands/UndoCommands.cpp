@@ -22,10 +22,11 @@
  * Contructor
  */
 AddVmCommand::AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
-		QUndoCommand *parent) : QUndoCommand(parent)
+		QList<PluginProxy *> pList, QUndoCommand *parent) : QUndoCommand(parent)
 {
 	vmItem = newVmItem;
 	vm = newVm;
+	plugins = pList;
 	setText(tr("Added a new virtual machine: ") + vm->getName());
 }
 

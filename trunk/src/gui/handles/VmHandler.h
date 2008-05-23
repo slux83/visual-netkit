@@ -49,7 +49,7 @@ signals:
 	void logEvent(QString message);
 
 public slots:
-	void createVm(QString vmNewName, QPointF pos);
+	void createVm(QString vmNewName, QStringList selectedPlugins, QPointF pos);
 };
 
 #endif /*VMHANDLER_H_*/

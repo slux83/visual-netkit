@@ -43,6 +43,7 @@ private:
 	QList<PluginLoaderFactory *> availablePlugins;
 
 	void fillPluginChooser();
+	QStringList getSelectedPlugins();
 	
 private slots:
 	void handleAcceptedSignal();
@@ -54,7 +55,7 @@ public:
 	void setMachinePos(QPointF pos) { machinePos = pos; };
 	
 signals:
-	void userAddedVm(QString vmNewName, QPointF pos);
+	void userAddedVm(QString vmNewName, QStringList selectedPlugins, QPointF pos);
 };
 
 #endif /*ADDVMFORM_H_*/
