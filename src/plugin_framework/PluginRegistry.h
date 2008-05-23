@@ -55,7 +55,7 @@ public:
 	
 	QObject* getBaseElement(PluginProxy* proxy);
 	
-	QList<PluginLoaderFactory*> getAllPluginFactories() { return factories.values(); };
+	const QList<PluginLoaderFactory*> getAllPluginFactories() { return factories.values(); };
 };
 
 #endif /*PLUGINREGISTRY_H_*/
