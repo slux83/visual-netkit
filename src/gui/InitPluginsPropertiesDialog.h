@@ -21,6 +21,7 @@
 
 #include <QDebug>
 #include <QWidget>
+#include <QMap>
 #include "ui_initPluginsProperties.h"
 #include "../plugin_framework/PluginLoaderFactory.h"
 
@@ -34,12 +35,17 @@ class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProper
 private:
 	QList<PluginLoaderFactory *> availablePlugins;
 	QList<PluginProxy *> pluginsToManage;
-
+	//property name, line edit
+	QMap<QString, QLineEdit*> propertiesAssoc;
+	
+	//Clear the gui elements and assoc map
+	void clearAll();
+	
 public:
 	InitPluginsPropertiesDialog(const QList<PluginLoaderFactory *> plugins, QWidget *parent = 0);
 	void updatePluginsToolBox(QStringList selectedPlugins);
 	virtual ~InitPluginsPropertiesDialog();
-	void buildGuiByPlugins(QList<PluginProxy*> plugins);
+	void buildGui(QList<PluginProxy*> plugins);
 };
 
 #endif /*INITPLUGINSPROPERTIESDIALOG_H_*/

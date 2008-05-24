@@ -46,7 +46,8 @@ Plugin::Plugin() : PluginInterface()
 Plugin::~Plugin()
 {
 	//NOTE: The proxy is destroyed by the plugin framework
-	qDeleteAll(properties);
+	qDeleteAll(properties.values());
+	properties.clear();
 	delete mySettings;
 }
 

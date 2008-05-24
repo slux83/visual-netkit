@@ -108,7 +108,7 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
 	/* now check if the user want init manually the plugins properties */
 	if(manuallyInit && selectedPlugins.size() > 0)
 	{
-		pluginPropDialog->buildGuiByPlugins(vmPlugins);
+		pluginPropDialog->buildGui(vmPlugins);
 		pluginPropDialog->setVisible(true);
 	}
 	
