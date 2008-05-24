@@ -47,7 +47,6 @@ InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
 void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 {	
 	clearAll();
-	
 	pluginsToManage = plugins;
 	
 	QListIterator<PluginProxy *> it(plugins);
@@ -80,6 +79,9 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 										lineEdit);
 			}
 			/* The plugin have at most one property */
+			QSpacerItem *spacerItem = 
+				new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+			layout->addItem(spacerItem);
 			pluginsToolBox->insertItem(tabCount++, w, QIcon(QString::fromUtf8(":/small/plugin")),
 				proxy->getPlugin()->getName());
 		}
