@@ -104,6 +104,15 @@ void LinkItem::updateLinkState()
 }
 
 /**
+ * [PUBLIC-SLOT]
+ * change the plugin line inside the shared area
+ */
+void LinkItem::setPluginLine(QString pluginName, QString content)
+{
+	pluginsSharedArea->changeMyLine(pluginName, content);
+}
+
+/**
  * [REIMPL]
  * Redefined the bounding rect
  */

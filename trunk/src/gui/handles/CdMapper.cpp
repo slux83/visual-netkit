@@ -101,3 +101,19 @@ void CdMapper::ensureAllItemsAreJoined()
 	while(itemIterator.hasNext())
 		itemIterator.next()->restoreGroupActionCalled();
 }
+
+/**
+ * Changes the label associated to the pluginName for the CollisionDomainItem associated with cd.
+ */
+void CdMapper::changeGraphicsLabel(CollisionDomain *cd, QString label, QString pluginName)
+{
+	CollisionDomainItem *cdi = mappings.key(cd);
+	if (cdi == NULL)
+	{
+		qWarning() << "CdMapper::changeGraphicsLabel: null pointer to CollisionDomainItem.";
+		return;
+	}
+	
+	cdi->setPluginLine(pluginName, label);
+	
+}

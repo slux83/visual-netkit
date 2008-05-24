@@ -27,7 +27,7 @@
 /**
  * This gui is a dialog that initialize the plugins properties
  */
-class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProperties
+class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProperties 
 {
 	Q_OBJECT
 

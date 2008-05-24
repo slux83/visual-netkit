@@ -53,7 +53,7 @@ public:
 	void updateCdCounter(CollisionDomain *cd, bool increase);
 	void ensureAllItemsAreJoined();
 	
-	void changeGraphicsLabel(VirtualMachine *vm, QString &label, QString &pluginName);
+	void changeGraphicsLabel(CollisionDomain *cd, QString label, QString pluginName);
 
 };
 
