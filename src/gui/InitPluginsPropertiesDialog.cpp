@@ -61,7 +61,9 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 		{
 			QWidget *w = new QWidget();	//the container
 			QVBoxLayout *layout = new QVBoxLayout(w);
-	
+			layout->setMargin(3);
+			layout->setSpacing(3);
+			
 			QListIterator<PluginProperty*> ii(proxy->getPluginProperties().values());
 			/* foraech property */
 			while(ii.hasNext())
