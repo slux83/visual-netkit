@@ -28,7 +28,7 @@
  */
 PluginIPv4::PluginIPv4() : PluginInterface()
 {
-	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
+	mySettings = new QSettings(":/iniipv4", QSettings::NativeFormat);
 	
 	/* Save the name of this plugin for future uses */
 	mySettings->beginGroup("global");
