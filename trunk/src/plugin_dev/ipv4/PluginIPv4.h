@@ -27,6 +27,8 @@
 #include "PluginProxy.h"
 #include "PluginProperty.h"
 
+#include "NetworkAddress.h"
+
 /**
  * A simple plugin that do nothing
  */
@@ -38,6 +40,8 @@ private:
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
+	
+	NetworkAddress address;
 
 	bool fetchProperties();
 	
@@ -59,6 +63,9 @@ public:
 	QString getDefaultGraphisLabel() {return QString("Hello from ipv4!"); };
 	
 	void updateLabel();
+	//NetworkAddress getAddress() { return address; };
+	QString getAddress() { return address.toString(); };
+	void setAddress(QString address, QString netmask);
 };
 
 
