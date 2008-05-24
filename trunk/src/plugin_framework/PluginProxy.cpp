@@ -25,7 +25,6 @@
  */
 PluginProxy::PluginProxy(PluginRegistry *r) : QObject()
 {
-	qDebug() << "registry" <<  r;
 	registry = r;
 }
 
@@ -40,7 +39,9 @@ PluginProxy::~PluginProxy()
 	 */
 }
 
-
+/**
+ * Change the label inside the "my" graphics element 
+ */
 void PluginProxy::changeGraphicsLabel(QString label)
 {
 	QObject* baseElement = getBaseElement();
@@ -67,6 +68,18 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	if (hi != NULL)
 	{
 		//LinkMapper::getInstance()->changeGraphicsLabel(hi, QString("ipv4 su link"), pluginInterface->getName());
+	}
+}
+
+/**
+ * Show the default label inside "my" graphics element, if any
+ */
+void PluginProxy::showDefaultGrophicsLabel()
+{
+	QString label = pluginInterface->getDefaultGraphisLabel();
+	if(!label.isEmpty())
+	{
+		changeGraphicsLabel(label);
 	}
 }
 
@@ -115,10 +128,8 @@ QSettings* PluginProxy::getPluginSettings()
  */
 QObject* PluginProxy::getBaseElement()
 {
-	qDebug() << "inside the proxy:" << registry;
 	if(registry != NULL)
 	{
-		qDebug() << "factories" << registry->getAllPluginFactories().size();
 		return registry->getBaseElement(this);
 	}
 	return NULL;

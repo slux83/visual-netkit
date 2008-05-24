@@ -41,15 +41,30 @@ public:
 	virtual bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL) = 0;
 	
 	virtual QSettings* getMySettings() = 0;
+	
 	virtual QString getTemplateLocation() = 0;
+	
 	virtual QString getTemplate() = 0;
+	
 	virtual QMap<QString, PluginProperty*> getPluginProperties() = 0;
+	
 	virtual PluginProxy* getProxy() = 0;
+	
 	virtual void setProxy(PluginProxy* p) = 0;
 	
-	//If unused, return -1 inside the plugin implementation
+	/**
+	 * If unused, return -1 inside the plugin implementation
+	 */
 	virtual void setGroupID(qint32 id) = 0;	
+	
 	virtual qint32 getGroupID() = 0;
+	
+	/**
+	 * This function il called by the system (through the proxy) when the plugin
+	 * is created and attached to a base element. If you dont want show a label
+	 * on plugin startup, you have to return a empty QString()
+	 */
+	virtual QString getDefaultGraphisLabel() = 0;
 	
 	virtual QString getName() = 0;
 };
