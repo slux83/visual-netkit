@@ -65,6 +65,7 @@ public:
 public slots:
 	void updateLinkPos();
 	void updateLinkState();
+	void setPluginLine(QString pluginName, QString content);
 };
 
 #endif /*LINKITEM_H_*/

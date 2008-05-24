@@ -117,7 +117,7 @@ bool PluginIPv4::fetchProperties()
 }
 
 
-bool PluginIPv4::updateLabel()
+void PluginIPv4::updateLabel()
 {
 	myProxy->changeGraphicsLabel("etichetta ipv4");
 }

@@ -106,4 +106,19 @@ QList<LinkItem*> LinkMapper::getLinkItems()
 	return mappings.keys();
 }
 
+/**
+ * Changes the label associated to the pluginName for the LinkItem associated with li.
+ */
+void LinkMapper::changeGraphicsLabel(HardwareInterface *hi, QString label, QString pluginName)
+{
+	LinkItem *li = mappings.key(hi);
+	if (li == NULL)
+	{
+		qWarning() << "LinkMapper::changeGraphicsLabel: null pointer to LinkItem.";
+		return;
+	}
+	
+	li->setPluginLine(pluginName, label);
+	
+}
 

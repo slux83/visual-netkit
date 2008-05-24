@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QString>
 #include <QSettings>
+
 #include "PluginInterface.h"
 #include "PluginProxy.h"
 #include "PluginProperty.h"
@@ -53,7 +54,7 @@ public:
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 	
-	bool updateLabel();
+	void updateLabel();
 	QString getName() { return myName; };
 };
 
