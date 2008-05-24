@@ -98,6 +98,7 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 	
 	if(!foundValidElement)
 		qWarning() << "PluginRegistry::registerPlugin" << "Decasting failed. returning NULL." << baseElement;
+
 	
 	return proxy;
 }
@@ -174,7 +175,7 @@ QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
 	if( be != NULL )
 		return be;
 	
-	qWarning() << "PluginRegistry: unknown return type for PluginProxy!";
+	qWarning() << "PluginRegistry: unknown base element for PluginProxy" << proxy;
 	
 	return be;
 }

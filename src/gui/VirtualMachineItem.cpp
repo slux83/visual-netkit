@@ -36,7 +36,7 @@ VirtualMachineItem::VirtualMachineItem(QString label)
 	vmNameLabel->setPos(0, 52);
 	/* init shared area */
 	pluginsSharedArea = new PluginsSharedArea();
-	pluginsSharedArea->setPos(0, 50);
+	pluginsSharedArea->setPos(0, 64);
 	
 	/* Add svg and label to this group */	
 	addToGroup(vmSvg);

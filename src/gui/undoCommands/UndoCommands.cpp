@@ -44,6 +44,11 @@ void AddVmCommand::redo()
 {
 	//show and connect view & domain machines
 	VmMapper::getInstance()->addNewMapping(vmItem, vm);
+	
+	//call default label for plugins
+	QListIterator<PluginProxy *> i(plugins);
+	while(i.hasNext())
+		i.next()->showDefaultGrophicsLabel();
 }
 
 /**

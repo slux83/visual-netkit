@@ -46,7 +46,16 @@ PluginsSharedArea::~PluginsSharedArea()
  */
 void PluginsSharedArea::changeMyLine(QString pluginName, QString content)
 {
-	pluginsArea.insert(pluginName, content);
+	if(content.isEmpty())
+	{
+		//delete label
+		pluginsArea.remove(pluginName);
+	}
+	else
+	{
+		//insert or update
+		pluginsArea.insert(pluginName, content);
+	}
 	
 	//need a repaint. emit the signal
 	emit needAreaRepaint();
@@ -64,11 +73,11 @@ void PluginsSharedArea::updateArea()
 	if(contents.size() == 0)
 	{
 		//hide the label area
-		setVisible(false);
+		hide();
 	}
 	else
 	{
-		this->setPlainText(contents.join("\n"));
-		setVisible(true);
+		setPlainText(contents.join("\n"));
+		show();
 	}
 }

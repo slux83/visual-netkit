@@ -125,9 +125,8 @@ void VmMapper::ensureAllItemsAreJoined()
  */
 void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString pluginName, QString label)
 {
-	qDebug() << vm->getName() << pluginName << label;
-/*	
-	VirtualMachineItem *vmi = mappings.key(vm);
+	
+	VirtualMachineItem *vmi = mappings.key(vm, NULL);
 	if (vmi == NULL)
 	{
 		qWarning() << "VmMapper::changeGraphicsLabel: null pointer to VirtualMachineItem.";
@@ -135,6 +134,6 @@ void VmMapper::changeGraphicsLabel(VirtualMachine *vm, QString pluginName, QStri
 	}
 	
 	vmi->setPluginLine(pluginName, label);
-*/	
+
 }
 
