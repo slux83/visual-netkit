@@ -46,10 +46,9 @@ public:
 	void addNewMapping(LinkItem* linkItem, HardwareInterface* hi);
 	QList<LinkItem*> getLinkItems();
 	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
-	
-	void changeGraphicsLabel(HardwareInterface *hi, QString label, QString pluginName);
 
 public slots:
+	void changeGraphicsLabel(HardwareInterface *hi, QString pluginName, QString label);
 	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);
 };
 

@@ -67,7 +67,7 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(getBaseElement());
 	if (hi != NULL)
 	{
-		//LinkMapper::getInstance()->changeGraphicsLabel(hi, QString("ipv4 su link"), pluginInterface->getName());
+		emit needLabelChanged(hi, pluginInterface->getName(), label);
 	}
 }
 
