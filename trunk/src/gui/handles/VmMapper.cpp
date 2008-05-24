@@ -30,7 +30,7 @@ VmMapper* VmMapper::instance = NULL;
  */
 VmMapper::VmMapper() : QObject()
 {
-	addVm = new AddVmForm();
+	addVm = NULL;
 	
 	/* Connect signals */
 	connect(this, SIGNAL(newMappingCreated(VirtualMachine *)),
@@ -62,6 +62,10 @@ VmMapper * VmMapper::getInstance()
  */
 void VmMapper::showAddVmForm(QPointF pos)
 {
+	//lazy init
+	if(addVm == NULL)
+		addVm = new AddVmForm();
+	
 	addVm->setMachinePos(pos);	//update the pos for the new machine
 	
 	addVm->show();

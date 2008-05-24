@@ -55,6 +55,7 @@ AddVmForm::AddVmForm(QWidget *parent) : QWidget(parent)
 	
 	/* Init plugin chooser */
 	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
+	qDebug() << availablePlugins;
 	fillPluginChooser();
 }
 

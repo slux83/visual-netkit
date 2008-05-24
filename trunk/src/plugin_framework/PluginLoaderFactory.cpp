@@ -44,15 +44,27 @@ PluginLoaderFactory::~PluginLoaderFactory()
 PluginProxy * PluginLoaderFactory::createPlugin()
 {
 	PluginInterface *p = createPluginFactory();
-	p->getProxy()->setRegistry(PluginRegistry::getInstance());
+	PluginProxy *pProxy = new PluginProxy(PluginRegistry::getInstance());
+	
+	p->setProxy(pProxy);
+	pProxy->setPluginInterface(p);
 	
 	/* Connect the proxy signals with some system components */
 	connect(p->getProxy(),
 			SIGNAL(needLabelChanged(VirtualMachine*, QString, QString)),
 			VmMapper::getInstance(),
 			SLOT(changeGraphicsLabel(VirtualMachine*, QString, QString)));
-	
+		
 	return p->getProxy();
+}
+
+/**
+ * Destroy the plugin and the associated proxy in the correct sequence
+ */
+void PluginLoaderFactory::destroyPlugin(PluginProxy *p)
+{
+	destroyPluginFactory(p->getPlugin());
+	delete p;
 }
 
 /**
@@ -73,9 +85,10 @@ bool PluginLoaderFactory::initPluginLibrary()
 	}
 	
 	//init the instance, and get the QSetting
-	PluginInterface *tester = createPluginFactory();
-	QSettings* pluginSetting = tester->getMySettings();
-	
+	PluginProxy *tester = createPlugin();
+
+	QSettings* pluginSetting = tester->getPluginSettings();
+
 	/* Validate settings */
 	pluginSetting->beginGroup("global");
 	QStringList generalKeys = pluginSetting->childKeys();
@@ -123,7 +136,7 @@ bool PluginLoaderFactory::initPluginLibrary()
 		properties.append(clone);
 	}
 	
-	destroyPluginFactory(tester);
+	destroyPlugin(tester);
 	
 	return retVal;
 }

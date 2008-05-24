@@ -35,10 +35,9 @@ Plugin::Plugin() : PluginInterface()
 	myName = mySettings->value("name").toString();
 	mySettings->endGroup();
 	
-	myProxy = new PluginProxy();
+	myProxy = NULL;
 	fetchProperties();
 	
-	myProxy->changeGraphicsLabel("hello from test");
 }
 
 /**
@@ -46,7 +45,7 @@ Plugin::Plugin() : PluginInterface()
  */
 Plugin::~Plugin()
 {
-	delete myProxy;
+	//NOTE: The proxy is destroyed by the plugin framework
 	qDeleteAll(properties);
 	delete mySettings;
 }

@@ -68,22 +68,36 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 		return NULL;
 	}
 	
+	bool foundValidElement = false;
+	
 	PluginProxy* proxy = factories.value(pluginName)->createPlugin();
 	
+	//Virtual machine
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(baseElement);
-	if ( vm != NULL ) {
+	if ( vm != NULL )
+	{
 		vmAssociations.insertMulti(vm, proxy);
+		foundValidElement = true;
 	}
 	
+	//Collision domain
 	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(baseElement);
-	if ( cd != NULL ) {
+	if ( cd != NULL )
+	{
 		cdAssociations.insertMulti(cd, proxy);
+		foundValidElement = true;
 	}
 	
+	//Hardware interface
 	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(baseElement);
-	if ( hi != NULL ) {
+	if ( hi != NULL )
+	{
 		hiAssociations.insertMulti(hi, proxy);
+		foundValidElement = true;
 	}
+	
+	if(!foundValidElement)
+		qWarning() << "PluginRegistry::registerPlugin" << "Decasting failed. returning NULL." << baseElement;
 	
 	return proxy;
 }
@@ -124,11 +138,15 @@ bool PluginRegistry::fetchPlugins()
 				if (factory->initPluginLibrary()) 
 				{
 					factories.insert(factory->getName(), factory);
-				} else {
+				}
+				else
+				{
 					delete factory;
 				}
 			}
-		} else {
+		}
+		else
+		{
 			qWarning() << "No plugins in" << DEFAULT_PLUGIN_DIR;
 			allok = false;
 		}
