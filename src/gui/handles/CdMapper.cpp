@@ -30,7 +30,7 @@ CdMapper* CdMapper::instance = NULL;
  */
 CdMapper::CdMapper() : QObject()
 {
-	addCdForm = new AddCdForm();
+	addCdForm = NULL;
 }
 
 /**
@@ -58,6 +58,10 @@ CdMapper * CdMapper::getInstance()
  */
 void CdMapper::showAddCdForm(QPointF pos)
 {
+	//lazy init
+	if(addCdForm == NULL)
+		addCdForm = new AddCdForm();
+	
 	addCdForm->setCollisionDomainPos(pos);
 	addCdForm->show();
 }

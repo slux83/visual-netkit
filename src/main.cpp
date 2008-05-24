@@ -34,6 +34,12 @@ int main(int argc, char *argv[])
 	splash.show();
 	splash.showMessage("Starting...");
 	
+	/* Load plugins */
+	splash.showMessage("Loading plugins");
+	qDebug() << "Loading plugins";
+	PluginRegistry::getInstance()->fetchPlugins();
+	qDebug() << "Founded" << PluginRegistry::getInstance()->getAllPluginFactories().size() << "plugin(s)";
+	
 	/* creating main gui */
 	splash.showMessage("Loading main GUI");
 	qDebug() << "Loading main GUI";
@@ -44,11 +50,6 @@ int main(int argc, char *argv[])
 	qDebug() << "Loading bug dumper";
 	BugDumper *dumper = new BugDumper();
 	Q_UNUSED(dumper);
-	
-	/* Load plugins */
-	splash.showMessage("Loading plugins");
-	qDebug() << "Loading plugins";
-	PluginRegistry::getInstance()->fetchPlugins();
 	
 	splash.finish(win);
 	win->setWindowState(Qt::WindowMaximized);

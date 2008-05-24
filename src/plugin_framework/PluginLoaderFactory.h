@@ -43,6 +43,7 @@ public:
 	PluginLoaderFactory(const QString &fileName, QObject *parent = 0);
 	virtual ~PluginLoaderFactory();
 	PluginProxy* createPlugin();
+	void destroyPlugin(PluginProxy *p);
 	bool initPluginLibrary();
 	QList<PluginProperty*> getPropertiesDescription() { return properties; };
 	

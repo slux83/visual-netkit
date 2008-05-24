@@ -45,6 +45,7 @@ public:
 	virtual QString getTemplate() = 0;
 	virtual QMap<QString, PluginProperty*> getPluginProperties() = 0;
 	virtual PluginProxy* getProxy() = 0;
+	virtual void setProxy(PluginProxy* p) = 0;
 	
 	//If unused, return -1 inside the plugin implementation
 	virtual void setGroupID(qint32 id) = 0;	

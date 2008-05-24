@@ -51,7 +51,7 @@ public:
 	QString getName() { return myName; };
 	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
-	
+	void setProxy(PluginProxy* p) { myProxy = p; };
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 };

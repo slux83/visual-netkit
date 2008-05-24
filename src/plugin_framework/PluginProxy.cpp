@@ -23,9 +23,10 @@
 /**
  * Constructor
  */
-PluginProxy::PluginProxy() : QObject()
+PluginProxy::PluginProxy(PluginRegistry *r) : QObject()
 {
-	registry = NULL;
+	qDebug() << "registry" <<  r;
+	registry = r;
 }
 
 /**
@@ -42,12 +43,18 @@ PluginProxy::~PluginProxy()
 
 void PluginProxy::changeGraphicsLabel(QString label)
 {
+	QObject* baseElement = getBaseElement();
+	if(baseElement == NULL)
+	{
+		qWarning() << "PluginProxy::changeGraphicsLabel -> base element is NULL";
+		return;
+	}
+	
 	//check the base element type and find the relative mapper
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(getBaseElement());
 	if (vm != NULL)
 	{
 		emit needLabelChanged(vm, pluginInterface->getName(), label);
-		//VmMapper::getInstance()->changeGraphicsLabel(vm, QString("ipv4 su vm"), pluginInterface->getName());
 	}
 	
 	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(getBaseElement());
@@ -108,12 +115,13 @@ QSettings* PluginProxy::getPluginSettings()
  */
 QObject* PluginProxy::getBaseElement()
 {
-//	if(registry != NULL)
-//	{
-//		qDebug() << "factories" << registry->getAllPluginFactories().size();
-//		return registry->getBaseElement(this);
-//	}
-//	return NULL;
+	qDebug() << "inside the proxy:" << registry;
+	if(registry != NULL)
+	{
+		qDebug() << "factories" << registry->getAllPluginFactories().size();
+		return registry->getBaseElement(this);
+	}
+	return NULL;
 }
 
 /**

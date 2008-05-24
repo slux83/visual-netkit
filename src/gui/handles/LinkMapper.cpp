@@ -30,7 +30,7 @@ LinkMapper* LinkMapper::instance = NULL;
  */
 LinkMapper::LinkMapper() : QObject()
 {
-	addLinkForm = new AddLinkForm();
+	addLinkForm = NULL;
 }
 
 /**
@@ -60,6 +60,10 @@ LinkMapper* LinkMapper::getInstance()
  */
 void LinkMapper::showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd)
 {
+	//lazy init
+	if(addLinkForm == NULL)
+		addLinkForm = new AddLinkForm();
+	
 	addLinkForm->updateItems(vm, cd);
 	addLinkForm->show();
 }

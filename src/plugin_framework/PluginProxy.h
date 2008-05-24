@@ -40,7 +40,7 @@ private:
 	PluginRegistry *registry;
 	
 public:
-	PluginProxy();
+	PluginProxy(PluginRegistry *r);
 	virtual ~PluginProxy();
 
 	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL);
@@ -50,10 +50,10 @@ public:
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 	QObject* getBaseElement();
+	PluginInterface * getPlugin() { return pluginInterface; };
 	void setPluginGroupID(qint32 id);
 	qint32 getPluginGroupID();
 	void changeGraphicsLabel(QString label);
-	void setRegistry(PluginRegistry *pluginRegistry) { registry = pluginRegistry; };
 	
 signals:
 	void needLabelChanged(VirtualMachine *vm, QString pluginName, QString label);
