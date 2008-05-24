@@ -115,10 +115,18 @@ bool PluginIPv4::fetchProperties()
 	return allok;
 }
 
-
+/**
+ * Updates the plugin label in the graphic scene.
+ */
 void PluginIPv4::updateLabel()
 {
 	myProxy->changeGraphicsLabel("etichetta ipv4");
 }
 
-
+/**
+ * Sets the IPv4 network address.
+ */
+void PluginIPv4::setAddress(QString addr, QString nmask)
+{
+	address = NetworkAddress(QHostAddress(addr), QHostAddress(nmask));
+}
