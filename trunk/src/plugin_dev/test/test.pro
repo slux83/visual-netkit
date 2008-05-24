@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = lib
-TARGET = 
+TARGET = test
 DEPENDPATH += .
 DESTDIR = ../../../bin/plugins
 MOC_DIR = build/moc
