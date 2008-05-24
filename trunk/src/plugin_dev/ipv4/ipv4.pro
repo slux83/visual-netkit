@@ -5,20 +5,21 @@
 TEMPLATE = lib
 TARGET = 
 DEPENDPATH += .
-
 DESTDIR = ../../../bin/plugins
+MOC_DIR = build/moc
+RCC_DIR = build/rcc
+UI_DIR = build/ui
+OBJECTS_DIR = build/obj
 
-# including also the PluginInterface.h
 INCLUDEPATH += . \
     ../../plugin_framework \
-    ../../core \
-    ../../gui/handles \
-    ../../gui
+    ../../core
 
 RESOURCES = resources/resources.qrc
 
 # Input
-HEADERS += PluginIPv4.h
+HEADERS += PluginIPv4.h \
+	../../plugin_framework/PluginProxy.h
 
 SOURCES += PluginIPv4.cpp \
 	../../plugin_framework/PluginProxy.cpp \

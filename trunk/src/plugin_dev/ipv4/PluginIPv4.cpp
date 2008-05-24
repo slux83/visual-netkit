@@ -35,7 +35,7 @@ PluginIPv4::PluginIPv4() : PluginInterface()
 	myName = mySettings->value("name").toString();
 	mySettings->endGroup();
 	
-	myProxy = new PluginProxy();
+	myProxy = NULL;
 	fetchProperties();
 }
 
@@ -44,7 +44,6 @@ PluginIPv4::PluginIPv4() : PluginInterface()
  */
 PluginIPv4::~PluginIPv4()
 {
-	delete myProxy;
 	qDeleteAll(properties);
 	delete mySettings;
 }
