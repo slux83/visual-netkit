@@ -19,6 +19,7 @@
 #include "SceneTreeMapper.h"
 #include "CdHandler.h"
 #include "VmHandler.h"
+#include "LinkHandler.h"
 
 /* Init che instance field to NULL */
 SceneTreeMapper* SceneTreeMapper::instance = NULL;
@@ -139,6 +140,7 @@ void SceneTreeMapper::handleItemClicked(QTreeWidgetItem *item, int column)
 	if(linkMap.key(item, NULL) != NULL)
 	{
 		//mapped with a linkItem
+		LinkHandler::getInstance()->renderLinkProperties(linkMap.key(item));
 	}
 	
 	if(cdMap.key(item, NULL) != NULL)
@@ -177,6 +179,21 @@ void SceneTreeMapper::changeVmLabel(VirtualMachineItem *vmItem, QString newLabel
 	if(node == NULL)
 	{
 		qWarning() << "SceneTreeMapper::changeVmLabel Broken mapping.";
+		return;
+	}
+	
+	node->setData(0, Qt::DisplayRole, newLabel);
+}
+
+/**
+ * Change the label for a Link
+ */
+void SceneTreeMapper::changeLinkLabel(LinkItem *linkItem, QString newLabel)
+{
+	QTreeWidgetItem *node = linkMap.value(linkItem, NULL);
+	if(node == NULL)
+	{
+		qWarning() << "SceneTreeMapper::changeLinkLabel Broken mapping.";
 		return;
 	}
 	

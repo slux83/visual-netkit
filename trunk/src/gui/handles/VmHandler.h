@@ -27,6 +27,7 @@
 #include "../InitPluginsPropertiesDialog.h"
 #include "LabHandler.h"
 #include "VmPropertyController.h"
+
 /**
  * This class is the controller for the vm operations
  */

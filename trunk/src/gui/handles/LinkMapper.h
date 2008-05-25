@@ -45,6 +45,7 @@ public:
 	static LinkMapper* getInstance();
 	void addNewMapping(LinkItem* linkItem, HardwareInterface* hi);
 	QList<LinkItem*> getLinkItems();
+	LinkItem* getLink(HardwareInterface *hi) { return mappings.key(hi, NULL); };
 	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
 
 public slots:

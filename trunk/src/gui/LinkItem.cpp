@@ -113,6 +113,15 @@ void LinkItem::setPluginLine(QString pluginName, QString content)
 }
 
 /**
+ * Change the label name for this link and change also the tree item name
+ */
+void LinkItem::setLinkLabel(QString newName)
+{
+	myLabel->setText(newName);
+	SceneTreeMapper::getInstance()->changeLinkLabel(this, newName);
+}
+
+/**
  * [REIMPL]
  * Redefined the bounding rect
  */

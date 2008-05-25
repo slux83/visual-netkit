@@ -16,99 +16,109 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VmPropertyController.h"
-#include "VmHandler.h"
-#include "VmMapper.h"
-#include "../../core/handles/LabFacadeController.h"
-#include <QMessageBox>
+#include "LinkPropertyController.h"
+#include "LinkHandler.h"
 
-#define VM_NAME "VmName"
+//Base properties for a link
+#define HI_NAME "VmName"
+#define HI_STATE "HiState"
 
 /**
  * Constructor
  */
-VmPropertyController::VmPropertyController() : QObject()
+LinkPropertyController::LinkPropertyController()
 {
-	vm = NULL;
+	hi = NULL;
 }
 
 /**
  * Deconstructor
  */
-VmPropertyController::~VmPropertyController()
+LinkPropertyController::~LinkPropertyController()
 {
 }
+
 
 /**
  * Render lab properties inside property dock
  */
-void VmPropertyController::renderCdProperties(QTableWidget *tableWidget)
+void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 {
-	if(vm == NULL)
+	if(hi == NULL)
 		return;
 	
 	/* render infos inside the property editor */
-	tableWidget->setRowCount(1);
+	tableWidget->setRowCount(2);
 
 	QTableWidgetItem *property = new QTableWidgetItem();
 	
-	//Vm name
+	//Hi name
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, vm->getName());
-	property->setData(Qt::UserRole, VM_NAME);
+	property->setData(Qt::DisplayRole, hi->getName());
+	property->setData(Qt::UserRole, HI_NAME);
 	tableWidget->setItem(0, 1, property);
+	
+	property = new QTableWidgetItem();
+	property->setData(Qt::DisplayRole, tr("State"));
+	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+	tableWidget->setItem(1, 0, property);
+	
+	property = new QTableWidgetItem();
+	property->setData(Qt::DisplayRole, hi->getState());
+	property->setData(Qt::UserRole, HI_STATE);
+	tableWidget->setItem(1, 1, property);
 }
 
 /**
  * Save a changed property
  */
-bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
+bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 {
 
 	bool ok = true;
 	
-	if(vm == NULL)
+	if(hi == NULL)
 		return false;
 	
 	QString itemValue = item->data(Qt::DisplayRole).toString().trimmed();
 	
 	/* This field is mine? */
-	if(item->data(Qt::UserRole).toString() == VM_NAME)
+	if(item->data(Qt::UserRole).toString() == HI_NAME)
 	{
 		
 		/* Some checks */
 		if(ok && itemValue == "")
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Virtual machine name must be not empty!"),
+	                   tr("The Hardware interface name must be not empty!"),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
-			item->setData(Qt::DisplayRole, vm->getName());
+			item->setData(Qt::DisplayRole, hi->getName());
 			ok = false;
 	        
 		}
 		
-		if(ok && VmHandler::getInstance()->vmNameExist(itemValue) && itemValue != vm->getName())
+		if(ok && LinkHandler::getInstance()->hiNameExist(hi, itemValue) && itemValue != hi->getName())
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Virtual machine name must be unique!"),
+	                   tr("The Hardware interface name must be unique!"),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
-			item->setData(Qt::DisplayRole, vm->getName());
+			item->setData(Qt::DisplayRole, hi->getName());
 			ok = false;
 		}
 		
 		/* save changes */
 		if(ok)
 		{
-			LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
-			VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
+			LinkHandler::getInstance()->updateLinkName(hi, itemValue);
+			LinkMapper::getInstance()->getLink(hi)->setLinkLabel(itemValue);
 		}
 		
 	}
@@ -119,4 +129,3 @@ bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	
 	return ok;
 }
-

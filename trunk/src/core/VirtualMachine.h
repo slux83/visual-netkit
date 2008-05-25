@@ -42,6 +42,7 @@ public:
 	QString getName();
 	void setName(QString newName) { name = newName; };
 	void addHardwareInterface(HardwareInterface *hi) { interfaces.insert(hi->getName(), hi); };
+	void changeHiName(HardwareInterface *hi, QString name);
 
 };
 

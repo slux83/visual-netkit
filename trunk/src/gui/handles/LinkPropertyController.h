@@ -16,51 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "VirtualMachine.h"
+#ifndef LINKPROPERTYCONTROLLER_H_
+#define LINKPROPERTYCONTROLLER_H_
+
+#include <QObject>
+#include <QTableWidget>
+#include <QDebug>
+#include "../../core/HardwareInterface.h"
 
 /**
- * [VirtualMachine]
- * Base contructor
+ * Class that map each property item (for a link item)
+ * with the hardware interface domain object
  */
-VirtualMachine::VirtualMachine(QString newName) : QObject()
+class LinkPropertyController : public QObject
 {
-	name = newName;
-}
-
-/**
- * Deconstructor
- */
-VirtualMachine::~VirtualMachine()
-{
+private:
+	HardwareInterface *hi;
 	
-}
-
-/**
- * Get the machine name 
- */
-QString VirtualMachine::getName()
-{
-	return name;
-}
-
-/**
- * Get the list of interfaces owned by this virtual machine
- */
-QMap<QString, HardwareInterface *> VirtualMachine::getInterfaces()
-{
-	return interfaces;
-}
-
-/**
- * Change the name for a gived hardware interface
- */
-void VirtualMachine::changeHiName(HardwareInterface *hi, QString name)
-{
-	if(!interfaces.contains(hi->getName()))
-		return;
+public:
+	LinkPropertyController();
+	virtual ~LinkPropertyController();	
+	bool saveChangedProperty(QTableWidgetItem *item);
+	void renderLinkProperties(QTableWidget *tableWidget);
 	
-	interfaces.remove(hi->getName());
-	interfaces.insert(name, hi);
-	
-	hi->setName(name);
-}
+	void setHi(HardwareInterface *selectedHi) { hi = selectedHi; };
+};
+
+#endif /*LINKPROPERTYCONTROLLER_H_*/
