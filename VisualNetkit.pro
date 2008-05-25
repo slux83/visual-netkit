@@ -23,7 +23,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/InitPluginsPropertiesDialog.h \
+HEADERS = src/gui/handles/VmPropertyController.h \
+    src/gui/InitPluginsPropertiesDialog.h \
     src/plugin_framework/PluginProperty.h \
     src/gui/PluginsSharedArea.h \
     src/plugin_framework/PluginRegistry.h \
@@ -69,7 +70,8 @@ HEADERS = src/gui/InitPluginsPropertiesDialog.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/InitPluginsPropertiesDialog.cpp \
+SOURCES = src/gui/handles/VmPropertyController.cpp \
+    src/gui/InitPluginsPropertiesDialog.cpp \
     src/plugin_framework/PluginProperty.cpp \
     src/gui/PluginsSharedArea.cpp \
     src/plugin_framework/PluginRegistry.cpp \

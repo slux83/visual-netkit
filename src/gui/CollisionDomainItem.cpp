@@ -17,6 +17,7 @@
  */
 
 #include "CollisionDomainItem.h"
+#include "handles/SceneTreeMapper.h"
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -193,6 +194,7 @@ void CollisionDomainItem::increaseDecreaseLinkCounter(bool increase)
 void CollisionDomainItem::setLabelCdName(QString newLabel)
 {
 	myLabel->setText(newLabel);
+	SceneTreeMapper::getInstance()->changeCdLabel(this, newLabel);
 }
 
 /**

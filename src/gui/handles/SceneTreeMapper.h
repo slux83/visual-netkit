@@ -63,6 +63,8 @@ public:
 	void addVmElement(VirtualMachineItem* vmItem);
 	void addCdElement(CollisionDomainItem* cdItem);
 	void addEthernetElement(LinkItem* linkItem);
+	void changeCdLabel(CollisionDomainItem *cdItem, QString newLabel);
+	void changeVmLabel(VirtualMachineItem *vmItem, QString newLabel);
 };
 
 #endif /*SCENETREEMAPPER_H_*/

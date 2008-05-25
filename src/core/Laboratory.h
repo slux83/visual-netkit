@@ -95,6 +95,8 @@ public:
 	void addMachine(VirtualMachine *vm);
 	void addCollisionDomain(CollisionDomain *cd);
 	void updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd);
+	void updateVmKey(QString oldKey, QString newKey, VirtualMachine *vm);
+
 };
 
 #endif /*LABORATORY_H_*/

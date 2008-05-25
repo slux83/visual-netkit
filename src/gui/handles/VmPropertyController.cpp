@@ -16,36 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CdPropertyController.h"
-#include "CdHandler.h"
-#include "CdMapper.h"
+#include "VmPropertyController.h"
+#include "VmHandler.h"
+#include "VmMapper.h"
 #include "../../core/handles/LabFacadeController.h"
 #include <QMessageBox>
 
-#define CD_NAME "CdName"
+#define VM_NAME "VmName"
 
 /**
  * Constructor
  */
-CdPropertyController::CdPropertyController() : QObject()
+VmPropertyController::VmPropertyController()
 {
-	cd = NULL;
+	vm = NULL;
 }
 
 /**
  * Deconstructor
  */
-CdPropertyController::~CdPropertyController()
+VmPropertyController::~VmPropertyController()
 {
-	
 }
 
 /**
  * Render lab properties inside property dock
  */
-void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
+void VmPropertyController::renderCdProperties(QTableWidget *tableWidget)
 {
-	if(cd == NULL)
+	if(vm == NULL)
 		return;
 	
 	/* render infos inside the property editor */
@@ -53,63 +52,63 @@ void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
 
 	QTableWidgetItem *property = new QTableWidgetItem();
 	
-	//Cd name
+	//Vm name
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, cd->getName());
-	property->setData(Qt::UserRole, CD_NAME);
+	property->setData(Qt::DisplayRole, vm->getName());
+	property->setData(Qt::UserRole, VM_NAME);
 	tableWidget->setItem(0, 1, property);
 }
 
 /**
  * Save a changed property
  */
-bool CdPropertyController::saveChangedProperty(QTableWidgetItem *item)
+bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
 {
+
 	bool ok = true;
 	
-	if(cd == NULL)
+	if(vm == NULL)
 		return false;
 	
 	QString itemValue = item->data(Qt::DisplayRole).toString().trimmed();
 	
 	/* This field is mine? */
-	if(item->data(Qt::UserRole).toString() == CD_NAME)
+	if(item->data(Qt::UserRole).toString() == VM_NAME)
 	{
 		
 		/* Some checks */
 		if(ok && itemValue == "")
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The collision domain name must be not empty!"),
+	                   tr("The Virtual machine name must be not empty!"),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
-			item->setData(Qt::DisplayRole, cd->getName());
+			item->setData(Qt::DisplayRole, vm->getName());
 			ok = false;
 	        
 		}
 		
-		if(ok && CdHandler::getInstance()->cdNameExist(itemValue) && itemValue != cd->getName())
+		if(ok && VmHandler::getInstance()->vmNameExist(itemValue) && itemValue != vm->getName())
 		{
-			
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The collision domain name must be unique!"),
+	                   tr("The Virtual machine name must be unique!"),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
-			item->setData(Qt::DisplayRole, cd->getName());
+			item->setData(Qt::DisplayRole, vm->getName());
 			ok = false;
 		}
 		
 		/* save changes */
 		if(ok)
 		{
-			LabFacadeController::getInstance()->getCurrentLab()->updateCdKey(cd->getName(), itemValue, cd);
-			CdMapper::getInstance()->getCdItem(cd)->setLabelCdName(itemValue);
+			LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
+			VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
 		}
 		
 	}

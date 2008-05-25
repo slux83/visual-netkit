@@ -17,6 +17,7 @@
  */
 
 #include "VirtualMachineItem.h"
+#include "handles/SceneTreeMapper.h"
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -176,4 +177,13 @@ void VirtualMachineItem::restoreGroupActionCalled()
 void VirtualMachineItem::setPluginLine(QString pluginName, QString content)
 {
 	pluginsSharedArea->changeMyLine(pluginName, content);
+}
+
+/**
+ * Change the vm label
+ */
+void VirtualMachineItem::setLabelVmName(QString newLabel)
+{
+	vmNameLabel->setText(newLabel);
+	SceneTreeMapper::getInstance()->changeVmLabel(this, newLabel);
 }

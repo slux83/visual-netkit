@@ -25,14 +25,6 @@
 
 class HardwareInterface;
 
-/* Property key for cd */
-enum CdPropertyKey
-{
-	CdName = 100,
-	CdNetwork
-};
-
-
 class CollisionDomain : public QObject
 {
 
