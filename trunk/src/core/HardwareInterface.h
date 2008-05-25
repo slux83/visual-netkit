@@ -43,6 +43,7 @@ public:
 	virtual ~HardwareInterface();
 	QString getName() { return name; };
 	void setName(QString newName) { name = newName; };
+	void setState(bool newState) { state = newState; };	
 	VirtualMachine* getMyVirtualMachine() { return myMachine; };
 	CollisionDomain* getMyCollisionDomain() { return domain; };
 	bool getState() { return state; };

@@ -63,7 +63,7 @@ void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 	tableWidget->setItem(0, 1, property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, tr("Is Up"));
+	property->setData(Qt::DisplayRole, tr("Status"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(1, 0, property);
 	
@@ -96,8 +96,8 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		if(ok && !validateEthName.exactMatch(itemValue))
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Hardware interface name must be validated by\n^eth([0-9]|[1-9][0-9]+)\nExamples: eth0 eth1 eth2 ... eth12 ..."),
-	                   QMessageBox::Ok);
+               tr("The Hardware interface name must be validated by\n^eth([0-9]|[1-9][0-9]+)\nExamples: eth0 eth1 eth2 ... eth12 ..."),
+               QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
 			item->setData(Qt::DisplayRole, hi->getName());
@@ -108,8 +108,8 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		if(ok && LinkHandler::getInstance()->hiNameExist(hi, itemValue) && itemValue != hi->getName())
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Hardware interface name must be unique!"),
-	                   QMessageBox::Ok);
+               tr("The Hardware interface name must be unique!"),
+               QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
 			item->setData(Qt::DisplayRole, hi->getName());
@@ -126,7 +126,25 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	}
 	else if(item->data(Qt::UserRole).toString() == HI_STATE) //State field?
 	{
-		//TODO
+		QString itemValue = item->data(Qt::DisplayRole).toString().toLower();
+		QRegExp validateState("up|down");
+		if(!validateState.exactMatch(itemValue))
+		{
+			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+               tr("The Hardware interface state must be \"up\" or \"down\"\n(case insensitive)"),
+               QMessageBox::Ok);
+			
+			//Restore the value, and alert the user
+			item->setData(Qt::DisplayRole, (hi->getState())? QString("up") : QString("down")	);
+			ok = false;
+		}
+		
+		/* save changes */
+		if(ok)
+		{
+			hi->setState((itemValue == "up"));
+			LinkMapper::getInstance()->getLink(hi)->updateLinkState();
+		}
 	}
 	else
 	{
