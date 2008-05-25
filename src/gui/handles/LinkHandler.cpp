@@ -35,6 +35,7 @@ LinkHandler::LinkHandler() : QObject()
 	vmMapper = VmMapper::getInstance();
 	cdMapper = CdMapper::getInstance();
 	labHandler = LabHandler::getInstance();
+	propertyController = new LinkPropertyController(); 
 }
 
 /**
@@ -94,3 +95,53 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	labHandler->getMainWindow()->forceManageGraphAction();
 	
 }
+
+/**
+ * Check if hi with passed name exist
+ */
+bool LinkHandler::hiNameExist(HardwareInterface *hi, QString toCheck)
+{
+	return hi->getMyVirtualMachine()->getInterfaces().contains(toCheck);
+}
+
+/**
+ * Update a link name
+ */
+void LinkHandler::updateLinkName(HardwareInterface *hi, QString newName)
+{
+	hi->getMyVirtualMachine()->changeHiName(hi, newName);
+}
+
+
+/**
+ * Handle the link item selection and render the properties
+ */
+void LinkHandler::renderLinkProperties(LinkItem *linkItem)
+{
+	/* Disconnect the old handler */
+	disconnect(labHandler->getMainWindow()->propertyTable, 
+			SIGNAL(cellChanged(int, int)), 0, 0);
+	
+	/* Clear the property editor */
+	labHandler->getMainWindow()->clearPropertyDock();
+	
+	/* Render properties */
+	propertyController->setHi(LinkMapper::getInstance()->getHardwareIterface(linkItem));
+	propertyController->renderLinkProperties(labHandler->getMainWindow()->propertyTable);
+	
+	/* Connect the correct handler dinamically */
+	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+		this, SLOT(saveChangedProperty(int, int)));
+}
+
+/**
+ * [SLOT]
+ * Save a changed property for a virtual machine
+ */
+void LinkHandler::saveChangedProperty(int row, int column)
+{
+	/* Foreward action */
+	propertyController->saveChangedProperty(
+			labHandler->getMainWindow()->propertyTable->item(row, column));
+}
+

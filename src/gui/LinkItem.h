@@ -57,6 +57,7 @@ public:
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
 	VirtualMachineItem* getVirtualMachineItem() { return vm; };
 	CollisionDomainItem* getCollisionDomainItem() { return cd; };
+	void setLinkLabel(QString newName);
 	
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };

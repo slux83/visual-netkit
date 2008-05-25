@@ -42,6 +42,7 @@ public:
 			QString ethName, bool interfaceState);
 	virtual ~HardwareInterface();
 	QString getName() { return name; };
+	void setName(QString newName) { name = newName; };
 	VirtualMachine* getMyVirtualMachine() { return myMachine; };
 	CollisionDomain* getMyCollisionDomain() { return domain; };
 	bool getState() { return state; };

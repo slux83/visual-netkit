@@ -24,11 +24,15 @@
 #include "../VirtualMachineItem.h"
 #include "../CollisionDomainItem.h"
 #include "../../core/handles/VmFacadeController.h"
-#include "VmMapper.h"
-#include "CdMapper.h"
 #include "../LinkItem.h"
 #include "../undoCommands/UndoCommands.h"
+#include "VmMapper.h"
+#include "CdMapper.h"
+#include "LinkPropertyController.h"
 
+/**
+ * This class is the controller for the link operations (gui/scene side)
+ */
 class LinkHandler : public QObject
 {
 	Q_OBJECT
@@ -39,13 +43,18 @@ private:
 	VmMapper* vmMapper;
 	CdMapper* cdMapper;
 	LabHandler *labHandler;
+	LinkPropertyController *propertyController;
 	
 public:
 	LinkHandler();
 	virtual ~LinkHandler();
 	static LinkHandler* getInstance();
-	
+	bool hiNameExist(HardwareInterface *hi, QString toCheck);
+	void updateLinkName(HardwareInterface *hi, QString newName);
+	void renderLinkProperties(LinkItem *linkItem);
+
 public slots:
+	void saveChangedProperty(int row, int column);
 	void createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
 			QString ethName, bool state);
 
