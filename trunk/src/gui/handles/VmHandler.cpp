@@ -36,6 +36,7 @@ VmHandler::VmHandler() : QObject()
 	
 	/* Get controller (View side) */
 	labHandler = LabHandler::getInstance();
+	propertyController = new VmPropertyController();
 	
 	pluginPropDialog = new InitPluginsPropertiesDialog(
 			PluginRegistry::getInstance()->getAllPluginFactories());
@@ -112,6 +113,38 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
 		pluginPropDialog->setVisible(true);
 	}
 	
+}
+
+/**
+ * Handle the vmitem selection and render the properties
+ */
+void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
+{
+	/* Disconnect the old handler */
+	disconnect(labHandler->getMainWindow()->propertyTable, 
+			SIGNAL(cellChanged(int, int)), 0, 0);
+	
+	/* Clear the property editor */
+	labHandler->getMainWindow()->clearPropertyDock();
+	
+	/* Render properties */
+	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
+	propertyController->renderCdProperties(labHandler->getMainWindow()->propertyTable);
+	
+	/* Connect the correct handler dinamically */
+	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+		this, SLOT(saveChangedProperty(int, int)));
+}
+
+/**
+ * [SLOT]
+ * Save a changed property for a virtual machine
+ */
+void VmHandler::saveChangedProperty(int row, int column)
+{
+	/* Foreward action */
+	propertyController->saveChangedProperty(
+			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
 
 

@@ -18,6 +18,7 @@
 
 #include "SceneTreeMapper.h"
 #include "CdHandler.h"
+#include "VmHandler.h"
 
 /* Init che instance field to NULL */
 SceneTreeMapper* SceneTreeMapper::instance = NULL;
@@ -148,6 +149,36 @@ void SceneTreeMapper::handleItemClicked(QTreeWidgetItem *item, int column)
 	
 	if(vmMap.key(item, NULL) != NULL)
 	{
-		//mapped with a virtual machine item
+		VmHandler::getInstance()->renderVmProperties(vmMap.key(item));
 	}
+}
+
+/**
+ * Change the label for a collision domain
+ */
+void SceneTreeMapper::changeCdLabel(CollisionDomainItem *cdItem, QString newLabel)
+{
+	QTreeWidgetItem *node = cdMap.value(cdItem, NULL);
+	if(node == NULL)
+	{
+		qWarning() << "SceneTreeMapper::changeCdLabel Broken mapping.";
+		return;
+	}
+	
+	node->setData(0, Qt::DisplayRole, newLabel);
+}
+
+/**
+ * Change the label for a virtual machine
+ */
+void SceneTreeMapper::changeVmLabel(VirtualMachineItem *vmItem, QString newLabel)
+{
+	QTreeWidgetItem *node = vmMap.value(vmItem, NULL);
+	if(node == NULL)
+	{
+		qWarning() << "SceneTreeMapper::changeVmLabel Broken mapping.";
+		return;
+	}
+	
+	node->setData(0, Qt::DisplayRole, newLabel);
 }

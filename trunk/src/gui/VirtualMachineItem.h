@@ -61,7 +61,7 @@ public:
 	virtual ~VirtualMachineItem();
 	QString getLabel() { return vmNameLabel->text(); };
 	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
-
+	void setLabelVmName(QString newLabel);
 	LabelItemPrivate* getLabelItemPrivate() { return vmNameLabel; };
 	
 	/* Reimpl */

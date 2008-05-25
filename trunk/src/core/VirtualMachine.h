@@ -40,6 +40,7 @@ public:
 	virtual ~VirtualMachine();
 	QMap<QString, HardwareInterface *> getInterfaces();
 	QString getName();
+	void setName(QString newName) { name = newName; };
 	void addHardwareInterface(HardwareInterface *hi) { interfaces.insert(hi->getName(), hi); };
 
 };

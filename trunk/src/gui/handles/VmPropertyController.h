@@ -16,30 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CDPROPERTYCONTROLLER_H_
-#define CDPROPERTYCONTROLLER_H_
+#ifndef VMPROPERTYCONTROLLER_H_
+#define VMPROPERTYCONTROLLER_H_
 
 #include <QObject>
 #include <QTableWidget>
 #include <QDebug>
-#include "../../core/CollisionDomain.h"
+#include "../../core/VirtualMachine.h"
 
 /**
- * Class that map each property item (for a collision domain item)
- * with the CD domain object
+ * Class that map each property item (for a virtual machine item)
+ * with the VM domain object
  */
-class CdPropertyController : public QObject
+class VmPropertyController : public QObject
 {
-private:
-	CollisionDomain *cd;
 
+private:
+	VirtualMachine *vm;
+	
 public:
-	CdPropertyController();
-	virtual ~CdPropertyController();
+	VmPropertyController();
+	virtual ~VmPropertyController();
 	bool saveChangedProperty(QTableWidgetItem *item);
 	void renderCdProperties(QTableWidget *tableWidget);
 	
-	void setCd(CollisionDomain *selectedCd) { cd = selectedCd; };
+	void setVm(VirtualMachine *selectedVm) { vm = selectedVm; };
 };
 
-#endif /*CDPROPERTYCONTROLLER_H_*/
+#endif /*VMPROPERTYCONTROLLER_H_*/

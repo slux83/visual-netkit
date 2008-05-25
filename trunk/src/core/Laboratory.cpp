@@ -88,8 +88,19 @@ void Laboratory::addCollisionDomain(CollisionDomain *cd)
 /**
  * Replace a key
  */
+void Laboratory::updateVmKey(QString oldKey, QString newKey, VirtualMachine *vm)
+{
+	machines.remove(oldKey);
+	machines.insert(newKey, vm);
+	vm->setName(newKey);
+}
+
+/**
+ * Replace a key
+ */
 void Laboratory::updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd)
 {
 	collisionDomains.remove(oldKey);
 	collisionDomains.insert(newKey, cd);
+	cd->setName(newKey);
 }

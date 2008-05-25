@@ -50,6 +50,8 @@ public:
 	void showAddVmForm(QPointF pos);
 	void addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm);
 	QList<VirtualMachineItem*> getVmItems() { return mappings.keys(); };
+	VirtualMachineItem* getVmItem(VirtualMachine *vm) { return mappings.key(vm); };
+	VirtualMachine *getVm(VirtualMachineItem* vmItem) { return mappings.value(vmItem); };
 	QStringList getMachineInterfaces(VirtualMachineItem* vmItem);
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
 	void ensureAllItemsAreJoined();

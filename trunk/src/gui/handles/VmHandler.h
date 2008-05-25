@@ -26,7 +26,7 @@
 #include "../../core/VirtualMachine.h"
 #include "../InitPluginsPropertiesDialog.h"
 #include "LabHandler.h"
-
+#include "VmPropertyController.h"
 /**
  * This class is the controller for the vm operations
  */
@@ -40,16 +40,21 @@ private:
 	VmFacadeController *vmFacadeController;
 	LabHandler *labHandler;
 	InitPluginsPropertiesDialog *pluginPropDialog;
+	VmPropertyController *propertyController;
 	
 public:
 	VmHandler();
 	virtual ~VmHandler();
 	static VmHandler* getInstance();
 	bool vmNameExist(QString vmNameToCheck);
+	void renderVmProperties(VirtualMachineItem *vmItem);
 
 signals:
 	void logEvent(QString message);
 
+private slots:
+	void saveChangedProperty(int row, int column);
+	
 public slots:
 	void createVm(QString vmNewName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);
 };
