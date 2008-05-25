@@ -127,6 +127,8 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	else if(item->data(Qt::UserRole).toString() == HI_STATE) //State field?
 	{
 		QString itemValue = item->data(Qt::DisplayRole).toString().toLower();
+		
+		/* Validate user input */
 		QRegExp validateState("up|down");
 		if(!validateState.exactMatch(itemValue))
 		{
