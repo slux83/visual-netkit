@@ -63,14 +63,16 @@ void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 	tableWidget->setItem(0, 1, property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, tr("State"));
+	property->setData(Qt::DisplayRole, tr("Is Up"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(1, 0, property);
 	
 	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, hi->getState());
+	property->setData(Qt::DisplayRole,
+			(hi->getState())? QString("up") : QString("down")	);
 	property->setData(Qt::UserRole, HI_STATE);
 	tableWidget->setItem(1, 1, property);
+	
 }
 
 /**
@@ -84,23 +86,23 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	if(hi == NULL)
 		return false;
 	
-	QString itemValue = item->data(Qt::DisplayRole).toString().trimmed();
-	
 	/* This field is mine? */
 	if(item->data(Qt::UserRole).toString() == HI_NAME)
 	{
+		QString itemValue = item->data(Qt::DisplayRole).toString();
 		
 		/* Some checks */
-		if(ok && itemValue == "")
+		QRegExp validateEthName("^eth([0-9]|[1-9][0-9]+)");
+		if(ok && !validateEthName.exactMatch(itemValue))
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Hardware interface name must be not empty!"),
+	                   tr("The Hardware interface name must be validated by\n^eth([0-9]|[1-9][0-9]+)\nExamples: eth0 eth1 eth2 ... eth12 ..."),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
 			item->setData(Qt::DisplayRole, hi->getName());
 			ok = false;
-	        
+			
 		}
 		
 		if(ok && LinkHandler::getInstance()->hiNameExist(hi, itemValue) && itemValue != hi->getName())
@@ -121,6 +123,10 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 			LinkMapper::getInstance()->getLink(hi)->setLinkLabel(itemValue);
 		}
 		
+	}
+	else if(item->data(Qt::UserRole).toString() == HI_STATE) //State field?
+	{
+		//TODO
 	}
 	else
 	{

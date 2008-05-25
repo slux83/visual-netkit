@@ -102,9 +102,7 @@ void AddLinkForm::updateItems(VirtualMachineItem *vm, CollisionDomainItem* cd)
  * Handle accept()
  */
 void AddLinkForm::handleAccept()
-{
-	QRegExp validateEthName("^eth[0-9]+");
-	
+{	
 	/**
 	 * test the interface name
 	 */
