@@ -37,8 +37,6 @@ PluginIPv4::PluginIPv4() : PluginInterface()
 	
 	myProxy = NULL;
 	bool fetched = fetchProperties();
-
-	getTemplate();
 }
 
 /**

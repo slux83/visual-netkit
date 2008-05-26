@@ -31,6 +31,7 @@ class LabScene : public QGraphicsScene
 	
 private:
 	QGraphicsRectItem *border;	//the path for the scene border
+	QGraphicsRectItem *selectionRect;	//the selection rect
 	QGraphicsLineItem *link;	//a fake link
 	QGraphicsLineItem *initNewLinkLine();
 	

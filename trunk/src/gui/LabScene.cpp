@@ -29,6 +29,7 @@
 LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
 	border = new QGraphicsRectItem();
+	selectionRect = new QGraphicsRectItem();
 	
 	//the pen & flags
 	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -39,7 +40,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	border->setFlags(QGraphicsItem::ItemClipsToShape);
 	border->setZValue(100);
 	
-	/* Adde the border to this scene */
+	/* Adds the border to this scene */
 	addItem(border);
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
@@ -94,7 +95,16 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	/* default action when the arrow icon is checked */
 	if(m->actionManageGraph->isChecked())
 	{
-		QGraphicsScene::mousePressEvent(mouseEvent);	
+		// if mouse cursor is not on any scene item
+		if ( (itemAt(mouseEvent->scenePos()))->parentItem() == NULL ) 
+		{
+			// draws the selection area on mouse move
+			QRectF rect(mouseEvent->scenePos(), mouseEvent->scenePos());
+			selectionRect->setRect(rect);
+			selectionRect->setPen(QPen(Qt::black, 1, Qt::DashLine, Qt::SquareCap, Qt::RoundJoin));
+        	addItem(selectionRect);
+		}
+		QGraphicsScene::mousePressEvent(mouseEvent);
 	}
 
 }
@@ -110,6 +120,12 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	{
 		QLineF linkNewPos(link->line().p1(), mouseEvent->scenePos());
 		link->setLine(linkNewPos);
+	}
+	
+	if (selectionRect != NULL) {
+    	// updates selection area dimensions
+    	QRectF newRect(selectionRect->rect().topLeft(), mouseEvent->scenePos());
+    	selectionRect->setRect(newRect);
 	}
 	
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -192,6 +208,34 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		delete link;
 		link = NULL;
 	}
+	
+	if (selectionRect != NULL && 
+		!selectionRect->rect().isNull() && 
+		LabHandler::getInstance()->getMainWindow()->actionManageGraph->isChecked()) 
+	{
+    	// finds the items inside the selection rect
+		QPainterPath path;
+    	path.addRect(selectionRect->rect());
+    	QList<QGraphicsItem*> itemList = items(path);
+    	
+    	// selects only the groups
+    	for (int i=0; i<itemList.size(); i++)
+    	{
+    		if (itemList.at(i)->group() == NULL)
+    		{
+    			itemList.at(i)->setSelected(true);
+    		}
+    	}
+    	
+    	removeItem(selectionRect);
+    	//delete selectionRect;
+    } 
+	else if (selectionRect->rect().isNull()) 
+	{
+    	removeItem(selectionRect);
+    	//delete selectionRect;
+    }
+    //selectionRect = NULL;
 	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
