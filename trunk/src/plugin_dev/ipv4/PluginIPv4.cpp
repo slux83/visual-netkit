@@ -82,8 +82,9 @@ QString PluginIPv4::getTemplateLocation()
 		qWarning() << "PluginIPv4::getTemplateLocation(): null hardware interface name.";
 		return QString();
 	}
+	QString vm = hi->getMyVirtualMachine()->getName();
 	
-	return QString(hi->getName() + "/etc/basic.conf");
+	return QString(vm+".startup");
 }
 
 /**
@@ -174,7 +175,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				if(cidrNetmask > 32 || cidrNetmask < 1)			
 				{
 					/* Show a warning message */
-					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask is included between 1 and 32.");
+					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask has to be included between 1 and 32.");
 				}
 				else	//save the netmask
 				{
