@@ -59,7 +59,7 @@ public:
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 	
-	QString getDefaultGraphisLabel() {return QString("ipv4 enabled"); };
+	QString getDefaultGraphisLabel() {return QString("ipv4"); };
 };
 
 

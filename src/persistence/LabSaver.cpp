@@ -246,8 +246,6 @@ QString LabSaver::strippedName(const QString &fullFileName)
 
 /**
  * Saves passed router or host configuration to filesystem.
- * This function creates both routerX.conf file and routerX folder
- * (including subdirectories and subfiles).
  */
 bool LabSaver::saveVmsConf()
 {
@@ -258,6 +256,9 @@ bool LabSaver::saveVmsConf()
 	while(machineIterator.hasNext() && allok)
 	{
 		machineIterator.next();
+		
+		qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPlugin()->getName();
+		
 		//TODO controllare l'esistenza dei plugin...se nn lo si fa segmentation fault!
 		qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPluginProperties();
 	}	
@@ -266,6 +267,8 @@ bool LabSaver::saveVmsConf()
 
 /**
  * Creates the lab folders as appearing in the lab tree in the Main GUI Window.
+ * This function creates both routerX.conf file and routerX folder
+ * (including subdirectories and subfiles).
  */
 bool LabSaver::createFolderSystem()
 {
