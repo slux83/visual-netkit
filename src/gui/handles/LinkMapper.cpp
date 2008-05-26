@@ -109,7 +109,7 @@ QList<LinkItem*> LinkMapper::getLinkItems()
 /**
  * Changes the label associated to the pluginName for the LinkItem associated with li.
  */
-void LinkMapper::changeGraphicsLabel(HardwareInterface *hi, QString pluginName, QString label)
+void LinkMapper::changeGraphicsLabelHi(HardwareInterface *hi, QString pluginName, QString label)
 {
 	LinkItem *li = mappings.key(hi);
 	if (li == NULL)

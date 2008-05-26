@@ -102,10 +102,11 @@ void AddCdCommand::undo()
  * Contructor
  */
 AddLinkCommand::AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi,
-		QUndoCommand *parent) : QUndoCommand(parent)
+		QList<PluginProxy *> pList, QUndoCommand *parent) : QUndoCommand(parent)
 {
 	linkItem = newLinkItem;
 	hi = newHi;
+	plugins = pList;
 	
 	/**
 	 * example:
@@ -130,6 +131,11 @@ void AddLinkCommand::redo()
 {
 	//show and connect view & domain objects
 	LinkMapper::getInstance()->addNewMapping(linkItem, hi);
+	
+	//call default label for plugins
+	QListIterator<PluginProxy *> i(plugins);
+	while(i.hasNext())
+		i.next()->showDefaultGrophicsLabel();
 }
 
 /**

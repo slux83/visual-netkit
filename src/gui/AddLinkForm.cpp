@@ -48,8 +48,17 @@ AddLinkForm::AddLinkForm(QWidget *parent) : QDialog(parent)
 	connect(addLinkButtonBox, SIGNAL(accepted()),
 			this, SLOT(handleAccept()));
 	
-	connect(this, SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)),
-			LinkHandler::getInstance(), SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QString, bool)));
+	connect(this,
+			SIGNAL(readyToAddLink(VirtualMachineItem *, CollisionDomainItem *, QStringList, bool, QString, bool)),
+			LinkHandler::getInstance(),
+			SLOT(createLink(VirtualMachineItem *, CollisionDomainItem *, QStringList, bool, QString, bool)));
+	
+	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
+				this, SLOT(showPluginInfos(QListWidgetItem *)));
+	
+	/* Init plugin chooser */
+	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
+	fillPluginChooser();
 }
 
 /**
@@ -119,11 +128,89 @@ void AddLinkForm::handleAccept()
 	//if up --> state true, false otherwise
 	bool ethState = ethUp->isChecked();
 	
+	/* Ok, get active plugins and foward the request */
+	QStringList selPlugins = getSelectedPlugins();
+	
 	//emit signal and close the gui
-	emit readyToAddLink(vmItem, cdItem, 
+	emit readyToAddLink(vmItem, cdItem, selPlugins, (initPropertiesCheck->checkState() == Qt::Unchecked),
 			QString(ethNumberSpinBox->prefix() + QString::number(ethNumberSpinBox->value())),
 			ethState);
 	
 	close();
 }
 
+/**
+ * [PRIVATE]
+ * fill the plugin chooser with a list of checkboxs
+ */
+void AddLinkForm::fillPluginChooser()
+{
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		//it's a mine plugin?
+		if(factory->getType() != "link")
+			continue; //Skeep this plugin
+		
+		//create entry
+		QListWidgetItem *pluginItem = new QListWidgetItem();
+		pluginItem->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
+		pluginItem->setData(Qt::DisplayRole, factory->getName());	//it's the unique ID
+		pluginItem->setData(Qt::ToolTipRole, tr("Select this plugin to show extra infos."));
+		pluginItem->setCheckState(Qt::Unchecked);
+		
+		pluginsList->addItem(pluginItem);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * show the infos of the selected plugin
+ */
+void AddLinkForm::showPluginInfos(QListWidgetItem *item)
+{
+	QString selectedPluginName = item->data(Qt::DisplayRole).toString();
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		if(factory->getName() == selectedPluginName)
+		{
+			/* Render infos */
+			pName->setText(factory->getName());
+			pDescription->setText(factory->getDescription());
+			pDeps->setText(factory->getDeps());
+			pAuthor->setText(factory->getAuthor());
+			pVersion->setText(factory->getVersion());
+			
+			break;
+		}
+	}
+}
+
+/**
+ * [PRIVATE]
+ * Get the selected plugins
+ */
+QStringList AddLinkForm::getSelectedPlugins()
+{
+	QStringList selectedPlugins;
+	
+	/* Get all list items and select only selected */
+	QList<QListWidgetItem *> listItems =
+		pluginsList->findItems(".+", Qt::MatchRegExp);
+	
+	QListIterator<QListWidgetItem *> itemIter(listItems);
+	while(itemIter.hasNext())
+	{
+		QListWidgetItem * item = itemIter.next();
+		//save the plugin name if the plugin is checked
+		if(item->checkState() == Qt::Checked)
+			selectedPlugins.append(item->data(Qt::DisplayRole).toString());
+	}
+	
+	return selectedPlugins;
+}

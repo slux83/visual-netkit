@@ -57,7 +57,7 @@ public:
 	void ensureAllItemsAreJoined();
 
 public slots:
-	void changeGraphicsLabel(VirtualMachine *vm, QString pluginName, QString label);
+	void changeGraphicsLabelVm(VirtualMachine *vm, QString pluginName, QString label);
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);

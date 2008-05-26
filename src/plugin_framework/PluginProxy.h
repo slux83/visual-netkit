@@ -57,8 +57,8 @@ public:
 	void showDefaultGrophicsLabel();
 	
 signals:
-	void needLabelChanged(VirtualMachine *vm, QString pluginName, QString label);
-	void needLabelChanged(HardwareInterface *hi, QString pluginName, QString label);
+	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);
+	void needLabelChangedHi(HardwareInterface *hi, QString pluginName, QString label);
 };
 
 #endif /*PLUGINPROXY_H_*/

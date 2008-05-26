@@ -35,7 +35,9 @@ LinkHandler::LinkHandler() : QObject()
 	vmMapper = VmMapper::getInstance();
 	cdMapper = CdMapper::getInstance();
 	labHandler = LabHandler::getInstance();
-	propertyController = new LinkPropertyController(); 
+	propertyController = new LinkPropertyController();
+	pluginPropDialog = new InitPluginsPropertiesDialog(
+			PluginRegistry::getInstance()->getAllPluginFactories());
 }
 
 /**
@@ -63,7 +65,7 @@ LinkHandler* LinkHandler::getInstance()
  * Handle the request for a new link beetween vm and cd
  */
 void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-		QString ethName, bool state)
+		QStringList selectedPlugins, bool manuallyInit, QString ethName, bool state)
 {	
 	/* Get from mappers the domain objects */
 	VirtualMachine *vm = vmMapper->getMachine(vmItem);
@@ -88,11 +90,31 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	QString linkLabel(ethName);
 	LinkItem *linkItem = new LinkItem(vmItem, cdItem, linkLabel);
 	
+	/* Create plugins and attach these to the vm */
+	QList<PluginProxy *> linkPlugins;
+	QStringListIterator iter(selectedPlugins);
+	PluginRegistry* registry = PluginRegistry::getInstance();
+	
+	/* Save proxies for undo command */
+	while(iter.hasNext())
+	{
+		PluginProxy* proxy;
+		if((proxy = registry->registerPlugin(iter.next(), interface)) != NULL)
+			linkPlugins.append(proxy);	
+	}
+	
 	/* the undo command (redo) can accomplish the action */
-	labHandler->getUndoStack()->push(new AddLinkCommand(linkItem, interface));
+	labHandler->getUndoStack()->push(new AddLinkCommand(linkItem, interface, linkPlugins));
 	
 	/* reset the default action (manage graph) */
 	labHandler->getMainWindow()->forceManageGraphAction();
+	
+	/* now check if the user want init manually the plugins properties */
+	if(manuallyInit && selectedPlugins.size() > 0)
+	{
+		pluginPropDialog->buildGui(linkPlugins);
+		pluginPropDialog->setVisible(true);
+	}
 	
 }
 

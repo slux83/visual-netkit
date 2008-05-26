@@ -88,9 +88,10 @@ class AddLinkCommand : public QObject, public QUndoCommand
 private:
 	LinkItem *linkItem;
 	HardwareInterface *hi;
+	QList<PluginProxy*> plugins;	//the plugins used with the hi
 	
 public:
-	AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi,
+	AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi, QList<PluginProxy *> pList,
 			QUndoCommand *parent = 0);
 	virtual ~AddLinkCommand();
 	
