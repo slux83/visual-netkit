@@ -20,7 +20,7 @@
 #include <QLineEdit>
 #include <QScrollArea>
 
-#define separator QString(QChar(226))
+#define SEPARATOR QString(QChar(226))
 
 /**
  * Constructor
@@ -113,7 +113,7 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 				
 				// save mapping
 				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
-										separator + prop->getName(),
+										SEPARATOR + prop->getName(),
 										lineEdit);
 			}
 			/* The plugin have at most one property */
