@@ -235,7 +235,6 @@ void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			}
 		}
 	}
-	//QGraphicsScene::
 }
 
 /**
