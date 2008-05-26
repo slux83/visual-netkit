@@ -52,7 +52,25 @@ InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
  */
 void InitPluginsPropertiesDialog::handleUserConfirm()
 {
-	qDebug() << "---";
+	qDebug() << "Property Widget: handleUserConfirm on Ok button pressed";
+	QStringList keys = propertiesAssoc.keys();
+	
+	// scrorro tutte le proprietà
+	for (int i=0; i < keys.size(); i++) 
+	{
+		QStringList l = keys.at(i).split("");
+		QString pluginName = l.first();
+		QString propName = l.last();
+		
+		// per ogni plugin nella lista "pluginsToManage"
+		for (int j=0; j < pluginsToManage.size(); j++) 
+		{
+			if (pluginsToManage.at(j))
+			{
+				
+			}
+		}
+	}
 }
 
 /**
@@ -93,7 +111,7 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 				
 				// save mapping
 				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
-										QString('\0') + prop->getName(),
+										QString('\') + prop->getName(),
 										lineEdit);
 			}
 			/* The plugin have at most one property */

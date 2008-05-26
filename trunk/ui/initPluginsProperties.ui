@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>536</width>
-    <height>475</height>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -64,29 +64,12 @@
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons" >
-      <set>QDialogButtonBox::Apply</set>
+      <set>QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>InitPluginsProperties</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>267</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>267</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
