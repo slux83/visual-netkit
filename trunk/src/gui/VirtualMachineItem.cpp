@@ -81,6 +81,9 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 		return newPos;
 	}
 	
+	if(change == ItemPositionHasChanged && scene())
+			emit needBoundingrectRebuild();
+	
 	//emit a signal
 	emit positionChanged();
 	
@@ -114,13 +117,10 @@ void VirtualMachineItem::initContextMenu()
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	restoreGroupAction = new QAction(tr("Restore group") , this);
 	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/menu/create_group")));
-	manageLinks = new QAction(tr("Manage interfaces"), this);
-	manageLinks->setIcon(QIcon(QString::fromUtf8(":/menu/manage_interfaces")));
 	
 	contextMenu.addAction(ungroupAction);
 	contextMenu.addAction(restoreGroupAction);
 	contextMenu.addAction(deleteAction);
-	contextMenu.addAction(manageLinks);
 	
 	/* Connects */
 	connect(ungroupAction, SIGNAL(triggered()),

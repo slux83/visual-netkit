@@ -22,6 +22,7 @@
 #include <math.h>
 #include <QGraphicsItemGroup>
 #include <QGraphicsLineItem>
+#include <QMenu>
 
 #include "LabelItemPrivate.h"
 #include "VirtualMachineItem.h"
@@ -48,6 +49,10 @@ private:
 	PluginsSharedArea *pluginsSharedArea;
 	VirtualMachineItem* vm;
 	CollisionDomainItem* cd;	//start and end of this "line"
+	QMenu contextMenu;
+	QAction *deleteAction;
+	
+	void initContextMenu();
 		
 public:
 	LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label);
@@ -61,11 +66,17 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };
-	//QRectF boundingRect() const;
+	
+protected:
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
+private slots:
+	void deleteLinkActionCalled();
 	
 public slots:
 	void updateLinkPos();
 	void updateLinkState();
+	void forceBoundingrectRebuild();
 	void setPluginLine(QString pluginName, QString content);
 };
 

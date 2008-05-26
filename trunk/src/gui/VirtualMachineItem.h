@@ -50,7 +50,6 @@ private:
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
-	QAction *manageLinks;
 	
 	bool isJoin;
 		
@@ -79,6 +78,7 @@ public slots:
 	
 signals:
 	void positionChanged();
+	void needBoundingrectRebuild();
 
 };
 

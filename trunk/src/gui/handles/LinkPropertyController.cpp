@@ -62,6 +62,9 @@ void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 	property->setData(Qt::UserRole, HI_NAME);
 	tableWidget->setItem(0, 1, property);
 	
+//	tableWidget->setHorizontalHeaderItem ( 1, new QTableWidgetItem);
+//	tableWidget->setSpan(1,0,1,2);
+	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Status"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable

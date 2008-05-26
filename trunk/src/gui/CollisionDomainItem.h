@@ -79,6 +79,7 @@ public slots:
 	
 signals:
 	void positionChanged();
+	void needBoundingrectRebuild();
 };
 
 #endif /*COLLISIONDOMAINITEM_H_*/

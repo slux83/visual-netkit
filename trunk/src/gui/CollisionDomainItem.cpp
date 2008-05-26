@@ -114,7 +114,11 @@ QVariant CollisionDomainItem::itemChange(GraphicsItemChange change, const QVaria
 	
 	//emit a signal
 	emit positionChanged();
-			
+	
+	
+	if(change == ItemPositionHasChanged && scene())
+		emit needBoundingrectRebuild();
+	
 	return QGraphicsItem::itemChange(change, value);
 }
 
