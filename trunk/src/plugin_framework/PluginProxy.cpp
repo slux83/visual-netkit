@@ -55,7 +55,7 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(getBaseElement());
 	if (vm != NULL)
 	{
-		emit needLabelChanged(vm, pluginInterface->getName(), label);
+		emit needLabelChangedVm(vm, pluginInterface->getName(), label);
 	}
 	
 	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(getBaseElement());
@@ -67,7 +67,7 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(getBaseElement());
 	if (hi != NULL)
 	{
-		emit needLabelChanged(hi, pluginInterface->getName(), label);
+		emit needLabelChangedHi(hi, pluginInterface->getName(), label);
 	}
 }
 

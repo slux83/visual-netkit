@@ -44,6 +44,7 @@ private:
 	CdMapper* cdMapper;
 	LabHandler *labHandler;
 	LinkPropertyController *propertyController;
+	InitPluginsPropertiesDialog *pluginPropDialog;
 	
 public:
 	LinkHandler();
@@ -56,7 +57,7 @@ public:
 public slots:
 	void saveChangedProperty(int row, int column);
 	void createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-			QString ethName, bool state);
+			QStringList selectedPlugins, bool manuallyInit, QString ethName, bool state);
 
 };
 

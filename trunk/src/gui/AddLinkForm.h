@@ -25,6 +25,7 @@
 #include "CollisionDomainItem.h"
 #include "handles/VmMapper.h"
 #include "ui_addLink.h"
+#include "../plugin_framework/PluginRegistry.h"
 
 class AddLinkForm : public QDialog, public Ui::AddLinkForm
 {
@@ -33,9 +34,14 @@ class AddLinkForm : public QDialog, public Ui::AddLinkForm
 private:
 	VirtualMachineItem* vmItem;
 	CollisionDomainItem* cdItem;
+	QList<PluginLoaderFactory *> availablePlugins;
+
+	void fillPluginChooser();
+	QStringList getSelectedPlugins();
 	
 private slots:
 	void handleAccept();
+	void showPluginInfos(QListWidgetItem *item);
 	
 public:
 	AddLinkForm(QWidget *parent = 0);
@@ -44,7 +50,7 @@ public:
 	
 signals:
 	void readyToAddLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
-			QString ethName, bool state);
+			QStringList selectedPlugins, bool manualInit, QString ethName, bool state);
 };
 
 #endif /*ADDLINKFORM_H_*/

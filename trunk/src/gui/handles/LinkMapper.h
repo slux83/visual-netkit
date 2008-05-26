@@ -28,7 +28,7 @@
 #include "../AddLinkForm.h"
 #include "../LinkItem.h"
 
-class LinkMapper : QObject
+class LinkMapper : public QObject
 {
 	Q_OBJECT
 	
@@ -49,7 +49,7 @@ public:
 	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
 
 public slots:
-	void changeGraphicsLabel(HardwareInterface *hi, QString pluginName, QString label);
+	void changeGraphicsLabelHi(HardwareInterface *hi, QString pluginName, QString label);
 	void showAddLinkForm(VirtualMachineItem *vm, CollisionDomainItem* cd);
 };
 

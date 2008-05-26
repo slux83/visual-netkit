@@ -18,6 +18,7 @@
 
 #include "PluginLoaderFactory.h"
 #include "../gui/handles/VmMapper.h"
+#include "../gui/handles/LinkMapper.h"
 #include "PluginRegistry.h"
 
 /**
@@ -51,9 +52,14 @@ PluginProxy * PluginLoaderFactory::createPlugin()
 	
 	/* Connect the proxy signals with some system components */
 	connect(p->getProxy(),
-			SIGNAL(needLabelChanged(VirtualMachine*, QString, QString)),
+			SIGNAL(needLabelChangedVm(VirtualMachine*, QString, QString)),
 			VmMapper::getInstance(),
-			SLOT(changeGraphicsLabel(VirtualMachine*, QString, QString)));
+			SLOT(changeGraphicsLabelVm(VirtualMachine*, QString, QString)));
+	
+	connect(p->getProxy(),
+			SIGNAL(needLabelChangedHi(HardwareInterface*, QString, QString)),
+			LinkMapper::getInstance(),
+			SLOT(changeGraphicsLabelHi(HardwareInterface*, QString, QString)));
 		
 	return p->getProxy();
 }
