@@ -29,7 +29,6 @@
 LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
 	border = new QGraphicsRectItem();
-	selectionRect = new QGraphicsRectItem();
 	
 	//the pen & flags
 	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
@@ -47,6 +46,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	connect(this, SIGNAL(selectionChanged()), this, SLOT(handleSelection()));
 	
 	link = NULL;
+	selectionRect = NULL;
 }
 
 /**
@@ -54,7 +54,6 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
  */
 LabScene::~LabScene()
 {
-	delete selectionRect;
 }
 
 /**
@@ -96,16 +95,18 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	/* default action when the arrow icon is checked */
 	if(m->actionManageGraph->isChecked())
 	{
-		// if mouse cursor is not on any scene item
-		if ( (itemAt(mouseEvent->scenePos()))->parentItem() == NULL ) 
-		{
-			// draws the selection area on mouse move
-			QRectF rect(mouseEvent->scenePos(), mouseEvent->scenePos());
-			selectionRect->setRect(rect);
-			selectionRect->setPen(QPen(Qt::black, 1, Qt::DashLine, Qt::SquareCap, Qt::RoundJoin));
-        	addItem(selectionRect);
-		}
 		QGraphicsScene::mousePressEvent(mouseEvent);
+	}
+	
+	/* selection tool active */
+	if ( m->actionSelectionTool->isChecked() /*&& (itemAt(mouseEvent->scenePos()))->parentItem() == NULL */) 
+	{
+		// draws the selection area on mouse move
+		QRectF rect(mouseEvent->scenePos(), mouseEvent->scenePos());
+		selectionRect = new QGraphicsRectItem();
+		selectionRect->setRect(rect);
+		selectionRect->setPen(QPen(Qt::black, 1, Qt::DashLine, Qt::SquareCap, Qt::RoundJoin));
+    	addItem(selectionRect);
 	}
 
 }
@@ -116,6 +117,8 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
  */
 void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	MainWindow *m = LabHandler::getInstance()->getMainWindow();
+
 	/* user is adding a new link? */
 	if(link != NULL)
 	{
@@ -124,7 +127,8 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	}
 	
 	// user is selecting items
-	if (selectionRect != NULL) {
+	if (selectionRect != NULL && m->actionSelectionTool->isChecked())
+	{
     	// updates selection area dimensions
     	QRectF newRect(selectionRect->rect().topLeft(), mouseEvent->scenePos());
     	selectionRect->setRect(newRect);
@@ -139,6 +143,8 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
  */
 void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+	MainWindow *m = LabHandler::getInstance()->getMainWindow();
+
 	/* user is adding a new link? */
 	if(link != NULL)
 	{
@@ -211,9 +217,7 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		link = NULL;
 	}
 	
-	if (selectionRect != NULL && 
-		!selectionRect->rect().isNull() && 
-		LabHandler::getInstance()->getMainWindow()->actionManageGraph->isChecked()) 
+	if (selectionRect != NULL && m->actionSelectionTool->isChecked()) 
 	{
     	// finds the items inside the selection rect
 		QPainterPath path;
@@ -228,13 +232,14 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     			itemList.at(i)->setSelected(true);
     		}
     	}
+    	
+    	//clear
     	removeItem(selectionRect);
+    	delete selectionRect;
+    	selectionRect = NULL;
+    	m->forceManageGraphAction();
     } 
-	else if (selectionRect->rect().isNull()) 
-	{
-    	removeItem(selectionRect);
-    }
-    //selectionRect = NULL;
+
 	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
@@ -281,8 +286,6 @@ void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 						break;
 				}
 			}
-		} else {
-			qWarning() << "LabScene::mouseDoubleClickEvent: selectedItems is either null or empty.";
 		}
 	}
 }

@@ -151,6 +151,7 @@ void MainWindow::createActionGroups()
 	labItemGroup->addAction(actionAddCollisionDomain);
 	labItemGroup->addAction(actionManageGraph);
 	labItemGroup->addAction(actionAddLink);
+	labItemGroup->addAction(actionSelectionTool);
 	labItemGroup->setDisabled(true);
 	
 	/* Group for scene size */

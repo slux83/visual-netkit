@@ -143,6 +143,7 @@
     <addaction name="actionAddCollisionDomain" />
     <addaction name="actionAddLink" />
     <addaction name="actionManageGraph" />
+    <addaction name="actionSelectionTool" />
     <addaction name="separator" />
     <addaction name="menuExportAs" />
    </widget>
@@ -523,6 +524,7 @@
    <addaction name="actionAddCollisionDomain" />
    <addaction name="actionAddLink" />
    <addaction name="actionManageGraph" />
+   <addaction name="actionSelectionTool" />
   </widget>
   <action name="actionNetkit_Lab" >
    <property name="checkable" >
@@ -812,6 +814,17 @@
    </property>
    <property name="text" >
     <string>Add link</string>
+   </property>
+  </action>
+  <action name="actionSelectionTool" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../resources/VisualNetkit.qrc" >:/menu/selection</iconset>
+   </property>
+   <property name="text" >
+    <string>Selection tool</string>
    </property>
   </action>
  </widget>
