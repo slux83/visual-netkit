@@ -261,7 +261,6 @@ void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		
 		if (!selectedItems.isEmpty())
 		{
-
 			QGraphicsItem *selectedItem = selectedItems.first();
 			if(selectedItem != NULL)
 			{
