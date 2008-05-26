@@ -37,6 +37,8 @@ PluginIPv4::PluginIPv4() : PluginInterface()
 	
 	myProxy = NULL;
 	bool fetched = fetchProperties();
+
+	getTemplate();
 }
 
 /**
@@ -62,11 +64,29 @@ QString PluginIPv4::getTemplate()
 	{
 		QTextStream in(&data);
 		templateContent = in.readAll();
+		
+		HardwareInterface *hi = dynamic_cast<HardwareInterface*>(myProxy->getBaseElement());
+		(hi != NULL)? templateContent.replace("HI", hi->getName()) : templateContent.replace("HI", "null");
+		
+		QString status;
+		(hi->getState())? status = "up" : status = "down";
+		templateContent.replace("HI_STATE", status);
+		
+		PluginProperty *pp = properties.value("address");
+		templateContent.replace("IP", pp->getValue());
+		
+		pp = properties.value("netmask");
+		templateContent.replace("NETMASK", pp->getValue());
+		
+		pp = properties.value("broadcast");
+		templateContent.replace("BROADCAST", pp->getValue());
 	}
 	else
 	{
 		qWarning() << "The plugin getTemplate() failed:" << data.errorString();
 	}
+	
+	qDebug() << endl << "====== IPv4 TEMPLATE ==============" << endl << templateContent << endl;
 		
 	return templateContent;
 }
