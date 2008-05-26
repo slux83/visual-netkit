@@ -238,8 +238,7 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     	delete selectionRect;
     	selectionRect = NULL;
     	m->forceManageGraphAction();
-    } 
-
+    }
 	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
