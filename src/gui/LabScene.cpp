@@ -54,6 +54,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
  */
 LabScene::~LabScene()
 {
+	delete selectionRect;
 }
 
 /**
@@ -122,6 +123,7 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		link->setLine(linkNewPos);
 	}
 	
+	// user is selecting items
 	if (selectionRect != NULL) {
     	// updates selection area dimensions
     	QRectF newRect(selectionRect->rect().topLeft(), mouseEvent->scenePos());
@@ -227,12 +229,10 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     		}
     	}
     	removeItem(selectionRect);
-    	//delete selectionRect;
     } 
 	else if (selectionRect->rect().isNull()) 
 	{
     	removeItem(selectionRect);
-    	//delete selectionRect;
     }
     //selectionRect = NULL;
 	
@@ -252,30 +252,37 @@ void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 			m->actionManageGraph->isChecked())
 	{
 		/* Get one selected item */
-		QGraphicsItem *selectedItem = selectedItems().first();
+		QList<QGraphicsItem*> selectedItems = this->selectedItems();
 		
-		if(selectedItem != NULL)
+		if (!selectedItems.isEmpty())
 		{
-			switch(selectedItem->type())
+
+			QGraphicsItem *selectedItem = selectedItems.first();
+			if(selectedItem != NULL)
 			{
-				//Virtual Machine item
-				case QGraphicsItem::UserType + VmItem:
-					VmHandler::getInstance()->renderVmProperties(
-						dynamic_cast<VirtualMachineItem*>(selectedItem));
-					break;
-					
-				//Collision Domain item
-				case QGraphicsItem::UserType + CdItem:
-					CdHandler::getInstance()->renderCdProperties(
-						dynamic_cast<CollisionDomainItem*>(selectedItem));
-					 break;
-					
-				//Link item
-				case QGraphicsItem::UserType + LnkItem:
-					LinkHandler::getInstance()->renderLinkProperties(
-							dynamic_cast<LinkItem*>(selectedItem));
-					break;
+				switch(selectedItem->type())
+				{
+					//Virtual Machine item
+					case QGraphicsItem::UserType + VmItem:
+						VmHandler::getInstance()->renderVmProperties(
+							dynamic_cast<VirtualMachineItem*>(selectedItem));
+						break;
+						
+					//Collision Domain item
+					case QGraphicsItem::UserType + CdItem:
+						CdHandler::getInstance()->renderCdProperties(
+							dynamic_cast<CollisionDomainItem*>(selectedItem));
+						 break;
+						
+					//Link item
+					case QGraphicsItem::UserType + LnkItem:
+						LinkHandler::getInstance()->renderLinkProperties(
+								dynamic_cast<LinkItem*>(selectedItem));
+						break;
+				}
 			}
+		} else {
+			qWarning() << "LabScene::mouseDoubleClickEvent: selectedItems is either null or empty.";
 		}
 	}
 }
