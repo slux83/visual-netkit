@@ -44,6 +44,7 @@ private:
 public:
 	Plugin();
 	virtual ~Plugin();
+	bool initProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL) { return true; };
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();

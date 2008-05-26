@@ -32,7 +32,7 @@ private:
 	QString errorString;
 	
 	bool saveLabConf();
-	bool saveRoutersConf();
+	bool saveVmsConf();
 	bool createFolderSystem();
 	bool saveStartups();
 	QString prepareLabConfText();
