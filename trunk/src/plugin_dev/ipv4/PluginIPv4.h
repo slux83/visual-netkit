@@ -30,7 +30,7 @@
 #include "NetworkAddress.h"
 
 /**
- * A simple plugin that do nothing
+ * An IPv4 plugin
  */
 class PluginIPv4 : public PluginInterface
 {
@@ -40,14 +40,13 @@ private:
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
-	
-	NetworkAddress address;
 
 	bool fetchProperties();
 	
 public:
 	PluginIPv4();
 	virtual ~PluginIPv4();
+	bool initProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL) { return false; };
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
@@ -60,12 +59,7 @@ public:
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 	
-	QString getDefaultGraphisLabel() {return QString("Hello from ipv4!"); };
-	
-	void updateLabel();
-	//NetworkAddress getAddress() { return address; };
-	QString getAddress() { return address.toString(); };
-	void setAddress(QString address, QString netmask);
+	QString getDefaultGraphisLabel() {return QString("ipv4 enabled"); };
 };
 
 

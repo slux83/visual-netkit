@@ -118,3 +118,19 @@ bool Plugin::fetchProperties()
 	return allok;
 }
 
+
+/**
+ * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
+ */
+bool Plugin::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+{
+	if (pluginAlertMsg == NULL)
+	{
+		return true;
+	} else {
+		//TODO check for pluginAlertMsg meaning and what to do next
+		pluginAlertMsg = new QString("TODO: check for pluginAlertMsg meaning and what to do next");
+		return false;
+	}
+}
+

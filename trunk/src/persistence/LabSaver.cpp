@@ -25,6 +25,8 @@
 #include "../core/CollisionDomain.h"
 #include "TemplateExpert.h"
 
+#include "../plugin_framework/PluginRegistry.h"
+
 /**
  * Constructor.
  * 
@@ -54,7 +56,7 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (allok && !saveStartups())
 		allok = false;
-	if (allok && !saveRoutersConf())
+	if (allok && !saveVmsConf())
 		allok = false;
 	
 	/* remove the lab */
@@ -127,7 +129,7 @@ bool LabSaver::saveStartups()
 
 /**
  * [PRIVATE]
- * Prepare and return the string represent the startup file for *vm
+ * Prepare and return the string representing the startup file for vm
  */
 QString LabSaver::prepareStartupText(VirtualMachine *vm)
 {
@@ -247,9 +249,19 @@ QString LabSaver::strippedName(const QString &fullFileName)
  * This function creates both routerX.conf file and routerX folder
  * (including subdirectories and subfiles).
  */
-bool LabSaver::saveRoutersConf()
+bool LabSaver::saveVmsConf()
 {
-	return true;
+	bool allok = true;
+	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
+	
+	/* iterates on machines */
+	while(machineIterator.hasNext() && allok)
+	{
+		machineIterator.next();
+		//TODO controllare l'esistenza dei plugin...se nn lo si fa segmentation fault!
+		qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPluginProperties();
+	}	
+	return allok;
 }
 
 /**

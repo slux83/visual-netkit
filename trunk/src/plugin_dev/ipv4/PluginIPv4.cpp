@@ -36,7 +36,7 @@ PluginIPv4::PluginIPv4() : PluginInterface()
 	mySettings->endGroup();
 	
 	myProxy = NULL;
-	fetchProperties();
+	bool fetched = fetchProperties();
 }
 
 /**
@@ -44,6 +44,7 @@ PluginIPv4::PluginIPv4() : PluginInterface()
  */
 PluginIPv4::~PluginIPv4()
 {
+	//NOTE: The proxy is destroyed by the plugin framework
 	qDeleteAll(properties);
 	delete mySettings;
 }
@@ -116,17 +117,82 @@ bool PluginIPv4::fetchProperties()
 }
 
 /**
- * Updates the plugin label in the graphic scene.
+ * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-void PluginIPv4::updateLabel()
+bool PluginIPv4::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
-	myProxy->changeGraphicsLabel("etichetta ipv4");
-}
-
-/**
- * Sets the IPv4 network address.
- */
-void PluginIPv4::setAddress(QString addr, QString nmask)
-{
-	address = NetworkAddress(QHostAddress(addr), QHostAddress(nmask));
+	if (pluginAlertMsg == NULL)
+	{
+		PluginProperty *prop = properties.value(propName);
+		prop->setValue(propValue);
+		qDebug() << "PluginIPv4::initProperty: property" << propName << "initialized with value" << propValue;
+		
+		if (propName == "address" || propName == "netmask")
+			if (myProxy != NULL)
+				myProxy->changeGraphicsLabel(propName + ":" + propValue);
+		
+		return true;
+	} 
+	else 
+	{
+		if (propName == "address") 
+		{
+			/* Check the network */
+			if(!NetworkAddress::validateIp(propName))
+			{
+				/* set a warning message */
+				pluginAlertMsg->append("Invalid Network.");
+			}
+		}
+		else if (propName == "netmask") 
+		{
+			quint8 cidrNetmask = 0;
+			
+			/* CIDR notation for the netmask? */
+			bool isInt;
+			cidrNetmask = propValue.toInt(&isInt);
+			
+			/* Maybe the netmask is in normal notation? 255.255.0.0 */
+			if(!isInt)
+			{
+				QHostAddress netmask(propValue);
+				qDebug() << netmask << propValue;
+				if(!NetworkAddress::validateNetmask(netmask))
+				{
+					/* Show a warning message */
+					pluginAlertMsg->append("Invalid netmask.");
+				}
+				else //Netmask ok
+				{
+					PluginProperty *prop = properties.value(propName);
+					prop->setValue(propValue);			
+				}
+			}
+			else
+			{
+				/* Validate cidr netmask */
+				if(cidrNetmask > 32 || cidrNetmask < 1)			
+				{
+					/* Show a warning message */
+					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask is included between 1 and 32.");
+				}
+				else	//save the netmask
+				{
+					PluginProperty *prop = properties.value(propName);
+					prop->setValue(propValue);
+				}	
+			}
+		} 
+		else if (propName == "broadcast") 
+		{
+			QHostAddress bcast = NetworkAddress::generateBroadcast(QHostAddress(properties.value("address")->getValue()), 
+																   QHostAddress(properties.value("netmask")->getValue()));
+			if (bcast != QHostAddress(propValue))
+			{
+				qWarning() << "PluginIPv4::initProperty: generated broadcast address differs from passed value";
+				pluginAlertMsg->append("PluginIPv4::initProperty: generated broadcast address differs from passed value");
+			}
+		}
+		return false;
+	}
 }
