@@ -21,6 +21,7 @@
 #include "handles/VmMapper.h"
 #include "handles/CdMapper.h"
 #include "handles/LinkMapper.h"
+#include "handles/LinkHandler.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -55,6 +56,7 @@ LabScene::~LabScene()
 }
 
 /**
+ * [PROTECTED-REIMPLE]
  * Mouse press event
  */
 void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -98,6 +100,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 }
 
 /**
+ * [PROTECTED-REIMPLE]
  * Mouse move event
  */
 void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -113,6 +116,7 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 }
 
 /**
+ * [PROTECTED-REIMPLE]
  * Mouse release event
  */
 void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -190,6 +194,48 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	}
 	
 	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
+/**
+ * [PROTECTED-REIMPLE]
+ * Mouse double click event
+ */
+void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+	MainWindow *m = LabHandler::getInstance()->getMainWindow();
+	
+	/* The user double click */
+	if(mouseEvent->button() == Qt::LeftButton && 
+			m->actionManageGraph->isChecked())
+	{
+		/* Get one selected item */
+		QGraphicsItem *selectedItem = selectedItems().first();
+		
+		if(selectedItem != NULL)
+		{
+			switch(selectedItem->type())
+			{
+				//Virtual Machine item
+				case QGraphicsItem::UserType + VmItem:
+					VmHandler::getInstance()->renderVmProperties(
+						dynamic_cast<VirtualMachineItem*>(selectedItem));
+					break;
+					
+				//Collision Domain item
+				case QGraphicsItem::UserType + CdItem:
+					CdHandler::getInstance()->renderCdProperties(
+						dynamic_cast<CollisionDomainItem*>(selectedItem));
+					 break;
+					
+				//Link item
+				case QGraphicsItem::UserType + LnkItem:
+					LinkHandler::getInstance()->renderLinkProperties(
+							dynamic_cast<LinkItem*>(selectedItem));
+					break;
+			}
+		}
+	}
+	//QGraphicsScene::
 }
 
 /**

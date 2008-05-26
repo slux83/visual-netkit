@@ -37,7 +37,7 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	pluginsSharedArea = new PluginsSharedArea();
 	
 	setZValue(800);
-	//setFlags(QGraphicsItem::ItemIsSelectable);
+	setFlags(QGraphicsItem::ItemIsSelectable);
 	
 	//set the line position
 	updateLinkPos();
@@ -51,6 +51,13 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 			this, SLOT(updateLinkPos()));
 	connect(cd, SIGNAL(positionChanged()),
 			this, SLOT(updateLinkPos()));
+	connect(cd, SIGNAL(needBoundingrectRebuild()),
+				this, SLOT(forceBoundingrectRebuild()));
+	connect(vm, SIGNAL(needBoundingrectRebuild()),
+					this, SLOT(forceBoundingrectRebuild()));
+	
+	/* init the context menu */
+	initContextMenu();
 }
 
 /**
@@ -91,7 +98,7 @@ void LinkItem::updateLinkPos()
 	labelCenter.setX(((cdCenter.x() + vmCenter.x()) * 0.5) + 4);
 	labelCenter.setY(((cdCenter.y() + vmCenter.y()) * 0.5) + 14);
 	pluginsSharedArea->setPos(labelCenter);
-	
+		
 }
 
 /**
@@ -122,22 +129,53 @@ void LinkItem::setLinkLabel(QString newName)
 }
 
 /**
- * [REIMPL]
- * Redefined the bounding rect
+ * [SLOT]
+ * recalculate the bounding rect for this link
  */
-/*
-QRectF LinkItem::boundingRect() const
+void LinkItem::forceBoundingrectRebuild()
 {
-	QRectF	bRect(lineItem->line().p1(), 
-			QSizeF	(
-					lineItem->line().p2().x() - lineItem->line().p1().x(),
-					lineItem->line().p2().y() - lineItem->line().p1().y()
-					)
-				);
-	bRect.normalized();
-	qDebug() << bRect;
-	return bRect;
+	//Hack: force re-calculate the bounding rect for this link
+	removeFromGroup(myLabel);
+	addToGroup(myLabel);
+}
+
+/**
+ * [PRIVATE]
+ * Create and initiate the cantext menu
+ */
+void LinkItem::initContextMenu()
+{
+	deleteAction = new QAction(tr("Delete Hardware Interface"), this);
+	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
+	
+	contextMenu.addAction(deleteAction);
+	
+	/* Connects */
+	connect(deleteAction, SIGNAL(triggered()),
+			this, SLOT(deleteLinkActionCalled()));
 
 }
-*/
+
+/**
+ * [PRIVATE-SLOT]
+ * Delete this link (handle call)
+ */
+void LinkItem::deleteLinkActionCalled()
+{
+	QMessageBox::warning(NULL,
+		tr("NOT IMPLEMENTED"),
+		tr("This function is not implemented yet >_<"),
+		QMessageBox::Ok);
+}
+
+/**
+ * [PROTECTED]
+ * Context menu
+ */
+void LinkItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	Q_UNUSED(event);
+	
+	contextMenu.exec(QCursor::pos());
+}
 

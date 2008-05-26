@@ -43,9 +43,10 @@ public:
 	virtual ~LabScene();
 	
 protected:
-	void mousePressEvent  (QGraphicsSceneMouseEvent *mouseEvent);
-	void mouseMoveEvent   (QGraphicsSceneMouseEvent *mouseEvent);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+	void mousePressEvent  		(QGraphicsSceneMouseEvent *mouseEvent);
+	void mouseMoveEvent   		(QGraphicsSceneMouseEvent *mouseEvent);
+	void mouseReleaseEvent		(QGraphicsSceneMouseEvent *mouseEvent);
+	void mouseDoubleClickEvent	(QGraphicsSceneMouseEvent *mouseEvent);
 
 };
 
