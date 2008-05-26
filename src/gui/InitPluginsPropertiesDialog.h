@@ -41,6 +41,9 @@ private:
 	//Clear the gui elements and assoc map
 	void clearAll();
 	
+private slots:
+	void handleUserConfirm();
+	
 public:
 	InitPluginsPropertiesDialog(const QList<PluginLoaderFactory *> plugins, QWidget *parent = 0);
 	void updatePluginsToolBox(QStringList selectedPlugins);

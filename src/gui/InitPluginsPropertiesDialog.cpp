@@ -29,6 +29,9 @@ InitPluginsPropertiesDialog::InitPluginsPropertiesDialog(
 	/* Connect the UI resource to this QWidget */
 	setupUi(this);
 	
+	/* Connects */
+	connect(buttonBox, SIGNAL(accepted()), this, SLOT(handleUserConfirm()));
+	
 	/* save the factories (for a fast access) */
 	availablePlugins = plugins;
 }
@@ -39,6 +42,17 @@ InitPluginsPropertiesDialog::InitPluginsPropertiesDialog(
 InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
 {
 	
+}
+
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle the user form confirm
+ * pre-operations on the input
+ */
+void InitPluginsPropertiesDialog::handleUserConfirm()
+{
+	qDebug() << "---";
 }
 
 /**
@@ -55,8 +69,10 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 	quint8 tabCount = 0;
 	while(it.hasNext())
 	{
+		// gets the current plugin proxy
 		PluginProxy *proxy = it.next();
 		
+		// if any property has to be set, build the UI
 		if(proxy->getPluginProperties().values().size() > 0)
 		{
 			QWidget *w = new QWidget();	//the container
@@ -75,7 +91,7 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 				layout->addWidget(label);
 				layout->addWidget(lineEdit);
 				
-				//save mapping
+				// save mapping
 				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
 										QString('\0') + prop->getName(),
 										lineEdit);
