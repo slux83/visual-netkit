@@ -36,7 +36,7 @@ PluginIPv4::PluginIPv4() : PluginInterface()
 	mySettings->endGroup();
 	
 	myProxy = NULL;
-	bool fetched = fetchProperties();
+	fetchProperties();
 }
 
 /**
