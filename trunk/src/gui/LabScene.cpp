@@ -226,7 +226,6 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     			itemList.at(i)->setSelected(true);
     		}
     	}
-    	
     	removeItem(selectionRect);
     	//delete selectionRect;
     } 
