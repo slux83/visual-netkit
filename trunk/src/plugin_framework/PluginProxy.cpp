@@ -152,3 +152,10 @@ qint32 PluginProxy::getPluginGroupID()
 	return pluginInterface->getGroupID();
 }
 
+/**
+ * Init a property
+ */
+bool PluginProxy::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+{
+	return pluginInterface->initProperty(propName, propValue, pluginAlertMsg);
+}

@@ -65,10 +65,11 @@ void AddVmCommand::undo()
  * Contructor
  */
 AddCdCommand::AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newCd,
-		QUndoCommand *parent) : QUndoCommand(parent)
+		QList<PluginProxy *> pList, QUndoCommand *parent) : QUndoCommand(parent)
 {
 	cdItem = newCdItem;
 	cd = newCd;
+	plugins = pList;
 	setText(tr("Added a new collision domain: ") + cd->getName());
 }
 
@@ -86,6 +87,11 @@ void AddCdCommand::redo()
 {
 	//show and connect view & domain objects
 	CdMapper::getInstance()->addNewMapping(cdItem, cd);
+	
+	//call default label for plugins
+	QListIterator<PluginProxy *> i(plugins);
+	while(i.hasNext())
+		i.next()->showDefaultGrophicsLabel();
 }
 
 /**

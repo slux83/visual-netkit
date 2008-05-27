@@ -60,7 +60,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 	// scrorro tutte le proprietà
 	for (int i=0; i < keys.size(); i++) 
 	{
-		QStringList l = keys.at(i).split(separator);
+		QStringList l = keys.at(i).split(SEPARATOR);
 		QString pluginName = l.first();
 		QString propName = l.last();
 		

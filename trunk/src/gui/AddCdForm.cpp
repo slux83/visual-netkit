@@ -18,7 +18,7 @@
 
 #include "AddCdForm.h"
 #include "handles/CdHandler.h"
-
+#include "../plugin_framework/PluginRegistry.h"
 #include <QDesktopWidget>
 #include <QStringList>
 #include <QHostAddress>
@@ -46,8 +46,15 @@ AddCdForm::AddCdForm(QWidget *parent) : QDialog(parent)
 	connect(cdFormConfirmBox, SIGNAL(accepted()),
 			this, SLOT(handleUserConfirm()));
 	
-	connect(this, SIGNAL(userAddCd(QString, QPointF)),
-				cdHandler, SLOT(handleAddNewCd(QString, QPointF)));	
+	connect(this, SIGNAL(userAddCd(QString, QStringList, bool, QPointF)),
+				cdHandler, SLOT(handleAddNewCd(QString, QStringList, bool, QPointF)));	
+	
+	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
+					this, SLOT(showPluginInfos(QListWidgetItem *)));
+	
+	/* Init plugin chooser */
+	availablePlugins = PluginRegistry::getInstance()->getAllPluginFactories();
+	fillPluginChooser();
 }
 
 /**
@@ -65,40 +72,120 @@ AddCdForm::~AddCdForm()
 void AddCdForm::handleUserConfirm()
 {
 	QString cdName = cdNameLineEdit->text();
+	bool ok = true;
 	
 	/*
 	 * Checks on cd name
 	 */
-	if(cdName.trimmed() == "")
+	if(ok && cdName.trimmed() == "")
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
 				tr("The collision domain name cannot be empty!"),
 				QMessageBox::Ok);
 		
-		goto error;
+		ok = false;
 	}
 	
-	if(CdHandler::getInstance()->cdNameExist(cdName))
+	if(ok && CdHandler::getInstance()->cdNameExist(cdName))
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
 				tr("The collision domain name must be unique!\nPlease, retry."),
 				QMessageBox::Ok);
 		
-		goto error;
+		ok = false;
 	}
 	
 	
 	/**
 	 * ok, all seems correct.. emit a signal, clear gui and close
 	 */
-	emit userAddCd(cdName, cdPos);
-	
-	cdNameLineEdit->clear();
-	close();
-
-error:
-	return;
+	if(ok)
+	{
+		QStringList selPlugins = getSelectedPlugins();
+		
+		emit userAddCd(cdName, selPlugins,
+				(initPropertiesCheck->checkState() == Qt::Unchecked), cdPos);
+		
+		cdNameLineEdit->clear();
+		close();
+	}
 	
 }
+/**
+ * [PRIVATE]
+ * fill the plugin chooser with a list of checkboxs
+ */
+void AddCdForm::fillPluginChooser()
+{
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		//it's a mine plugin?
+		if(factory->getType() != "cd")
+			continue; //Skeep this plugin
+		
+		//create entry
+		QListWidgetItem *pluginItem = new QListWidgetItem();
+		pluginItem->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
+		pluginItem->setData(Qt::DisplayRole, factory->getName());	//it's the unique ID
+		pluginItem->setData(Qt::ToolTipRole, tr("Select this plugin to show extra infos."));
+		pluginItem->setCheckState(Qt::Unchecked);
+		
+		pluginsList->addItem(pluginItem);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * show the infos of the selected plugin
+ */
+void AddCdForm::showPluginInfos(QListWidgetItem *item)
+{
+	QString selectedPluginName = item->data(Qt::DisplayRole).toString();
+	QListIterator<PluginLoaderFactory*> it(availablePlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		if(factory->getName() == selectedPluginName)
+		{
+			/* Render infos */
+			pName->setText(factory->getName());
+			pDescription->setText(factory->getDescription());
+			pDeps->setText(factory->getDeps());
+			pAuthor->setText(factory->getAuthor());
+			pVersion->setText(factory->getVersion());
+			
+			break;
+		}
+	}
+}
+
+/**
+ * [PRIVATE]
+ * Get the selected plugins
+ */
+QStringList AddCdForm::getSelectedPlugins()
+{
+	QStringList selectedPlugins;
+	
+	/* Get all list items and select only selected */
+	QList<QListWidgetItem *> listItems =
+		pluginsList->findItems(".+", Qt::MatchRegExp);
+	
+	QListIterator<QListWidgetItem *> itemIter(listItems);
+	while(itemIter.hasNext())
+	{
+		QListWidgetItem * item = itemIter.next();
+		//save the plugin name if the plugin is checked
+		if(item->checkState() == Qt::Checked)
+			selectedPlugins.append(item->data(Qt::DisplayRole).toString());
+	}
+	
+	return selectedPlugins;
+}
+
