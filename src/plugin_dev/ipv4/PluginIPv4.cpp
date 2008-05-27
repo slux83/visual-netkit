@@ -148,7 +148,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 	}	
 	
 	// se il valore della property propName è uguale a quello di default
-	if (propValue == propName_default)
+	if (propValue == properties.value(propName)->getDefaultValue())
 		return true;
 	
 	// se voglio forzare il salvataggio della property
