@@ -19,6 +19,9 @@
 #include "InitPluginsPropertiesDialog.h"
 #include <QLineEdit>
 #include <QScrollArea>
+#include <QMessageBox>
+
+#include "../plugin_framework/PluginProxy.h"
 
 #define SEPARATOR QString(QChar(226))
 
@@ -69,7 +72,43 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 		{
 			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
 			{
-				pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+				QString *altMsg = new QString();
+				bool allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
+				
+				// some warning or error returned by initProperty function
+				if (!allok)
+				{	
+					// mostro l'alert question all'utente chiedendogli:
+					// la property XXX ha dato come errore :errorDalPlugin  -->  ignora o modifica?
+					QString question =
+								tr("Il plugin ") + pluginsToManage.at(j)->getPlugin()->getName() +
+								tr(" ha riportato il seguente messaggio:\n") +
+								*altMsg + ".\n\n" +
+								tr("Ignorare il messaggio?");
+					
+					int ret = QMessageBox::question(this, tr("VisualNetkit - Warning"),
+						tr(question.toUtf8()),
+						QMessageBox::Yes | QMessageBox::Ignore,
+						QMessageBox::Yes);
+					
+					// se l'utente sceglie di continuare rifaccio la stessa chiamata al plugin 
+					// ma senza passargli il QString di altMsg in questo modo il plugin dovra' 
+					// prendere per buono qualsiasi valore per quella property
+					if(ret == QMessageBox::Yes)
+					{
+						qDebug() << "QMessageBox::Yes";
+						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+
+						// pulisco la altMsg string
+						altMsg = new QString();
+						
+						// chiudo la QMessageBox
+						close();
+					}
+					else {
+						qDebug() << "QMessageBox::No";
+					}
+				}
 			}
 		}
 	}

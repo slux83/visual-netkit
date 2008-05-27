@@ -160,7 +160,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 			if(!NetworkAddress::validateIp(propName))
 			{
 				/* set a warning message */
-				pluginAlertMsg->append("Invalid Network.");
+				pluginAlertMsg->append("Invalid network address");
 			}
 		}
 		else if (propName == "netmask") 
@@ -179,7 +179,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				if(!NetworkAddress::validateNetmask(netmask))
 				{
 					/* Show a warning message */
-					pluginAlertMsg->append("Invalid netmask.");
+					pluginAlertMsg->append("Invalid netmask");
 				}
 				else //Netmask ok
 				{
@@ -193,7 +193,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				if(cidrNetmask > 32 || cidrNetmask < 1)			
 				{
 					/* Show a warning message */
-					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask has to be included between 1 and 32.");
+					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask has to be included between 1 and 32");
 				}
 				else	//save the netmask
 				{
@@ -209,7 +209,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 			if (bcast != QHostAddress(propValue))
 			{
 				qWarning() << "PluginIPv4::initProperty: generated broadcast address differs from passed value";
-				pluginAlertMsg->append("PluginIPv4::initProperty: generated broadcast address differs from passed value");
+				pluginAlertMsg->append("Generated broadcast address differs from passed value");
 			}
 		}
 		return false;
