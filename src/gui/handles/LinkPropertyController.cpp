@@ -195,10 +195,43 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	{
 		
 		QRegExp pluginPropValidator("(.+)" + SEPARATOR + "(.+)");
-		if(pluginPropValidator.exactMatch(item->data(Qt::UserRole).toString()))
+		if(pluginPropValidator.exactMatch(item->data(Qt::UserRole).toString()) ||
+				item->data(Qt::UserRole).toString().split(SEPARATOR).size() != 2)
+			
 		{
-			qDebug() << item->data(Qt::UserRole).toString().split(SEPARATOR);
-			qDebug() << item->data(Qt::DisplayRole).toString();
+			
+			QString pluginName = item->data(Qt::UserRole).toString().split(SEPARATOR)[0];
+			QString propName = item->data(Qt::UserRole).toString().split(SEPARATOR)[1];
+			
+			QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getHiProxies(hi));
+			
+			/* Seach the plugin to send che change */
+			while(i.hasNext())
+			{
+				PluginProxy *p = i.next();
+				if(p->getPlugin()->getName() == pluginName)
+				{
+					QString *alert = new QString();
+					if(!p->initProperty(propName, item->data(Qt::DisplayRole).toString(), alert))
+					{
+						int userChoice;
+						
+						userChoice = QMessageBox::question(NULL, tr("Visual Netkit - Warning"),
+							tr(("Plugin Property error: " + *alert + "\n\n" + "Do you want ignore this warning?").toUtf8()),
+							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+						
+						if(userChoice == QMessageBox::Yes)
+						{
+							//ok, store the value and shut up!
+							p->initProperty(propName, item->data(Qt::DisplayRole).toString());
+						}	
+					}
+					
+					delete alert;
+					break;
+				}
+			}
+			
 		}
 		else
 			qWarning() << "Unknown property user role:" << item->data(Qt::UserRole).toString();
