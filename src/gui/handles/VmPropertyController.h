@@ -38,7 +38,7 @@ public:
 	VmPropertyController();
 	virtual ~VmPropertyController();
 	bool saveChangedProperty(QTableWidgetItem *item);
-	void renderCdProperties(QTableWidget *tableWidget);
+	void renderVmProperties(QTableWidget *tableWidget);
 	
 	void setVm(VirtualMachine *selectedVm) { vm = selectedVm; };
 };

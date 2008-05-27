@@ -18,10 +18,13 @@
 
 #include "LinkPropertyController.h"
 #include "LinkHandler.h"
+#include "../../plugin_framework/PluginRegistry.h"
 
 //Base properties for a link
 #define HI_NAME "VmName"
 #define HI_STATE "HiState"
+
+#define SEPARATOR QString(QChar(226))
 
 /**
  * Constructor
@@ -62,9 +65,6 @@ void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 	property->setData(Qt::UserRole, HI_NAME);
 	tableWidget->setItem(0, 1, property);
 	
-//	tableWidget->setHorizontalHeaderItem ( 1, new QTableWidgetItem);
-//	tableWidget->setSpan(1,0,1,2);
-	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, tr("Status"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
@@ -76,6 +76,47 @@ void LinkPropertyController::renderLinkProperties(QTableWidget *tableWidget)
 	property->setData(Qt::UserRole, HI_STATE);
 	tableWidget->setItem(1, 1, property);
 	
+	QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getHiProxies(hi));
+		
+	/* show plugins properties */
+	while(i.hasNext())
+	{
+		PluginProxy *p = i.next();
+		QMapIterator<QString, PluginProperty*> j(p->getPluginProperties());
+		
+		/* Build header for this plugin (span 2 columns) */
+		if(j.hasNext())
+		{
+			tableWidget->setRowCount(tableWidget->rowCount() + 1);
+			property = new QTableWidgetItem();
+			property->setFlags(!Qt::ItemIsSelectable || !Qt::ItemIsEditable);
+			property->setData(Qt::DisplayRole, tr("Plugin: ") + p->getPlugin()->getName());
+			property->setBackgroundColor(Qt::gray);
+			property->setForeground(Qt::blue);
+			property->setFont(QFont("Sand Serif", 9, QFont::Bold));
+			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
+			tableWidget->setSpan(tableWidget->rowCount() - 1, 0, 1, 2);
+		}
+		
+		/* render propertyes for this plugin */
+		while(j.hasNext())
+		{
+			j.next();
+			//property name
+			tableWidget->setRowCount(tableWidget->rowCount() + 1);
+			property = new QTableWidgetItem();
+			property->setData(Qt::DisplayRole, j.key());
+			property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
+			
+			//property value
+			property = new QTableWidgetItem();
+			property->setData(Qt::DisplayRole, j.value()->getValue());
+			property->setData(Qt::ToolTipRole, j.value()->getDescription());
+			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + j.key());
+			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
+		}
+	}
 }
 
 /**

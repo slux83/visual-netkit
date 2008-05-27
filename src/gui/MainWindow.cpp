@@ -322,6 +322,10 @@ void MainWindow::zoomNormal()
  */
 void MainWindow::clearPropertyDock()
 {
+	/* First, reset the spans */
+	for(int i=0; i<propertyTable->rowCount(); i++)
+		propertyTable->setSpan(i, 0, 1, 1);
+	
 	/* Clear all table items and reset the view-size */
 	propertyTable->clearContents();		//just only this slot!
 	propertyTable->setRowCount(0);		//resize (reset) the view	

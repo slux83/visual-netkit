@@ -129,7 +129,7 @@ void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
 	
 	/* Render properties */
 	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
-	propertyController->renderCdProperties(labHandler->getMainWindow()->propertyTable);
+	propertyController->renderVmProperties(labHandler->getMainWindow()->propertyTable);
 	
 	/* Connect the correct handler dinamically */
 	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
