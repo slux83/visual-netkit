@@ -78,7 +78,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 				qDebug() << "retvalue out:" << ret;
 				
 				// some warning or error returned by initProperty function
-				if (!allok && (ret==0 | !ret==QMessageBox::YesToAll))
+				if (!allok && (ret==0 || !ret==QMessageBox::YesToAll))
 				{	
 					// mostro l'alert question all'utente chiedendogli:
 					// la property XXX ha dato come errore :errorDalPlugin  -->  ignora o modifica?

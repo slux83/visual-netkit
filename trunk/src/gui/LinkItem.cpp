@@ -58,6 +58,8 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	
 	/* init the context menu */
 	initContextMenu();
+	
+	pluginsManager = new ManagePluginsDialog(this);
 }
 
 /**
@@ -147,12 +149,17 @@ void LinkItem::initContextMenu()
 {
 	deleteAction = new QAction(tr("Delete Hardware Interface"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
+	managePluginsAction = new QAction(tr("Manage plugins"), this);
+	managePluginsAction->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
 	
 	contextMenu.addAction(deleteAction);
+	contextMenu.addAction(managePluginsAction);
 	
 	/* Connects */
 	connect(deleteAction, SIGNAL(triggered()),
 			this, SLOT(deleteLinkActionCalled()));
+	connect(managePluginsAction, SIGNAL(triggered()),
+			this, SLOT(managePluginsActionCalled()));
 
 }
 
@@ -179,3 +186,11 @@ void LinkItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	contextMenu.exec(QCursor::pos());
 }
 
+/**
+ * [SLOT]
+ * Show the manage plugins dialog
+ */
+void LinkItem::managePluginsActionCalled()
+{
+	pluginsManager->show();
+}

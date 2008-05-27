@@ -30,6 +30,7 @@
 #include "LineItemPrivate.h"
 #include "../common/Types.h"
 #include "PluginsSharedArea.h"
+#include "ManagePluginsDialog.h"
 
 /* Pi-greco */
 static const double Pi = 3.14159;
@@ -51,6 +52,8 @@ private:
 	CollisionDomainItem* cd;	//start and end of this "line"
 	QMenu contextMenu;
 	QAction *deleteAction;
+	QAction *managePluginsAction;
+	ManagePluginsDialog *pluginsManager;
 	
 	void initContextMenu();
 		
@@ -72,6 +75,7 @@ protected:
 
 private slots:
 	void deleteLinkActionCalled();
+	void managePluginsActionCalled();
 	
 public slots:
 	void updateLinkPos();
