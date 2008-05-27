@@ -75,8 +75,11 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 				QString *altMsg = new QString();
 				bool allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
 				
+				int ret = 0;
+				qDebug() << "retvalue out:" << ret;
+				
 				// some warning or error returned by initProperty function
-				if (!allok)
+				if (!allok && (ret==0 | !ret==QMessageBox::YesToAll))
 				{	
 					// mostro l'alert question all'utente chiedendogli:
 					// la property XXX ha dato come errore :errorDalPlugin  -->  ignora o modifica?
@@ -86,10 +89,12 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 								*altMsg + ".\n\n" +
 								tr("Ignorare il messaggio?");
 					
-					int ret = QMessageBox::question(this, tr("VisualNetkit - Warning"),
+					ret = QMessageBox::question(this, tr("VisualNetkit - Warning"),
 						tr(question.toUtf8()),
-						QMessageBox::Yes | QMessageBox::Ignore,
+						QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No,
 						QMessageBox::Yes);
+					
+					qDebug() << "retvalue in:" << ret;
 					
 					// se l'utente sceglie di continuare rifaccio la stessa chiamata al plugin 
 					// ma senza passargli il QString di altMsg in questo modo il plugin dovra' 
@@ -98,17 +103,26 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 					{
 						qDebug() << "QMessageBox::Yes";
 						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-
-						// pulisco la altMsg string
-						altMsg = new QString();
-						
 						// chiudo la QMessageBox
 						close();
 					}
+					// se l'utente vuole applicare la stessa scelta a tutti i messaggi
+					else if(ret == QMessageBox::YesToAll)
+					{
+						qDebug() << "QMessageBox::YesToAll";
+						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+						// chiudo la QMessageBox
+						close();
+					}
+					// se l'utente vuole ri-modificare i valori di default
 					else {
 						qDebug() << "QMessageBox::No";
+						break;
 					}
 				}
+				
+				//pulisco la stringa d'errore
+				delete altMsg;
 			}
 		}
 	}
