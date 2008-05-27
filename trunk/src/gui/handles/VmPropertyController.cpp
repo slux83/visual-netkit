@@ -21,10 +21,12 @@
 #include "VmMapper.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "../../plugin_framework/PluginRegistry.h"
+#include "../../common/CommonConfigs.h"
+
 #include <QMessageBox>
 
 #define VM_NAME "VmName"
-#define SEPARATOR QString(QChar(226))
+
 
 /**
  * Constructor

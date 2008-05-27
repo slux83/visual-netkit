@@ -21,10 +21,10 @@
 #include "CdMapper.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "../../plugin_framework/PluginRegistry.h"
+#include "../../common/CommonConfigs.h"
 #include <QMessageBox>
 
 #define CD_NAME "CdName"
-#define SEPARATOR QString(QChar(226))
 
 /**
  * Constructor

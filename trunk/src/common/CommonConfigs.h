@@ -44,4 +44,8 @@
 /* Default plugin folder */
 #define DEFAULT_PLUGIN_DIR QString("./bin/plugins")
 
+/* Separator character */
+#define SEPARATOR QString(QChar(149))
+
+
 #endif /*COMMONCONFIGS_H_*/
