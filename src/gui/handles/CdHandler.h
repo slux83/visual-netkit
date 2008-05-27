@@ -19,6 +19,7 @@
 #ifndef CDHANDLER_H_
 #define CDHANDLER_H_
 
+#include "../InitPluginsPropertiesDialog.h"
 #include "../../core/handles/LabFacadeController.h"
 #include "LabHandler.h"
 #include "CdPropertyController.h"
@@ -38,6 +39,7 @@ private:
 	LabHandler *labHandler;
 	CdPropertyController *propertyController;
 	static CdHandler *instance;
+	InitPluginsPropertiesDialog *pluginPropDialog;
 
 public:
 	CdHandler();
@@ -47,7 +49,7 @@ public:
 	void renderCdProperties(CollisionDomainItem *cdItem);
 	
 public slots:
-	void handleAddNewCd(QString cdName, QPointF pos);
+	void handleAddNewCd(QString cdName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);
 	void saveChangedProperty(int row, int column);
 
 	

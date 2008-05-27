@@ -44,8 +44,8 @@ private:
 	QList<PluginProxy*> plugins;	//the plugins used with the vm
 	
 public:
-	AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm, QList<PluginProxy *> pList,
-			QUndoCommand *parent = 0);
+	AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
+			QList<PluginProxy *> pList,	QUndoCommand *parent = 0);
 	virtual ~AddVmCommand();
 	
 	//TODO
@@ -65,10 +65,11 @@ class AddCdCommand : public QObject, public QUndoCommand
 private:
 	CollisionDomainItem *cdItem;
 	CollisionDomain *cd;
+	QList<PluginProxy*> plugins;	//the plugins used with the cd
 	
 public:
 	AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newCd,
-			QUndoCommand *parent = 0);
+			QList<PluginProxy *> pList, QUndoCommand *parent = 0);
 	virtual ~AddCdCommand();
 	
 	//TODO

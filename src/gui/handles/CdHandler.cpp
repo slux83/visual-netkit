@@ -20,6 +20,7 @@
 #include "../../core/CollisionDomain.h"
 #include "../CollisionDomainItem.h"
 #include "../undoCommands/UndoCommands.h"
+#include "../../plugin_framework/PluginRegistry.h"
 
 /* Init che instance field to NULL */
 CdHandler* CdHandler::instance = NULL;
@@ -35,6 +36,9 @@ CdHandler::CdHandler()
 	/* view side */
 	labHandler = LabHandler::getInstance();
 	propertyController = new CdPropertyController();
+
+	pluginPropDialog = new InitPluginsPropertiesDialog(
+			PluginRegistry::getInstance()->getAllPluginFactories());
 }
 
 /**
@@ -69,7 +73,8 @@ bool CdHandler::cdNameExist(QString cdNameToCheck)
  * [PUBLIC-SLOT]
  * Handle the signal for inserte a new collision domain
  */
-void CdHandler::handleAddNewCd(QString cdName, QPointF pos)
+void CdHandler::handleAddNewCd(QString cdName, QStringList selectedPlugins,
+		bool manuallyInit, QPointF pos)
 {	
 	/* Create the view and domain objects */
 	CollisionDomain *cd = new CollisionDomain(cdName);
@@ -78,13 +83,33 @@ void CdHandler::handleAddNewCd(QString cdName, QPointF pos)
 	
 	cdItem->setPos(pos);	//place the item wher user clicked
 	
+	/* Create plugins and attach these to the vm */
+	QList<PluginProxy *> cdPlugins;
+	QStringListIterator iter(selectedPlugins);
+	PluginRegistry* registry = PluginRegistry::getInstance();
+	
+	/* Save proxies for undo command */
+	while(iter.hasNext())
+	{
+		PluginProxy* proxy;
+		if((proxy = registry->registerPlugin(iter.next(), cd)) != NULL)
+			cdPlugins.append(proxy);
+	}
+	
 	labFacadeController->getCurrentLab()->addCollisionDomain(cd);
 	
 	/* the undo command (redo) can accomplish the action */
-	labHandler->getUndoStack()->push(new AddCdCommand(cdItem, cd));
+	labHandler->getUndoStack()->push(new AddCdCommand(cdItem, cd, cdPlugins));
 	
 	/* reset the default action (manage graph) */
 	labHandler->getMainWindow()->forceManageGraphAction();
+	
+	/* now check if the user want init manually the plugins properties */
+	if(manuallyInit && selectedPlugins.size() > 0)
+	{
+		pluginPropDialog->buildGui(cdPlugins);
+		pluginPropDialog->setVisible(true);
+	}
 }
 
 /**

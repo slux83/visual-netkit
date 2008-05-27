@@ -24,6 +24,7 @@
 #include <QPointF>
 #include "ui_addCd.h"
 #include "handles/CdHandler.h"
+#include "../plugin_framework/PluginLoaderFactory.h"
 
 /**
  * This class implement the form for add collision domain action
@@ -34,7 +35,11 @@ class AddCdForm : public QDialog, public Ui::AddCdForm
 
 private:
 	QPointF cdPos;
-	CdHandler *cdHandler;
+	CdHandler *cdHandler;	
+	QList<PluginLoaderFactory *> availablePlugins;
+
+	void fillPluginChooser();
+	QStringList getSelectedPlugins();
 
 public:
 	AddCdForm(QWidget *parent = 0);
@@ -43,9 +48,10 @@ public:
 
 private slots:
 	void handleUserConfirm();
-
+	void showPluginInfos(QListWidgetItem *item);
+	
 signals:
-	void userAddCd(QString cdName, QPointF pos);
+	void userAddCd(QString cdName, QStringList selectedPlugins, bool manualInit, QPointF pos);
 };
 
 
