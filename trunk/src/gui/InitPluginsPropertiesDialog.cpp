@@ -67,9 +67,9 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 		// per ogni plugin nella lista "pluginsToManage"
 		for (int j=0; j < pluginsToManage.size(); j++) 
 		{
-			if (pluginsToManage.at(j))
+			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
 			{
-				
+				pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
 			}
 		}
 	}
