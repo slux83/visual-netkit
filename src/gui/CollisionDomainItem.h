@@ -32,6 +32,7 @@
 #include "LabelItemPrivate.h"
 #include "PluginsSharedArea.h"
 #include "../common/CommonConfigs.h"
+#include "ManagePluginsDialog.h"
 
 /**
  * This class is a graphic group element of type Collision Domain
@@ -50,6 +51,8 @@ private:
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
+	QAction *managePluginsAction;
+	ManagePluginsDialog *pluginsManager;
 	bool isJoin;
 	quint16 connectedlinks;
 	
@@ -75,6 +78,7 @@ public slots:
 	void ungroupActionCalled();
 	void deleteCdActionCalled();
 	void restoreGroupActionCalled();
+	void managePluginsActionCalled();
 	void setPluginLine(QString pluginName, QString content);
 	
 signals:

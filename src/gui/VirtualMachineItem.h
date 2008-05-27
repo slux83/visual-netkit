@@ -32,6 +32,7 @@
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
 #include "PluginsSharedArea.h"
+#include "ManagePluginsDialog.h"
 
 /**
  * This class is a graphic group element of type Virtual Machine
@@ -50,6 +51,8 @@ private:
 	QAction *ungroupAction;
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
+	QAction *managePluginsAction;
+	ManagePluginsDialog *pluginsManager;
 	
 	bool isJoin;
 		
@@ -74,6 +77,7 @@ public slots:
 	void ungroupActionCalled();
 	void deleteVmActionCalled();
 	void restoreGroupActionCalled();
+	void managePluginsActionCalled();
 	void setPluginLine(QString pluginName, QString content);
 	
 signals:

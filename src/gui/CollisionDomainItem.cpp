@@ -54,6 +54,9 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	
 	/* init the context menu */
 	initContextMenu();
+	
+	pluginsManager = new ManagePluginsDialog(this);
+
 }
 
 /**
@@ -75,10 +78,13 @@ void CollisionDomainItem::initContextMenu()
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	restoreGroupAction = new QAction(tr("Restore group") , this);
 	restoreGroupAction->setIcon(QIcon(QString::fromUtf8(":/menu/create_group")));
+	managePluginsAction = new QAction(tr("Manage plugins"), this);
+	managePluginsAction->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
 	
 	contextMenu.addAction(ungroupAction);
 	contextMenu.addAction(restoreGroupAction);
 	contextMenu.addAction(deleteAction);
+	contextMenu.addAction(managePluginsAction);
 	
 	/* Connects */
 	connect(ungroupAction, SIGNAL(triggered()),
@@ -87,6 +93,8 @@ void CollisionDomainItem::initContextMenu()
 			this, SLOT(deleteCdActionCalled()));
 	connect(restoreGroupAction, SIGNAL(triggered()),
 				this, SLOT(restoreGroupActionCalled()));
+	connect(managePluginsAction, SIGNAL(triggered()),
+				this, SLOT(managePluginsActionCalled()));
 }
 
 /**
@@ -208,5 +216,13 @@ void CollisionDomainItem::setLabelCdName(QString newLabel)
 void CollisionDomainItem::setPluginLine(QString pluginName, QString content)
 {
 	pluginsSharedArea->changeMyLine(pluginName, content);
+}
+/**
+ * [SLOT]
+ * Show the manage plugins dialog
+ */
+void CollisionDomainItem::managePluginsActionCalled()
+{
+	pluginsManager->show();
 }
 

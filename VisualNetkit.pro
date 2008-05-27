@@ -1,11 +1,11 @@
-TEMPLATE = app
 TARGET = VisualNetkit
 DEPENDPATH += . \
     src \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/addCd.ui \
+FORMS += ui/managePlugins.ui \
+    ui/addCd.ui \
     ui/addVm.ui \
     ui/addLink.ui \
     ui/main.ui \
@@ -23,7 +23,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/LinkPropertyController.h \
+HEADERS = src/gui/ManagePluginsDialog.h \
+    src/gui/handles/LinkPropertyController.h \
     src/gui/handles/VmPropertyController.h \
     src/gui/InitPluginsPropertiesDialog.h \
     src/plugin_framework/PluginProperty.h \
@@ -71,7 +72,8 @@ HEADERS = src/gui/handles/LinkPropertyController.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/LinkPropertyController.cpp \
+SOURCES = src/gui/ManagePluginsDialog.cpp \
+    src/gui/handles/LinkPropertyController.cpp \
     src/gui/handles/VmPropertyController.cpp \
     src/gui/InitPluginsPropertiesDialog.cpp \
     src/plugin_framework/PluginProperty.cpp \
