@@ -37,6 +37,8 @@ private:
 	static PluginRegistry *instance;
 	
 	QMap<QString, PluginLoaderFactory*> factories;
+	
+	//Multi maps: the value for each key can have multi-values
 	QMap<VirtualMachine*, PluginProxy*> vmAssociations;
 	QMap<CollisionDomain*, PluginProxy*> cdAssociations;
 	QMap<HardwareInterface*, PluginProxy*> hiAssociations;
@@ -49,9 +51,9 @@ public:
 	bool fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
 	
-	PluginProxy* getVmProxy(VirtualMachine* vm) { return vmAssociations.value(vm); };
-	PluginProxy* getCdProxy(CollisionDomain* cd) { return cdAssociations.value(cd); };
-	PluginProxy* getHiProxy(HardwareInterface* hi) { return hiAssociations.value(hi); };
+	QList<PluginProxy*> getVmProxies(VirtualMachine* vm)	{ return vmAssociations.values(vm); };
+	QList<PluginProxy*> getCdProxies(CollisionDomain* cd)	{ return cdAssociations.values(cd); };
+	QList<PluginProxy*> getHiProxies(HardwareInterface* hi)	{ return hiAssociations.values(hi); };
 	
 	QObject* getBaseElement(PluginProxy* proxy);
 	

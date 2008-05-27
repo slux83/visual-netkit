@@ -20,9 +20,11 @@
 #include "CdHandler.h"
 #include "CdMapper.h"
 #include "../../core/handles/LabFacadeController.h"
+#include "../../plugin_framework/PluginRegistry.h"
 #include <QMessageBox>
 
 #define CD_NAME "CdName"
+#define SEPARATOR QString(QChar(226))
 
 /**
  * Constructor
@@ -62,6 +64,48 @@ void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
 	property->setData(Qt::DisplayRole, cd->getName());
 	property->setData(Qt::UserRole, CD_NAME);
 	tableWidget->setItem(0, 1, property);
+	
+	QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getCdProxies(cd));
+	
+	/* show plugins properties */
+	while(i.hasNext())
+	{
+		PluginProxy *p = i.next();
+		QMapIterator<QString, PluginProperty*> j(p->getPluginProperties());
+		
+		/* Build header for this plugin (span 2 columns) */
+		if(j.hasNext())
+		{
+			tableWidget->setRowCount(tableWidget->rowCount() + 1);
+			property = new QTableWidgetItem();
+			property->setFlags(!Qt::ItemIsSelectable || !Qt::ItemIsEditable);
+			property->setData(Qt::DisplayRole, tr("Plugin: ") + p->getPlugin()->getName());
+			property->setBackgroundColor(Qt::gray);
+			property->setForeground(Qt::blue);
+			property->setFont(QFont("Sand Serif", 9, QFont::Bold));
+			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
+			tableWidget->setSpan(tableWidget->rowCount() - 1, 0, 1, 2);
+		}
+		
+		/* render propertyes for this plugin */
+		while(j.hasNext())
+		{
+			j.next();
+			//property name
+			tableWidget->setRowCount(tableWidget->rowCount() + 1);
+			property = new QTableWidgetItem();
+			property->setData(Qt::DisplayRole, j.key());
+			property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
+			
+			//property value
+			property = new QTableWidgetItem();
+			property->setData(Qt::DisplayRole, j.value()->getValue());
+			property->setData(Qt::ToolTipRole, j.value()->getDescription());
+			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + j.key());
+			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
+		}
+	}
 }
 
 /**

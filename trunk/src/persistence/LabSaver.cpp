@@ -257,10 +257,10 @@ bool LabSaver::saveVmsConf()
 	{
 		machineIterator.next();
 		
-		qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPlugin()->getName();
+	//	qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPlugin()->getName();
 		
 		//TODO controllare l'esistenza dei plugin...se nn lo si fa segmentation fault!
-		qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPluginProperties();
+	//	qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPluginProperties();
 	}	
 	return allok;
 }
