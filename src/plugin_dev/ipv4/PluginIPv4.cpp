@@ -140,6 +140,18 @@ bool PluginIPv4::fetchProperties()
  */
 bool PluginIPv4::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
+	// se non esiste una property di nome propName
+	if (!properties.contains(propName))
+	{
+		qWarning() << "PluginIPv4::initProperty: properties doesn't contain property" + propName;
+		return true;
+	}	
+	
+	// se il valore della property propName è uguale a quello di default
+	if (propValue == propName_default)
+		return true;
+	
+	// se voglio forzare il salvataggio della property
 	if (pluginAlertMsg == NULL)
 	{
 		PluginProperty *prop = properties.value(propName);
@@ -152,8 +164,10 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 		
 		return true;
 	} 
+	// altrimenti, se voglio effettuare i controlli sui valori inseriti
 	else 
 	{
+		// controllo il valore relativo alla property address
 		if (propName == "address") 
 		{
 			/* Check the network */
@@ -162,7 +176,14 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				/* set a warning message */
 				pluginAlertMsg->append("Invalid network address");
 			}
+			else 
+			{
+				PluginProperty *prop = properties.value(propName);
+				prop->setValue(propValue);
+				return true;
+			}
 		}
+		// controllo il valore relativo alla property netmask
 		else if (propName == "netmask") 
 		{
 			quint8 cidrNetmask = 0;
@@ -184,7 +205,8 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				else //Netmask ok
 				{
 					PluginProperty *prop = properties.value(propName);
-					prop->setValue(propValue);			
+					prop->setValue(propValue);
+					return true;
 				}
 			}
 			else
@@ -199,9 +221,11 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 				{
 					PluginProperty *prop = properties.value(propName);
 					prop->setValue(propValue);
+					return true;
 				}	
 			}
 		} 
+		// controllo il valore relativo alla property broadcast
 		else if (propName == "broadcast") 
 		{
 			QHostAddress bcast = NetworkAddress::generateBroadcast(QHostAddress(properties.value("address")->getValue()), 
@@ -210,6 +234,12 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 			{
 				qWarning() << "PluginIPv4::initProperty: generated broadcast address differs from passed value";
 				pluginAlertMsg->append("Generated broadcast address differs from passed value");
+			}
+			else 
+			{
+				PluginProperty *prop = properties.value(propName);
+				prop->setValue(propValue);
+				return true;
 			}
 		}
 		return false;
