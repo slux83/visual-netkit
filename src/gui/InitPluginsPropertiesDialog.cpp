@@ -22,8 +22,7 @@
 #include <QMessageBox>
 
 #include "../plugin_framework/PluginProxy.h"
-
-#define SEPARATOR QString(QChar(226))
+#include "../common/CommonConfigs.h"
 
 /**
  * Constructor

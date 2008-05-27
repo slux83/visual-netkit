@@ -19,12 +19,11 @@
 #include "LinkPropertyController.h"
 #include "LinkHandler.h"
 #include "../../plugin_framework/PluginRegistry.h"
+#include "../../common/CommonConfigs.h"
 
 //Base properties for a link
 #define HI_NAME "VmName"
 #define HI_STATE "HiState"
-
-#define SEPARATOR QString(QChar(226))
 
 /**
  * Constructor
@@ -194,7 +193,15 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	}
 	else
 	{
-		//TODO: send this field to plugins's proxy		
+		
+		QRegExp pluginPropValidator("(.+)" + SEPARATOR + "(.+)");
+		if(pluginPropValidator.exactMatch(item->data(Qt::UserRole).toString()))
+		{
+			qDebug() << item->data(Qt::UserRole).toString().split(SEPARATOR);
+			qDebug() << item->data(Qt::DisplayRole).toString();
+		}
+		else
+			qWarning() << "Unknown property user role:" << item->data(Qt::UserRole).toString();
 	}
 	
 	return ok;
