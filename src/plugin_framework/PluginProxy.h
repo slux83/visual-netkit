@@ -27,6 +27,7 @@
 
 #include "../core/VirtualMachine.h"
 #include "PluginProperty.h"
+#include "PluginInterface.h"
 
 class PluginRegistry;
 class PluginInterface;
