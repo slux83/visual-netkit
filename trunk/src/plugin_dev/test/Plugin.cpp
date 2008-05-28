@@ -122,7 +122,7 @@ bool Plugin::fetchProperties()
 /**
  * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-bool Plugin::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool Plugin::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
 	qDebug() << "Plugin test" << "propName:" << propName << "propValue:" << propValue
 			<< "alert:" << pluginAlertMsg;
