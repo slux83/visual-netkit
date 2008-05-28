@@ -58,27 +58,35 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 {
 	qDebug() << "Property Widget: handleUserConfirm on Ok button pressed";
 	QStringList keys = propertiesAssoc.keys();
-	
-	// scrorro tutte le proprietà
-	for (int i=0; i < keys.size(); i++) 
+
+	// per ogni plugin nella lista "pluginsToManage"
+	for (int j=0; j < pluginsToManage.size(); j++) 
 	{
-		QStringList l = keys.at(i).split(SEPARATOR);
-		QString pluginName = l.first();
-		QString propName = l.last();
-		
-		int ret = 0;
-		qDebug() << "retvalue out:" << ret;
-		
-		// per ogni plugin nella lista "pluginsToManage"
-		for (int j=0; j < pluginsToManage.size(); j++) 
+		// scrorro tutte le proprietà
+		for (int i=0; i < keys.size(); i++) 
 		{
+			QStringList l = keys.at(i).split(SEPARATOR);
+			QString pluginName = l.first();
+			QString propName = l.last();
+			
+			int yesToAll = 0;
+	
 			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
 			{
 				QString *altMsg = new QString();
-				bool allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
+				bool allok = true;
+				
+				if (yesToAll==QMessageBox::YesToAll)
+				{
+					pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+				}
+				else
+				{
+					allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
+				}
 				
 				// some warning or error returned by initProperty function
-				if (!allok && (ret==0 || !ret==QMessageBox::YesToAll))
+				if (!allok && (yesToAll!=QMessageBox::YesToAll))
 				{	
 					// mostro l'alert question all'utente chiedendogli:
 					// la property XXX ha dato come errore :errorDalPlugin  -->  ignora o modifica?
@@ -88,41 +96,35 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 								*altMsg + ".\n\n" +
 								tr("Ignorare il messaggio?");
 					
-					ret = QMessageBox::question(this, tr("VisualNetkit - Warning"),
+					yesToAll = QMessageBox::question(this, tr("VisualNetkit - Warning"),
 						tr(question.toUtf8()),
 						QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No,
 						QMessageBox::Yes);
 					
-					qDebug() << "retvalue in:" << ret << "QMessageBox::YesToAll:" << QMessageBox::YesToAll;
-					
 					// se l'utente sceglie di continuare rifaccio la stessa chiamata al plugin 
 					// ma senza passargli il QString di altMsg in questo modo il plugin dovra' 
 					// prendere per buono qualsiasi valore per quella property
-					if(ret == QMessageBox::Yes)
+					if(yesToAll == QMessageBox::Yes)
 					{
 						qDebug() << "QMessageBox::Yes";
 						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-						// chiudo la QMessageBox
-						close();
 					}
 					// se l'utente vuole applicare la stessa scelta a tutti i messaggi
-					else if(ret == QMessageBox::YesToAll)
+					else if(yesToAll == QMessageBox::YesToAll)
 					{
 						qDebug() << "QMessageBox::YesToAll";
 						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-						// chiudo la QMessageBox
-						close();
+						yesToAll = QMessageBox::YesToAll;
 					}
 					// se l'utente vuole ri-modificare i valori di default
 					else {
 						qDebug() << "QMessageBox::No";
-						break;
+						return;
 					}
 				}
 				else
 				{
 					qDebug() << "Empty value set for property "+propName+" in plugin "+pluginName;
-					close();
 				}
 				
 				//pulisco la stringa d'errore
@@ -130,6 +132,8 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 			}
 		}
 	}
+	// chiudo la QMessageBox
+	close();
 }
 
 /**
