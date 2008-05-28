@@ -59,11 +59,13 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
 		                   QMessageBox::Ok);
 			}
 			else
-			{
+			{				
+				//Update the tree lab view
+				LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(lab->getName(),
+						item->data(Qt::DisplayRole).toString(), true);
+				
 				lab->setName(item->data(Qt::DisplayRole).toString());
 				
-				//Update the tree lab view
-				LabHandler::getInstance()->getMainWindow()->labTree->topLevelItem(0)->setData(0, Qt::DisplayRole, lab->getName());
 				returnVal = true;
 			}
 			

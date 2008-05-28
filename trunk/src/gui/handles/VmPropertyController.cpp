@@ -153,6 +153,11 @@ bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		/* save changes */
 		if(ok)
 		{
+			//change tree lab names (vm dir and .startup file name)
+			LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName(), itemValue);
+			LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName() + ".startup", itemValue + ".startup");
+			
+			//save on low level and scene level
 			LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
 			VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
 		}

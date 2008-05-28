@@ -347,3 +347,42 @@ void MainWindow::saveModifiedLab()
 		//TODO
 	}
 }
+
+/**
+ * Change the name of a node inside the tree with the new name
+ * Match criteria: MatchExactly
+ */
+void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootElement)
+{
+	qDebug() << "old:" << oldName << "new:" << newName;
+	QList<QTreeWidgetItem *> nodes;
+	
+	if(rootElement)
+	{
+		nodes = labTree->findItems(oldName, Qt::MatchExactly);
+	}
+	else
+	{
+		//Find the node as child of root element
+		QTreeWidgetItem *root = labTree->topLevelItem(0);		
+		if(root == NULL)
+		{
+			qWarning() << "MainWindow::changeTreeNodeName lab tree top element not found!";
+			return;
+		}
+		
+		for(int i=0; i<root->childCount(); i++)
+		{
+			if(root->child(i)->data(0, Qt::DisplayRole).toString() == oldName)
+				nodes << root->child(i);
+		}
+
+	}
+		
+	
+	if(nodes.size() == 1)
+		nodes.first()->setData(0, Qt::DisplayRole, newName);
+	else
+		qWarning() << "MainWindow::changeTreeNodeName nodes.size() is" << nodes.size();
+	
+}

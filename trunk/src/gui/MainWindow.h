@@ -41,6 +41,7 @@ public:
 	void unlockSceneAndActions();
 	QGraphicsView* getGraphicsView() { return this->graphicsView; };
 	void clearPropertyDock();
+	void changeTreeNodeName(QString oldName, QString newName, bool rootElement = false);
 	
 private:
 	/* Controllers */
