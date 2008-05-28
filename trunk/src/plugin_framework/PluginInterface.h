@@ -30,8 +30,6 @@ class PluginInterface
 public:
 	virtual ~PluginInterface() {};
 	
-	virtual bool initProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL) = 0;
-	
 	/**
 	 * pluginAlertMsg is a pointer to QString to show to the user an alert
 	 * if the returned value is false.
@@ -40,7 +38,8 @@ public:
 	 * If the pluginAlertMsg doesn't passed (default as NULL) the property is
 	 * saved without any consistent check, and allways return TRUE.
 	 */
-	virtual bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL) = 0;
+	virtual bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL) = 0;
+	
 	virtual QSettings* getMySettings() = 0;
 	virtual QString getTemplateLocation() = 0;
 	virtual QString getTemplate() = 0;

@@ -84,14 +84,6 @@ void PluginProxy::showDefaultGrophicsLabel()
 }
 
 /**
- * Just foreward the call
- */
-bool PluginProxy::saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg)
-{
-	return pluginInterface->saveProperty(property, pluginAlertMsg);
-}
-
-/**
  * Returns the associated plugin properties.
  */
 QMap< QString, PluginProperty* > PluginProxy::getPluginProperties()
@@ -155,7 +147,7 @@ qint32 PluginProxy::getPluginGroupID()
 /**
  * Init a property
  */
-bool PluginProxy::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginProxy::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
-	return pluginInterface->initProperty(propName, propValue, pluginAlertMsg);
+	return pluginInterface->saveProperty(propName, propValue, pluginAlertMsg);
 }

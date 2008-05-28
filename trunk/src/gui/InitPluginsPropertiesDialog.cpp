@@ -62,6 +62,8 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 	// per ogni plugin nella lista "pluginsToManage"
 	for (int j=0; j < pluginsToManage.size(); j++) 
 	{
+		int yesToAll = 0;
+		
 		// scrorro tutte le proprietà
 		for (int i=0; i < keys.size(); i++) 
 		{
@@ -69,8 +71,6 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 			QString pluginName = l.first();
 			QString propName = l.last();
 			
-			int yesToAll = 0;
-	
 			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
 			{
 				QString *altMsg = new QString();
@@ -78,11 +78,11 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 				
 				if (yesToAll==QMessageBox::YesToAll)
 				{
-					pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+					pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
 				}
 				else
 				{
-					allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
+					allok = pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
 				}
 				
 				// some warning or error returned by initProperty function
@@ -106,25 +106,19 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 					// prendere per buono qualsiasi valore per quella property
 					if(yesToAll == QMessageBox::Yes)
 					{
-						qDebug() << "QMessageBox::Yes";
-						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+						pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
 					}
 					// se l'utente vuole applicare la stessa scelta a tutti i messaggi
 					else if(yesToAll == QMessageBox::YesToAll)
 					{
-						qDebug() << "QMessageBox::YesToAll";
-						pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text());
+						pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
 						yesToAll = QMessageBox::YesToAll;
 					}
 					// se l'utente vuole ri-modificare i valori di default
 					else {
-						qDebug() << "QMessageBox::No";
+						propertiesAssoc.value(keys.at(i))->selectAll();
 						return;
 					}
-				}
-				else
-				{
-					qDebug() << "Empty value set for property "+propName+" in plugin "+pluginName;
 				}
 				
 				//pulisco la stringa d'errore
