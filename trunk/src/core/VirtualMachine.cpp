@@ -25,6 +25,7 @@
 VirtualMachine::VirtualMachine(QString newName) : QObject()
 {
 	name = newName;
+	setObjectName("vm-class");	//for downcasting operations
 }
 
 /**

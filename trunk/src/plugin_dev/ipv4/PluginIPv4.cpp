@@ -213,7 +213,7 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 				if(cidrNetmask > 32 || cidrNetmask < 1)			
 				{
 					/* Show a warning message */
-					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR nonation the netmask has to be included between 1 and 32");
+					pluginAlertMsg->append("Invalid netmask.\nIn the CIDR notation the netmask has to be included between 1 and 32");
 				}
 				else	//save the netmask
 				{
@@ -227,11 +227,27 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 		// controllo il valore relativo alla property broadcast
 		else if (propName == "broadcast") 
 		{
-			QHostAddress bcast = NetworkAddress::generateBroadcast(QHostAddress(properties.value("address")->getValue()), 
-																   QHostAddress(properties.value("netmask")->getValue()));
+			QHostAddress bcast;
+			
+			/* check if netmask is in cidr notation */
+			bool isCidr;
+			properties.value("netmask")->getValue().toInt(&isCidr);
+			if(isCidr)
+			{
+				bcast = NetworkAddress::generateBroadcast(
+						QHostAddress(properties.value("address")->getValue()), 
+						QHostAddress(NetworkAddress::cidr2netmask(properties.value("netmask")->getValue().toInt())));
+			}
+			else
+			{
+				bcast = NetworkAddress::generateBroadcast(
+						QHostAddress(properties.value("address")->getValue()), 
+						QHostAddress(properties.value("netmask")->getValue()));
+			}
+			
 			if (bcast != QHostAddress(propValue))
 			{
-				pluginAlertMsg->append("generated broadcast address differs from passed value");
+				pluginAlertMsg->append("generated broadcast (" + bcast.toString() + ") address differs from passed value");
 			}
 			else 
 			{

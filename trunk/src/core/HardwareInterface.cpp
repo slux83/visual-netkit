@@ -30,6 +30,7 @@ HardwareInterface::HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
 	domain->addPeer(this);
 	name = ethName;
 	state = interfaceState;
+	setObjectName("hi-class");	//for downcasting operations
 }
 
 /**

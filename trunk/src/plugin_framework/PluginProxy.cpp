@@ -45,30 +45,31 @@ PluginProxy::~PluginProxy()
 void PluginProxy::changeGraphicsLabel(QString label)
 {
 	QObject* baseElement = getBaseElement();
-	qDebug() << baseElement->objectName();
+	
 	if(baseElement == NULL)
 	{
 		qWarning() << "PluginProxy::changeGraphicsLabel -> base element is NULL";
 		return;
 	}
 	
-	//check the base element type and find the relative mapper
-	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(getBaseElement());
-	if (vm != NULL)
+	if(baseElement->objectName() == "vm-class")
 	{
+		VirtualMachine *vm = static_cast<VirtualMachine*>(baseElement);
 		emit needLabelChangedVm(vm, pluginInterface->getName(), label);
 	}
 	
-	CollisionDomain *cd = dynamic_cast<CollisionDomain*>(getBaseElement());
-	if (cd != NULL)
+	if(baseElement->objectName() == "cd-class")
 	{
+		CollisionDomain *cd = static_cast<CollisionDomain*>(baseElement);
+	
 		//CdMapper::getInstance()->changeGraphicsLabel(cd, QString("ipv4 su cd"), pluginInterface->getName());
 	}
 	
-	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(getBaseElement());
-	if (hi != NULL)
+	if(baseElement->objectName() == "hi-class")
 	{
+		HardwareInterface *hi = static_cast<HardwareInterface*>(baseElement);
 		emit needLabelChangedHi(hi, pluginInterface->getName(), label);
+	
 	}
 }
 

@@ -70,7 +70,7 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };
-	QRectF boundingRect() const;
+	//QRectF boundingRect() const;
 	
 protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

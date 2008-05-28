@@ -26,6 +26,7 @@ CollisionDomain::CollisionDomain(QString newName)
 	: QObject()
 {
 	name = newName;
+	setObjectName("cd-class");	//for downcasting operations
 }
 
 /**
