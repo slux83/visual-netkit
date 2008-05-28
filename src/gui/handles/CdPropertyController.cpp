@@ -162,6 +162,8 @@ bool CdPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		//TODO: send this field to plugins's proxy		
 	}
 	
+	if (ok)
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Collision domain property saved"));
 	return ok;
 }
 
