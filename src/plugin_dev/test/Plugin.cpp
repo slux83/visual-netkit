@@ -127,6 +127,8 @@ bool Plugin::saveProperty(QString propName, QString propValue, QString *pluginAl
 	qDebug() << "Plugin test" << "propName:" << propName << "propValue:" << propValue
 			<< "alert:" << pluginAlertMsg;
 	
+	myProxy->changeGraphicsLabel(propValue);
+	
 	return true;
 }
 

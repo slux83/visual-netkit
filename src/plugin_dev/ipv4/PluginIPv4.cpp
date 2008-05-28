@@ -156,10 +156,7 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 	{
 		PluginProperty *prop = properties.value(propName);
 		prop->setValue(propValue);
-		
-		if (propName == "address" || propName == "netmask")
-			if (myProxy != NULL)
-				myProxy->changeGraphicsLabel(propName + ":" + propValue);
+		refreshLabel();
 		
 		return true;
 	} 
@@ -173,12 +170,13 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 			if(!NetworkAddress::validateIp(propValue))
 			{
 				/* set a warning message */
-				pluginAlertMsg->append("Invalid network address");
+				pluginAlertMsg->append("Invalid IP address");
 			}
 			else 
 			{
 				PluginProperty *prop = properties.value(propName);
 				prop->setValue(propValue);
+				refreshLabel();
 				return true;
 			}
 		}
@@ -205,6 +203,7 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 				{
 					PluginProperty *prop = properties.value(propName);
 					prop->setValue(propValue);
+					refreshLabel();
 					return true;
 				}
 			}
@@ -220,6 +219,7 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 				{
 					PluginProperty *prop = properties.value(propName);
 					prop->setValue(propValue);
+					refreshLabel();
 					return true;
 				}	
 			}
@@ -243,3 +243,14 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 		return false;
 	}
 }
+
+/**
+ * [PRIVATE]
+ * Refresh the scene label if netmask or ip are changed
+ */
+void PluginIPv4::refreshLabel()
+{
+	myProxy->changeGraphicsLabel(
+			properties["address"]->getValue() + "/" + properties["netmask"]->getValue());
+}
+
