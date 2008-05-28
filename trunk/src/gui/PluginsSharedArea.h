@@ -46,6 +46,7 @@ public:
 	PluginsSharedArea();
 	virtual ~PluginsSharedArea();
 	void changeMyLine(QString pluginName, QString content);
+	QMap<QString, QString> getPluginsArea() { return pluginsArea;};
 };
 
 #endif /*PLUGINSSHAREDAREA_H_*/

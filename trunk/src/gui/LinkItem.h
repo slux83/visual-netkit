@@ -23,6 +23,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsLineItem>
 #include <QMenu>
+#include <QPainterPath>
 
 #include "LabelItemPrivate.h"
 #include "VirtualMachineItem.h"
@@ -69,6 +70,7 @@ public:
 	
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };
+	QRectF boundingRect() const;
 	
 protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
