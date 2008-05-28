@@ -216,6 +216,8 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 							tr(("Plugin Property error: " + *alert + "\n\n" + "Do you want ignore this warning?").toUtf8()),
 							QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 						
+						ok = false;
+						
 						if(userChoice == QMessageBox::Yes)
 						{
 							//ok, store the value and shut up!

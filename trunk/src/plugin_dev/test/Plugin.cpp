@@ -124,13 +124,9 @@ bool Plugin::fetchProperties()
  */
 bool Plugin::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
-	if (pluginAlertMsg == NULL)
-	{
-		return true;
-	} else {
-		//TODO check for pluginAlertMsg meaning and what to do next
-		pluginAlertMsg = new QString("TODO: check for pluginAlertMsg meaning and what to do next");
-		return false;
-	}
+	qDebug() << "Plugin test" << "propName:" << propName << "propValue:" << propValue
+			<< "alert:" << pluginAlertMsg;
+	
+	return true;
 }
 
