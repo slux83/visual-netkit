@@ -138,7 +138,7 @@ bool PluginIPv4::fetchProperties()
 /**
  * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-bool PluginIPv4::initProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
 	// se non esiste una property di nome propName
 	if (!properties.contains(propName))
@@ -156,7 +156,6 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 	{
 		PluginProperty *prop = properties.value(propName);
 		prop->setValue(propValue);
-		qDebug() << "PluginIPv4::initProperty: property" << propName << "initialized with value" << propValue;
 		
 		if (propName == "address" || propName == "netmask")
 			if (myProxy != NULL)
@@ -180,7 +179,6 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 			{
 				PluginProperty *prop = properties.value(propName);
 				prop->setValue(propValue);
-				qDebug() << "PluginIPv4::initProperty: property" << propName << "initialized with value" << propValue;
 				return true;
 			}
 		}
@@ -233,8 +231,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 																   QHostAddress(properties.value("netmask")->getValue()));
 			if (bcast != QHostAddress(propValue))
 			{
-				qWarning() << "PluginIPv4::initProperty: generated broadcast address differs from passed value";
-				pluginAlertMsg->append("Generated broadcast address differs from passed value");
+				pluginAlertMsg->append("generated broadcast address differs from passed value");
 			}
 			else 
 			{

@@ -208,7 +208,7 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 				if(p->getPlugin()->getName() == pluginName)
 				{
 					QString *alert = new QString();
-					if(!p->initProperty(propName, item->data(Qt::DisplayRole).toString(), alert))
+					if(!p->saveProperty(propName, item->data(Qt::DisplayRole).toString(), alert))
 					{
 						int userChoice;
 						
@@ -221,7 +221,7 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 						if(userChoice == QMessageBox::Yes)
 						{
 							//ok, store the value and shut up!
-							ok = p->initProperty(propName, item->data(Qt::DisplayRole).toString());
+							ok = p->saveProperty(propName, item->data(Qt::DisplayRole).toString());
 						}	
 					} else {
 						ok = true;

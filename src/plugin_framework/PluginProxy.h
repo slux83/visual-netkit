@@ -44,8 +44,7 @@ public:
 	PluginProxy(PluginRegistry *r);
 	virtual ~PluginProxy();
 
-	bool initProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL);
+	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QMap< QString, PluginProperty* > getPluginProperties();
 	QString getTemplate();
 	QString getTemplateLocation();

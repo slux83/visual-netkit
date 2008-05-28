@@ -46,8 +46,7 @@ private:
 public:
 	PluginIPv4();
 	virtual ~PluginIPv4();
-	bool initProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	bool saveProperty(QTableWidgetItem* property, QString *pluginAlertMsg = NULL) { return false; };
+	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QSettings* getMySettings() { return mySettings; };
 	QString getTemplateLocation();
 	QString getTemplate();
