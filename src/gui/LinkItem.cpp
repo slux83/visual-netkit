@@ -199,7 +199,7 @@ void LinkItem::managePluginsActionCalled()
  * [REIMPL]
  * Returns the shape of this item as a QPainterPath in local coordinates.
  */
-QRectF LinkItem::boundingRect() const
+/*QRectF LinkItem::boundingRect() const
 {
 	QPainterPath path;
 	QRectF rect;
@@ -221,12 +221,15 @@ QRectF LinkItem::boundingRect() const
 	//QRectF base_rect(myLabel->shape().boundingRect());
 	
 	//adds a QRectF with height as n*base_rect.height
+	 */
 	/*path.addRect(myLabel->shape().boundingRect().x(),
 				 myLabel->shape().boundingRect().y(), 
 				 base_rect.width(), 
 				 base_rect.height() * pluginsSharedArea->getPluginsArea().size());
 	*/
+/*
 	rect = path.boundingRect();
 	
 	return rect;
 }
+*/
