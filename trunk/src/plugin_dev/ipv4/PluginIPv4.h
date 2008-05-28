@@ -42,6 +42,7 @@ private:
 	QString myName;
 
 	bool fetchProperties();
+	void refreshLabel();
 	
 public:
 	PluginIPv4();

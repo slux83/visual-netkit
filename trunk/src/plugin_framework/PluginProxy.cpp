@@ -45,6 +45,7 @@ PluginProxy::~PluginProxy()
 void PluginProxy::changeGraphicsLabel(QString label)
 {
 	QObject* baseElement = getBaseElement();
+	qDebug() << baseElement->objectName();
 	if(baseElement == NULL)
 	{
 		qWarning() << "PluginProxy::changeGraphicsLabel -> base element is NULL";
