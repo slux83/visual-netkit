@@ -66,6 +66,9 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 		QString pluginName = l.first();
 		QString propName = l.last();
 		
+		int ret = 0;
+		qDebug() << "retvalue out:" << ret;
+		
 		// per ogni plugin nella lista "pluginsToManage"
 		for (int j=0; j < pluginsToManage.size(); j++) 
 		{
@@ -73,9 +76,6 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 			{
 				QString *altMsg = new QString();
 				bool allok = pluginsToManage.at(j)->initProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
-				
-				int ret = 0;
-				qDebug() << "retvalue out:" << ret;
 				
 				// some warning or error returned by initProperty function
 				if (!allok && (ret==0 || !ret==QMessageBox::YesToAll))
@@ -93,7 +93,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 						QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No,
 						QMessageBox::Yes);
 					
-					qDebug() << "retvalue in:" << ret;
+					qDebug() << "retvalue in:" << ret << "QMessageBox::YesToAll:" << QMessageBox::YesToAll;
 					
 					// se l'utente sceglie di continuare rifaccio la stessa chiamata al plugin 
 					// ma senza passargli il QString di altMsg in questo modo il plugin dovra' 
@@ -118,6 +118,11 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 						qDebug() << "QMessageBox::No";
 						break;
 					}
+				}
+				else
+				{
+					qDebug() << "Empty value set for property "+propName+" in plugin "+pluginName;
+					close();
 				}
 				
 				//pulisco la stringa d'errore
