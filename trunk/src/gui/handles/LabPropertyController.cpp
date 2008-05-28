@@ -99,7 +99,8 @@ bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
 			returnVal = true;
 			break;
 	}
-	
+
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Lab property saved"));
 	return returnVal;
 }
 

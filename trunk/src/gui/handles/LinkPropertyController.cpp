@@ -40,7 +40,6 @@ LinkPropertyController::~LinkPropertyController()
 {
 }
 
-
 /**
  * Render lab properties inside property dock
  */
@@ -145,7 +144,6 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 			//Restore the value, and alert the user
 			item->setData(Qt::DisplayRole, hi->getName());
 			ok = false;
-			
 		}
 		
 		if(ok && LinkHandler::getInstance()->hiNameExist(hi, itemValue) && itemValue != hi->getName())
@@ -197,15 +195,13 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		QRegExp pluginPropValidator("(.+)" + SEPARATOR + "(.+)");
 		if(pluginPropValidator.exactMatch(item->data(Qt::UserRole).toString()) ||
 				item->data(Qt::UserRole).toString().split(SEPARATOR).size() != 2)
-			
-		{
-			
+		{	
 			QString pluginName = item->data(Qt::UserRole).toString().split(SEPARATOR)[0];
 			QString propName = item->data(Qt::UserRole).toString().split(SEPARATOR)[1];
 			
 			QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getHiProxies(hi));
 			
-			/* Seach the plugin to send che change */
+			/* Seach the plugin to send the change */
 			while(i.hasNext())
 			{
 				PluginProxy *p = i.next();
@@ -223,10 +219,11 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 						if(userChoice == QMessageBox::Yes)
 						{
 							//ok, store the value and shut up!
-							p->initProperty(propName, item->data(Qt::DisplayRole).toString());
+							ok = p->initProperty(propName, item->data(Qt::DisplayRole).toString());
 						}	
+					} else {
+						ok = true;
 					}
-					
 					delete alert;
 					break;
 				}
@@ -237,5 +234,7 @@ bool LinkPropertyController::saveChangedProperty(QTableWidgetItem *item)
 			qWarning() << "Unknown property user role:" << item->data(Qt::UserRole).toString();
 	}
 	
+	if (ok)
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Link property saved"));
 	return ok;
 }

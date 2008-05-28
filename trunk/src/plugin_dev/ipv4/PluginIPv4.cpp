@@ -171,7 +171,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 		if (propName == "address") 
 		{
 			/* Check the network */
-			if(!NetworkAddress::validateIp(propName))
+			if(!NetworkAddress::validateIp(propValue))
 			{
 				/* set a warning message */
 				pluginAlertMsg->append("Invalid network address");
@@ -180,6 +180,7 @@ bool PluginIPv4::initProperty(QString propName, QString propValue, QString *plug
 			{
 				PluginProperty *prop = properties.value(propName);
 				prop->setValue(propValue);
+				qDebug() << "PluginIPv4::initProperty: property" << propName << "initialized with value" << propValue;
 				return true;
 			}
 		}

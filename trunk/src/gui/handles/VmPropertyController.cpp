@@ -168,6 +168,8 @@ bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
 		//TODO: send this field to plugins's proxy		
 	}
 	
+	if (ok)
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Virtual machine property saved"));
 	return ok;
 }
 
