@@ -44,7 +44,7 @@ private:
 	UndoStack *undoStack;
 	LabPropertyController *propertyController;
 	
-	void addPathToNode(QStringList path, QTreeWidgetItem *node);
+	void addPathToNode(QStringList path, QTreeWidgetItem *node, QString fullPath);
 	QMap<QString, QTreeWidgetItem*> findItems(QString nodeName, QTreeWidget *node);
 	
 public:

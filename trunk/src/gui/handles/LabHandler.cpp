@@ -275,14 +275,14 @@ void LabHandler::addPathToTree(QString path)
 	{
 		QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
 		QStringList pathNodes = path.split("/");
-		addPathToNode(pathNodes, root);
+		addPathToNode(pathNodes, root, path);
 	}
 }
 
 /**
  * Recursively adds a path (as a tree) to the passed node.
  */
-void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
+void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString fullPath)
 {
 	// if the path is not empty and the passed tree in not null
 	if (path.size()>0 && node!=NULL)
@@ -298,11 +298,9 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 			// if the path has only one node
 			if (path.size()==1) 
 			{
-				qDebug() << "path: " << path;
-				qDebug() << "path.first: " << path.first();
 				elem->setData(0, Qt::DisplayRole, path.first());
 				elem->setData(0, Qt::UserRole, "config_file");		//type
-				elem->setData(0, Qt::UserRole + 1, path.first());	//path
+				elem->setData(0, Qt::UserRole + 1, fullPath);		//path
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 
 				// adds the new node to the current node
@@ -313,7 +311,7 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 			// else
 			else
 			{	
-				elem->setData(0, Qt::DisplayRole, path);
+				elem->setData(0, Qt::DisplayRole, path.first());
 				elem->setData(0, Qt::UserRole, "vm_element");
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
 				
@@ -324,28 +322,22 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 				node->addChild(elem);
 				
 				if (!path.isEmpty())
-					addPathToNode(path, elem);
+					addPathToNode(path, elem, fullPath);
 			}
 		}
 		// if the node is among the children of the current node
 		else if (childs.size() == 1)
 		{
-			qDebug() << "il nodo è tra i figli di: " << node->text(0);
 			// apply recursion to path (without first node)
 			// and the current child node
-			QString currNode = path.first();
-			path.removeFirst();
+			QString currNode = path.takeFirst();
 			if (!path.isEmpty())
-				addPathToNode(path, childs.value(currNode));
+				addPathToNode(path, childs.value(currNode), fullPath);
 		}
 		else 
 		{
-			qWarning() << "LabHandler::addPathToNode: nodo replicato nel labTree (" << path.first() << ")";
+			qWarning() << "LabHandler::addPathToNode: replicated node inside labTree (" << path.first() << ")";
 		}
-	}
-	else 
-	{
-		qWarning() << "LabHandler::addPathtoNode: empty QStringList path or null QWidgetItem node";
 	}
 }
 
