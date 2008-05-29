@@ -316,7 +316,8 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 					elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
 					
 					// applico la ricorsione con path senza primo nodo
-					addPathToNode(path.removeFirst(), elem);
+					path.removeFirst();
+					addPathToNode(path, elem);
 
 					// aggiungo il nuovo nodo al nodo corrente
 					node->addChild(elem);
@@ -327,7 +328,8 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 			{
 				// applico la ricorsione con path senza primo nodo
 				// passando come nodo corrente il nodo figlio corrente
-				addPathToNode(path.removeFirst(), node->child(c));
+				path.removeFirst();
+				addPathToNode(path, node->child(c));
 			}
 		}
 	}
