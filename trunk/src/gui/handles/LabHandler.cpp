@@ -175,7 +175,7 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	
 	startupConf->setData(0, Qt::DisplayRole, QString(m->getName() + ".startup"));
 	startupConf->setData(0, Qt::UserRole, "config_file");		//type
-	startupConf->setData(0, Qt::UserRole +1 , QString(m->getName() + ".startup"));	//path
+	startupConf->setData(0, Qt::UserRole + 1, QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	
 	QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
@@ -261,4 +261,78 @@ bool LabHandler::getLabState()
 		return false;
 	
 	return LabFacadeController::getInstance()->getCurrentLab()->getSaveState();
+}
+
+/**
+ * [SLOT]
+ * Adds path to the tree.
+ * If a node in the path is in the tree, it is not replaced but the rest of the path is 
+ * appended as a child.
+ */
+void LabHandler::addPathToTree(QString path)
+{
+	// se path non è vuoto
+	if (!path.isEmpty())
+	{
+		QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
+		QStringList pathNodes = path.split("/");
+		addPathToNode(pathNodes, root);
+	}
+}
+
+/**
+ * Recursively try to add a path (as a tree) to the passed node.
+ */
+void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
+{
+	if (path.size()>0 && node!=NULL)
+	{
+		// per ogni figlio del nodo corrente
+		for (int c=0; c<node->childCount(); c++)
+		{
+			// se il nodo non è presente tra i figli del nodo corrente
+			if (path.first() != node->child(c)->text(0))
+			{
+				QTreeWidgetItem *elem = new QTreeWidgetItem();
+				
+				// se il path è di un solo elemento lo aggiungo come foglia
+				if (path.size()==1) 
+				{
+					elem->setData(0, Qt::DisplayRole, path.first());
+					elem->setData(0, Qt::UserRole, "config_file");		//type
+					elem->setData(0, Qt::UserRole + 1, path.first());	//path
+					elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+
+					// aggiungo il nuovo nodo al nodo corrente
+					node->addChild(elem);
+
+					return;
+				}
+				// altrimenti
+				else
+				{	
+					elem->setData(0, Qt::DisplayRole, path.first());
+					elem->setData(0, Qt::UserRole, "vm_element");
+					elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
+					
+					// applico la ricorsione con path senza primo nodo
+					addPathToNode(path.removeFirst(), elem);
+
+					// aggiungo il nuovo nodo al nodo corrente
+					node->addChild(elem);
+				}
+			}
+			// se il nodo è presente tra i figli del nodo corrente
+			else
+			{
+				// applico la ricorsione con path senza primo nodo
+				// passando come nodo corrente il nodo figlio corrente
+				addPathToNode(path.removeFirst(), node->child(c));
+			}
+		}
+	}
+	else 
+	{
+		qWarning() << "LabHandler::addPathtoNode: empty QStringList path or null QWidgetItem node";
+	}
 }

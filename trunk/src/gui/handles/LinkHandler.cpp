@@ -100,7 +100,10 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	{
 		PluginProxy* proxy;
 		if((proxy = registry->registerPlugin(iter.next(), interface)) != NULL)
-			linkPlugins.append(proxy);	
+		{
+			linkPlugins.append(proxy);
+			LabHandler::getInstance()->addPathToTree(proxy->getTemplateLocation());
+		}
 	}
 	
 	/* the undo command (redo) can accomplish the action */
