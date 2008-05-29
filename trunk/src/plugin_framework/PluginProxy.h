@@ -60,6 +60,7 @@ public:
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);
 	void needLabelChangedHi(HardwareInterface *hi, QString pluginName, QString label);
+	void needLabelChangedCd(CollisionDomain *cd, QString pluginName, QString label);
 };
 
 #endif /*PLUGINPROXY_H_*/

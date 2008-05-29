@@ -19,6 +19,7 @@
 #include "PluginLoaderFactory.h"
 #include "../gui/handles/VmMapper.h"
 #include "../gui/handles/LinkMapper.h"
+#include "../gui/handles/CdMapper.h"
 #include "PluginRegistry.h"
 
 /**
@@ -60,6 +61,11 @@ PluginProxy * PluginLoaderFactory::createPlugin()
 			SIGNAL(needLabelChangedHi(HardwareInterface*, QString, QString)),
 			LinkMapper::getInstance(),
 			SLOT(changeGraphicsLabelHi(HardwareInterface*, QString, QString)));
+	
+	connect(p->getProxy(),
+			SIGNAL(needLabelChangedCd(CollisionDomain*, QString, QString)),
+			CdMapper::getInstance(),
+			SLOT(changeGraphicsLabelCd(CollisionDomain*, QString, QString)));
 		
 	return p->getProxy();
 }

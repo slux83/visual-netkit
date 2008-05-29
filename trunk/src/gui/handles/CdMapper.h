@@ -54,7 +54,7 @@ public:
 	void ensureAllItemsAreJoined();
 
 public slots:
-	void changeGraphicsLabel(CollisionDomain *cd, QString pluginName, QString label);
+	void changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QString label);
 
 };
 
