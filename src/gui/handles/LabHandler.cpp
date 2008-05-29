@@ -270,7 +270,7 @@ bool LabHandler::getLabState()
  */
 void LabHandler::addPathToTree(QString path)
 {
-	// se path non è vuoto
+	// if path is not empty
 	if (!path.isEmpty())
 	{
 		QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
@@ -280,89 +280,68 @@ void LabHandler::addPathToTree(QString path)
 }
 
 /**
- * Recursively try to add a path (as a tree) to the passed node.
+ * Recursively adds a path (as a tree) to the passed node.
  */
 void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 {
+	// if the path is not empty and the passed tree in not null
 	if (path.size()>0 && node!=NULL)
 	{
-		// per ogni figlio del nodo corrente
-		//for (int c=0; c<node->childCount(); c++)
-		//{
-			mainWindow->labTree->setCurrentItem(node, 0);
-			qDebug() << "nodo corrente settato: " << node->text(0);
-			qDebug() << "'--> n° figli:" << node->childCount();
+		mainWindow->labTree->setCurrentItem(node, 0);
+		
+		// if the node is among the children of current node
+		QMap<QString, QTreeWidgetItem*> childs = findItems(path.first(), mainWindow->labTree);
+		if (childs.size() <= 0)
+		{
+			QTreeWidgetItem *elem = new QTreeWidgetItem();
 			
-			qDebug() << "labtree currentItem --- " << mainWindow->labTree->currentItem()->text(0);
-			qDebug() << "'--> n° figli:" << mainWindow->labTree->currentItem()->childCount();
-			
-			// se il nodo non è presente tra i figli del nodo corrente
-			QMap<QString, QTreeWidgetItem*> childs = findItems(path.first(), mainWindow->labTree);
-			qDebug() << "(figli con nome" << path.first() << ":" << childs << ")";
-			
-			if (childs.size() <= 0)
+			// if the path has only one node
+			if (path.size()==1) 
 			{
-				qDebug() << "nodo" << path.first() << "non presente tra i figli di " << node->text(0);
-				
-				QTreeWidgetItem *elem = new QTreeWidgetItem();
-				
-				// se il path è di un solo elemento lo aggiungo come foglia
-				if (path.size()==1) 
-				{
-					qDebug() << "path: " << path;
-					qDebug() << "path.first: " << path.first();
-					elem->setData(0, Qt::DisplayRole, path.first());
-					elem->setData(0, Qt::UserRole, "config_file");		//type
-					elem->setData(0, Qt::UserRole + 1, path.first());	//path
-					elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+				qDebug() << "path: " << path;
+				qDebug() << "path.first: " << path.first();
+				elem->setData(0, Qt::DisplayRole, path.first());
+				elem->setData(0, Qt::UserRole, "config_file");		//type
+				elem->setData(0, Qt::UserRole + 1, path.first());	//path
+				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 
-					// aggiungo il nuovo nodo al nodo corrente
-					node->addChild(elem);
+				// adds the new node to the current node
+				node->addChild(elem);
 
-					return;
-				}
-				// altrimenti
-				else
-				{	
-					elem->setData(0, Qt::DisplayRole, path.first());
-					elem->setData(0, Qt::UserRole, "vm_element");
-					elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
-					
-					qDebug() << "path: " << path;
-					
-					// applico la ricorsione con path senza primo nodo
-					path.removeFirst();
-					qDebug() << "path - first: " << path;
-					
-					// aggiungo il nuovo nodo al nodo corrente
-					node->addChild(elem);
-					qDebug() << "nodo corrente: " << node->text(0);
-					
-					if (!path.isEmpty())
-					{
-						qDebug() << "ricorsione con: path=" << path << "  elem=" << elem->text(0);
-						addPathToNode(path, elem);
-					}
-				}
+				return;
 			}
-			// se il nodo è presente tra i figli del nodo corrente
-			else if (childs.size() == 1)
-			{
-				qDebug() << "il nodo è tra i figli di: " << node->text(0);
-				// applico la ricorsione con path senza primo nodo
-				// passando come nodo corrente il nodo figlio corrente
+			// else
+			else
+			{	
+				elem->setData(0, Qt::DisplayRole, path);
+				elem->setData(0, Qt::UserRole, "vm_element");
+				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
+				
+				// apply recursion to the path (without first element)
 				path.removeFirst();
+				
+				// adds the new node to the current node
+				node->addChild(elem);
+				
 				if (!path.isEmpty())
-				{
-					qDebug() << "ricorsione con: path=" << path << "  elem=" << childs.value(path.first());
-					addPathToNode(path, childs.value(path.first()));
-				}
+					addPathToNode(path, elem);
 			}
-			else 
-			{
-				qWarning() << "LabHandler::addPathToNode: nodo replicato nel labTree (" << path.first() << ")";
-			}
-		//}
+		}
+		// if the node is among the children of the current node
+		else if (childs.size() == 1)
+		{
+			qDebug() << "il nodo è tra i figli di: " << node->text(0);
+			// apply recursion to path (without first node)
+			// and the current child node
+			QString currNode = path.first();
+			path.removeFirst();
+			if (!path.isEmpty())
+				addPathToNode(path, childs.value(currNode));
+		}
+		else 
+		{
+			qWarning() << "LabHandler::addPathToNode: nodo replicato nel labTree (" << path.first() << ")";
+		}
 	}
 	else 
 	{
@@ -370,21 +349,21 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node)
 	}
 }
 
-QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWidget *node)
+/**
+ * Finds and returns all the children nodes in the passed tree whose name is nodeName
+ */
+QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWidget *tree)
 {
 	QMap<QString, QTreeWidgetItem*> map;
-	QTreeWidgetItem *curr = node->currentItem();
+	QTreeWidgetItem *curr = tree->currentItem();
 	
-	//qDebug() << "---- LabHandler::findItems ----";
-	
-	// scorro tutti i figli del nodo passato
+	// visit all children for the passed node
 	for (int i=0; i<curr->childCount(); i++) 
 	{
-		//qDebug() << "nodeName:" << nodeName << "curr->text(0)" << curr->child(i)->text(0);
-		//se uno dei figli ha lo stesso nome del nodo tester nodeName
+		// if a child has the same name as the tester node "nodeName
 		if (nodeName == curr->child(i)->text(0))
 		{
-			// lo aggiungo alla mappa
+			// adds it to the map
 			map.insert(curr->child(i)->text(0), curr->child(i));
 		}
 	}
