@@ -75,13 +75,15 @@ void AddVmForm::handleAcceptedSignal()
 {
 	bool allCorrect = true;
 	QString newVmName = vmName->text();
+	QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
+	int pos = 0;
 	
-	/* Empty name? */
-	if(newVmName.trimmed() == "")
+	/* validate name */
+	if(nameValidator.validate(newVmName, pos) != QValidator::Acceptable)
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
-				tr("The virtual machine name cannot be empty!"),
+				tr("The virtual machine name must match ^[a-zA-Z0-9]+$"),
 				QMessageBox::Ok);
 		
 		allCorrect = false;

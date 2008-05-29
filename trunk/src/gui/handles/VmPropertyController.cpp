@@ -125,12 +125,14 @@ bool VmPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	/* This field is mine? */
 	if(item->data(Qt::UserRole).toString() == VM_NAME)
 	{
+		QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
+		int pos = 0;
 		
-		/* Some checks */
-		if(ok && itemValue == "")
+		/* validate name */
+		if(ok && nameValidator.validate(itemValue, pos) != QValidator::Acceptable)
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The Virtual machine name must be not empty!"),
+	                   tr("The Virtual machine name must match ^[a-zA-Z0-9]+$"),
 	                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user

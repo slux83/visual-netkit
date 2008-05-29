@@ -124,12 +124,15 @@ bool CdPropertyController::saveChangedProperty(QTableWidgetItem *item)
 	if(item->data(Qt::UserRole).toString() == CD_NAME)
 	{
 		
-		/* Some checks */
-		if(ok && itemValue == "")
+		QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
+		int pos = 0;
+		
+		/* validate name */
+		if(ok && nameValidator.validate(itemValue, pos) != QValidator::Acceptable)
 		{
 			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	                   tr("The collision domain name must be not empty!"),
-	                   QMessageBox::Ok);
+                   tr("The collision domain name must match ^[a-zA-Z0-9]+$"),
+                   QMessageBox::Ok);
 			
 			//Restore the value, and alert the user
 			item->setData(Qt::DisplayRole, cd->getName());
