@@ -51,7 +51,7 @@ compile()
 			cd "$plugin"
 			`$QMAKE` || echo "### ERROR: Failed to build the plugin $plugin (qmake)"
 			
-			make || echo "### ERROR: Failed to build the plugin $plugin"
+			make || exit 1
 						
 			cd "$VN_HOME"
 		else
@@ -67,7 +67,7 @@ compile()
 	echo
 
 	`$QMAKE` || echo "### ERROR: Failed to build visual netkit (qmake)"
-	make || echo "### ERROR: Failed to build visual netkit"
+	make || exit 1
 	
 	echo
 	echo ">>> STARTING ./bin/VisualNetkit <<<"
