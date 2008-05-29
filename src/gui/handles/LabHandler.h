@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QStringList>
+#include <QTreeWidgetItem>
 #include "LabPropertyController.h"
 #include "SceneTreeMapper.h"
 #include "../../core/handles/LabFacadeController.h"
@@ -43,6 +44,8 @@ private:
 	UndoStack *undoStack;
 	LabPropertyController *propertyController;
 	
+	void addPathToNode(QStringList path, QTreeWidgetItem *node);
+	
 public:
 	LabHandler();
 	virtual ~LabHandler();
@@ -61,6 +64,7 @@ public slots:
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
 	void saveChangedProperty(int row, int column);
+	void addPathToTree(QString path);
 
 signals:
 	void logEvent(QString message);
