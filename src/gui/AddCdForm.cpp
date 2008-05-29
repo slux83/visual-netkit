@@ -73,15 +73,15 @@ void AddCdForm::handleUserConfirm()
 {
 	QString cdName = cdNameLineEdit->text();
 	bool ok = true;
+	QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
+	int pos = 0;
 	
-	/*
-	 * Checks on cd name
-	 */
-	if(ok && cdName.trimmed() == "")
+	/* validate name */
+	if(nameValidator.validate(cdName, pos) != QValidator::Acceptable)
 	{
 		/* Show a warning message */
 		QMessageBox::warning(this, tr("VisualNetkit - Error"),
-				tr("The collision domain name cannot be empty!"),
+				tr("The collision domain name must match ^[a-zA-Z0-9]+$"),
 				QMessageBox::Ok);
 		
 		ok = false;
