@@ -223,6 +223,7 @@ void CollisionDomainItem::setPluginLine(QString pluginName, QString content)
  */
 void CollisionDomainItem::managePluginsActionCalled()
 {
+	pluginsManager->buildGui();
 	pluginsManager->show();
 }
 

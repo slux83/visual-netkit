@@ -113,6 +113,7 @@ void AddCdForm::handleUserConfirm()
 	}
 	
 }
+
 /**
  * [PRIVATE]
  * fill the plugin chooser with a list of checkboxs
