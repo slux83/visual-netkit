@@ -93,10 +93,7 @@ void CdHandler::handleAddNewCd(QString cdName, QStringList selectedPlugins,
 	{
 		PluginProxy* proxy;
 		if((proxy = registry->registerPlugin(iter.next(), cd)) != NULL)
-		{
 			cdPlugins.append(proxy);
-			LabHandler::getInstance()->addPathToTree(proxy->getTemplateLocation());
-		}
 	}
 	
 	labFacadeController->getCurrentLab()->addCollisionDomain(cd);

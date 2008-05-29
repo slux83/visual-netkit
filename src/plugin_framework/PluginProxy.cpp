@@ -76,7 +76,7 @@ void PluginProxy::changeGraphicsLabel(QString label)
 /**
  * Show the default label inside "my" graphics element, if any
  */
-void PluginProxy::showDefaultGrophicsLabel()
+void PluginProxy::showDefaultGraphicsLabel()
 {
 	QString label = pluginInterface->getDefaultGraphisLabel();
 	if(!label.isEmpty())

@@ -94,14 +94,13 @@ QString PluginIPv4::getTemplate()
  */
 QString PluginIPv4::getTemplateLocation()
 {
-	HardwareInterface *hi = dynamic_cast<HardwareInterface*>(myProxy->getBaseElement());
+	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 	if (hi == NULL)
 	{
 		qWarning() << "PluginIPv4::getTemplateLocation(): null hardware interface name.";
 		return QString();
 	}
 	QString vm = hi->getMyVirtualMachine()->getName();
-	
 	return QString(vm+".startup");
 }
 

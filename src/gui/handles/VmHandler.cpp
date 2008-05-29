@@ -95,10 +95,7 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
 	{
 		PluginProxy* proxy;
 		if((proxy = registry->registerPlugin(iter.next(), vm)) != NULL)
-		{
 			vmPlugins.append(proxy);
-			LabHandler::getInstance()->addPathToTree(proxy->getTemplateLocation());
-		}
 	}
 	
 	labFacadeController->getCurrentLab()->addMachine(vm);

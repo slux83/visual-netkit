@@ -48,7 +48,11 @@ void AddVmCommand::redo()
 	//call default label for plugins
 	QListIterator<PluginProxy *> i(plugins);
 	while(i.hasNext())
-		i.next()->showDefaultGrophicsLabel();
+	{
+		PluginProxy *p = i.next();
+		p->showDefaultGraphicsLabel();
+		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+	}
 }
 
 /**
@@ -91,7 +95,11 @@ void AddCdCommand::redo()
 	//call default label for plugins
 	QListIterator<PluginProxy *> i(plugins);
 	while(i.hasNext())
-		i.next()->showDefaultGrophicsLabel();
+	{
+		PluginProxy *p = i.next();
+		p->showDefaultGraphicsLabel();
+		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+	}
 }
 
 /**
@@ -141,7 +149,11 @@ void AddLinkCommand::redo()
 	//call default label for plugins
 	QListIterator<PluginProxy *> i(plugins);
 	while(i.hasNext())
-		i.next()->showDefaultGrophicsLabel();
+	{
+		PluginProxy *p = i.next();
+		p->showDefaultGraphicsLabel();
+		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+	}
 }
 
 /**
