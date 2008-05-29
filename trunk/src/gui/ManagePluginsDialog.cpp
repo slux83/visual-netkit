@@ -52,26 +52,28 @@ ManagePluginsDialog::~ManagePluginsDialog()
  */
 void ManagePluginsDialog::buildGui()
 {
+	clearPluginsList();
+	
 	QString pluginType;
 	QList<PluginProxy*> usedPlugins;
 	PluginRegistry *registry = PluginRegistry::getInstance();
 	
 	/* Downcasting */
-	VirtualMachineItem *vmItem = static_cast<VirtualMachineItem*>(baseElement);
+	VirtualMachineItem *vmItem = dynamic_cast<VirtualMachineItem*>(baseElement);
 	if(vmItem != NULL)
 	{
 		pluginType = "vm";
 		usedPlugins = registry->getVmProxies(VmMapper::getInstance()->getVm(vmItem));
 	}
 	
-	CollisionDomainItem *cdItem = static_cast<CollisionDomainItem*>(baseElement);
+	CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(baseElement);
 	if(cdItem != NULL)
 	{
 		pluginType = "cd";
 		usedPlugins = registry->getCdProxies(CdMapper::getInstance()->getCD(cdItem));
 	}
 	
-	LinkItem *linkItem = static_cast<LinkItem*>(baseElement);
+	LinkItem *linkItem = dynamic_cast<LinkItem*>(baseElement);
 	if(linkItem != NULL)
 	{
 		pluginType = "link";
@@ -92,7 +94,7 @@ void ManagePluginsDialog::buildGui()
 	while(it.hasNext())
 	{
 		PluginLoaderFactory *factory = it.next();
-		
+
 		if(factory->getType() != pluginType)
 			continue;
 		
@@ -131,5 +133,19 @@ void ManagePluginsDialog::showPluginInfos(QListWidgetItem *item)
 			
 			break;
 		}
+	}
+}
+
+/**
+ * [PRIVATE]
+ * Clear all q tree widget items
+ */
+void ManagePluginsDialog::clearPluginsList()
+{
+	for(int i=0; i<pluginsList->count(); i++)
+	{
+		QListWidgetItem *item = pluginsList->takeItem(i);
+		if(item != NULL)
+			delete item;
 	}
 }

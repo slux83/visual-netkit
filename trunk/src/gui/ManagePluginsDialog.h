@@ -35,6 +35,7 @@ class ManagePluginsDialog : public QDialog, public Ui::ManagePluginsGui
 private:
 	QGraphicsItemGroup *baseElement;
 	QList<PluginLoaderFactory*> allPlugins;
+	void clearPluginsList();
 
 private slots:
 	void showPluginInfos(QListWidgetItem *);

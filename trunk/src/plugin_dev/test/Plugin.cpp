@@ -78,7 +78,7 @@ QString Plugin::getTemplate()
  */
 QString Plugin::getTemplateLocation()
 {
-	VirtualMachine *vm = dynamic_cast<VirtualMachine*>(myProxy->getBaseElement());
+	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
 	if (vm == NULL)
 	{
 		qWarning() << "Plugin::getTemplateLocation(): null VirtualMachine name.";
