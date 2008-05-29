@@ -45,6 +45,7 @@ private:
 	LabPropertyController *propertyController;
 	
 	void addPathToNode(QStringList path, QTreeWidgetItem *node);
+	QMap<QString, QTreeWidgetItem*> findItems(QString nodeName, QTreeWidget *node);
 	
 public:
 	LabHandler();
