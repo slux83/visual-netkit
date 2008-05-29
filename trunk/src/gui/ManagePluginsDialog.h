@@ -23,18 +23,25 @@
 #include <QWidget>
 #include <QGraphicsItemGroup>
 #include "ui_managePlugins.h"
+class PluginLoaderFactory;
 
 /**
  * With this dialog the user can manage plugins for a base element
  */
 class ManagePluginsDialog : public QDialog, public Ui::ManagePluginsGui
 {
+	Q_OBJECT
+	
 private:
 	QGraphicsItemGroup *baseElement;
-	
+	QList<PluginLoaderFactory*> allPlugins;
+
+private slots:
+	void showPluginInfos(QListWidgetItem *);
 public:
 	ManagePluginsDialog(QGraphicsItemGroup *bElement, QWidget *parent = 0);
 	virtual ~ManagePluginsDialog();
+	void buildGui();
 };
 
 #endif /*MANAGEPLUGINSDIALOG_H_*/

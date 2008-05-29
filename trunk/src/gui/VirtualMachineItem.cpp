@@ -201,5 +201,6 @@ void VirtualMachineItem::setLabelVmName(QString newLabel)
  */
 void VirtualMachineItem::managePluginsActionCalled()
 {
+	pluginsManager->buildGui();
 	pluginsManager->show();
 }

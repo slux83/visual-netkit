@@ -17,6 +17,11 @@
  */
 
 #include "ManagePluginsDialog.h"
+#include "../plugin_framework/PluginLoaderFactory.h"
+#include "../plugin_framework/PluginRegistry.h"
+#include "handles/VmMapper.h"
+#include "handles/LinkMapper.h"
+#include "handles/CdMapper.h"
 
 /**
  * Constructor
@@ -28,6 +33,11 @@ ManagePluginsDialog::ManagePluginsDialog(QGraphicsItemGroup *bElement, QWidget *
 	setupUi(this);
 	
 	baseElement = bElement;
+	allPlugins = PluginRegistry::getInstance()->getAllPluginFactories();
+	
+	/* Connects */
+	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
+		this, SLOT(showPluginInfos(QListWidgetItem *)));
 }
 
 /**
@@ -35,4 +45,91 @@ ManagePluginsDialog::ManagePluginsDialog(QGraphicsItemGroup *bElement, QWidget *
  */
 ManagePluginsDialog::~ManagePluginsDialog()
 {
+}
+
+/**
+ * Build the gui
+ */
+void ManagePluginsDialog::buildGui()
+{
+	QString pluginType;
+	QList<PluginProxy*> usedPlugins;
+	PluginRegistry *registry = PluginRegistry::getInstance();
+	
+	/* Downcasting */
+	VirtualMachineItem *vmItem = static_cast<VirtualMachineItem*>(baseElement);
+	if(vmItem != NULL)
+	{
+		pluginType = "vm";
+		usedPlugins = registry->getVmProxies(VmMapper::getInstance()->getVm(vmItem));
+	}
+	
+	CollisionDomainItem *cdItem = static_cast<CollisionDomainItem*>(baseElement);
+	if(cdItem != NULL)
+	{
+		pluginType = "cd";
+		usedPlugins = registry->getCdProxies(CdMapper::getInstance()->getCD(cdItem));
+	}
+	
+	LinkItem *linkItem = static_cast<LinkItem*>(baseElement);
+	if(linkItem != NULL)
+	{
+		pluginType = "link";
+		usedPlugins = registry->getHiProxies(LinkMapper::getInstance()->getHardwareIterface(linkItem));
+	}
+	
+	/* LIST to MAP for a fast access inside the build loop */
+	QMap<QString, PluginProxy*> usedPluginsMap;
+	QListIterator<PluginProxy*> iter(usedPlugins);
+	while(iter.hasNext())
+	{
+		PluginProxy *p = iter.next();
+		usedPluginsMap.insert(p->getPlugin()->getName(), p);
+	}
+	
+	/* Building */
+	QListIterator<PluginLoaderFactory*> it(allPlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		if(factory->getType() != pluginType)
+			continue;
+		
+		//create entry
+		QListWidgetItem *pluginItem = new QListWidgetItem();
+		pluginItem->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
+		pluginItem->setData(Qt::DisplayRole, factory->getName());	//it's the unique ID
+		pluginItem->setData(Qt::ToolTipRole, tr("Select this plugin to show extra infos."));
+		pluginItem->setCheckState(
+				(usedPluginsMap.contains(factory->getName()))? Qt::Checked : Qt::Unchecked);
+		
+		pluginsList->addItem(pluginItem);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * show the infos of the selected plugin
+ */
+void ManagePluginsDialog::showPluginInfos(QListWidgetItem *item)
+{
+	QString selectedPluginName = item->data(Qt::DisplayRole).toString();
+	QListIterator<PluginLoaderFactory*> it(allPlugins);
+	while(it.hasNext())
+	{
+		PluginLoaderFactory *factory = it.next();
+		
+		if(factory->getName() == selectedPluginName)
+		{
+			/* Render infos */
+			pName->setText(factory->getName());
+			pDescription->setText(factory->getDescription());
+			pDeps->setText(factory->getDeps());
+			pAuthor->setText(factory->getAuthor());
+			pVersion->setText(factory->getVersion());
+			
+			break;
+		}
+	}
 }

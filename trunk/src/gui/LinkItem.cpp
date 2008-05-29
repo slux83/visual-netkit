@@ -192,6 +192,7 @@ void LinkItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
  */
 void LinkItem::managePluginsActionCalled()
 {
+	pluginsManager->buildGui();
 	pluginsManager->show();
 }
 
