@@ -61,8 +61,7 @@ void PluginProxy::changeGraphicsLabel(QString label)
 	if(baseElement->objectName() == "cd-class")
 	{
 		CollisionDomain *cd = static_cast<CollisionDomain*>(baseElement);
-	
-		//CdMapper::getInstance()->changeGraphicsLabel(cd, QString("ipv4 su cd"), pluginInterface->getName());
+		emit needLabelChangedCd(cd, pluginInterface->getName(), label);
 	}
 	
 	if(baseElement->objectName() == "hi-class")

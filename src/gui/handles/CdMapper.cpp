@@ -105,7 +105,7 @@ void CdMapper::ensureAllItemsAreJoined()
 /**
  * Changes the label associated to the pluginName for the CollisionDomainItem associated with cd.
  */
-void CdMapper::changeGraphicsLabel(CollisionDomain *cd, QString pluginName, QString label)
+void CdMapper::changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QString label)
 {
 	CollisionDomainItem *cdi = mappings.key(cd);
 	if (cdi == NULL)
