@@ -73,6 +73,22 @@ MainWindow::~MainWindow()
  */
 void MainWindow::populateViewMenu()
 {
+	/* Add some shortcut */
+	dockLab->toggleViewAction()->setShortcut(QApplication::translate("NetkitMainWindow", "Alt+L", 0, QApplication::UnicodeUTF8));
+	dockLab->setWindowTitle(dockLab->windowTitle() + " [" + dockLab->toggleViewAction()->shortcut().toString() + "]");
+	
+	dockProperty->toggleViewAction()->setShortcut(QApplication::translate("NetkitMainWindow", "Alt+P", 0, QApplication::UnicodeUTF8));
+	dockProperty->setWindowTitle(dockProperty->windowTitle() + " [" + dockProperty->toggleViewAction()->shortcut().toString() + "]");
+
+	dockMiniature->toggleViewAction()->setShortcut(QApplication::translate("NetkitMainWindow", "Alt+M", 0, QApplication::UnicodeUTF8));
+	dockMiniature->setWindowTitle(dockMiniature->windowTitle() + " [" + dockMiniature->toggleViewAction()->shortcut().toString() + "]");
+	
+	dockTreeView->toggleViewAction()->setShortcut(QApplication::translate("NetkitMainWindow", "Alt+E", 0, QApplication::UnicodeUTF8));
+	dockTreeView->setWindowTitle(dockTreeView->windowTitle() + " [" + dockTreeView->toggleViewAction()->shortcut().toString() + "]");
+
+	dockLog->toggleViewAction()->setShortcut(QApplication::translate("NetkitMainWindow", "Alt+G", 0, QApplication::UnicodeUTF8));
+	dockLog->setWindowTitle(dockLog->windowTitle() + " [" + dockLog->toggleViewAction()->shortcut().toString() + "]");
+
 	menuView->addAction(dockLab->toggleViewAction());
 	menuView->addAction(dockProperty->toggleViewAction());
 	menuView->addAction(dockMiniature->toggleViewAction());
