@@ -20,13 +20,13 @@
         <file alias="redo_icon" >menu_icons/redo.png</file>
         <file alias="save_icon" >menu_icons/save.png</file>
         <file alias="save_as_icon" >menu_icons/save_as.png</file>
+        <file alias="selection" >menu_icons/selection.png</file>
         <file alias="tab_close_icon" >menu_icons/tab_close.png</file>
         <file alias="undo_icon" >menu_icons/undo.png</file>
         <file alias="vm_icon" >menu_icons/vm.png</file>
         <file alias="zoom_in_icon" >menu_icons/zoom_in.png</file>
         <file alias="zoom_original_icon" >menu_icons/zoom_original.png</file>
         <file alias="zoom_out_icon" >menu_icons/zoom_out.png</file>
-        <file alias="selection" >menu_icons/selection.png</file>
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>
