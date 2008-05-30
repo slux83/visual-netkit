@@ -56,7 +56,7 @@ void LabHandler::setMainWindow(MainWindow *w)
 }
 
 /**
- * Singletone get instance
+ * Singleton get instance
  */
 LabHandler* LabHandler::getInstance()
 {
