@@ -138,6 +138,15 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds item's label relative position
 				label.setAttribute("x", QString(QByteArray::number(vmlist.at(i)->getLabelItemPrivate()->pos().x())));
 				label.setAttribute("y", QString(QByteArray::number(vmlist.at(i)->getLabelItemPrivate()->pos().y())));
+				
+				
+				//adds item's multiline label
+				QDomElement multilabel = doc->createElement("multilabel");
+				item.appendChild(multilabel);
+				
+				//adds item's multiline label relative position
+				multilabel.setAttribute("x", QString(QByteArray::number(vmlist.at(i)->getPluginsSharedArea()->pos().x())));
+				multilabel.setAttribute("y", QString(QByteArray::number(vmlist.at(i)->getPluginsSharedArea()->pos().y())));
 			}
 		}
 		//==========================================================================
@@ -175,9 +184,18 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				QDomElement label = doc->createElement("label");
 				cd.appendChild(label);
 				
+				
 				//adds collisiondomain's label relative position
 				label.setAttribute("x", QString(QByteArray::number(cdsList.at(i)->getLabelItemPrivate()->pos().x())));
 				label.setAttribute("y", QString(QByteArray::number(cdsList.at(i)->getLabelItemPrivate()->pos().y())));
+				
+				//adds collisiondomain's multiline label
+				QDomElement multilabel = doc->createElement("multilabel");
+				cd.appendChild(multilabel);
+				
+				//adds collisiondomain's multiline label relative position
+				multilabel.setAttribute("x", QString(QByteArray::number(cdsList.at(i)->getPluginsSharedArea()->pos().x())));
+				multilabel.setAttribute("y", QString(QByteArray::number(cdsList.at(i)->getPluginsSharedArea()->pos().y())));
 			}
 		}
 		//==========================================================================	
@@ -218,10 +236,6 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds link's label
 				QDomElement label = doc->createElement("label");
 				link.appendChild(label);
-				
-				//adds link's label relative position
-				label.setAttribute("x", QString(QByteArray::number(linksList.at(i)->getLabelItemPrivate()->pos().x())));
-				label.setAttribute("y", QString(QByteArray::number(linksList.at(i)->getLabelItemPrivate()->pos().y())));
 			}
 		}
 	}
