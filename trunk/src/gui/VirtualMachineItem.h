@@ -66,6 +66,8 @@ public:
 	void setLabelVmName(QString newLabel);
 	LabelItemPrivate* getLabelItemPrivate() { return vmNameLabel; };
 	
+	PluginsSharedArea* getPluginsSharedArea() { return pluginsSharedArea; };
+	
 	/* Reimpl */
 	int type() const { return UserType + VmItem; };
 	

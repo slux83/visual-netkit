@@ -67,6 +67,8 @@ public:
 	void increaseDecreaseLinkCounter(bool increase);
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
 	
+	PluginsSharedArea* getPluginsSharedArea() { return pluginsSharedArea; };
+	
 	/* Reimpl */
 	int type() const { return UserType + CdItem; };
 	
