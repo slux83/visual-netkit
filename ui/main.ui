@@ -590,6 +590,9 @@
    <property name="text" >
     <string>New Lab</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionOpenLab" >
    <property name="icon" >
@@ -597,6 +600,9 @@
    </property>
    <property name="text" >
     <string>Open Lab</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionClearMenu" >
@@ -613,6 +619,9 @@
    </property>
    <property name="text" >
     <string>Save</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSaveAs" >
@@ -633,6 +642,9 @@
    <property name="text" >
     <string>Close Lab</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl+W</string>
+   </property>
   </action>
   <action name="actionQuit" >
    <property name="icon" >
@@ -640,6 +652,9 @@
    </property>
    <property name="text" >
     <string>Quit</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
    </property>
    <property name="menuRole" >
     <enum>QAction::QuitRole</enum>
@@ -655,6 +670,9 @@
    <property name="text" >
     <string>Undo</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionRedo" >
    <property name="enabled" >
@@ -665,6 +683,9 @@
    </property>
    <property name="text" >
     <string>Redo</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
   <action name="actionZoomIn" >
@@ -677,6 +698,9 @@
    <property name="text" >
     <string>Zoom in</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl++</string>
+   </property>
   </action>
   <action name="actionZoomOut" >
    <property name="enabled" >
@@ -688,6 +712,9 @@
    <property name="text" >
     <string>Zoom out</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl+-</string>
+   </property>
   </action>
   <action name="actionZoomOriginal" >
    <property name="enabled" >
@@ -698,6 +725,9 @@
    </property>
    <property name="text" >
     <string>Zoom original</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+0</string>
    </property>
   </action>
   <action name="actionAddVirtualMachine" >
