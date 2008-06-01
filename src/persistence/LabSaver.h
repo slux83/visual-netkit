@@ -35,8 +35,8 @@ private:
 	bool saveVmsConf();
 	bool createFolderSystem();
 	bool saveStartups();
+	bool saveTemplates();
 	QString prepareLabConfText();
-	QString prepareStartupText(VirtualMachine *vm);
 	QString strippedName(const QString &fullFileName);
 
 public:

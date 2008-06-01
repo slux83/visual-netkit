@@ -40,14 +40,14 @@ private:
 	QString myName;
 
 	bool fetchProperties();
+	QString getTemplateLocation();
 	
 public:
 	Plugin();
 	virtual ~Plugin();
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QSettings* getMySettings() { return mySettings; };
-	QString getTemplateLocation();
-	QString getTemplate();
+	QMap<QString, QString> getTemplates();
 	QString getName() { return myName; };
 	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };

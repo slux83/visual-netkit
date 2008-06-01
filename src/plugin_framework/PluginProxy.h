@@ -45,9 +45,8 @@ public:
 	virtual ~PluginProxy();
 
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	QMap< QString, PluginProperty* > getPluginProperties();
-	QString getTemplate();
-	QString getTemplateLocation();
+	QMap<QString, PluginProperty*> getPluginProperties();
+	QMap<QString, QString> getTemplates();
 	QSettings* getPluginSettings();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
 	QObject* getBaseElement();

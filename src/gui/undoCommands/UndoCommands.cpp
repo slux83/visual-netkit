@@ -51,7 +51,14 @@ void AddVmCommand::redo()
 	{
 		PluginProxy *p = i.next();
 		p->showDefaultGraphicsLabel();
-		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+		QList<QString> tplPaths = p->getTemplates().keys();
+		
+		// for each plugin and for each key in the templates map
+		for (int j=0; j<tplPaths.size(); j++)
+		{
+			// adds path to tree
+			LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
+		}
 	}
 }
 
@@ -98,7 +105,14 @@ void AddCdCommand::redo()
 	{
 		PluginProxy *p = i.next();
 		p->showDefaultGraphicsLabel();
-		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+		QList<QString> tplPaths = p->getTemplates().keys();
+		
+		// for each plugin and for each key in the templates map
+		for (int j=0; j<tplPaths.size(); j++)
+		{
+			// adds path to tree
+			LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
+		}
 	}
 }
 
@@ -152,7 +166,13 @@ void AddLinkCommand::redo()
 	{
 		PluginProxy *p = i.next();
 		p->showDefaultGraphicsLabel();
-		LabHandler::getInstance()->addPathToTree(p->getTemplateLocation());
+		QList<QString> tplPaths = p->getTemplates().keys();
+		// for each plugin and for each key in the templates map
+		for (int j=0; j<tplPaths.size(); j++)
+		{
+			// adds path to tree
+			LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
+		}
 	}
 }
 

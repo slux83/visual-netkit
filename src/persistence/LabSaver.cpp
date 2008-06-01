@@ -56,6 +56,8 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (allok && !saveStartups())
 		allok = false;
+	if (allok && !saveTemplates())
+		allok = false;
 	if (allok && !saveVmsConf())
 		allok = false;
 	
@@ -101,7 +103,7 @@ bool LabSaver::saveStartups()
 	bool returnVal = true;
 	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 	
-	/* save all startups */
+	// save all startups template
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
@@ -120,7 +122,7 @@ bool LabSaver::saveStartups()
 		
 		QTextStream out(&startup);
 		QApplication::setOverrideCursor(Qt::WaitCursor);
-		out << prepareStartupText(machineIterator.value());
+		out << TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
 		QApplication::restoreOverrideCursor();
 	}
 	
@@ -128,45 +130,70 @@ bool LabSaver::saveStartups()
 }
 
 /**
- * [PRIVATE]
- * Prepare and return the string representing the startup file for vm
+ * Saves all templates files if any
  */
-QString LabSaver::prepareStartupText(VirtualMachine *vm)
+bool LabSaver::saveTemplates()
 {
-	QString startupText = TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
-	QString ifconfigContent;
+	bool allok = true;
 	
-	/* Reg expressions */
-	QRegExp ifconfigReg("<IFCONFIG>(.+)</IFCONFIG>");
-	QRegExp zebraReg("<ZEBRA>(.+)</ZEBRA>");
+	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 	
-	/* Get the ifconfig line */
-	ifconfigReg.indexIn(startupText);
-	QString ifconfigLine = ifconfigReg.cap(1);
-	
-	/* iterate all interfaces */
-	QListIterator<HardwareInterface*> ethIterator(vm->getInterfaces().values());
-	while(ethIterator.hasNext())
+	// for each virtual machine
+	while(machineIterator.hasNext())
 	{
-		HardwareInterface *hi = ethIterator.next();
-		QString temp = ifconfigLine;	//clone line
-		QString status;
+		machineIterator.next();
 		
-		/* replace infos */
-		temp.replace("<ETH_NAME>", hi->getName());
+		// gets all the associated proxies
+		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(machineIterator.value());
 		
-		(hi->getState())? status = "up" : status = "down";
-		temp.replace("<STATUS>", status);
-		
-		/* append */
-		ifconfigContent.append(temp + "\n");
+		// for each proxy
+		for (int p=0; p<plugins.size(); p++)
+		{
+			// get all the templates to save
+			QMapIterator<QString, QString> tplIterator(plugins.at(p)->getTemplates());
+			
+			// for each template to be saved
+			while (tplIterator.hasNext())
+			{
+				tplIterator.next();
+				QString path = tplIterator.key();
+				
+				QFile tpl(path);
+				
+				// if current template exists on filesystem, append its content
+				if(tpl.exists())
+				{
+					if (!tpl.open(QFile::Append | QFile::Text))
+					{
+						qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
+						errorString = "Cannot append content to file " + tplIterator.key() + tpl.errorString();
+						return false;
+					}
+					QTextStream out(&tpl);
+					QApplication::setOverrideCursor(Qt::WaitCursor);
+					out << tplIterator.value();
+					QApplication::restoreOverrideCursor();
+				}
+				// otherwise, write the template to filesystem
+				else 
+				{
+					// creates file and write the template content
+					if (!tpl.open(QFile::WriteOnly | QFile::Text))
+					{
+						qWarning()	<< "Cannot write file" << tplIterator.key() << ":" << tpl.errorString();
+						errorString = "Cannot write file " + tplIterator.key() + tpl.errorString();
+						return false;
+					}
+					QTextStream out(&tpl);
+					QApplication::setOverrideCursor(Qt::WaitCursor);
+					out << tplIterator.value();
+					QApplication::restoreOverrideCursor();
+				}
+			}
+		}
 	}
 	
-	/* Replace the ifconfig content inside <IFCONFIG> tags */
-	startupText.replace(ifconfigReg, ifconfigContent);
-
-	return startupText;
-	
+	return allok;
 }
 
 /**

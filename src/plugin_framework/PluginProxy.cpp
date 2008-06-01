@@ -95,17 +95,9 @@ QMap< QString, PluginProperty* > PluginProxy::getPluginProperties()
 /**
  * Returns the plugin template.
  */
-QString PluginProxy::getTemplate()
+QMap<QString, QString> PluginProxy::getTemplates()
 {
-	return pluginInterface->getTemplate();
-}
-
-/**
- * Returns template location where to save the file.
- */
-QString PluginProxy::getTemplateLocation()
-{
-	return pluginInterface->getTemplateLocation();
+	return pluginInterface->getTemplates();
 }
 
 /**
