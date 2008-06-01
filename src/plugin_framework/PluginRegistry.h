@@ -56,7 +56,7 @@ public:
 	QList<PluginProxy*> getHiProxies(HardwareInterface* hi)	{ return hiAssociations.values(hi); };
 	
 	QObject* getBaseElement(PluginProxy* proxy);
-	
+	QList<PluginProxy*> unregisterVmPlugins(VirtualMachine *vm, QStringList toDelete);
 	const QList<PluginLoaderFactory*> getAllPluginFactories() { return factories.values(); };
 };
 

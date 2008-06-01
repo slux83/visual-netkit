@@ -147,4 +147,16 @@ void VmHandler::saveChangedProperty(int row, int column)
 			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
 
-
+void VmHandler::removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToRemove)
+{
+	VirtualMachine *vm = VmMapper::getInstance()->getVm(vmItem);
+	
+	if(vm == NULL)
+	{
+		qWarning() << "Error: VmHandler::removePlugins broker mapping";
+		return;
+	}
+	
+	LabHandler::getInstance()->getUndoStack()->push(new DeleteVmPluginsCommand(vm, 
+			PluginRegistry::getInstance()->unregisterVmPlugins(vm ,pluginsToRemove)));
+}

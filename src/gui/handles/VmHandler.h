@@ -49,6 +49,7 @@ public:
 	static VmHandler* getInstance();
 	bool vmNameExist(QString vmNameToCheck);
 	void renderVmProperties(VirtualMachineItem *vmItem);
+	void removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToRemove);
 
 signals:
 	void logEvent(QString message);
