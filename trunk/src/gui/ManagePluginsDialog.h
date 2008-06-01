@@ -36,6 +36,7 @@ private:
 	QGraphicsItemGroup *baseElement;
 	QList<PluginLoaderFactory*> allPlugins;
 	QStringList elemPlugins;
+	
 	void clearPluginsList();
 	QStringList getAddedPlugins();
 	QStringList getDeletedPlugins();
