@@ -159,8 +159,31 @@ void ManagePluginsDialog::clearPluginsList()
  */
 void ManagePluginsDialog::handleUserConfirm()
 {
-	qDebug() << "Added plugins:" << getAddedPlugins();
-	qDebug() << "Deleted plugins:" << getDeletedPlugins();
+	QStringList toAdd, toDelete;
+	toAdd = getAddedPlugins();
+	toDelete = getDeletedPlugins();
+	
+	QString question;
+	if(toAdd.size() > 0)
+		question += tr("Plugins to add:") + "\n" + toAdd.join(", ") + "\n";
+	if(toDelete.size() > 0)
+		question += tr("Plugins to delete:") + "\n" + toDelete.join(", ") + "\n";
+	
+	if(toAdd.size() > 0 || toDelete.size() > 0)
+		question += "\nDo you want apply this changes?";
+	
+	if(question.isEmpty())
+		return;
+	
+	QMessageBox::StandardButton resp =
+		QMessageBox::question(this, tr("Visual Netkit - question"), question,
+		QMessageBox::Apply | QMessageBox::Cancel, QMessageBox::Cancel);
+	
+	if(resp != QMessageBox::Apply)
+		return;
+	
+	/* delegate add and delete actions to the rispective handler */
+	
 }
 
 /**
