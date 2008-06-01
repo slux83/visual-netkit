@@ -142,6 +142,7 @@ bool LabSaver::saveTemplates()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
+		qDebug() << "Machine: " << machineIterator.key();
 		
 		// gets all the associated proxies
 		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(machineIterator.value());
@@ -149,6 +150,8 @@ bool LabSaver::saveTemplates()
 		// for each proxy
 		for (int p=0; p<plugins.size(); p++)
 		{
+			qDebug() << "    Plugin:" << plugins.at(p)->getPluginGroupID();
+			
 			// get all the templates to save
 			QMapIterator<QString, QString> tplIterator(plugins.at(p)->getTemplates());
 			
@@ -156,13 +159,32 @@ bool LabSaver::saveTemplates()
 			while (tplIterator.hasNext())
 			{
 				tplIterator.next();
-				QString path = tplIterator.key();
 				
-				QFile tpl(path);
+				qDebug() << "        Template:" << tplIterator.key();
+				
+				QStringList tplPathList = tplIterator.key().split("/");
+				tplPathList.removeLast();
+				QString tplPath = tplPathList.join("/");
+				QString tplName = tplIterator.key().split("/").last();
+				
+				if (tplPath.isEmpty() || tplName.isEmpty())
+				{
+					qWarning() << "LabSaver::saveTemplates: error - null tplPath or tplName";
+					qWarning() << "tplPath = " << tplPath;
+					qWarning() << "tplName = " << tplName;
+					return false;
+				}
+				QString path = curPath + "/" + currentLab->getName() + "/" + tplPath;
+				
+				QFile tpl(path + "/" + tplName);
+				qDebug() << "Path:" << path;
+				QDir rootDir;
 				
 				// if current template exists on filesystem, append its content
 				if(tpl.exists())
 				{
+					qDebug() << "File exists on filesystem.";
+					
 					if (!tpl.open(QFile::Append | QFile::Text))
 					{
 						qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
@@ -177,7 +199,11 @@ bool LabSaver::saveTemplates()
 				// otherwise, write the template to filesystem
 				else 
 				{
+					qDebug() << "File does not exists on filesystem.";
+					
 					// creates file and write the template content
+					rootDir.mkpath(path);
+					
 					if (!tpl.open(QFile::WriteOnly | QFile::Text))
 					{
 						qWarning()	<< "Cannot write file" << tplIterator.key() << ":" << tpl.errorString();
