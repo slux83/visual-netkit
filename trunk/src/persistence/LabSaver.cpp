@@ -142,7 +142,7 @@ bool LabSaver::saveTemplates()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
-		qDebug() << "Machine: " << machineIterator.key();
+		qDebug() << "Machine of" << currentLab->getMachines().keys().size() <<": " << machineIterator.key();
 		
 		// gets all the associated proxies
 		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(machineIterator.value());
@@ -150,7 +150,7 @@ bool LabSaver::saveTemplates()
 		// for each proxy
 		for (int p=0; p<plugins.size(); p++)
 		{
-			qDebug() << "    Plugin:" << plugins.at(p)->getPluginGroupID();
+			qDebug() << "    Plugin "<< p << "of" << plugins.size() <<":" << plugins.at(p)->getPluginGroupID();
 			
 			// get all the templates to save
 			QMapIterator<QString, QString> tplIterator(plugins.at(p)->getTemplates());
@@ -160,7 +160,7 @@ bool LabSaver::saveTemplates()
 			{
 				tplIterator.next();
 				
-				qDebug() << "        Template:" << tplIterator.key();
+				qDebug() << "        Template of" << plugins.at(p)->getTemplates().keys().size()<< ": " << tplIterator.key();
 				
 				QStringList tplPathList = tplIterator.key().split("/");
 				tplPathList.removeLast();
@@ -185,7 +185,8 @@ bool LabSaver::saveTemplates()
 				{
 					qDebug() << "File exists on filesystem.";
 					
-					if (!tpl.open(QFile::Append | QFile::Text))
+					//if (!tpl.open(QFile::Append | QFile::Text))
+					if (!tpl.open(QFile::WriteOnly | QFile::Text))
 					{
 						qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
 						errorString = "Cannot append content to file " + tplIterator.key() + tpl.errorString();
