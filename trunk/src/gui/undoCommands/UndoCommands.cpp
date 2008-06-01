@@ -183,3 +183,41 @@ void AddLinkCommand::undo()
 {
 	//TODO
 }
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+DeleteVmPluginsCommand::DeleteVmPluginsCommand(VirtualMachine *vmP, QList<PluginProxy *> pList,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	
+	plugins = pList;
+	vm = vmP;
+	
+	setText(tr("Deleted plugins for vm: ") + vm->getName());
+}
+
+/**
+ * Deconstructor
+ */ 
+DeleteVmPluginsCommand::~DeleteVmPluginsCommand()
+{
+}
+
+/**
+ * Redo action
+ */
+void DeleteVmPluginsCommand::redo()
+{
+	//do nothing... this command just save (back-up) deleted plugins
+}
+
+/**
+ * Undo action
+ */
+void DeleteVmPluginsCommand::undo()
+{
+	//TODO
+}

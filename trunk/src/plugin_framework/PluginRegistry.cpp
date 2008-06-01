@@ -181,3 +181,35 @@ QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
 	
 	return be;
 }
+
+/**
+ * Unregister a list of vm plugins and return proxies
+ */
+QList<PluginProxy*> PluginRegistry::unregisterVmPlugins(VirtualMachine *vm, QStringList toDelete)
+{
+	QList<PluginProxy*> deletedAll, deleted;
+	
+	/* take all before */
+	for(int i=0; i<vmAssociations.values(vm).size(); i++)
+	{
+		deletedAll << vmAssociations.take(vm);
+	}
+	
+	/* now, delete plugins and restore others */
+	for(int j=0; j<deletedAll.size(); j++)
+	{
+		if(toDelete.contains(deletedAll.at(j)->getPlugin()->getName()))
+		{
+			//sure to delete
+			deleted << deletedAll.takeAt(j);
+		}
+		else
+		{
+			//restore
+			vmAssociations.insertMulti(vm, deletedAll.takeAt(j));
+		}
+	}
+	
+	return deleted;
+}
+

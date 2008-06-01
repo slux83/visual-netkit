@@ -183,7 +183,24 @@ void ManagePluginsDialog::handleUserConfirm()
 		return;
 	
 	/* delegate add and delete actions to the rispective handler */
+	/* Downcasting */
+	VirtualMachineItem *vmItem = dynamic_cast<VirtualMachineItem*>(baseElement);
+	if(vmItem != NULL)
+	{
+		VmHandler::getInstance()->removePlugins(vmItem, toDelete);
+	}
 	
+	CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(baseElement);
+	if(cdItem != NULL)
+	{
+	
+	}
+	
+	LinkItem *linkItem = dynamic_cast<LinkItem*>(baseElement);
+	if(linkItem != NULL)
+	{
+	
+	}
 }
 
 /**

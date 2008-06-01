@@ -101,5 +101,28 @@ public:
 	void redo();
 };
 
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Delete plugins for a virtual machine.
+ * This command stores delete plugins for a specific vm
+ */
+class DeleteVmPluginsCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	VirtualMachine *vm;
+	QList<PluginProxy*> plugins;	//the deleted
+	
+public:
+	DeleteVmPluginsCommand(VirtualMachine *vmP, QList<PluginProxy *> pList,
+			QUndoCommand *parent = 0);
+	virtual ~DeleteVmPluginsCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
 
 #endif /*UNDOCOMMANDS_H_*/
