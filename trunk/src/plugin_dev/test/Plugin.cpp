@@ -55,8 +55,9 @@ Plugin::~Plugin()
  * Returns the plugin template if resource file exists,
  * otherwise returns an empty QString.
  */
-QString Plugin::getTemplate()
+QMap<QString, QString> Plugin::getTemplates()
 {
+	QMap<QString, QString> templates;
 	QString templateContent;
 	
 	QFile data(":/basic_tpl");
@@ -69,11 +70,14 @@ QString Plugin::getTemplate()
 	{
 		qWarning() << "The plugin getTemplate() failed:" << data.errorString();
 	}
-		
-	return templateContent;
+	
+	templates.insert(getTemplateLocation(), templateContent);
+	
+	return templates;
 }
 
 /**
+ * [PRIVATE]
  * Returns the path where save/append the template content
  */
 QString Plugin::getTemplateLocation()

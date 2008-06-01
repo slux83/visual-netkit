@@ -53,8 +53,9 @@ PluginIPv4::~PluginIPv4()
  * Returns the plugin template if resource file exists,
  * otherwise returns an empty QString.
  */
-QString PluginIPv4::getTemplate()
+QMap<QString, QString> PluginIPv4::getTemplates()
 {
+	QMap<QString, QString> templates;
 	QString templateContent;
 	
 	QFile data(":/basic_tpl");
@@ -63,33 +64,33 @@ QString PluginIPv4::getTemplate()
 		QTextStream in(&data);
 		templateContent = in.readAll();
 		
-		HardwareInterface *hi = dynamic_cast<HardwareInterface*>(myProxy->getBaseElement());
-		(hi != NULL)? templateContent.replace("HI", hi->getName()) : templateContent.replace("HI", "null");
+		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
+		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
 		
 		QString status;
-		(hi->getState())? status = "up" : status = "down";
-		templateContent.replace("HI_STATE", status);
+		(hi != NULL && hi->getState())? status = "up" : status = "down";
+		templateContent.replace("<HI_STATE>", status);
 		
 		PluginProperty *pp = properties.value("address");
-		templateContent.replace("IP", pp->getValue());
+		templateContent.replace("<IP>", pp->getValue());
 		
 		pp = properties.value("netmask");
-		templateContent.replace("NETMASK", pp->getValue());
+		templateContent.replace("<NETMASK>", pp->getValue());
 		
 		pp = properties.value("broadcast");
-		templateContent.replace("BROADCAST", pp->getValue());
+		templateContent.replace("<BROADCAST>", pp->getValue());
 	}
 	else
 	{
-		qWarning() << "The plugin getTemplate() failed:" << data.errorString();
+		qWarning() << "PluginIPv4::getTemplates(): failed reading template file:" << endl << data.errorString();
 	}
 	
-	qDebug() << endl << "====== IPv4 TEMPLATE ==============" << endl << templateContent << endl;
-		
-	return templateContent;
+	templates.insert(getTemplateLocation(), templateContent);
+	return templates;
 }
 
 /**
+ * [PRIVATE]
  * Returns the path where save/append the template content
  */
 QString PluginIPv4::getTemplateLocation()

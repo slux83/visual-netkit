@@ -41,6 +41,7 @@ private:
 	PluginProxy *myProxy;
 	QString myName;
 
+	QString getTemplateLocation();
 	bool fetchProperties();
 	void refreshLabel();
 	
@@ -49,8 +50,7 @@ public:
 	virtual ~PluginIPv4();
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QSettings* getMySettings() { return mySettings; };
-	QString getTemplateLocation();
-	QString getTemplate();
+	QMap<QString, QString> getTemplates();
 	QString getName() { return myName; };
 	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };

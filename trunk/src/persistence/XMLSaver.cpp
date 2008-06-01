@@ -147,6 +147,12 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds item's multiline label relative position
 				multilabel.setAttribute("x", QString(QByteArray::number(vmlist.at(i)->getPluginsSharedArea()->pos().x())));
 				multilabel.setAttribute("y", QString(QByteArray::number(vmlist.at(i)->getPluginsSharedArea()->pos().y())));
+				
+				//adds this VM plugin names
+				QDomElement plugins = doc->createElement("plugins");
+				item.appendChild(plugins);
+				
+				//plugins.text(QString("....."));
 			}
 		}
 		//==========================================================================
