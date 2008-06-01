@@ -35,10 +35,15 @@ class ManagePluginsDialog : public QDialog, public Ui::ManagePluginsGui
 private:
 	QGraphicsItemGroup *baseElement;
 	QList<PluginLoaderFactory*> allPlugins;
+	QStringList elemPlugins;
 	void clearPluginsList();
+	QStringList getAddedPlugins();
+	QStringList getDeletedPlugins();
 
 private slots:
 	void showPluginInfos(QListWidgetItem *);
+	void handleUserConfirm();
+	
 public:
 	ManagePluginsDialog(QGraphicsItemGroup *bElement, QWidget *parent = 0);
 	virtual ~ManagePluginsDialog();

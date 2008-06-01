@@ -38,6 +38,7 @@ ManagePluginsDialog::ManagePluginsDialog(QGraphicsItemGroup *bElement, QWidget *
 	/* Connects */
 	connect(pluginsList, SIGNAL(itemClicked(QListWidgetItem *)),
 		this, SLOT(showPluginInfos(QListWidgetItem *)));
+	connect(buttonBox, SIGNAL(accepted()), this, SLOT(handleUserConfirm()));
 }
 
 /**
@@ -53,6 +54,7 @@ ManagePluginsDialog::~ManagePluginsDialog()
 void ManagePluginsDialog::buildGui()
 {
 	clearPluginsList();
+	elemPlugins.clear();
 	
 	QString pluginType;
 	QList<PluginProxy*> usedPlugins;
@@ -87,6 +89,7 @@ void ManagePluginsDialog::buildGui()
 	{
 		PluginProxy *p = iter.next();
 		usedPluginsMap.insert(p->getPlugin()->getName(), p);
+		elemPlugins << p->getPlugin()->getName();
 	}
 	
 	/* Building */
@@ -148,4 +151,64 @@ void ManagePluginsDialog::clearPluginsList()
 		if(item != NULL)
 			delete item;
 	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle the user confirm
+ */
+void ManagePluginsDialog::handleUserConfirm()
+{
+	qDebug() << "Added plugins:" << getAddedPlugins();
+	qDebug() << "Deleted plugins:" << getDeletedPlugins();
+}
+
+/**
+ * [PRIVATE]
+ * Get the added plugins
+ */
+QStringList ManagePluginsDialog::getAddedPlugins()
+{
+	QStringList addedPlugins;
+	
+	/* Get all list items and select only selected */
+	QList<QListWidgetItem *> listItems =
+		pluginsList->findItems(".+", Qt::MatchRegExp);
+	
+	QListIterator<QListWidgetItem *> itemIter(listItems);
+	while(itemIter.hasNext())
+	{
+		QListWidgetItem * item = itemIter.next();
+		//save the plugin name if the plugin is "added"
+		if(item->checkState() == Qt::Checked &&
+				!elemPlugins.contains(item->data(Qt::DisplayRole).toString()))
+			addedPlugins << item->data(Qt::DisplayRole).toString();
+	}
+	
+	return addedPlugins;
+}
+
+/**
+ * [PRIVATE]
+ * Get the deleted plugins
+ */
+QStringList ManagePluginsDialog::getDeletedPlugins()
+{
+	QStringList deletedPlugins;
+	
+	/* Get all list items and select only selected */
+	QList<QListWidgetItem *> listItems =
+		pluginsList->findItems(".+", Qt::MatchRegExp);
+	
+	QListIterator<QListWidgetItem *> itemIter(listItems);
+	while(itemIter.hasNext())
+	{
+		QListWidgetItem * item = itemIter.next();
+		//save the plugin name if the plugin is "deleted"
+		if(item->checkState() == Qt::Unchecked &&
+				elemPlugins.contains(item->data(Qt::DisplayRole).toString()))
+			deletedPlugins << item->data(Qt::DisplayRole).toString();
+	}
+	
+	return deletedPlugins;
 }
