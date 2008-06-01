@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 QMAKE="qmake"
+GDB="gdb"
 VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" )
 VN_HOME=`pwd`
 
@@ -29,6 +30,7 @@ usage()
 	echo " 	OPTIONS:"
 	echo "	-h		Display this help and exit"
 	echo "	-b		Build plugins and Visual Netkit"
+	echo "	-bg		Build all in Debug mode (using GDB)"
 	echo "	-c		Clear plugins and Visual Netkit"
 	echo "	-cb		Clear and Re-Build plugins and Visual Netkit"
 	echo	
@@ -69,10 +71,18 @@ compile()
 	`$QMAKE` || echo "### ERROR: Failed to build visual netkit (qmake)"
 	make || exit 1
 	
-	echo
-	echo ">>> STARTING ./bin/VisualNetkit <<<"
-	echo
-	./bin/VisualNetkit
+	if [ "$1" = "g" ]; then
+		echo
+		echo ">>> DEBUG MODE STARTING ./bin/VisualNetkit <<<"
+		echo
+		$GDB ./bin/VisualNetkit
+	else
+		echo
+		echo ">>> STARTING ./bin/VisualNetkit <<<"
+		echo
+		./bin/VisualNetkit
+	fi
+	                                 
 }
 
 clean()
@@ -118,6 +128,9 @@ if [ "$#" != "0" ]; then
 		
 		-b)
 			compile
+		;;
+		-bg)
+			compile g
 		;;
 		-c)
 			clean
