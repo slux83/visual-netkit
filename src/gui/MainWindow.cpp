@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	createScene();
 	
 	//status bar show a ready state
-	statusBar()->showMessage(tr("Ready"));
+	statusBar()->showMessage(tr("Ready"), 10000);
 
 }
 
@@ -152,6 +152,9 @@ void MainWindow::createConnections()
 void MainWindow::writeLogMessage(QString message)
 {
 	logText->append("[" + QTime::currentTime().toString("HH:mm:ss:zzz") + "] " + message);
+	
+	//set status bar
+	statusBar()->showMessage(tr("Last performed action was ") + message , 0);
 }
 
 /**

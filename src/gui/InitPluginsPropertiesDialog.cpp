@@ -73,7 +73,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 			
 			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
 			{
-				QString *altMsg = new QString();
+				QString altMsg;
 				bool allok = true;
 				
 				if (yesToAll==QMessageBox::YesToAll)
@@ -82,7 +82,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 				}
 				else
 				{
-					allok = pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text(), altMsg);
+					allok = pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text(), &altMsg);
 				}
 				
 				// some warning or error returned by initProperty function
@@ -93,7 +93,7 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 					QString question =
 								tr("Il plugin ") + pluginsToManage.at(j)->getPlugin()->getName() +
 								tr(" ha riportato il seguente messaggio:\n") +
-								*altMsg + ".\n\n" +
+								altMsg + ".\n\n" +
 								tr("Ignorare il messaggio?");
 					
 					yesToAll = QMessageBox::question(this, tr("VisualNetkit - Warning"),
@@ -120,9 +120,6 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 						return;
 					}
 				}
-				
-				//pulisco la stringa d'errore
-				delete altMsg;
 			}
 		}
 	}
