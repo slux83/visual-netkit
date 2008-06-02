@@ -24,6 +24,10 @@
 #include <QActionGroup>
 #include <QDir>
 
+#include <QPrinter>
+#include <QPainter>
+#include <QSvgGenerator>
+
 /**
  * Constructor
  */
@@ -143,6 +147,11 @@ void MainWindow::createConnections()
 	connect(actionZoomOriginal, SIGNAL(triggered()),
 					this, SLOT(zoomNormal()));
 
+	//connect: export to SVG image action
+	connect(actionSVGImage, SIGNAL(triggered()), this, SLOT(dumpToSVG()));
+	
+	//connect: export to PDF image action
+	connect(actionPDFImage, SIGNAL(triggered()), this, SLOT(dumpToPDF()));
 }
 
 /**
@@ -405,3 +414,24 @@ void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootE
 		qWarning() << "MainWindow::changeTreeNodeName nodes.size() is" << nodes.size();
 	
 }
+
+void MainWindow::dumpToPDF() {
+	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+	printer->setOutputFormat(QPrinter::PdfFormat);
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
+	printer->setOutputFileName(fileName);
+	QPainter *pdfPainter = new QPainter(printer);
+	graphicsView->scene()->render(pdfPainter);
+	pdfPainter->end();
+}
+
+void MainWindow::dumpToSVG() {
+	QSvgGenerator *gen = new QSvgGenerator();
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to SVG"), "~/untitled.svg", tr("File (*.svg)"));
+	gen->setFileName(fileName);
+	QPainter *svgPainter = new QPainter(gen);
+	graphicsView->scene()->render(svgPainter);
+	svgPainter->end();
+}
+
+

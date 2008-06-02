@@ -38,7 +38,7 @@ private:
 	bool saveTemplates();
 	QString prepareLabConfText();
 	QString strippedName(const QString &fullFileName);
-	bool RemoveDir(const QString d);
+	bool removeDir(const QString d);
 
 public:
 	LabSaver(const QString &path);

@@ -69,7 +69,7 @@ bool LabSaver::saveLab()
 		if(rootDir.exists(labPath))
 		{
 			//allok = rootDir.rmdir(labPath);
-			allok = RemoveDir(labPath);
+			allok = removeDir(labPath);
 			if(!allok)
 				errorString = "Cannot remove lab dir '" + labPath + "'.";
 		}
@@ -375,7 +375,7 @@ bool LabSaver::createFolderSystem()
  * [PRIVATE]
  * Removes passed dir and contained files.
  */
-bool LabSaver::RemoveDir(const QString d)
+bool LabSaver::removeDir(const QString d)
 {
 	bool ret = true;
 	QDir dir(d);
@@ -388,7 +388,7 @@ bool LabSaver::RemoveDir(const QString d)
 		{
 			fi = list.at(l);
 			if (fi.isDir() && fi.fileName() != "." && fi.fileName() != "..")
-				ret = RemoveDir(fi.absoluteFilePath());
+				ret = removeDir(fi.absoluteFilePath());
 			else if (fi.isFile())
 			{
 				QFile f( fi.absoluteFilePath() );
