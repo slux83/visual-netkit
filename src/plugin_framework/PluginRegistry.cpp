@@ -185,9 +185,17 @@ QObject* PluginRegistry::getBaseElement(PluginProxy* proxy)
 /**
  * Unregister a list of vm plugins and return proxies
  */
-QList<PluginProxy*> PluginRegistry::unregisterVmPlugins(VirtualMachine *vm, QStringList toDelete)
+QList<PluginProxy*> PluginRegistry::unregisterVmPlugins(VirtualMachine *vm, QStringList toDelete,
+		QStringList *paths)
 {
 	QList<PluginProxy*> deletedAll, deleted;
+	
+	/* Save paths before all */
+	foreach(PluginProxy* pp, vmAssociations.values(vm))
+		if(toDelete.contains(pp->getPlugin()->getName()))
+			*paths << pp->getTemplates().keys();
+	
+	qDebug() << "unreg paths" << *paths;
 	
 	/* take all before */
 	for(int i=0; i<vmAssociations.values(vm).size(); i++)
@@ -213,3 +221,24 @@ QList<PluginProxy*> PluginRegistry::unregisterVmPlugins(VirtualMachine *vm, QStr
 	return deleted;
 }
 
+/**
+ * Get all paths (unique entries) used by plugins
+ */ 
+QSet<QString> PluginRegistry::getAllUsedPaths()
+{
+	QStringList paths;
+	QList<PluginProxy*> allPlugins;
+	
+	//get all plugins
+	allPlugins << vmAssociations.values() << cdAssociations.values() << hiAssociations.values();
+	
+	QListIterator<PluginProxy*> i(allPlugins);
+	while(i.hasNext())
+	{
+		paths << i.next()->getTemplates().keys();
+	}
+	
+	qDebug() << paths.toSet();
+	
+	return paths.toSet();
+}

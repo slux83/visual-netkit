@@ -114,10 +114,11 @@ class DeleteVmPluginsCommand : public QObject, public QUndoCommand
 private:
 	VirtualMachine *vm;
 	QList<PluginProxy*> plugins;	//the deleted
+	QSet<QString> pathsToDelete;
 	
 public:
 	DeleteVmPluginsCommand(VirtualMachine *vmP, QList<PluginProxy *> pList,
-			QUndoCommand *parent = 0);
+			QSet<QString> paths, QUndoCommand *parent = 0);
 	virtual ~DeleteVmPluginsCommand();
 	
 	//TODO

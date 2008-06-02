@@ -201,6 +201,8 @@ void ManagePluginsDialog::handleUserConfirm()
 	{
 	
 	}
+	
+	close();
 }
 
 /**
