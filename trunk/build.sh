@@ -20,6 +20,7 @@ QMAKE="qmake"
 GDB="gdb"
 VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" )
 VN_HOME=`pwd`
+MAKE="make -j2"
 
 usage()
 {
@@ -53,7 +54,7 @@ compile()
 			cd "$plugin"
 			`$QMAKE` || echo "### ERROR: Failed to build the plugin $plugin (qmake)"
 			
-			make || exit 1
+			$MAKE || exit 1
 						
 			cd "$VN_HOME"
 		else
@@ -69,7 +70,7 @@ compile()
 	echo
 
 	`$QMAKE` || echo "### ERROR: Failed to build visual netkit (qmake)"
-	make || exit 1
+	$MAKE || exit 1
 	
 	if [ "$1" = "g" ]; then
 		echo
@@ -116,7 +117,7 @@ clean()
 	echo "##########################"
 	echo
 	
-	make clean || echo "### ERROR: Failed to clean Visual Netkit"
+	$MAKE clean || echo "### ERROR: Failed to clean Visual Netkit"
 	rm -fr Makefile*
 }
 

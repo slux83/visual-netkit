@@ -190,9 +190,9 @@ void AddLinkCommand::undo()
  * Contructor
  */
 DeleteVmPluginsCommand::DeleteVmPluginsCommand(VirtualMachine *vmP, QList<PluginProxy *> pList,
-		QUndoCommand *parent) : QUndoCommand(parent)
+		QSet<QString> paths, QUndoCommand *parent) : QUndoCommand(parent)
 {
-	
+	pathsToDelete = paths;
 	plugins = pList;
 	vm = vmP;
 	
@@ -211,7 +211,25 @@ DeleteVmPluginsCommand::~DeleteVmPluginsCommand()
  */
 void DeleteVmPluginsCommand::redo()
 {
-	//do nothing... this command just save (back-up) deleted plugins
+	/* Clear the tree-lab view deleting unused paths */
+	QRegExpValidator startupValidator(QRegExp("^[a-zA-Z0-9]+\\.startup$"), this);
+	QSet<QString> allPaths = PluginRegistry::getInstance()->getAllUsedPaths();
+	
+	foreach(PluginProxy *pp, plugins)
+	{
+		foreach(QString path, pathsToDelete)
+		{
+			int pos = 0;
+			//exclude "lab.conf" and startup files
+			if(path != "lab.conf" &&
+					startupValidator.validate(path, pos) == QValidator::Invalid &&
+					!allPaths.contains(path))
+			{
+				qDebug() << "Path to delete:" << path;
+				//TODO call someone to delete this path inside the lab tree view
+			}
+		}
+	}
 }
 
 /**

@@ -47,10 +47,11 @@ public:
 	virtual void setProxy(PluginProxy* p) = 0;
 	
 	/**
-	 * If unused, return -1 inside the plugin implementation
+	 * [DEFAULT IMPLEMENTATION]
+	 * If unused, return -1
 	 */
-	virtual void setGroupID(qint32 id) = 0;
-	virtual qint32 getGroupID() = 0;
+	virtual void setGroupID(qint32 id) { Q_UNUSED(id) };
+	virtual qint32 getGroupID() { return -1; };
 	
 	/**
 	 * This function il called by the system (through the proxy) when the plugin

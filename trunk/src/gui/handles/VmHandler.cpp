@@ -157,6 +157,17 @@ void VmHandler::removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToR
 		return;
 	}
 	
-	LabHandler::getInstance()->getUndoStack()->push(new DeleteVmPluginsCommand(vm, 
-			PluginRegistry::getInstance()->unregisterVmPlugins(vm ,pluginsToRemove)));
+	//unregister plugins
+	QStringList pathsToDelete;
+	
+	QList<PluginProxy*> deletedPlugins = 
+		PluginRegistry::getInstance()->unregisterVmPlugins(vm, pluginsToRemove, &pathsToDelete);
+	
+	//undo command
+	LabHandler::getInstance()->getUndoStack()->push(new DeleteVmPluginsCommand(vm, deletedPlugins, pathsToDelete.toSet()));
+	
+	/* Remove label inside shared area of the vm item */
+	foreach(QString pName, pluginsToRemove)
+		vmItem->setPluginLine(pName, "");
+	
 }
