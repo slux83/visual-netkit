@@ -50,21 +50,34 @@ bool LabSaver::saveLab()
 	
 	currentLab = LabFacadeController::getInstance()->getCurrentLab();
 	
-	if (allok && !createFolderSystem())
+	if (allok && !createFolderSystem())		// creates folders
 		allok = false;
-	if (allok && !saveLabConf())
+	if (allok && !saveLabConf())			// saves lab.conf file
 		allok = false;
-	if (allok && !saveStartups())
+	if (allok && !saveStartups())			// saves .startup files
 		allok = false;
-	if (allok && !saveTemplates())
+	if (allok && !saveTemplates())			// saves plugin templates
 		allok = false;
-	if (allok && !saveVmsConf())
+	if (allok && !saveVmsConf())			// saves virtual machines configurations
 		allok = false;
 	
-	/* remove the lab */
+	// remove the lab
 	if(!allok)
 	{
-		//TODO: clear the junk lab 
+		QDir rootDir;
+		QString labPath = curPath + "/" + currentLab->getName();
+		if(rootDir.exists(labPath))
+		{
+			//allok = rootDir.rmdir(labPath);
+			allok = RemoveDir(labPath);
+			if(!allok)
+				errorString = "Cannot remove lab dir '" + labPath + "'.";
+		}
+		else 
+		{
+			errorString = "Cannot remove lab dir '" + curPath + "/" + currentLab->getName() + "':\n"+
+						  "directory does not exist.";
+		}
 	}
 	
 	return allok;
@@ -290,15 +303,6 @@ QString LabSaver::prepareLabConfText()
 }
 
 /**
- * The strippedName() function call around curFile shortens
- * the file name to exclude the path.
- */
-QString LabSaver::strippedName(const QString &fullFileName)
-{
-	return QFileInfo(fullFileName).fileName();
-}
-
-/**
  * Saves passed router or host configuration to filesystem.
  */
 bool LabSaver::saveVmsConf()
@@ -360,3 +364,47 @@ bool LabSaver::createFolderSystem()
 	
 	return allok;
 }
+
+
+/**
+ * [PRIVATE]
+ * Removes passed dir and contained files.
+ */
+bool LabSaver::RemoveDir(const QString d)
+{
+	bool ret = true;
+	QDir dir(d);
+	qWarning() << "Deleting dir " << d << "...";
+	if (dir.exists())
+	{
+		const QFileInfoList list = dir.entryInfoList();
+		QFileInfo fi;
+		for (int l = 0; l < list.size(); l++)
+		{
+			fi = list.at(l);
+			if (fi.isDir() && fi.fileName() != "." && fi.fileName() != "..")
+				ret = RemoveDir(fi.absoluteFilePath());
+			else if (fi.isFile())
+			{
+				QFile f( fi.absoluteFilePath() );
+				ret = f.remove();
+				if (!ret)
+					qWarning() << "Can't remove: " << fi.absoluteFilePath() << " (write-protect?)";
+			}
+		}
+		//qWarning() << "Removed:" << d << ".";
+		dir.rmdir(d);
+	}
+	return ret;
+}
+
+/**
+ * The strippedName() function call around curFile shortens
+ * the file name to exclude the path.
+ */
+QString LabSaver::strippedName(const QString &fullFileName)
+{
+	return QFileInfo(fullFileName).fileName();
+}
+
+

@@ -104,6 +104,7 @@ bool LabFacadeController::saveLab(const QString &savePath)
 		// TODO: delegate to different thread
 		// saves lab structure dirs and files
 		LabSaver ls(savePath);
+		
 		// saves lab XML
 		XMLSaver xs(savePath + "/" + currentLab->getName());
 		

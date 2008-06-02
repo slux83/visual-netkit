@@ -95,8 +95,6 @@ void LabHandler::openLab()
  */
 void LabHandler::saveLab(const QStringList &selectedFiles)
 {
-	qDebug() << "where save the lab:" <<  selectedFiles.first();
-			
 	if(LabFacadeController::getInstance()->saveLab(selectedFiles.first()))
 	{
 		//ok, lab saved! save state and refresh window header text
