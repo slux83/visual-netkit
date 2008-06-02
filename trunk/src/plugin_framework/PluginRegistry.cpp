@@ -237,8 +237,17 @@ QSet<QString> PluginRegistry::getAllUsedPaths()
 	{
 		paths << i.next()->getTemplates().keys();
 	}
-	
 	qDebug() << paths.toSet();
 	
 	return paths.toSet();
 }
+
+/**
+ * Returns all plugins' proxies in the registry.
+ */
+QList<PluginProxy*> PluginRegistry::getAllProxies()
+{
+	QList<PluginProxy*> proxies(vmAssociations.values() + cdAssociations.values() + hiAssociations.values());
+	return proxies;
+}
+

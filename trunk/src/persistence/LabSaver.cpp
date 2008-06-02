@@ -149,6 +149,7 @@ bool LabSaver::saveTemplates()
 {
 	bool allok = true;
 	
+	/*
 	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
 	
 	// for each virtual machine
@@ -159,7 +160,10 @@ bool LabSaver::saveTemplates()
 		
 		// gets all the associated proxies
 		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(machineIterator.value());
+		*/
 		
+		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getAllProxies();
+	
 		// for each proxy
 		for (int p=0; p<plugins.size(); p++)
 		{
@@ -180,7 +184,8 @@ bool LabSaver::saveTemplates()
 				QString tplPath = tplPathList.join("/");
 				QString tplName = tplIterator.key().split("/").last();
 				
-				if (tplPath.isEmpty() || tplName.isEmpty())
+				qWarning() << "Template path: " << tplIterator.key();
+				if (tplName.isEmpty()) // || tplPath.isEmpty())    -->  il path può essere vuoto se locale al lab
 				{
 					qWarning() << "LabSaver::saveTemplates: error - null tplPath or tplName";
 					qWarning() << "tplPath = " << tplPath;
@@ -231,7 +236,7 @@ bool LabSaver::saveTemplates()
 				}
 			}
 		}
-	}
+	//}
 	
 	return allok;
 }
