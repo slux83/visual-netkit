@@ -60,7 +60,7 @@ QMap<QString, QString> Plugin::getTemplates()
 	QMap<QString, QString> templates;
 	QString templateContent;
 	
-	QFile data(":/basic_tpl");
+	QFile data(":/test_basic_tpl");
 	if (data.open(QFile::ReadOnly)) 
 	{
 		QTextStream in(&data);
