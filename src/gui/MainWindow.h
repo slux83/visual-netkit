@@ -68,6 +68,8 @@ private slots:
 	void zoomNormal();
 	void showSaveFileDialog() { saveFileDialog->show(); };
 	void saveModifiedLab();
+	void dumpToPDF();
+	void dumpToSVG();
 
 public slots:
 	void writeLogMessage(QString message);
