@@ -58,7 +58,7 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 	QMap<QString, QString> templates;
 	QString templateContent;
 	
-	QFile data(":/basic_tpl");
+	QFile data(":/ipv4_basic_tpl");
 	if (data.open(QFile::ReadOnly)) 
 	{
 		QTextStream in(&data);
