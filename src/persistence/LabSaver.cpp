@@ -203,8 +203,7 @@ bool LabSaver::saveTemplates()
 				{
 					qDebug() << "File exists on filesystem.";
 					
-					//if (!tpl.open(QFile::Append | QFile::Text))
-					if (!tpl.open(QFile::WriteOnly | QFile::Text))
+					if(!tpl.open(QFile::Append))
 					{
 						qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
 						errorString = "Cannot append content to file " + tplIterator.key() + tpl.errorString();

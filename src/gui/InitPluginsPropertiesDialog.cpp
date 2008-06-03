@@ -56,7 +56,6 @@ InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
  */
 void InitPluginsPropertiesDialog::handleUserConfirm()
 {
-	qDebug() << "Property Widget: handleUserConfirm on Ok button pressed";
 	QStringList keys = propertiesAssoc.keys();
 
 	// per ogni plugin nella lista "pluginsToManage"
@@ -88,13 +87,12 @@ void InitPluginsPropertiesDialog::handleUserConfirm()
 				// some warning or error returned by initProperty function
 				if (!allok && (yesToAll!=QMessageBox::YesToAll))
 				{	
-					// mostro l'alert question all'utente chiedendogli:
-					// la property XXX ha dato come errore :errorDalPlugin  -->  ignora o modifica?
+					//Prepare the alert message
 					QString question =
-								tr("Il plugin ") + pluginsToManage.at(j)->getPlugin()->getName() +
-								tr(" ha riportato il seguente messaggio:\n") +
+								tr("The plugin ") + pluginsToManage.at(j)->getPlugin()->getName() +
+								tr(" have returned a warning:\n") +
 								altMsg + ".\n\n" +
-								tr("Ignorare il messaggio?");
+								tr("Ignore this warning?");
 					
 					yesToAll = QMessageBox::question(this, tr("VisualNetkit - Warning"),
 						tr(question.toUtf8()),

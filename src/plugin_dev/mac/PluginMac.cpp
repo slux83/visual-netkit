@@ -133,6 +133,9 @@ bool PluginMac::fetchProperties()
  */
 bool PluginMac::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
+	/* Mac validator */
+	QRegExpValidator macValidator(QRegExp("^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"), NULL);
+	
 	/* Check if property exist */
 	if (!properties.contains(propName))
 	{
@@ -157,8 +160,9 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 	{
 		if (propName == "mac_address") 
 		{
+			int pos = 0;
 			/* Validate the MAC address */
-			if(false) //TODO: validate mac
+			if(macValidator.validate(propValue, pos) != QValidator::Acceptable)
 			{
 				/* set a warning message */
 				pluginAlertMsg->append("Invalid MAC address");
