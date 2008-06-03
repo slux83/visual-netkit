@@ -65,7 +65,7 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 		templateContent = in.readAll();
 		
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
-		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
+		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "ethUNKNOWN");
 		
 		QString status;
 		(hi != NULL && hi->getState())? status = "up" : status = "down";
@@ -75,7 +75,16 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 		templateContent.replace("<IP>", pp->getValue());
 		
 		pp = properties.value("netmask");
-		templateContent.replace("<NETMASK>", pp->getValue());
+		
+		/* Check if netmask is in CIDR notation */
+		QString netmask = pp->getValue();
+		bool isCidr;
+		netmask.toInt(&isCidr);
+
+		if(isCidr)
+			templateContent.replace("<NETMASK>", NetworkAddress::cidr2netmask(netmask.toInt()).toString());
+		else
+			templateContent.replace("<NETMASK>", netmask);
 		
 		pp = properties.value("broadcast");
 		templateContent.replace("<BROADCAST>", pp->getValue());
@@ -193,7 +202,7 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 			if(!isInt)
 			{
 				QHostAddress netmask(propValue);
-				qDebug() << netmask << propValue;
+
 				if(!NetworkAddress::validateNetmask(netmask))
 				{
 					/* Show a warning message */
