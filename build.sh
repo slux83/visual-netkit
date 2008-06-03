@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-QMAKE="qmake4"
+QMAKE="qmake"
 GDB="gdb"
 VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" "src/plugin_dev/mac")
 VN_HOME=`pwd`
