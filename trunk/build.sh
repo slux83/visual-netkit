@@ -18,7 +18,7 @@
 
 QMAKE="qmake"
 GDB="gdb"
-VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" )
+VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" "src/plugin_dev/mac")
 VN_HOME=`pwd`
 MAKE="make -j2"
 
