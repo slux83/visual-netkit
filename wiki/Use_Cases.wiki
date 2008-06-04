@@ -19,7 +19,7 @@ Descrizione dei casi d'uso in modo strutturato.
 *Post-condizioni:* è stato creato un nuovo lab ed e' stato associato come corrente
 
 
-*Scenario Principale di Successo:* l’utente sceglie di creare un nuovo lab dal menu principale. L'utente inserisce vari parametri quali autori, nome, descrizione, website, versione ed email (non tutte obbligatorie). Il nuovo lab viene creato e associato come corrente.
+*Scenario Principale di Successo:* l’utente sceglie di creare un nuovo lab dal menu principale. Il nuovo lab viene creato e associato come corrente.
 
 *Variante:*
  * se e' gia' esistente un lab corrente, il sistema provvede a chiedere all'utente (eventualmente se necessario) il salvataggio dello stesso e la conferma a chiudere l'attuale laboratorio e a settare quello nuovo come nuovo lab corrente.
@@ -59,8 +59,8 @@ L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta 
 
 
 *Scenario Principale di Successo:* L'utente seleziona dal menu'/toolbar l'azione di "add virtual machine" che risulta mutuamente esclusiva rispetto alle altre azioni che governano la scena. L'utente clicca con il mouse su un'area della scena e il sistema mostra una form per l'acquisizione dei dati riguardanti la nuova macchina virtuale.
-La form in particolare mostra campi per l'inserimento di dati quali: nome della macchina virtuale, servizi che si vuole avviare (e che caratterizzano il "tipo" della vm). L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti e mostra sulla scena la macchina virtuale etichettata dal suo nome, disegnata in base ai servizi ad essa associati (ad esempio un router, un dns, uno switch, un semplice host, ecc...).
-
+La form in particolare mostra campi per l'inserimento di dati quali: nome della macchina virtuale, plugins che si vogliono utilizzare (e che caratterizzano il "tipo" della vm). L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti e mostra sulla scena la macchina virtuale etichettata dal suo nome, ed eventuali etichette offerte dai plugins.
+Al momento di creazione l'utente puo' decidere se inizializzare manualmente le varie proprieta' offerte dai plugins attivati, oppure mantenere i valori di default.
 
 
 = UC-Modifica proprieta' di una VM =
@@ -76,7 +76,7 @@ La form in particolare mostra campi per l'inserimento di dati quali: nome della 
 *Post-condizioni:* una proprieta' della VM prescelta è stata cambiata
 
 
-*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella dock del laboratorio. Il sistema provvede a mostrare tutte li proprieta' della macchina all'interno della dock "property editor". L'utente tramite quest'ultima puo' modificare le varie priprieta' della macchina virtuale selezionata e il sistema provvede ad aggiornare i dati.
+*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella dock della vista ad albero della scena, oppure doppio click su una macchina posta sulla scena. Il sistema provvede a mostrare tutte li proprieta' della macchina all'interno della dock "property editor" seguite dalle proprieta' offerte da eventuali plugins usati da quella macchina virtuale. L'utente tramite quest'ultima puo' modificare le varie priprieta' e il sistema provvede ad aggiornare i dati.
 
 
 = UC-Aggiungi una interfaccia di rete per una VM =
@@ -143,52 +143,17 @@ Note: non è necessario che siano già presenti VM o altri elementi nel lab
 
 
 ----
-= UC-Crea AS =
+= UC-Open LAB =
 
 
 *Attore:* utente finale
 
 *Contesto:* applicazione principale
 
-*Pre-condizioni:* esiste una VM ed un CD in memoria
+*Pre-condizioni:* non vi e' un lab corrente in memoria (vedi variante)
 
 
-*Post-condizioni:* è stato creato un nuovo AS ed associato al lab
+*Post-condizioni:* è stato caricato in memoria un lab pre-esistente su filesystem (creato precedentemente con il tool)
 
 
-*Scenario Principale di Successo:* l’utente specifica le VM ed i CD che vuole raggruppare in un AS. Il gruppo viene creato ed associato al lab.
-Note: gli elementi che prendono parte al gruppo (AS), ad es. VM o CD, devono avere una proprietà tipo “AS a cui appartengo”??
-
-
-
-= UC-Modifica AS =
-
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-*Pre-condizioni:* esiste un AS in memoria ed è quello corrente
-
-
-*Post-condizioni:* è stato modificato l’AS
-
-
-*Scenario Principale di Successo:* l’utente modifica le proprietà dell’AS
-
-
-
-= UC-Rinomina AS =
-
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-*Pre-condizioni:* esiste un AS in memoria ed è quello corrente
-
-
-*Post-condizioni:* è stato rinominato l’AS
-
-
-*Scenario Principale di Successo:* l’utente specifica il nuovo nome per l’AS
+*Scenario Principale di Successo:* l'utente tramite l'azione "Open Lab" seleziona la directory dov'e' presente il lab precedentemente salvato. Il sistema provvede a "validare" il lab cercando il file lab.xml e lab.conf. Se si ha un esito positivo, il sistema crea in memoria un lab, e inizia ad instanziare gli oggetti (e eventuali plugins per ognuno di essi) e creare tutti i mappings. Il parsing delle informazioni extra presenti nei vari files di configurazione, e' lasciato al singolo plugin.
