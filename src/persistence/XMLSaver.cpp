@@ -152,7 +152,17 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				QDomElement plugins = doc->createElement("plugins");
 				item.appendChild(plugins);
 				
-				//plugins.text(QString("....."));
+				QListIterator<PluginProxy*> pIter(
+						PluginRegistry::getInstance()->getVmProxies(
+								VmMapper::getInstance()->getVm(vmlist.at(i))));
+	
+				//save plugin`s name 
+				while(pIter.hasNext())
+				{
+					QDomElement plugin = doc->createElement("plugin");
+					plugin.setAttribute("name", pIter.next()->getPlugin()->getName());
+					plugins.appendChild(plugin);
+				}
 			}
 		}
 		//==========================================================================
@@ -202,6 +212,23 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds collisiondomain's multiline label relative position
 				multilabel.setAttribute("x", QString(QByteArray::number(cdsList.at(i)->getPluginsSharedArea()->pos().x())));
 				multilabel.setAttribute("y", QString(QByteArray::number(cdsList.at(i)->getPluginsSharedArea()->pos().y())));
+				
+				//adds this CD plugin names
+				QDomElement plugins = doc->createElement("plugins");
+				cd.appendChild(plugins);
+				
+				QListIterator<PluginProxy*> pIter(
+						PluginRegistry::getInstance()->getCdProxies(
+								CdMapper::getInstance()->getCD(cdsList.at(i))));
+	
+				//save plugin`s name 
+				while(pIter.hasNext())
+				{
+					QDomElement plugin = doc->createElement("plugin");
+					plugin.setAttribute("name", pIter.next()->getPlugin()->getName());
+					plugins.appendChild(plugin);
+				}
+	
 			}
 		}
 		//==========================================================================	
@@ -242,6 +269,22 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				//adds link's label
 				QDomElement label = doc->createElement("label");
 				link.appendChild(label);
+				
+				//adds this link plugin names
+				QDomElement plugins = doc->createElement("plugins");
+				link.appendChild(plugins);
+				
+				QListIterator<PluginProxy*> pIter(
+						PluginRegistry::getInstance()->getHiProxies(
+								LinkMapper::getInstance()->getHardwareIterface(linksList.at(i))));
+	
+				//save plugin`s name 
+				while(pIter.hasNext())
+				{
+					QDomElement plugin = doc->createElement("plugin");
+					plugin.setAttribute("name", pIter.next()->getPlugin()->getName());
+					plugins.appendChild(plugin);
+				}
 			}
 		}
 	}
