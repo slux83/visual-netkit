@@ -215,19 +215,16 @@ void DeleteVmPluginsCommand::redo()
 	QRegExpValidator startupValidator(QRegExp("^[a-zA-Z0-9]+\\.startup$"), this);
 	QSet<QString> allPaths = PluginRegistry::getInstance()->getAllUsedPaths();
 	
-	foreach(PluginProxy *pp, plugins)
+	foreach(QString path, pathsToDelete)
 	{
-		foreach(QString path, pathsToDelete)
+		int pos = 0;
+		//exclude "lab.conf" and startup files
+		if(path != "lab.conf" &&
+				startupValidator.validate(path, pos) == QValidator::Invalid &&
+				!allPaths.contains(path))
 		{
-			int pos = 0;
-			//exclude "lab.conf" and startup files
-			if(path != "lab.conf" &&
-					startupValidator.validate(path, pos) == QValidator::Invalid &&
-					!allPaths.contains(path))
-			{
-				qDebug() << "Path to delete:" << path;
-				//TODO call someone to delete this path inside the lab tree view
-			}
+			qDebug() << "Path to delete:" << path;
+			//TODO call someone to delete this path inside the lab tree view
 		}
 	}
 }
