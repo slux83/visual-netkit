@@ -16,6 +16,7 @@ QT += core \
     network \
     svg \
     xml
+
 DESTDIR = bin
 MOC_DIR = build/moc
 RCC_DIR = build/rcc

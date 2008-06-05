@@ -30,34 +30,18 @@
 #include "../core/Laboratory.h"
 
 /**
- * This object is the laboratory XML parser.
+ * This object is a xml parser (using XPath) to read selective infos inside lab.xml
+ * This class offer some static functions
  */
 class XMLParser
 {
 	
 private:
 	XMLExpert *ex;
-	QMap<QString, QString> *labInfos;
-	QMap<QString, QString> *sceneInfos;
-	QMap<QString, QMap<QString, QString> > *vmsInfos;
-	QMap<QString, QMap<QString, QString> > *cdsInfos;
-	QList< QMap<QString, QString> > *linksInfos;
-	QDomDocument *labDom;
-
 public:
 	XMLParser();
 	virtual ~XMLParser();
-	
-	bool parseXML();
-	bool loadXML();
-	QDomDocument* getLabDom();
-	Laboratory* getLaboratory();
-	QMap<QString, QString> *getLabInfos() { return labInfos; };
-	QMap<QString, QString> *getSceneInfos() { return sceneInfos; };
-	QMap<QString, QMap<QString, QString> > *getVmsInfos() { return vmsInfos; };
-	QMap<QString, QMap<QString, QString> > *getCdsInfos() { return cdsInfos; };
-	QList< QMap<QString, QString> > *getLinksInfos() { return linksInfos; };
-	
+	static QRectF getSceneSize(QDomDocument *doc, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/
