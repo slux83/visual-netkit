@@ -93,55 +93,6 @@ Al momento di creazione l'utente puo' decidere se inizializzare manualmente le v
 
 *Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella scena grafica. Con il tasto destro del muose l'utente accede al menu' della vm selezionata e sceglie l'opzione "Manage hardware interfaces". Il sistema provvede a mostrare un form che mostra tutte le interfaccie di rete della macchina e offre la possibilita' di crearne uno nuova. L'utente deve inserire il nome della nuova interfaccia di rete, nonche' l'indirizzo ip, la netmask (se lo desidera), lo stato (UP | DOWN) ecc... In questo momento, la nuova interfaccia di rete non e' connessa a nessun dominio di collisione.
 
-
-----
-= UC-Crea Collision Domain =
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-*Pre-condizioni:* esiste un lab in memoria ed è quello corrente
-
-*Post-condizioni:* è stato creato un nuovo Collision Domain ed associato al lab
-
-
-*Scenario Principale di Successo:* l’utente crea un nuovo CD associandogli nome, ip, netmask...
-Note: non è necessario che siano già presenti VM o altri elementi nel lab
-
-
-
-= UC-Modifica Collision Domain =
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-*Pre-condizioni:* esiste un CD in memoria ed è quello corrente
-
-
-*Post-condizioni:* il CD corrente è stato modificato
-
-
-*Scenario Principale di Successo:* l’utente modifica le proprietà del CD corrente.
-
-
-
-= UC-Rinomina Collision Domain =
-
-*Attore:* utente finale
-
-*Contesto:* applicazione principale
-
-*Pre-condizioni:* esiste un CD in memoria ed è quello corrente
-
-
-*Post-condizioni:* il CD corrente è stato rinominato
-
-
-*Scenario Principale di Successo:* l’utente specifica il nuovo nome per il CD corrente.
-
-
 ----
 = UC-Open LAB =
 
