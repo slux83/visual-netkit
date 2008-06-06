@@ -152,6 +152,9 @@ void MainWindow::createConnections()
 	
 	//connect: export to PDF image action
 	connect(actionPDFImage, SIGNAL(triggered()), this, SLOT(dumpToPDF()));
+	
+	//connect: export to PNG image action
+	connect(actionPNGImage, SIGNAL(triggered()), this, SLOT(dumpToPNG()));
 }
 
 /**
@@ -411,7 +414,13 @@ void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootE
 	
 }
 
-void MainWindow::dumpToPDF() {
+
+/**
+ * [PRIVATE-SLOT]
+ * Dump the scene inside an PDF (A4 format) file
+ */
+void MainWindow::dumpToPDF() 
+{
 	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 	printer->setOutputFormat(QPrinter::PdfFormat);
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
@@ -419,15 +428,49 @@ void MainWindow::dumpToPDF() {
 	QPainter *pdfPainter = new QPainter(printer);
 	graphicsView->scene()->render(pdfPainter);
 	pdfPainter->end();
+	
+	delete pdfPainter;
+	delete printer;
 }
 
-void MainWindow::dumpToSVG() {
+/**
+ * [PRIVATE-SLOT]
+ * Dump the scene inside an SVG file
+ */
+void MainWindow::dumpToSVG()
+{
 	QSvgGenerator *gen = new QSvgGenerator();
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to SVG"), "~/untitled.svg", tr("File (*.svg)"));
 	gen->setFileName(fileName);
+	gen->setResolution(10);
 	QPainter *svgPainter = new QPainter(gen);
+	svgPainter->setRenderHints(QPainter::Antialiasing);
 	graphicsView->scene()->render(svgPainter);
 	svgPainter->end();
+	
+	delete svgPainter;
+	delete gen;
+}
+
+
+/**
+ * [PRIVATE-SLOT]
+ * Dump the scene inside a PNG file
+ */
+void MainWindow::dumpToPNG()
+{
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PNG"), "~/untitled.png", tr("File (*.png)"));
+	QPixmap *pngImage =
+		new QPixmap(graphicsView->scene()->sceneRect().width(), graphicsView->scene()->sceneRect().height());
+	
+	pngImage->fill(Qt::white);
+	
+	QPainter *painter = new QPainter(pngImage);
+	painter->setRenderHints(QPainter::Antialiasing);
+	graphicsView->scene()->render(painter);
+	painter->end();
+	
+	pngImage->save(fileName, "PNG", 0);
 }
 
 
