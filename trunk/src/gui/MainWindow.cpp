@@ -471,6 +471,9 @@ void MainWindow::dumpToPNG()
 	painter->end();
 	
 	pngImage->save(fileName, "PNG", 0);
+	
+	delete painter;
+	delete pngImage;
 }
 
 
