@@ -70,6 +70,7 @@ private slots:
 	void saveModifiedLab();
 	void dumpToPDF();
 	void dumpToSVG();
+	void dumpToPNG();
 
 public slots:
 	void writeLogMessage(QString message);

@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>1026</width>
-    <height>768</height>
+    <height>762</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -19,9 +19,9 @@
    <property name="geometry" >
     <rect>
      <x>268</x>
-     <y>70</y>
+     <y>71</y>
      <width>490</width>
-     <height>460</height>
+     <height>464</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" >
@@ -42,7 +42,7 @@
          <x>0</x>
          <y>0</y>
          <width>480</width>
-         <height>425</height>
+         <height>428</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -70,7 +70,7 @@
      <x>0</x>
      <y>0</y>
      <width>1026</width>
-     <height>31</height>
+     <height>32</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -124,6 +124,7 @@
      </property>
      <addaction name="actionSVGImage" />
      <addaction name="actionPDFImage" />
+     <addaction name="actionPNGImage" />
     </widget>
     <widget class="QMenu" name="menuSize" >
      <property name="title" >
@@ -166,9 +167,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>744</y>
+     <y>737</y>
      <width>1026</width>
-     <height>24</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
@@ -176,7 +177,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>31</y>
+     <y>32</y>
      <width>228</width>
      <height>39</height>
     </rect>
@@ -202,9 +203,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>70</y>
+     <y>71</y>
      <width>262</width>
-     <height>121</height>
+     <height>123</height>
     </rect>
    </property>
    <property name="floating" >
@@ -226,7 +227,7 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>21</y>
+      <y>23</y>
       <width>262</width>
       <height>100</height>
      </rect>
@@ -260,9 +261,9 @@
    <property name="geometry" >
     <rect>
      <x>764</x>
-     <y>70</y>
+     <y>71</y>
      <width>262</width>
-     <height>227</height>
+     <height>230</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -278,9 +279,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>21</y>
+      <y>23</y>
       <width>262</width>
-      <height>206</height>
+      <height>207</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -317,9 +318,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>197</y>
+     <y>200</y>
      <width>262</width>
-     <height>333</height>
+     <height>335</height>
     </rect>
    </property>
    <property name="maximumSize" >
@@ -338,7 +339,7 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>21</y>
+      <y>23</y>
       <width>262</width>
       <height>312</height>
      </rect>
@@ -443,9 +444,9 @@
    <property name="geometry" >
     <rect>
      <x>764</x>
-     <y>303</y>
+     <y>307</y>
      <width>262</width>
-     <height>227</height>
+     <height>228</height>
     </rect>
    </property>
    <property name="windowTitle" >
@@ -458,9 +459,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>21</y>
+      <y>23</y>
       <width>262</width>
-      <height>206</height>
+      <height>205</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -492,9 +493,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>536</y>
+     <y>541</y>
      <width>1026</width>
-     <height>208</height>
+     <height>196</height>
     </rect>
    </property>
    <property name="floating" >
@@ -510,9 +511,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>21</y>
+      <y>23</y>
       <width>1026</width>
-      <height>187</height>
+      <height>173</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -551,7 +552,7 @@
    <property name="geometry" >
     <rect>
      <x>228</x>
-     <y>31</y>
+     <y>32</y>
      <width>798</width>
      <height>39</height>
     </rect>
@@ -828,7 +829,7 @@
     <bool>true</bool>
    </property>
    <property name="text" >
-    <string>SVG image</string>
+    <string>SVG file</string>
    </property>
   </action>
   <action name="actionPDFImage" >
@@ -836,7 +837,7 @@
     <bool>true</bool>
    </property>
    <property name="text" >
-    <string>PDF image</string>
+    <string>PDF (A4) file</string>
    </property>
   </action>
   <action name="actionSmall" >
@@ -920,6 +921,11 @@
    </property>
    <property name="text" >
     <string>Selection tool</string>
+   </property>
+  </action>
+  <action name="actionPNGImage" >
+   <property name="text" >
+    <string>PNG image</string>
    </property>
   </action>
  </widget>
