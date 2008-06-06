@@ -60,11 +60,13 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
+	tableWidget->setSpan(0, 0, 1, 1);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, vm->getName());
 	property->setData(Qt::UserRole, VM_NAME);
 	tableWidget->setItem(0, 1, property);
+	tableWidget->setSpan(0, 1, 1, 1);
 	
 	QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getVmProxies(vm));
 	
@@ -98,6 +100,7 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 			property->setData(Qt::DisplayRole, j.key());
 			property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
+			tableWidget->setSpan(tableWidget->rowCount() - 1, 0, 1, 1);
 			
 			//property value
 			property = new QTableWidgetItem();
@@ -105,6 +108,7 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 			property->setData(Qt::ToolTipRole, j.value()->getDescription());
 			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + j.key());
 			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
+			tableWidget->setSpan(tableWidget->rowCount() - 1, 1, 1, 1);
 		}
 	}
 }
