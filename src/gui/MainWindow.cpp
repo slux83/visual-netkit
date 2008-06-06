@@ -470,7 +470,7 @@ void MainWindow::dumpToPNG()
 	graphicsView->scene()->render(painter);
 	painter->end();
 	
-	pngImage->save(fileName, "PNG", 0);
+	pngImage->save(fileName, "PNG", PNG_COPRESSION);
 	
 	delete painter;
 	delete pngImage;

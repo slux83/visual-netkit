@@ -47,5 +47,7 @@
 /* Separator character */
 #define SEPARATOR QString(QChar(149))
 
+/* PNG file compression for exporting */
+#define PNG_COPRESSION 30
 
 #endif /*COMMONCONFIGS_H_*/
