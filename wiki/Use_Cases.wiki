@@ -157,3 +157,5 @@ Note: non è necessario che siano già presenti VM o altri elementi nel lab
 
 
 *Scenario Principale di Successo:* l'utente tramite l'azione "Open Lab" seleziona la directory dov'e' presente il lab precedentemente salvato. Il sistema provvede a "validare" il lab cercando il file lab.xml e lab.conf. Se si ha un esito positivo, il sistema crea in memoria un lab, e inizia ad instanziare gli oggetti (e eventuali plugins per ognuno di essi) e creare tutti i mappings. Il parsing delle informazioni extra presenti nei vari files di configurazione, e' lasciato al singolo plugin.
+
+*Variante: se vi e' gia' un lab caricato in memoria, il sistema deve prevedere la possibilita' di chiedere all'utente se salvare il lab corrente qual'ora vi siano modifiche, nonche' provvedere alla chiusura dello stesso e procedere con lo scenario di apertura del laboratorio presente su filesystem.
