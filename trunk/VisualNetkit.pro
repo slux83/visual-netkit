@@ -16,7 +16,6 @@ QT += core \
     network \
     svg \
     xml
-
 DESTDIR = bin
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
@@ -24,7 +23,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/ManagePluginsDialog.h \
+HEADERS = src/persistence/LabOpener.h \
+    src/gui/ManagePluginsDialog.h \
     src/gui/handles/LinkPropertyController.h \
     src/gui/handles/VmPropertyController.h \
     src/gui/InitPluginsPropertiesDialog.h \
@@ -73,7 +73,8 @@ HEADERS = src/gui/ManagePluginsDialog.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/ManagePluginsDialog.cpp \
+SOURCES = src/persistence/LabOpener.cpp \
+    src/gui/ManagePluginsDialog.cpp \
     src/gui/handles/LinkPropertyController.cpp \
     src/gui/handles/VmPropertyController.cpp \
     src/gui/InitPluginsPropertiesDialog.cpp \
