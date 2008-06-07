@@ -20,6 +20,7 @@
 #define MAINWINDOW_H_
 
 #include "ui_main.h"
+#include "OpenLabForm.h"
 
 class VmHandler;
 class LabHandler;
@@ -48,6 +49,9 @@ private:
 	LabHandler *labHandler;
 	VmHandler *vmHandler;
 	
+	/* Open lab form */
+	OpenLabForm olf;
+	
 	/* Action groups */
 	QActionGroup *labItemGroup, *sceneSizeGroup, *graphZoomGroup;
 	
@@ -71,6 +75,7 @@ private slots:
 	void dumpToPDF();
 	void dumpToSVG();
 	void dumpToPNG();
+	void openLab();
 
 public slots:
 	void writeLogMessage(QString message);

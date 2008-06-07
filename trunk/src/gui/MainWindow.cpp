@@ -155,6 +155,9 @@ void MainWindow::createConnections()
 	
 	//connect: export to PNG image action
 	connect(actionPNGImage, SIGNAL(triggered()), this, SLOT(dumpToPNG()));
+	
+	//connect: open lab
+	connect(actionOpenLab, SIGNAL(triggered()), this, SLOT(openLab()));
 }
 
 /**
@@ -476,4 +479,13 @@ void MainWindow::dumpToPNG()
 	delete pngImage;
 }
 
+/**
+ * [PRIVATE-SLOT]
+ * Show the dialog open lab
+ */
+void MainWindow::openLab()
+{
+	olf.resetGui();
+	olf.show();
+}
 

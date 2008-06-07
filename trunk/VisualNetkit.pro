@@ -4,7 +4,8 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/managePlugins.ui \
+FORMS += ui/openLab.ui \
+    ui/managePlugins.ui \
     ui/addCd.ui \
     ui/addVm.ui \
     ui/addLink.ui \
@@ -23,7 +24,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/persistence/LabOpener.h \
+HEADERS = src/gui/OpenLabForm.h \
+    src/persistence/LabOpener.h \
     src/gui/ManagePluginsDialog.h \
     src/gui/handles/LinkPropertyController.h \
     src/gui/handles/VmPropertyController.h \
@@ -73,7 +75,8 @@ HEADERS = src/persistence/LabOpener.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/persistence/LabOpener.cpp \
+SOURCES = src/gui/OpenLabForm.cpp \
+    src/persistence/LabOpener.cpp \
     src/gui/ManagePluginsDialog.cpp \
     src/gui/handles/LinkPropertyController.cpp \
     src/gui/handles/VmPropertyController.cpp \
