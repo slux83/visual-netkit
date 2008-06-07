@@ -24,6 +24,7 @@
 LabOpener::LabOpener(QString &labPathToOpen)
 {
 	labPath = labPathToOpen;
+	qDebug() << "is valid:" << validateLab();
 }
 
 /**
@@ -63,19 +64,28 @@ bool LabOpener::validateLab()
 		qWarning() << "LabOpener::validateLab()" << "Unable to open lab.conf";
 	}
 	
+	/* Each subdir is a virtual machine. Checking the lab.conf consistency */
 	QString labConfContent(labConf.readAll());
 	
-	/* Simple parse of lab.conf to check machines */
-	QRegExp machineExtract("(^[a-zA-Z0-9]+)\\[.+\\]=.+");
-	if(valid)
+	//Validate the string HOST_NAME[ETH_NUMBER]="COLLISION_DOMAIN"
+	QRegExp machineRegExp("^([a-zA-Z0-9]+)\\[.+\\]=\"?.+\"?");
+	
+	QStringList lines = labConfContent.split("\n", QString::SkipEmptyParts);
+	foreach(QString line, lines)
 	{
-		int pos = 0;
-		
-		while((pos = machineExtract.indexIn(labConfContent, pos)) != -1)
+		machineRegExp.indexIn(line);
+		QStringList capLine = machineRegExp.capturedTexts();
+		if(capLine.size() == 2)
 		{
-			qDebug() << machineExtract.cap(1);
-			pos += machineExtract.matchedLength();
+			//Check the machine dir if exist
+			QString machineName = capLine[1];
+			if(!QDir(labPath + "/" + machineName).exists())
+			{
+				qWarning() << "LabOpener::validateLab()" << "machine" << machineName << "declared inside lab.conf without creating its own directory.";
+				valid = false;
+			}
 		}
+		
 	}
 	
 	return valid;

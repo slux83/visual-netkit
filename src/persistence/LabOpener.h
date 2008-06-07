@@ -23,6 +23,8 @@
 #include <QDebug>
 #include <QRegExp>
 #include <QFile>
+#include <QDir>
+#include <QStringList>
 
 /**
  * This's the expert that allow to open a lab created with visual netkit

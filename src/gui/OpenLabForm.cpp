@@ -27,6 +27,8 @@ OpenLabForm::OpenLabForm(QWidget *parent) : QDialog(parent)
 	
 	connect(browseButton, SIGNAL(clicked()),
 			this, SLOT(browseLab()));
+	connect(buttonBox, SIGNAL(accepted()),
+			this, SLOT(handleAccept()));
 }
 
 /**
@@ -79,4 +81,14 @@ void OpenLabForm::resetGui()
 	
 	checkBox_8->setChecked(false);
 	checkBox_8->setEnabled(false);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Handle user confirm
+ */
+void OpenLabForm::handleAccept()
+{
+	QString labDir = labPathLineEdit->text();
+	LabOpener labOpener(labDir);
 }
