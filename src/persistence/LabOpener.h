@@ -16,30 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLSAVER_H_
-#define XMLSAVER_H_
+#ifndef LABOPENER_H_
+#define LABOPENER_H_
 
-#include <QDomDocument>
-#include <QList>
-#include <QDir>
-
-#include "XMLExpert.h"
+#include <QObject>
+#include <QDebug>
+#include <QRegExp>
+#include <QFile>
 
 /**
- * This class make a DomDocument and save it inside the lab.xml file
+ * This's the expert that allow to open a lab created with visual netkit
+ * This is not an IMPORTER
  */
-class XMLSaver
+class LabOpener : public QObject
 {
-
+	Q_OBJECT
+	
 private:
-	QString curPath;
-	QDomDocument* prepareDomDocument();
+	QString labPath;
+	bool validateLab();
 	
 public:
-	XMLSaver(const QString & path);	
-	virtual ~XMLSaver();
-	
-	bool saveLab();
+	LabOpener(QString &labPathToOpen);
+	LabOpener() {};
+	virtual ~LabOpener();
 };
 
-#endif /*XMLSAVER_H_*/
+#endif /*LABOPENER_H_*/
