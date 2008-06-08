@@ -64,7 +64,7 @@ LabFacadeController* LabFacadeController::getInstance()
  * Create a new laboratory and set it as current laboratory
  * This is also the Factory for laboratory instances
  */
-void LabFacadeController::newLaboratory()
+void LabFacadeController::newLaboratory(bool needEmit)
 {
 	/* Check if current lab exist */
 	if(currentLab != NULL)
@@ -76,7 +76,8 @@ void LabFacadeController::newLaboratory()
 	
 	currentLab = new Laboratory();
 	
-	emit createdNewLab(currentLab);
+	if(needEmit)
+		emit createdNewLab(currentLab);
 }
 
 /**

@@ -101,7 +101,7 @@ void OpenLabForm::handleAccept()
 {
 	QString labDir = labPathLineEdit->text();
 	labOpener->setPath(labDir);
-	labOpener->start();
+	labOpener->open();
 	
 }
 
