@@ -112,9 +112,6 @@ void MainWindow::createConnections()
 	//connect: new lab action
 	connect(actionNewLab, SIGNAL(triggered()), labHandler, SLOT(newLab()));
 	
-	//connect: open lab action TODO
-	connect(actionOpenLab, SIGNAL(triggered()), labHandler, SLOT(openLab()));
-	
 	//connect: save lab action
 	connect(actionSaveAs, SIGNAL(triggered()), this, SLOT(showSaveFileDialog()));
 	connect(actionSave, SIGNAL(triggered()), this, SLOT(saveModifiedLab()));
