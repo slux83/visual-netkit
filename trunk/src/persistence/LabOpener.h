@@ -35,7 +35,7 @@ class LabHandler;
  * This's the expert that allow to open a lab created with visual netkit
  * This is not an IMPORTER
  */
-class LabOpener : public QThread
+class LabOpener : public QObject
 {
 	Q_OBJECT
 	
@@ -44,19 +44,19 @@ private:
 	QString errorString;
 	bool validateLab();			//step 1
 	bool fetchMachines();		//step 2
-	LabFacadeController *labFacadeController;
-	VmFacadeController *vmFacadeController;
-	LabHandler *labHandler;
+	void initControllers();
 	
 signals:
 	void loadStepDone(int step, bool result);
+	void createMachines(QStringList machines);
 	
 public:
 	LabOpener(QString &labPathToOpen);
 	LabOpener() {};
 	virtual ~LabOpener();
-	void run();
+	void open();
 	void setPath(QString &newPath) { labPath = newPath; };
+	QString getPath() { return labPath; };
 	QString getErrorString() { return errorString; };
 };
 

@@ -22,7 +22,7 @@
 /**
  * Constructor
  */
-LabOpener::LabOpener(QString &labPathToOpen) : QThread()
+LabOpener::LabOpener(QString &labPathToOpen) : QObject()
 {
 	labPath = labPathToOpen;
 	errorString = "Unknown error";
@@ -36,15 +36,19 @@ LabOpener::~LabOpener()
 }
 
 /**
- * Run this theread
+ * [PRIVATE]
+ * Init controlers
  */
-void LabOpener::run()
+void LabOpener::initControllers()
 {
-	/* Init controllers */
-	labHandler = LabHandler::getInstance();
-	vmFacadeController = VmFacadeController::getInstance();
-	labFacadeController = LabFacadeController::getInstance();
 	
+}
+
+/**
+ * Start open
+ */
+void LabOpener::open()
+{	
 	if(validateLab())
 	{
 		//next steps
@@ -115,7 +119,6 @@ bool LabOpener::validateLab()
 					valid = false;
 				}
 			}
-			
 		}
 	}
 	
@@ -136,7 +139,7 @@ bool LabOpener::fetchMachines()
 	//Init a new laboratory
 	qDebug() << labPath.split('/',  QString::SkipEmptyParts).last();
 		
-	labHandler->openLab(labPath);
+	LabHandler::getInstance()->openLab(labPath);
 	
 	QDir labRoot(labPath);
 	if(!labRoot.exists())
@@ -149,8 +152,8 @@ bool LabOpener::fetchMachines()
 		QStringList machines = labRoot.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
 		foreach(QString machine, machines)
 		{
-			VirtualMachine *vm = vmFacadeController->createNewVirtualMachine(machine);
-			labFacadeController->getCurrentLab()->addMachine(vm);
+			VirtualMachine *vm = VmFacadeController::getInstance()->createNewVirtualMachine(machine);
+			LabFacadeController::getInstance()->getCurrentLab()->addMachine(vm);
 		}
 	}
 	

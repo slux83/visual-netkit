@@ -86,13 +86,18 @@ void LabHandler::newLab()
  */
 void LabHandler::openLab(QString labPath)
 {	
-	newLab();
+	LabFacadeController::getInstance()->newLaboratory();
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
-	
+	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
+
 	QStringList splittedPath = labPath.split('/', QString::SkipEmptyParts);
 	
-	currLab->setName(splittedPath.last());
 	currLab->setLabPath(labPath);
+	
+	mainWindow->changeTreeNodeName(currLab->getName(), splittedPath.last(), true);
+	
+	currLab->setName(splittedPath.last());
+	
 	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
 	currLab->setSavedState(true);

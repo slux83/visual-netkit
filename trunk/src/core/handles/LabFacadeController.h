@@ -40,7 +40,7 @@ public:
 	LabFacadeController();
 	virtual ~LabFacadeController();
 	static LabFacadeController * getInstance();
-	void newLaboratory();
+	void newLaboratory(bool needEmit = true);
 	bool saveLab(QString const &savePath);
 	Laboratory * getCurrentLab() { return currentLab; };
 
