@@ -84,9 +84,18 @@ void LabHandler::newLab()
  * [SLOT]
  * Opens an existent lab
  */
-void LabHandler::openLab()
-{
-	LabFacadeController::getInstance()->openLab();
+void LabHandler::openLab(QString labPath)
+{	
+	newLab();
+	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	QStringList splittedPath = labPath.split('/', QString::SkipEmptyParts);
+	
+	currLab->setName(splittedPath.last());
+	currLab->setLabPath(labPath);
+	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
+	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
+	currLab->setSavedState(true);
 }
 
 /**

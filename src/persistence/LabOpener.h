@@ -20,28 +20,44 @@
 #define LABOPENER_H_
 
 #include <QObject>
-#include <QDebug>
+#include <QThread>
 #include <QRegExp>
 #include <QFile>
 #include <QDir>
 #include <QStringList>
+#include <QDebug>
+
+#include "../core/handles/VmFacadeController.h"
+
+class LabHandler;
 
 /**
  * This's the expert that allow to open a lab created with visual netkit
  * This is not an IMPORTER
  */
-class LabOpener : public QObject
+class LabOpener : public QThread
 {
 	Q_OBJECT
 	
 private:
 	QString labPath;
-	bool validateLab();
+	QString errorString;
+	bool validateLab();			//step 1
+	bool fetchMachines();		//step 2
+	LabFacadeController *labFacadeController;
+	VmFacadeController *vmFacadeController;
+	LabHandler *labHandler;
+	
+signals:
+	void loadStepDone(int step, bool result);
 	
 public:
 	LabOpener(QString &labPathToOpen);
 	LabOpener() {};
 	virtual ~LabOpener();
+	void run();
+	void setPath(QString &newPath) { labPath = newPath; };
+	QString getErrorString() { return errorString; };
 };
 
 #endif /*LABOPENER_H_*/

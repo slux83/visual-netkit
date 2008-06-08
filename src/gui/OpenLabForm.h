@@ -21,6 +21,7 @@
 
 #include <QFileDialog>
 #include <QDir>
+#include <QMessageBox>
 
 #include "../persistence/LabOpener.h"
 #include "ui_openLab.h"
@@ -31,10 +32,16 @@
 class OpenLabForm : public QDialog, public Ui::OpenLabUi
 {
 	Q_OBJECT
+
+private:
+	LabOpener *labOpener;
+	QMap<int, QCheckBox*> steps;
+	void initStepMap();
 	
 private slots:
 	void browseLab();
 	void handleAccept();
+	void markLoadStep(int step, bool result);
 	
 public:
 	OpenLabForm(QWidget *parent = 0);

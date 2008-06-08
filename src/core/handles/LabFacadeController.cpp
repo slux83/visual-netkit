@@ -80,16 +80,6 @@ void LabFacadeController::newLaboratory()
 }
 
 /**
- * Opens an existent laboratory. TODO
- */
-void LabFacadeController::openLab()
-{
-//	XMLParser xp;
-//	xp.loadXML();
-//	xp.parseXML();
-}
-
-/**
  * Saves the current laboratory. TODO
  */
 bool LabFacadeController::saveLab(const QString &savePath)

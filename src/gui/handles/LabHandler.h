@@ -59,7 +59,7 @@ public:
 
 public slots:
 	void newLab();
-	void openLab();
+	void openLab(QString labPath);
 	void saveLab(const QStringList &selectedFiles);
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);

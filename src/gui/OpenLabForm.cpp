@@ -25,10 +25,19 @@ OpenLabForm::OpenLabForm(QWidget *parent) : QDialog(parent)
 {
 	setupUi(this);
 	
+	//init steps
+	initStepMap();
+	
+	labOpener = new LabOpener();
+	
+	//connects
+	connect(labOpener, SIGNAL(loadStepDone(int, bool)),
+			this, SLOT(markLoadStep(int, bool)));
 	connect(browseButton, SIGNAL(clicked()),
 			this, SLOT(browseLab()));
 	connect(buttonBox, SIGNAL(accepted()),
 			this, SLOT(handleAccept()));
+	
 }
 
 /**
@@ -36,6 +45,7 @@ OpenLabForm::OpenLabForm(QWidget *parent) : QDialog(parent)
  */
 OpenLabForm::~OpenLabForm()
 {
+	delete labOpener;
 }
 
 /**
@@ -58,28 +68,28 @@ void OpenLabForm::resetGui()
 {
 	labPathLineEdit->clear();
 	
-	checkBox_1->setChecked(false);
+	checkBox_1->setCheckState(Qt::Unchecked);
 	checkBox_1->setEnabled(false);
 	
-	checkBox_2->setChecked(false);
+	checkBox_2->setCheckState(Qt::Unchecked);
 	checkBox_2->setEnabled(false);
 	
-	checkBox_3->setChecked(false);
+	checkBox_3->setCheckState(Qt::Unchecked);
 	checkBox_3->setEnabled(false);
 	
-	checkBox_4->setChecked(false);
+	checkBox_4->setCheckState(Qt::Unchecked);
 	checkBox_4->setEnabled(false);
 	
-	checkBox_5->setChecked(false);
+	checkBox_5->setCheckState(Qt::Unchecked);
 	checkBox_5->setEnabled(false);
 	
-	checkBox_6->setChecked(false);
+	checkBox_6->setCheckState(Qt::Unchecked);
 	checkBox_6->setEnabled(false);
 	
-	checkBox_7->setChecked(false);
+	checkBox_7->setCheckState(Qt::Unchecked);
 	checkBox_7->setEnabled(false);
 	
-	checkBox_8->setChecked(false);
+	checkBox_8->setCheckState(Qt::Unchecked);
 	checkBox_8->setEnabled(false);
 }
 
@@ -90,5 +100,52 @@ void OpenLabForm::resetGui()
 void OpenLabForm::handleAccept()
 {
 	QString labDir = labPathLineEdit->text();
-	LabOpener labOpener(labDir);
+	labOpener->setPath(labDir);
+	labOpener->start();
+	
 }
+
+/**
+ * [PRIVATE]
+ * Init the checkbox map
+ */
+void OpenLabForm::initStepMap()
+{
+	steps.insert(1, checkBox_1);
+	steps.insert(2, checkBox_2);
+	steps.insert(3, checkBox_3);
+	steps.insert(4, checkBox_4);
+	steps.insert(5, checkBox_5);
+	steps.insert(6, checkBox_6);
+	steps.insert(7, checkBox_7);
+	steps.insert(8, checkBox_8);
+	
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Mark the step passed with the result
+ */
+void OpenLabForm::markLoadStep(int step, bool result)
+{
+	if(!steps.contains(step))
+	{
+		qWarning() << "OpenLabForm::markLoadStep step" << step << "don't exist";
+		return;
+	}
+	
+	if(result)
+		steps.value(step)->setCheckState(Qt::Checked);
+	else
+	{
+		steps.value(step)->setCheckState(Qt::PartiallyChecked);
+		QMessageBox::warning(this, tr("Visual Netkit - ERROR"),
+				tr("There was an error during laboratory opening:") + "\n\n" + labOpener->getErrorString(),
+				QMessageBox::Ok, QMessageBox::Ok);
+		return;
+	}
+	
+	//enable the check
+	steps.value(step)->setEnabled(true);
+}
+
