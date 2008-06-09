@@ -68,6 +68,9 @@ void OpenLabForm::resetGui()
 {
 	labPathLineEdit->clear();
 	
+	checkBox_0->setCheckState(Qt::Unchecked);
+	checkBox_0->setEnabled(false);
+	
 	checkBox_1->setCheckState(Qt::Unchecked);
 	checkBox_1->setEnabled(false);
 	
@@ -111,6 +114,7 @@ void OpenLabForm::handleAccept()
  */
 void OpenLabForm::initStepMap()
 {
+	steps.insert(0, checkBox_0);
 	steps.insert(1, checkBox_1);
 	steps.insert(2, checkBox_2);
 	steps.insert(3, checkBox_3);

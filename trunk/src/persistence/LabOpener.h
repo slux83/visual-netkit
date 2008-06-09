@@ -42,13 +42,13 @@ class LabOpener : public QObject
 private:
 	QString labPath;
 	QString errorString;
-	bool validateLab();			//step 1
+	bool validateLab();			//step 0
+	bool createLab();			//step 1
 	bool fetchMachines();		//step 2
-	void initControllers();
+	bool fetchCds();			//step 3
 	
 signals:
 	void loadStepDone(int step, bool result);
-	void createMachines(QStringList machines);
 	
 public:
 	LabOpener(QString &labPathToOpen);
