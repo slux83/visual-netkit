@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>366</height>
+    <height>393</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -54,7 +54,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout" >
       <item>
-       <widget class="QCheckBox" name="checkBox_1" >
+       <widget class="QCheckBox" name="checkBox_0" >
         <property name="enabled" >
          <bool>false</bool>
         </property>
@@ -63,6 +63,16 @@
         </property>
         <property name="tristate" >
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_1" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="text" >
+         <string>Creating Laboratory</string>
         </property>
        </widget>
       </item>
