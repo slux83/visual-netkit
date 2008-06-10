@@ -46,6 +46,7 @@ private:
 	bool createLab();			//step 1
 	bool fetchMachines();		//step 2
 	bool fetchCds();			//step 3
+	bool fetchHis();			//step 4
 	
 signals:
 	void loadStepDone(int step, bool result);

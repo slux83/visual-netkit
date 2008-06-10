@@ -143,13 +143,11 @@ void OpenLabForm::markLoadStep(int step, bool result)
 	else
 	{
 		steps.value(step)->setCheckState(Qt::PartiallyChecked);
+		
 		QMessageBox::warning(this, tr("Visual Netkit - ERROR"),
 				tr("There was an error during laboratory opening:") + "\n\n" + labOpener->getErrorString(),
 				QMessageBox::Ok, QMessageBox::Ok);
 		return;
 	}
-	
-	//enable the check
-	steps.value(step)->setEnabled(true);
 }
 
