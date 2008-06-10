@@ -79,8 +79,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	QDomElement scene = doc->createElement("scene");
 	root.appendChild(scene);
 	
-	//adds scene dimensions
-	QDomElement sceneDim = doc->createElement("dimensions");
+	//adds scene dimension
+	QDomElement sceneDim = doc->createElement("dimension");
 	scene.appendChild(sceneDim);
 	
 	//X position value

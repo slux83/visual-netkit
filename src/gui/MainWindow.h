@@ -45,6 +45,7 @@ public:
 	void clearPropertyDock();
 	void changeTreeNodeName(QString oldName, QString newName, bool rootElement = false);
 	LabScene *getLabScene() { return scene; };
+	void setSceneSize(QRectF &size);
 	
 private:
 	/* Controllers */

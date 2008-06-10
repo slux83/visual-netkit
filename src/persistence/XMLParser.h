@@ -41,7 +41,7 @@ private:
 public:
 	XMLParser();
 	virtual ~XMLParser();
-	static QRectF getSceneSize(QDomDocument *doc, QString *error = NULL);
+	static QRectF getSceneSize(QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/

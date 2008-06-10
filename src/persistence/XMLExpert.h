@@ -33,8 +33,8 @@ class XMLExpert
 public:
 	XMLExpert();
 	virtual ~XMLExpert();
-	static bool dumpDocument(QDomDocument *doc, QString path);
-	static QDomDocument* readDocument();
+	static bool dumpDocument(QDomDocument *doc, QString labPath);
+	static QDomDocument* readDocument(QString labPath);
 };
 
 #endif /*XMLEXPERT_H_*/

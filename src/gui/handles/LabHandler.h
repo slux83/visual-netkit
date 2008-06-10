@@ -56,6 +56,7 @@ public:
 	MainWindow* getMainWindow() { return mainWindow; };
 	bool getLabState();
 	void prepareRenderLabProperties();
+	void setSceneSize(QRectF &size);
 
 public slots:
 	void closeLab();
