@@ -54,9 +54,10 @@ Laboratory::Laboratory()
  */
 Laboratory::~Laboratory()
 {
-	qDebug() << "Destroing lab";
 	qDeleteAll(machines);
 	qDeleteAll(collisionDomains);
+	machines.clear();
+	collisionDomains.clear();
 }
 
 /**

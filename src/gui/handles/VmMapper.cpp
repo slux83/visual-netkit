@@ -143,6 +143,6 @@ void VmMapper::changeGraphicsLabelVm(VirtualMachine *vm, QString pluginName, QSt
  */
 void VmMapper::clear()
 {
-	//qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
 	mappings.clear();
 }

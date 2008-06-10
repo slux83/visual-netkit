@@ -124,6 +124,6 @@ void CdMapper::changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QS
  */
 void CdMapper::clear()
 {
-	//qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
 	mappings.clear();
 }
