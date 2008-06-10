@@ -381,7 +381,6 @@ void MainWindow::saveModifiedLab()
  */
 void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootElement)
 {
-	qDebug() << "old:" << oldName << "new:" << newName;
 	QList<QTreeWidgetItem *> nodes;
 	
 	if(rootElement)

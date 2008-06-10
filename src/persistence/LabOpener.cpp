@@ -52,8 +52,12 @@ void LabOpener::open()
 	if(!fetchMachines())
 		return;
 	
-	//STEP3
+	//STEP 3
 	if(!fetchCds())
+		return;
+	
+	//STEP 4
+	if(!fetchHis())
 		return;
 }
 
@@ -95,7 +99,6 @@ bool LabOpener::validateLab()
 	if(valid)	//continue if valid
 	{
 		/* Each subdir is a virtual machine. Checking the lab.conf consistency */
-
 		QString labConfContent(labConf.readAll());
 		
 		//Validate the string HOST_NAME[ETH_NUMBER]="COLLISION_DOMAIN"
@@ -241,7 +244,7 @@ bool LabOpener::fetchCds()
 	if (valid && !labConf.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		valid = false;
-		qWarning() << "LabOpener::validateLab()" << "Unable to open lab.conf";
+		qWarning() << "LabOpener::fetchCds()" << "Unable to open lab.conf";
 		errorString = "Unable to open lab.conf";
 	}
 	
@@ -272,8 +275,11 @@ bool LabOpener::fetchCds()
 			/* Create a new collision domain */
 			if(value.trimmed() != "")
 			{
-				CollisionDomain *cd = new CollisionDomain(value);
-				LabFacadeController::getInstance()->getCurrentLab()->addCollisionDomain(cd);
+				if(!LabFacadeController::getInstance()->getCurrentLab()->cdExist(value))
+				{
+					CollisionDomain *cd = new CollisionDomain(value);
+					LabFacadeController::getInstance()->getCurrentLab()->addCollisionDomain(cd);
+				}
 			}
 		}
 	}
@@ -281,4 +287,111 @@ bool LabOpener::fetchCds()
 	emit loadStepDone(3, valid);
 	return valid;
 
+}
+
+/**
+ * [PRIVATE]
+ * 
+ * ## STEP-4 ##
+ * Create all hardware interfaces
+ */
+bool LabOpener::fetchHis()
+{
+	bool valid = true;
+	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	/* Get the content of lab.conf */
+	QFile labConf(labPath + "/lab.conf");
+	if (valid && !labConf.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		valid = false;
+		qWarning() << "LabOpener::fetchHis()" << "Unable to open lab.conf";
+		errorString = "Unable to open lab.conf";
+	}
+	
+	if(valid)	//continue if valid
+	{
+		QString labConfContent(labConf.readAll());
+		
+		//Get Cd name HOST_NAME[ETH_NUMBER]="COLLISION_DOMAIN"
+		QRegExp allRegExp("^(.+)\\[(.+)\\]=(.+)");
+		
+		QStringList lines = labConfContent.split("\n", QString::SkipEmptyParts);
+		foreach(QString line, lines)
+		{
+			allRegExp.indexIn(line);
+			QStringList caps = allRegExp.capturedTexts();
+			
+			if(caps[0] == "")
+				continue;
+			
+			// Clear value from sorrounding quotes on collision domain name
+			QString value = caps[3];
+			if(value.size() >= 2)
+			{
+				if(value.at(0) == QChar('"') || value.at(0) == QChar('\''))
+					value = value.remove(0, 1);
+				
+				if(value.at(value.size() - 1) == QChar('"') || value.at(value.size() - 1) == QChar('\''))
+					value = value.remove(value.size() - 1, 1);
+			}
+			
+			//get vm and cd to connect by this link/hardware interface
+			VirtualMachine *vm = lab->getMachines().value(caps[1]);
+			CollisionDomain *cd = lab->getCollisionDomains().value(value);
+			if(vm == NULL || cd == NULL)
+			{
+				valid = false;
+				qWarning()	<< "LabOpener::fetchHis()"
+							<< "Null virtual machine [" << (vm == NULL)
+							<< "] or collision domain [" << (cd == NULL) << "]";
+				
+				if(vm == NULL)
+					errorString = "Unknnown virtual machine " + caps[1];
+				if(cd == NULL)
+					errorString = "Unknnown collision domain " + value;
+			}
+			
+			//Now, get the state of this hardware interface (default true|up)
+			//readeng the startup file
+			
+			bool linkState = true;
+			QFile startupFile(labPath + "/" + vm->getName() + ".startup");
+			QRegExp linkStatusRegExp(QRegExp::escape(QString("/sbin/ifconfig")) + ".+"
+					+ QRegExp::escape(QString("eth").append(caps[2]))
+					+ ".+(up|down)$");
+			
+			if (valid && startupFile.open(QIODevice::ReadOnly | QIODevice::Text))
+			{
+				QString startupContent = startupFile.readAll(); 
+				
+				foreach(QString line, startupContent.split("\n", QString::SkipEmptyParts))
+				{
+					linkStatusRegExp.indexIn(line);
+					//get the status
+					QString capState = linkStatusRegExp.capturedTexts()[1];
+					if(capState != "")
+					{
+						linkState = (capState == "up");
+						break; //stop status search to the first
+					}
+				}
+			}
+			else
+				qWarning() << "LabOpener::fetchHis()" << "Unable to open " << vm->getName().append(".startup");
+			
+			if(valid)		//ok, create the link
+			{
+				HardwareInterface *hi =
+					VmFacadeController::getInstance()->createNewHardwareIterface(
+							vm, QString("eth").append(caps[2]), linkState, cd);
+				
+				Q_UNUSED(hi);		//hi is just created
+			}
+		}
+	}
+	
+	emit loadStepDone(4, valid);
+	return valid;
+	
 }
