@@ -28,22 +28,9 @@
  */
 LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 {
-	border = new QGraphicsRectItem();
-	
-	//the pen & flags
-	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-	border->setFlags(QGraphicsItem::ItemClipsToShape);
-	border->setPen(pen);
-	//set the rect
-	border->setRect(sceneRect());
-	border->setFlags(QGraphicsItem::ItemClipsToShape);
-	border->setZValue(100);
-	
-	/* Adds the border to this scene */
-	addItem(border);
+	initBorder();
 	
 	connect(this, SIGNAL(sceneRectChanged(QRectF)), this, SLOT(adjustSceneBorder(QRectF)));
-	connect(this, SIGNAL(selectionChanged()), this, SLOT(handleSelection()));
 	
 	link = NULL;
 	selectionRect = NULL;
@@ -311,22 +298,31 @@ QGraphicsLineItem* LabScene::initNewLinkLine()
 }
 
 /**
- * [PRIVATE-SLOT]
- * Handle the selection of items 
+ * Clear the scene
  */
-void LabScene::handleSelection()
+void LabScene::clearScene()
 {
-	/* Get selected items */
-	QList<QGraphicsItem *> items = selectedItems();
-	if(items.size() > 0)
-	{
-		//CollisionDomainItem *cdItem = dynamic_cast<CollisionDomainItem*>(items.first());
-		
-		/* Render object properties */
-		//if(cdItem != NULL)
-			//CdHandler::getInstance()->renderCdProperties(cdItem);
-	}
-	
+	clear();
+	initBorder();
 }
 
-
+/**
+ * [PRIVATE]
+ * Init the border of the scene
+ */
+void LabScene::initBorder()
+{
+	border = new QGraphicsRectItem();
+		
+	//the pen & flags
+	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+	border->setFlags(QGraphicsItem::ItemClipsToShape);
+	border->setPen(pen);
+	//set the rect
+	border->setRect(sceneRect());
+	border->setFlags(QGraphicsItem::ItemClipsToShape);
+	border->setZValue(100);
+	
+	/* Adds the border to this scene */
+	addItem(border);
+}

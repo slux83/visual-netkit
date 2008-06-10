@@ -34,14 +34,15 @@ private:
 	QGraphicsRectItem *selectionRect;	//the selection rect
 	QGraphicsLineItem *link;	//a fake link
 	QGraphicsLineItem *initNewLinkLine();
+	void initBorder();
 	
 private slots:
 	void adjustSceneBorder(QRectF r);
-	void handleSelection();
 	
 public:
 	LabScene();
 	virtual ~LabScene();
+	void clearScene();
 	
 protected:
 	void mousePressEvent  		(QGraphicsSceneMouseEvent *mouseEvent);

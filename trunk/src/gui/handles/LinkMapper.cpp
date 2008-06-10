@@ -128,6 +128,6 @@ void LinkMapper::changeGraphicsLabelHi(HardwareInterface *hi, QString pluginName
  */
 void LinkMapper::clear()
 {
-//	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
 	mappings.clear();
 }

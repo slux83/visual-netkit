@@ -44,6 +44,7 @@ public:
 	QGraphicsView* getGraphicsView() { return graphicsView; };
 	void clearPropertyDock();
 	void changeTreeNodeName(QString oldName, QString newName, bool rootElement = false);
+	LabScene *getLabScene() { return scene; };
 	
 private:
 	/* Controllers */
@@ -58,6 +59,9 @@ private:
 	
 	/* The file chooser to select where save a lab */
 	QFileDialog *saveFileDialog;
+	
+	//The lab scene
+	LabScene *scene;
 	
 	void populateViewMenu();
 	void createConnections();

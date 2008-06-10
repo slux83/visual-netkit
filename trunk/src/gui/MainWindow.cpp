@@ -217,7 +217,7 @@ void MainWindow::createActionGroups()
  */
 void MainWindow::createScene()
 {
-	LabScene *scene = new LabScene();
+	scene = new LabScene();
 	graphicsView->setScene(scene);
 	graphicsView->setVisible(false);
 }

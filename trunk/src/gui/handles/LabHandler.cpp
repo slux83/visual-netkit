@@ -396,7 +396,7 @@ void LabHandler::closeLab()
 	LinkMapper::getInstance()->clear();
 	
 	//Destroy all items
-	mainWindow->getGraphicsView()->scene()->clear();
+	mainWindow->getLabScene()->clearScene();
 	
 	//reset tree views
 	mainWindow->labTree->clear();
