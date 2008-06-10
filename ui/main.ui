@@ -263,7 +263,7 @@
      <x>764</x>
      <y>71</y>
      <width>262</width>
-     <height>230</height>
+     <height>229</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -281,7 +281,7 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>207</height>
+      <height>206</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -444,9 +444,9 @@
    <property name="geometry" >
     <rect>
      <x>764</x>
-     <y>307</y>
+     <y>306</y>
      <width>262</width>
-     <height>228</height>
+     <height>229</height>
     </rect>
    </property>
    <property name="windowTitle" >
@@ -461,7 +461,7 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>205</height>
+      <height>206</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -690,6 +690,9 @@
    </property>
   </action>
   <action name="actionCloseLab" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../resources/VisualNetkit.qrc" >
      <normaloff>:/menu/close_icon</normaloff>:/menu/close_icon</iconset>

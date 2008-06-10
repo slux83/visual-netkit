@@ -81,6 +81,8 @@ void LabHandler::newLab()
 	
 	//set the current lab inside the property controller
 	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
+	
+	mainWindow->actionCloseLab->setDisabled(false);
 }
 
 /**
@@ -104,6 +106,8 @@ void LabHandler::openLab(QString labPath)
 	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
 	currLab->setSavedState(true);
+	
+	mainWindow->actionCloseLab->setDisabled(false);
 }
 
 /**
@@ -407,5 +411,7 @@ void LabHandler::closeLab()
 	LabFacadeController::getInstance()->closeLowLevelLab();
 	
 	mainWindow->writeLogMessage("Lab Closed");
+	
+	mainWindow->actionCloseLab->setDisabled(true);
 }
 
