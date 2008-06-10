@@ -38,9 +38,9 @@ XMLExpert::~XMLExpert()
  * Writes to filesystem the passed QDomDocument. If the specified file exists
  * overwrites it.
  */
-bool XMLExpert::dumpDocument(QDomDocument *doc, QString path)
+bool XMLExpert::dumpDocument(QDomDocument *doc, QString labPath)
 {	
-	QFile data(path + "/" + XML_DEFAULT_FILE_NAME);
+	QFile data(labPath + "/" + XML_DEFAULT_FILE_NAME);
 	bool returnVal = false;
 	
 	if (data.open(QFile::WriteOnly | QFile::Truncate)) 
@@ -58,16 +58,15 @@ bool XMLExpert::dumpDocument(QDomDocument *doc, QString path)
 
 /**
  * [STATIC]
- * Reads the file named "filename" and returns a QDomDocument. If the file is 
- * empty or null returns an empty QDomDocument.
+ * Dump the labpath/lab.xml contend inside the document
  */ 
-QDomDocument* XMLExpert::readDocument()
+QDomDocument* XMLExpert::readDocument(QString labPath)
 {
 	//preparo il documento
 	QDomDocument *doc = new QDomDocument();
 	
-	QFile data(XML_DEFAULT_FILE_NAME);
-	if (data.open(QFile::ReadOnly)) 
+	QFile data(labPath.append("/").append(XML_DEFAULT_FILE_NAME));
+	if (data.open(QFile::ReadOnly))
 	{
 		QTextStream in(&data);
 		QString result = in.readAll();

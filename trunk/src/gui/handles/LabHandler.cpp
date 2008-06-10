@@ -415,3 +415,10 @@ void LabHandler::closeLab()
 	mainWindow->actionCloseLab->setDisabled(true);
 }
 
+/**
+ * Set the lab scene size
+ */
+void LabHandler::setSceneSize(QRectF &size)
+{
+	mainWindow->setSceneSize(size);
+}

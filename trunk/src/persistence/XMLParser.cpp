@@ -37,8 +37,9 @@ XMLParser::~XMLParser()
  * Parse the dom and return the size of the scene
  * error string is setted if an error is verified
  */
-QRectF XMLParser::getSceneSize(QDomDocument *doc, QString *error)
+QRectF XMLParser::getSceneSize(QString labPath, QString *error)
 {
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
 	QRectF sceneSize;	//the return value
 	QDomElement dimension = 
 		doc->elementsByTagName("lab").at(0).toElement().

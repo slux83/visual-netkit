@@ -18,6 +18,7 @@
 
 #include "LabOpener.h"
 #include "../gui/handles/LabHandler.h"
+#include "XMLParser.h"
 
 /**
  * Constructor
@@ -161,7 +162,19 @@ bool LabOpener::createLab()
 	{
 		//Init a new laboratory
 		LabHandler::getInstance()->openLab(labPath);
-
+		
+		QString error;
+		QRectF sceneSize = XMLParser::getSceneSize(labPath, &error);
+		
+		if(!error.isEmpty())
+		{
+			errorString = error;
+			valid = false;
+		}
+		
+		if(valid)
+			LabHandler::getInstance()->setSceneSize(sceneSize);
+		
 		//Get the lab properites
 		QRegExp propertiesRegExp("^LAB_(DESCRIPTION|VERSION|AUTHOR|EMAIL|WEB)=(.+)");
 		

@@ -245,6 +245,17 @@ void MainWindow::resizeScene(QAction *action)
 }
 
 /**
+ * Set the scene size (used by open lab UC)
+ */
+void MainWindow::setSceneSize(QRectF &size)
+{
+	graphicsView->scene()->setSceneRect(size);
+	
+	//update the miniature scale factor
+	updateMinuatureDock((int)size.width());
+}
+
+/**
  * Unlock the scene and correlated actions
  */
 void MainWindow::unlockSceneAndActions()
