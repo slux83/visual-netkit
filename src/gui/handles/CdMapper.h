@@ -55,6 +55,7 @@ public:
 
 public slots:
 	void changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QString label);
+	void clear();
 
 };
 

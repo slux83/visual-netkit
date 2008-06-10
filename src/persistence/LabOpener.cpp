@@ -382,11 +382,8 @@ bool LabOpener::fetchHis()
 			
 			if(valid)		//ok, create the link
 			{
-				HardwareInterface *hi =
-					VmFacadeController::getInstance()->createNewHardwareIterface(
-							vm, QString("eth").append(caps[2]), linkState, cd);
-				
-				Q_UNUSED(hi);		//hi is just created
+				VmFacadeController::getInstance()->createNewHardwareIterface(
+						vm, QString("eth").append(caps[2]), linkState, cd);
 			}
 		}
 	}

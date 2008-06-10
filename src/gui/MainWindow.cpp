@@ -155,6 +155,9 @@ void MainWindow::createConnections()
 	
 	//connect: open lab
 	connect(actionOpenLab, SIGNAL(triggered()), this, SLOT(openLab()));
+	
+	//connect: close lab
+	connect(actionCloseLab, SIGNAL(triggered()), labHandler, SLOT(closeLab()));
 }
 
 /**
@@ -263,6 +266,28 @@ void MainWindow::unlockSceneAndActions()
 	
 	initMiniatureDock();
 }
+
+/**
+ * Lock the scene and correlated actions
+ */
+void MainWindow::lockSceneAndActions()
+{
+	graphicsView->setVisible(false);
+	graphicsView->setDisabled(true);
+	sceneSizeGroup->setDisabled(true);
+	labItemGroup->setDisabled(true);
+	menuGraph->setDisabled(true);
+	graphZoomGroup->setDisabled(true);
+	
+	/* save and save as... */
+	actionSave->setDisabled(true);
+	actionSaveAs->setDisabled(true);
+	
+	labMiniature->setDisabled(true);
+	
+	actionManageGraph->setDisabled(true);
+}
+
 
 /**
  * [PRIVATE]

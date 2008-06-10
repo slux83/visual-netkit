@@ -43,6 +43,7 @@ public:
 	void newLaboratory(bool needEmit = true);
 	bool saveLab(QString const &savePath);
 	Laboratory * getCurrentLab() { return currentLab; };
+	void closeLowLevelLab();
 
 signals:
 	void createdNewLab(Laboratory *newLab);

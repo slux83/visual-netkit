@@ -122,3 +122,12 @@ void LinkMapper::changeGraphicsLabelHi(HardwareInterface *hi, QString pluginName
 	
 }
 
+/**
+ * [SLOT]
+ * Clear mapping
+ */
+void LinkMapper::clear()
+{
+//	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	mappings.clear();
+}

@@ -38,7 +38,7 @@ HardwareInterface::HardwareInterface(VirtualMachine *m, CollisionDomain *cd,
  */
 HardwareInterface::~HardwareInterface()
 {
-	
+	qDebug() << "hi destroyed";
 }
 
 /**

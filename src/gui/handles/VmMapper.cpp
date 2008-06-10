@@ -137,3 +137,12 @@ void VmMapper::changeGraphicsLabelVm(VirtualMachine *vm, QString pluginName, QSt
 
 }
 
+/**
+ * [SLOT]
+ * Clear mapping
+ */
+void VmMapper::clear()
+{
+	//qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	mappings.clear();
+}

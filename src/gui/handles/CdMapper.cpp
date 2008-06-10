@@ -117,3 +117,13 @@ void CdMapper::changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QS
 	cdi->setPluginLine(pluginName, label);
 	
 }
+
+/**
+ * [SLOT]
+ * Clear mapping
+ */
+void CdMapper::clear()
+{
+	//qDeleteAll(mappings.keys());	//values is destroyed by low level objects
+	mappings.clear();
+}

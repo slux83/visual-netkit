@@ -62,6 +62,10 @@ SceneTreeMapper* SceneTreeMapper::getInstance()
  */
 void SceneTreeMapper::createRootElement()
 {
+	//fixed to null by clear() function
+	if(rootElement == NULL)
+		rootElement = new QTreeWidgetItem();
+	
 	rootElement->setIcon(0, QIcon(LAB_ICON));
 	sceneTree->addTopLevelItem(rootElement);
 }
@@ -198,4 +202,19 @@ void SceneTreeMapper::changeLinkLabel(LinkItem *linkItem, QString newLabel)
 	}
 	
 	node->setData(0, Qt::DisplayRole, newLabel);
+}
+
+/**
+ * [SLOT]
+ * Clear mappings and contents
+ */
+void SceneTreeMapper::clear()
+{
+	sceneTree->clear();
+	vmMap.clear();
+	linkMap.clear();
+	cdMap.clear();
+	
+	//root element is deleted by sceneTree clear() call
+	rootElement = NULL;
 }
