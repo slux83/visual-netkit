@@ -22,6 +22,7 @@
 #include <QMap>
 #include <QString>
 #include <QObject>
+#include <QDebug>
 
 class HardwareInterface;
 

@@ -34,6 +34,8 @@ CollisionDomain::CollisionDomain(QString newName)
  */
 CollisionDomain::~CollisionDomain()
 {
+	//links are destroyed by vm deconstructor
+	qDebug() << "cd destroyed";
 }
 
 /**

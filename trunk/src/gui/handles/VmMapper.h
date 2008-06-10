@@ -58,6 +58,7 @@ public:
 
 public slots:
 	void changeGraphicsLabelVm(VirtualMachine *vm, QString pluginName, QString label);
+	void clear();
 
 signals:
 	void newMappingCreated(VirtualMachine *machine);

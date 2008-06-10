@@ -58,6 +58,7 @@ public:
 	void prepareRenderLabProperties();
 
 public slots:
+	void closeLab();
 	void newLab();
 	void openLab(QString labPath);
 	void saveLab(const QStringList &selectedFiles);

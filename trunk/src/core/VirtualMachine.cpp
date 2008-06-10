@@ -33,6 +33,8 @@ VirtualMachine::VirtualMachine(QString newName) : QObject()
  */
 VirtualMachine::~VirtualMachine()
 {
+	qDebug() << "destoring vm";
+	qDeleteAll(interfaces);
 	
 }
 

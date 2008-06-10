@@ -92,7 +92,6 @@ bool LabFacadeController::saveLab(const QString &savePath)
 		VmMapper::getInstance()->ensureAllItemsAreJoined();
 		CdMapper::getInstance()->ensureAllItemsAreJoined();
 		
-		// TODO: delegate to different thread
 		// saves lab structure dirs and files
 		LabSaver ls(savePath);
 		
@@ -115,3 +114,13 @@ bool LabFacadeController::saveLab(const QString &savePath)
 	return false;
 }
 
+/**
+ * Destroy and reset all low lever strucutes 
+ */
+void LabFacadeController::closeLowLevelLab()
+{
+	//TODO: destroy plugins
+	
+	delete currentLab;
+	currentLab = NULL;
+}

@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QDebug>
 #include "CollisionDomain.h"
 
 class VirtualMachine;

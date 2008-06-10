@@ -18,6 +18,9 @@
 
 #include "LabHandler.h"
 #include "../../common/CommonConfigs.h"
+#include "VmMapper.h"
+#include "CdMapper.h"
+#include "LinkMapper.h"
 
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
@@ -372,5 +375,37 @@ QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWid
 		}
 	}
 	return map;
+}
+
+/**
+ * [SLOT]
+ * Close the lab: clear mappings, scene, graphics items and Main gui.
+ */
+void LabHandler::closeLab()
+{
+	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
+		return;
+	
+	//Destroy mappings
+	VmMapper::getInstance()->clear();
+	CdMapper::getInstance()->clear();
+	LinkMapper::getInstance()->clear();
+	
+	//Destroy all items
+	mainWindow->getGraphicsView()->scene()->clear();
+	
+	//reset tree views
+	mainWindow->labTree->clear();
+	SceneTreeMapper::getInstance()->clear();
+	
+	//other gui stuffs
+	mainWindow->clearPropertyDock();
+	mainWindow->setWindowTitle("VisualNetkit");
+	mainWindow->lockSceneAndActions();
+	
+	//Destroy low level stuff
+	LabFacadeController::getInstance()->closeLowLevelLab();
+	
+	mainWindow->writeLogMessage("Lab Closed");
 }
 

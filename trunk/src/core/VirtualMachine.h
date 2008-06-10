@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QString>
 #include <QMap>
+#include <QDebug>
 
 /**
  * The Virtual machine that inside NetKit it is modelled with User Mode Linux
