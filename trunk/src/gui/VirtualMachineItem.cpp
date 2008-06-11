@@ -93,8 +93,12 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 	if(change == ItemPositionHasChanged && scene())
 			emit needBoundingrectRebuild();
 	
-	//emit a signal
-	emit positionChanged();
+	//Prevent coredump when item is removed: no need to adjust the link :D
+	if(change != ItemChildRemovedChange && change != ItemVisibleHasChanged)
+	{
+		//emit a signal
+		emit positionChanged();
+	}
 	
 	return QGraphicsItem::itemChange(change, value);
 }
