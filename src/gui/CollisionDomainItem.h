@@ -57,12 +57,14 @@ private:
 	quint16 connectedlinks;
 	
 	void initContextMenu();
+	void refreshGroup();
 
 public:
 	CollisionDomainItem(QString label);
 	virtual ~CollisionDomainItem();
 	QString getLabel() { return myLabel->text(); };
 	void setLabelCdName(QString newLabel);
+	void setLabelPos(QPointF &pos) { myLabel->setPos(pos); refreshGroup(); };
 	SvgItemPrivate* getSvgPrivate() { return collisionDomainSvg; };
 	void increaseDecreaseLinkCounter(bool increase);
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };

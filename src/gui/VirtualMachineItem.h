@@ -57,6 +57,7 @@ private:
 	bool isJoin;
 		
 	void initContextMenu();
+	void refreshGroup();
 	
 public:
 	VirtualMachineItem(QString label) ;
@@ -64,6 +65,7 @@ public:
 	QString getLabel() { return vmNameLabel->text(); };
 	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
 	void setLabelVmName(QString newLabel);
+	void setLabelPos(QPointF &pos) { vmNameLabel->setPos(pos); refreshGroup(); };
 	LabelItemPrivate* getLabelItemPrivate() { return vmNameLabel; };
 	
 	PluginsSharedArea* getPluginsSharedArea() { return pluginsSharedArea; };

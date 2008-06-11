@@ -215,3 +215,13 @@ void VirtualMachineItem::managePluginsActionCalled()
 	pluginsManager->buildGui();
 	pluginsManager->show();
 }
+
+/**
+ * [PRIVATE]
+ * Refresh the group size
+ */
+void VirtualMachineItem::refreshGroup()
+{
+	 removeFromGroup(vmNameLabel);
+	 addToGroup(vmNameLabel);
+}
