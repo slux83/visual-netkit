@@ -251,3 +251,32 @@ QList<PluginProxy*> PluginRegistry::getAllProxies()
 	return proxies;
 }
 
+/**
+ * Clean all plugins
+ */
+void PluginRegistry::clean()
+{
+	qDebug() << "Cleaning plugin registry";
+	
+	/* Destroy vm plugins */
+	foreach(PluginProxy *proxy, vmAssociations.values())
+	{
+		factories.value(proxy->getPlugin()->getName())->destroyPlugin(proxy);
+	}
+	
+	/* Destroy hi plugins */
+	foreach(PluginProxy *proxy, hiAssociations.values())
+	{
+		factories.value(proxy->getPlugin()->getName())->destroyPlugin(proxy);
+	}
+
+	/* Destroy cd plugins */
+	foreach(PluginProxy *proxy, cdAssociations.values())
+	{
+		factories.value(proxy->getPlugin()->getName())->destroyPlugin(proxy);
+	}
+	
+	vmAssociations.clear();
+	hiAssociations.clear();
+	cdAssociations.clear();
+}

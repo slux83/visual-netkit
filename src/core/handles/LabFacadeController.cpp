@@ -25,6 +25,8 @@
 #include "../../persistence/XMLSaver.h"
 #include "../../persistence/XMLParser.h"
 
+#include "../../plugin_framework/PluginRegistry.h"
+
 /**
  * Init the null instance for the singletone controller
  */
@@ -119,7 +121,8 @@ bool LabFacadeController::saveLab(const QString &savePath)
  */
 void LabFacadeController::closeLowLevelLab()
 {
-	//TODO: destroy plugins
+	//destroy plugins
+	PluginRegistry::getInstance()->clean();
 	
 	delete currentLab;
 	currentLab = NULL;

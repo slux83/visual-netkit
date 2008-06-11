@@ -47,6 +47,7 @@ public:
 	PluginRegistry();
 	virtual ~PluginRegistry();
 	static PluginRegistry* getInstance();
+	void clean();
 	
 	bool fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);

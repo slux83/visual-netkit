@@ -71,7 +71,6 @@ extern "C" PluginInterface* createPlugin()
 extern "C" void destroyPlugin(PluginInterface* p)
 {
 	delete p;
-	qDebug() << "PluginMac destroyed";
 }
 
 
