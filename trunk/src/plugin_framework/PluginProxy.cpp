@@ -35,7 +35,7 @@ PluginProxy::~PluginProxy()
 {
 	/*
 	 * NOTE: do not destroy the plugin here!
-	 * It's the plugin that destroy its proxy
+	 * It will be destroyed by loader factory
 	 */
 }
 
