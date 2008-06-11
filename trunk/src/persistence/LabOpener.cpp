@@ -445,6 +445,20 @@ bool LabOpener::createGraphicElements()
 			return false;
 		}
 		
+		error.clear();
+		QPointF vmLabelPos = XMLParser::getVmLabelPosition(vm->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		vmItem->setLabelPos(vmLabelPos);
+		
 		vmItem->setPos(vmP);
 		VmMapper::getInstance()->addNewMapping(vmItem, vm);
 	}
@@ -460,7 +474,7 @@ bool LabOpener::createGraphicElements()
 		
 		CollisionDomainItem *cdItem = new CollisionDomainItem(cd->getName());
 		QString error;
-		QPointF vmP = XMLParser::getCdPosition(cd->getName(), labPath, &error);
+		QPointF cdP = XMLParser::getCdPosition(cd->getName(), labPath, &error);
 		
 		//XML error
 		if(!error.isEmpty())
@@ -471,8 +485,22 @@ bool LabOpener::createGraphicElements()
 			return false;
 		}
 		
-		cdItem->setPos(vmP);
+		cdItem->setPos(cdP);
 		CdMapper::getInstance()->addNewMapping(cdItem, cd);
+		
+		error.clear();
+		QPointF cdLabelPos = XMLParser::getCdLabelPosition(cd->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		cdItem->setLabelPos(cdLabelPos);
 		
 		/**
 		 * Connect this Collision domain to all hosts

@@ -238,3 +238,13 @@ void CollisionDomainItem::managePluginsActionCalled()
 	pluginsManager->show();
 }
 
+/**
+ * [PRIVATE]
+ * Refresh the group size
+ */
+void CollisionDomainItem::refreshGroup()
+{
+	 removeFromGroup(myLabel);
+	 addToGroup(myLabel);
+}
+
