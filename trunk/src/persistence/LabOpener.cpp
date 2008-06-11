@@ -18,6 +18,10 @@
 
 #include "LabOpener.h"
 #include "../gui/handles/LabHandler.h"
+#include "../gui/handles/VmMapper.h"
+#include "../gui/handles/CdMapper.h"
+#include "../gui/handles/LinkMapper.h"
+#include "../gui/VirtualMachineItem.h"
 #include "XMLParser.h"
 
 /**
@@ -59,6 +63,10 @@ void LabOpener::open()
 	
 	//STEP 4
 	if(!fetchHis())
+		return;
+	
+	//STEP 5
+	if(!createGraphicElements())
 		return;
 }
 
@@ -402,6 +410,72 @@ bool LabOpener::fetchHis()
 	}
 	
 	emit loadStepDone(4, valid);
-	return valid;
 	
+	return valid;	
+}
+
+/**
+ * [PRIVATE]
+ * 
+ * ## STEP-5 ##
+ * Create all graphics elements and init mappings
+ */
+bool LabOpener::createGraphicElements()
+{
+	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	/**
+	 * Virtual machine items
+	 */
+	QListIterator<VirtualMachine*> vmIter = lab->getMachines().values();
+	
+	while(vmIter.hasNext())
+	{
+		VirtualMachine *vm = vmIter.next();
+		VirtualMachineItem *vmItem = new VirtualMachineItem(vm->getName());
+		QString error;
+		QPointF vmP = XMLParser::getVmPosition(vm->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		vmItem->setPos(vmP);
+		VmMapper::getInstance()->addNewMapping(vmItem, vm);
+	}
+	
+	/**
+	 * Virtual machine items
+	 */
+	QListIterator<CollisionDomain*> cdIter = lab->getCollisionDomains().values();
+	
+	while(cdIter.hasNext())
+	{
+		CollisionDomain *cd = cdIter.next();
+		
+		CollisionDomainItem *cdItem = new CollisionDomainItem(cd->getName());
+		QString error;
+		QPointF vmP = XMLParser::getCdPosition(cd->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		cdItem->setPos(vmP);
+		CdMapper::getInstance()->addNewMapping(cdItem, cd);
+	}
+	
+	emit loadStepDone(5, true);
+	
+	return true;
 }

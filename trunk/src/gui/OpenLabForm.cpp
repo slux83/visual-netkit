@@ -17,6 +17,7 @@
  */
 
 #include "OpenLabForm.h"
+#include "handles/LabHandler.h"
 
 /**
  * Constructor
@@ -64,9 +65,10 @@ void OpenLabForm::browseLab()
 /**
  * Reset the gui
  */
-void OpenLabForm::resetGui()
+void OpenLabForm::resetGui(bool clearPath)
 {
-	labPathLineEdit->clear();
+	if(clearPath)
+		labPathLineEdit->clear();
 	
 	checkBox_0->setCheckState(Qt::Unchecked);
 	checkBox_0->setEnabled(false);
@@ -139,15 +141,25 @@ void OpenLabForm::markLoadStep(int step, bool result)
 	}
 	
 	if(result)
+	{
 		steps.value(step)->setCheckState(Qt::Checked);
+		//TODO: close the gui at the last step
+	}
 	else
 	{
 		steps.value(step)->setCheckState(Qt::PartiallyChecked);
 		
-		QMessageBox::warning(this, tr("Visual Netkit - ERROR"),
+		int resp = QMessageBox::warning(this, tr("Visual Netkit - ERROR"),
 				tr("There was an error during laboratory opening:") + "\n\n" + labOpener->getErrorString(),
 				QMessageBox::Ok, QMessageBox::Ok);
-		return;
+		
+		if(resp == QMessageBox::Ok)
+		{
+			//when user click "ok" clear lab junk and reset the gui, not the path
+		
+			LabHandler::getInstance()->closeLab();
+			resetGui(false);
+		}
 	}
 }
 

@@ -30,10 +30,3 @@ LabelItemPrivate::LabelItemPrivate(const QString &text, QGraphicsItem *parent)
 	setZValue(1100);
 	setFont(GRAPHICS_FONT);
 }
-
-/**
- * Deconstructor
- */ 
-LabelItemPrivate::~LabelItemPrivate()
-{
-}

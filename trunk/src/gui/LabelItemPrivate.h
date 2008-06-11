@@ -29,7 +29,6 @@ class LabelItemPrivate : public QGraphicsSimpleTextItem
 	
 public:
 	LabelItemPrivate(const QString & text, QGraphicsItem * parent = 0);
-	virtual ~LabelItemPrivate();
 };
 
 #endif /*LABELITEMPRIVATE_H_*/

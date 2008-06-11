@@ -58,6 +58,13 @@ VirtualMachineItem::VirtualMachineItem(QString label)
  */
 VirtualMachineItem::~VirtualMachineItem()
 {
+	delete pluginsManager;
+	delete vmSvg;
+	delete vmNameLabel;
+	delete pluginsSharedArea;
+	delete ungroupAction;
+	delete restoreGroupAction;
+	delete deleteAction;
 }
 
 /**

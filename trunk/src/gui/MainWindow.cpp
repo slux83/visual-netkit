@@ -251,6 +251,23 @@ void MainWindow::setSceneSize(QRectF &size)
 {
 	graphicsView->scene()->setSceneRect(size);
 	
+	//Select the correct action
+	if(actionSmall->data().toRectF() == size)
+			actionSmall->setChecked(true);
+		
+	if(actionSmall->data().toRectF() == size)
+			actionSmall->setChecked(true);
+		
+	if(actionNormal->data().toRectF() == size)
+			actionNormal->setChecked(true);
+		
+	if(actionBig->data().toRectF() == size)
+			actionBig->setChecked(true);
+		
+	if(actionHuge->data().toRectF() == size)
+			actionHuge->setChecked(true);
+		
+		
 	//update the miniature scale factor
 	updateMinuatureDock((int)size.width());
 }
