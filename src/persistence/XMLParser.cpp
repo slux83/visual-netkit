@@ -34,7 +34,7 @@ XMLParser::~XMLParser()
 
 /**
  * [STATIC-PUBLIC]
- * Parse the dom and return the size of the scene
+ * Return the size of the scene
  * error string is setted if an error is verified
  */
 QRectF XMLParser::getSceneSize(QString labPath, QString *error)
@@ -59,6 +59,84 @@ QRectF XMLParser::getSceneSize(QString labPath, QString *error)
 	
 	return sceneSize;
 
+}
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the vm position
+ * If someting goes wrong, the error arg is setted
+ */
+QPointF XMLParser::getVmPosition(QString vmName, QString labPath, QString *error)
+{
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QPointF vmPos;	//the return value
+	QDomNodeList nodeList = doc->elementsByTagName("virtualmachine");
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		if(nodeList.at(i).toElement().hasAttribute("id"))
+		{
+			if(nodeList.at(i).toElement().attribute("id") == vmName)
+			{
+				//ok, get x and y coordinates, but before check consistency
+				if(!nodeList.at(i).toElement().hasAttribute("x") || !nodeList.at(i).toElement().hasAttribute("y"))
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: node virtualmachine").append(" ID=").append(vmName).append(" ").append("not standard.");
+					return vmPos;
+				}
+				
+				vmPos.setX(nodeList.at(i).toElement().attribute("x").toInt());
+				vmPos.setY(nodeList.at(i).toElement().attribute("y").toInt());
+				break;
+			}
+		}
+		else
+		{
+			if(error != NULL)
+				error->append("Unvalid lab.xml: none ID attribute for node virtualmachine").append(" ID=").append(vmName);
+		}
+	}
+	
+	return vmPos;
+}
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the cd position
+ * If someting goes wrong, the error arg is setted
+ */
+QPointF XMLParser::getCdPosition(QString cdName, QString labPath, QString *error)
+{
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QPointF cdPos;	//the return value
+	QDomNodeList nodeList = doc->elementsByTagName("collisiondomain");
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		if(nodeList.at(i).toElement().hasAttribute("id"))
+		{
+			if(nodeList.at(i).toElement().attribute("id") == cdName)
+			{
+				//ok, get x and y coordinates, but before check consistency
+				if(!nodeList.at(i).toElement().hasAttribute("x") || !nodeList.at(i).toElement().hasAttribute("y"))
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: node collisiondomain").append(" ID=").append(cdName).append(" ").append("not standard.");
+					return cdPos;
+				}
+				
+				cdPos.setX(nodeList.at(i).toElement().attribute("x").toInt());
+				cdPos.setY(nodeList.at(i).toElement().attribute("y").toInt());
+				break;
+			}
+		}
+		else
+		{
+			if(error != NULL)
+				error->append("Unvalid lab.xml: none ID attribute for node collisiondomain").append(" ID=").append(cdName);
+		}
+	}
+	
+	return cdPos;
 }
 
 ///**

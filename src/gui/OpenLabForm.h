@@ -46,7 +46,7 @@ private slots:
 public:
 	OpenLabForm(QWidget *parent = 0);
 	virtual ~OpenLabForm();
-	void resetGui();
+	void resetGui(bool clearPath = true);
 };
 
 #endif /*OPENLABFORM_H_*/

@@ -90,8 +90,7 @@ void VmMapper::addNewMapping(VirtualMachineItem* vmItem, VirtualMachine* vm)
 }
 
 /**
- * Get the interfaces for the machine passed
- * name -> ip/netmask
+ * Get the interface names for the machine passed
  */
 QStringList VmMapper::getMachineInterfaces(VirtualMachineItem* vmItem)
 {

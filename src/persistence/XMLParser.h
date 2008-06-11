@@ -42,6 +42,8 @@ public:
 	XMLParser();
 	virtual ~XMLParser();
 	static QRectF getSceneSize(QString labPath, QString *error = NULL);
+	static QPointF getVmPosition(QString vmName, QString labPath, QString *error = NULL);
+	static QPointF getCdPosition(QString cdName, QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/

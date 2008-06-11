@@ -30,13 +30,6 @@ LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(pare
 }
 
 /**
- * Deconstructor
- */
-LineItemPrivate::~LineItemPrivate()
-{
-}
-
-/**
  * [REIMPL]
  * Redefined the bounding rect
  */

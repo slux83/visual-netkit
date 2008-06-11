@@ -67,6 +67,13 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
  */
 LinkItem::~LinkItem()
 {
+	delete lineItem;
+	delete myLabel;
+	delete pluginsSharedArea;
+	delete deleteAction;
+	delete managePluginsAction;
+	delete pluginsManager;
+
 }
 
 /**

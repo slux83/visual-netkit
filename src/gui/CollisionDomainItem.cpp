@@ -64,6 +64,14 @@ CollisionDomainItem::CollisionDomainItem(QString label)
  */
 CollisionDomainItem::~CollisionDomainItem()
 {
+	delete collisionDomainSvg;
+	delete myLabel;
+	delete pluginsSharedArea;
+	delete ungroupAction;
+	delete restoreGroupAction;
+	delete deleteAction;
+	delete managePluginsAction;
+	delete pluginsManager;
 }
 
 /**

@@ -18,10 +18,10 @@
   <widget class="QWidget" name="centralwidget" >
    <property name="geometry" >
     <rect>
-     <x>268</x>
+     <x>286</x>
      <y>71</y>
-     <width>490</width>
-     <height>464</height>
+     <width>472</width>
+     <height>537</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" >
@@ -41,8 +41,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>480</width>
-         <height>428</height>
+         <width>462</width>
+         <height>501</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -204,8 +204,8 @@
     <rect>
      <x>0</x>
      <y>71</y>
-     <width>262</width>
-     <height>123</height>
+     <width>280</width>
+     <height>384</height>
     </rect>
    </property>
    <property name="floating" >
@@ -228,8 +228,8 @@
      <rect>
       <x>0</x>
       <y>23</y>
-      <width>262</width>
-      <height>100</height>
+      <width>280</width>
+      <height>361</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -263,7 +263,7 @@
      <x>764</x>
      <y>71</y>
      <width>262</width>
-     <height>229</height>
+     <height>252</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -281,7 +281,7 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>206</height>
+      <height>229</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -317,11 +317,17 @@
   <widget class="QDockWidget" name="dockMiniature" >
    <property name="geometry" >
     <rect>
-     <x>0</x>
-     <y>200</y>
+     <x>764</x>
+     <y>329</y>
      <width>262</width>
-     <height>335</height>
+     <height>279</height>
     </rect>
+   </property>
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="maximumSize" >
     <size>
@@ -333,7 +339,7 @@
     <string>Miniature</string>
    </property>
    <attribute name="dockWidgetArea" >
-    <number>1</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_6" >
     <property name="geometry" >
@@ -341,14 +347,14 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>312</height>
+      <height>256</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
      <item>
       <layout class="QHBoxLayout" >
        <property name="margin" >
-        <number>6</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QGraphicsView" name="labMiniature" >
@@ -380,8 +386,17 @@
      </item>
      <item>
       <layout class="QHBoxLayout" >
-       <property name="margin" >
+       <property name="leftMargin" >
         <number>2</number>
+       </property>
+       <property name="topMargin" >
+        <number>2</number>
+       </property>
+       <property name="rightMargin" >
+        <number>2</number>
+       </property>
+       <property name="bottomMargin" >
+        <number>0</number>
        </property>
        <item>
         <widget class="QLabel" name="label" >
@@ -424,44 +439,31 @@
        </item>
       </layout>
      </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0" >
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
     </layout>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockTreeView" >
    <property name="geometry" >
     <rect>
-     <x>764</x>
-     <y>306</y>
-     <width>262</width>
-     <height>229</height>
+     <x>0</x>
+     <y>461</y>
+     <width>280</width>
+     <height>147</height>
     </rect>
    </property>
    <property name="windowTitle" >
     <string>Scene Elements</string>
    </property>
    <attribute name="dockWidgetArea" >
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2" >
     <property name="geometry" >
      <rect>
       <x>0</x>
       <y>23</y>
-      <width>262</width>
-      <height>206</height>
+      <width>280</width>
+      <height>124</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -493,9 +495,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>541</y>
+     <y>614</y>
      <width>1026</width>
-     <height>196</height>
+     <height>123</height>
     </rect>
    </property>
    <property name="floating" >
@@ -513,7 +515,7 @@
       <x>0</x>
       <y>23</y>
       <width>1026</width>
-      <height>173</height>
+      <height>100</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
