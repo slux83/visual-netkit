@@ -84,6 +84,10 @@ void LinkItem::updateLinkPos()
 {
 	QPointF vmCenter, cdCenter, labelCenter;
 
+	//prevent core dump when scene destroy all elements and vm and cd send signals
+	if(vm == NULL || cd == NULL)
+		return;
+	
 	//start point
 	vmCenter.setX(vm->getSvgPrivate()->scenePos().x() +
 			vm->getSvgPrivate()->boundingRect().width() / 2);

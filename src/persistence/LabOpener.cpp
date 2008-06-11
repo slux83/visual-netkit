@@ -450,7 +450,7 @@ bool LabOpener::createGraphicElements()
 	}
 	
 	/**
-	 * Virtual machine items
+	 * Collision domain items
 	 */
 	QListIterator<CollisionDomain*> cdIter = lab->getCollisionDomains().values();
 	
@@ -473,6 +473,26 @@ bool LabOpener::createGraphicElements()
 		
 		cdItem->setPos(vmP);
 		CdMapper::getInstance()->addNewMapping(cdItem, cd);
+		
+		/**
+		 * Connect this Collision domain to all hosts
+		 */
+		foreach(HardwareInterface *hi, cd->getPeers())
+		{
+			VirtualMachineItem* vmItemToConnect =
+				VmMapper::getInstance()->getVmItem(hi->getMyVirtualMachine());
+			
+			if(vmItemToConnect == NULL)
+			{
+				errorString.append("Virtual machine item unknown for virtual machine").append(" ").append(hi->getMyVirtualMachine()->getName());
+				emit loadStepDone(5, false);
+				break;
+			}
+			
+			/* Make link and connect the mapping */
+			LinkItem *link = new LinkItem(vmItemToConnect, cdItem, hi->getName());
+			LinkMapper::getInstance()->addNewMapping(link, hi);
+		}
 	}
 	
 	emit loadStepDone(5, true);
