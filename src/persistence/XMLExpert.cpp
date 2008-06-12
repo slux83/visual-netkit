@@ -59,19 +59,40 @@ bool XMLExpert::dumpDocument(QDomDocument *doc, QString labPath)
 /**
  * [STATIC]
  * Dump the labpath/lab.xml contend inside the document
+ * @return empty document with error variable setted on error
  */ 
-QDomDocument* XMLExpert::readDocument(QString labPath)
+QDomDocument XMLExpert::readDocument(QString labPath, QString *error)
 {
 	//preparo il documento
-	QDomDocument *doc = new QDomDocument();
+	QDomDocument doc;
+	QString errorMsg;
+	int errorLine, errorColumn;
 	
 	QFile data(labPath.append("/").append(XML_DEFAULT_FILE_NAME));
-	if (data.open(QFile::ReadOnly))
+	
+	if(!data.open(QFile::ReadOnly))
 	{
-		QTextStream in(&data);
-		QString result = in.readAll();
-		doc->setContent(result, new QString("\nError reading XML file."), 0, 0);
+		if(error != NULL)
+			error->append("Unable to open the lab.xml in read only mode inside ").append(labPath);
+		return doc;
 	}
+	
+	if (!doc.setContent(&data, &errorMsg, &errorLine, &errorColumn))
+	{
+		data.close();
+		
+		qWarning()	<< "Xml file invalid."
+					<< "\nError:" << errorMsg
+					<< "\nline:" << errorLine
+					<< "\ncolumn:" << errorColumn;
+		
+		if(error != NULL)
+			error->append("Invalid lab.xml inside ").append(labPath);
+		
+		return doc;
+	}
+	
+	data.close();
 	
 	return doc;
 }

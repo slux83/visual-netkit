@@ -39,10 +39,19 @@ XMLParser::~XMLParser()
  */
 QRectF XMLParser::getSceneSize(QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QString errXml;
+	QDomDocument doc = XMLExpert::readDocument(labPath, &errXml);
 	QRectF sceneSize;	//the return value
+	
+	//validate dom
+	if(!errXml.isEmpty())
+	{
+		error->append(errXml);
+		return sceneSize;
+	}
+	
 	QDomElement dimension = 
-		doc->elementsByTagName("lab").at(0).toElement().
+		doc.elementsByTagName("lab").at(0).toElement().
 			elementsByTagName("scene").at(0).toElement().
 				elementsByTagName("dimension").at(0).toElement();
 	
@@ -68,9 +77,10 @@ QRectF XMLParser::getSceneSize(QString labPath, QString *error)
  */
 QPointF XMLParser::getVmPosition(QString vmName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF vmPos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("virtualmachine");
+	QDomNodeList nodeList = doc.elementsByTagName("virtualmachine");
+	
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -107,9 +117,10 @@ QPointF XMLParser::getVmPosition(QString vmName, QString labPath, QString *error
  */
 QPointF XMLParser::getCdPosition(QString cdName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF cdPos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("collisiondomain");
+	QDomNodeList nodeList = doc.elementsByTagName("collisiondomain");
+	
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -146,9 +157,9 @@ QPointF XMLParser::getCdPosition(QString cdName, QString labPath, QString *error
  */
 QPointF XMLParser::getCdLabelPosition(QString cdName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF pos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("collisiondomain");
+	QDomNodeList nodeList = doc.elementsByTagName("collisiondomain");
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -196,9 +207,9 @@ QPointF XMLParser::getCdLabelPosition(QString cdName, QString labPath, QString *
  */
 QPointF XMLParser::getCdPluginsAreaPosition(QString cdName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF pos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("collisiondomain");
+	QDomNodeList nodeList = doc.elementsByTagName("collisiondomain");
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -246,9 +257,9 @@ QPointF XMLParser::getCdPluginsAreaPosition(QString cdName, QString labPath, QSt
  */
 QPointF XMLParser::getVmLabelPosition(QString vmName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF pos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("virtualmachine");
+	QDomNodeList nodeList = doc.elementsByTagName("virtualmachine");
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -295,9 +306,9 @@ QPointF XMLParser::getVmLabelPosition(QString vmName, QString labPath, QString *
  */
 QPointF XMLParser::getVmPluginsAreaPosition(QString vmName, QString labPath, QString *error)
 {
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QDomDocument doc = XMLExpert::readDocument(labPath);
 	QPointF pos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("virtualmachine");
+	QDomNodeList nodeList = doc.elementsByTagName("virtualmachine");
 	for(int i=0; i<nodeList.size(); i++)
 	{
 		if(nodeList.at(i).toElement().hasAttribute("id"))
@@ -337,16 +348,16 @@ QPointF XMLParser::getVmPluginsAreaPosition(QString vmName, QString labPath, QSt
 	return pos;
 }
 
+/**
+ * [STATIC-PUBLIC]
+ * Get the list of plugins for a link
+ */
 QStringList XMLParser::getLinkPlugins(QString vmName, QString ethName,
 		QString labPath, QString *error)
 {
 	QStringList plugins;	//return list
-	QDomDocument *doc = XMLExpert::readDocument(labPath);
-	QPointF pos;	//the return value
-	QDomNodeList nodeList = doc->elementsByTagName("link");
-	
-	if(nodeList.size() == 0 && error != NULL)
-		error->append("Unvalid lab.xml: node link ").append(ethName).append(" for virtual-machine ").append(vmName).append(", not found.");
+	QDomDocument doc = XMLExpert::readDocument(labPath);
+	QDomNodeList nodeList = doc.elementsByTagName("link");
 	
 	for(int i=0; i<nodeList.size(); i++)
 	{
@@ -384,171 +395,78 @@ QStringList XMLParser::getLinkPlugins(QString vmName, QString ethName,
 	return plugins;
 }
 
-///**
-// * Reads and store the QDomDocument representing laboratory graph.
-// * This function has to be called before loadXML() function.
-// */
-//bool XMLParser::parseXML()
-//{
-//	bool allok = true;
-//	QString not_found("not found");
-//	
-//	qDebug() << "Parsing XML: ";
-//	
-//	// parsing XML to create QMap<QString, QString> *labInfos
-//	qDebug() << "looking for lab infos... ";
-//	QDomElement lab = labDom->elementsByTagName("lab").at(0).toElement();
-//	labInfos = new QMap<QString, QString>();
-//	labInfos->insert("name", lab.attribute("name", not_found));
-//	labInfos->insert("date", lab.attribute("date", not_found));
-//	qDebug() << "done!" << endl;
-//	
-//	// parsing XML to create QMap<QString, QString> *sceneInfos
-//	qDebug() << "looking for scene infos... ";
-//	lab = labDom->elementsByTagName("scene").at(0).toElement();
-//	sceneInfos = new QMap<QString, QString>();
-//	sceneInfos->insert("width", lab.attribute("width", not_found));
-//	sceneInfos->insert("height",lab.attribute("height", not_found));
-//	qDebug() << "done!" << endl;
-//	
-//	//looking for any item in the scene
-//	qDebug() << "looking for any item in the scene..." << endl;
-//	QDomElement itemsNode = labDom->elementsByTagName("items").at(0).toElement(); 
-//	if (!itemsNode.isNull())
-//	{
-//		int i=0;
-//		
-//		//looking for any virtualmachine in the scene
-//		QDomNodeList vmsNodeList = itemsNode.elementsByTagName("virtualmachine");
-//		if (!vmsNodeList.isEmpty())
-//		{
-//			// parsing XML to create QMap< QString, QMap<QString, QString> > *vmsInfos
-//			qDebug() << "looking for virtual machines infos...";
-//			vmsInfos = new QMap< QString, QMap<QString, QString> >();
-//			for (i=0; i < vmsNodeList.size(); i++)
-//			{
-//				QDomElement vmNode = vmsNodeList.at(i).toElement();
-//				QMap<QString, QString> vm;
-//				
-//				// adds vm id
-//				vm.insert("id", vmNode.attribute("id", not_found));
-//
-//				// adds vm type
-//				vm.insert("type", vmNode.attribute("type", not_found));
-//				
-//				// adds vm position
-//				vm.insert("posx", vmNode.attribute("x", not_found));
-//				vm.insert("posy", vmNode.attribute("y", not_found));
-//				
-//				// adds vm label position
-//				QDomElement label = vmNode.elementsByTagName("label").at(0).toElement();
-//				vm.insert("labelposx", label.attribute("rposx", not_found));
-//				vm.insert("labelposy", label.attribute("rposy", not_found));
-//				
-//				//default value in case of error is the iterator position i
-//				vmsInfos->insert(vmNode.attribute("id", QString::number(i)), vm);
-//			}
-//			qDebug() << "done!";
-//		}
-//		
-//		
-//		//looking for any collision domain in the scene
-//		QDomNodeList cdsNodeList = itemsNode.elementsByTagName("collisiondomain");
-//		if (!cdsNodeList.isEmpty())
-//		{
-//			// parsing XML to create QMap<QString, QMap<QString, QString> > *cdsInfos
-//			qDebug() << "looking for collision domain infos...";
-//			cdsInfos = new QMap<QString, QMap<QString, QString> >();
-//			for (i=0; i < cdsNodeList.size(); i++)
-//			{
-//				QDomElement cdNode = cdsNodeList.at(i).toElement();
-//				QMap<QString, QString> cd;
-//				
-//				// adds cd id
-//				cd.insert("id", cdNode.attribute("id", not_found));
-//				
-//				// adds cd position
-//				cd.insert("posx", cdNode.attribute("x", not_found));
-//				cd.insert("posy", cdNode.attribute("y", not_found));
-//				
-//				// adds cd label position
-//				QDomElement label = cdNode.elementsByTagName("label").at(0).toElement();
-//				cd.insert("labelposx", label.attribute("rposx", not_found));
-//				cd.insert("labelposy", label.attribute("rposy", not_found));
-//				
-//				//default value in case of error is the iterator position i
-//				cdsInfos->insert(cdNode.attribute("id", QString::number(i)), cd);
-//			}
-//			qDebug() << "done!";
-//		}
-//		
-//		
-//		//looking for any link in the scene
-//		QDomNodeList linksNodeList = itemsNode.elementsByTagName("link");
-//		if (!linksNodeList.isEmpty())
-//		{
-//			// parsing XML to create QMap<QString, QString> *linksInfos	
-//			qDebug() << "looking for link infos...";
-//			linksInfos = new QList< QMap<QString, QString> >();
-//			for (i=0; i < linksNodeList.size(); i++)
-//			{
-//				QDomElement linkNode = linksNodeList.at(i).toElement();
-//				QMap<QString, QString> link;
-//				
-//				// adds link's virtualmachine
-//				link.insert("virtualmachine", linkNode.attribute("virtualmachine", not_found));
-//				
-//				// adds link's collisiondomain
-//				link.insert("collisiondomain", linkNode.attribute("collisiondomain", not_found));
-//				
-//				// adds vm label position
-//				QDomElement label = linkNode.elementsByTagName("label").at(0).toElement();
-//				link.insert("labelposx", label.attribute("rposx", not_found));
-//				link.insert("labelposy", label.attribute("rposy", not_found));
-//				
-//				linksInfos->append(link);
-//			}
-//			qDebug() << "done!";
-//		}
-//		
-//	}
-//	return allok;
-//}
-//
-///**
-// * Reads and store the QDomDocument representing laboratory graph.
-// * This function has to be called in order to populate and use the QDomDocument.
-// */
-//bool XMLParser::loadXML()
-//{
-//	qDebug() << "loadXML(): reading labDom...";
-//	labDom = ex->readDocument();
-//	qDebug() << "done!" << endl;
-//	return labDom->isNull();
-//}
-//
-///**
-// * Returns the QDomDocument representing laboratory graph.
-// */
-//QDomDocument* XMLParser::getLabDom()
-//{
-//	return labDom;
-//}
-//
-//
-///**
-// * Returns a fake laboratory with name and date attributes.
-// */
-//Laboratory* XMLParser::getLaboratory()
-//{
-//	Laboratory *lab = new Laboratory();
-//	if (!labDom->isNull())
-//	{
-//		lab->setName(labInfos->value("name"));
-//		lab->setDate(labInfos->value("date"));
-//	} else {
-//		qWarning() << "Function XMLParser::getLaboratory(): labDom is null!";
-//	}
-//	return lab;
-//}
-//
+/**
+ * [STATIC-PUBLIC]
+ * Get the list of plugins for a virtual machine
+ */
+QStringList XMLParser::getVmPlugins(QString vmName, QString labPath, QString *error)
+{
+	QStringList plugins;	//return list
+	QDomDocument doc = XMLExpert::readDocument(labPath);
+	QDomNodeList nodeList = doc.elementsByTagName("virtualmachine");
+	
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		QDomElement elem = nodeList.at(i).toElement();
+		
+		if(elem.attribute("id") == vmName)
+		{
+			//plugin nodes
+			QDomNodeList pluginsList = elem.elementsByTagName("plugin");
+			
+			for(int j=0; j<pluginsList.size(); j++)
+			{
+				QDomElement pluginNode = pluginsList.at(j).toElement();
+				if(!pluginNode.hasAttribute("name"))
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: Node plugin has no 'name' attribute.");
+					
+					return plugins;
+				}
+				
+				plugins << pluginNode.attribute("name");
+			}
+		}
+	}
+	
+	return plugins;
+}
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the list of plugins for a collision domain
+ */
+QStringList XMLParser::getCdPlugins(QString cdName, QString labPath, QString *error)
+{
+	QStringList plugins;	//return list
+	QDomDocument doc = XMLExpert::readDocument(labPath);
+	QDomNodeList nodeList = doc.elementsByTagName("collisiondomain");
+	
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		QDomElement elem = nodeList.at(i).toElement();
+		
+		if(elem.attribute("id") == cdName)
+		{
+			//plugin nodes
+			QDomNodeList pluginsList = elem.elementsByTagName("plugin");
+			
+			for(int j=0; j<pluginsList.size(); j++)
+			{
+				QDomElement pluginNode = pluginsList.at(j).toElement();
+				if(!pluginNode.hasAttribute("name"))
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: Node plugin has no 'name' attribute.");
+					
+					return plugins;
+				}
+				
+				plugins << pluginNode.attribute("name");
+			}
+		}
+	}
+	
+	return plugins;
+}

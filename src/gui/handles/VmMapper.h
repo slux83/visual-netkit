@@ -54,6 +54,7 @@ public:
 	VirtualMachine *getVm(VirtualMachineItem* vmItem) { return mappings.value(vmItem); };
 	QStringList getMachineInterfaces(VirtualMachineItem* vmItem);
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
+	QList<VirtualMachine *> getMachines() { return mappings.values(); };
 	void ensureAllItemsAreJoined();
 
 public slots:

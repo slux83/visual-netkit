@@ -44,7 +44,9 @@ LabOpener::~LabOpener()
  * Start open lab steps
  */
 void LabOpener::open()
-{	
+{
+	errorString.clear();
+	
 	//STEP 0
 	if(!validateLab())
 		return;
@@ -600,7 +602,65 @@ bool LabOpener::loadPlugins()
 			}
 		}
 	}
-	
+
+	/* Load plugins for all virtual machines */
+	foreach(VirtualMachine *vm, VmMapper::getInstance()->getMachines())
+	{
+		//init all plugins for this vm
+		QStringList plugins =
+			XMLParser::getVmPlugins(vm->getName(), labPath, &err);
+		
+		//we have an xml error, stop all
+		if(!err.isEmpty())
+		{
+			errorString.append(err);
+			emit loadStepDone(6, false);
+			return false;
+		}
+		
+		foreach(QString plugin, plugins)
+		{
+			//TODO: call plugin init function to parse files and get infos
+			PluginProxy *proxy = registry->registerPlugin(plugin, vm);
+			
+			if(proxy == NULL)	//unknown plugin name
+			{
+				errorString.append("Unknow plugin name (").append(plugin).append(").");
+				emit loadStepDone(6, false);
+				return false;
+			}
+		}
+	}
+
+	/* Load plugins for all collision domains */
+	foreach(CollisionDomain *cd, CdMapper::getInstance()->getCDs())
+	{
+		//init all plugins for this CD
+		QStringList plugins =
+			XMLParser::getCdPlugins(cd->getName(), labPath, &err);
+		
+		//we have an xml error, stop all
+		if(!err.isEmpty())
+		{
+			errorString.append(err);
+			emit loadStepDone(6, false);
+			return false;
+		}
+		
+		foreach(QString plugin, plugins)
+		{
+			//TODO: call plugin init function to parse files and get infos
+			PluginProxy *proxy = registry->registerPlugin(plugin, cd);
+			
+			if(proxy == NULL)	//unknown plugin name
+			{
+				errorString.append("Unknow plugin name (").append(plugin).append(").");
+				emit loadStepDone(6, false);
+				return false;
+			}
+		}
+	}
+
 	emit loadStepDone(6, true);
 	
 	return true;
