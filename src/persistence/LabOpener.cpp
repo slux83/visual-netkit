@@ -41,7 +41,7 @@ LabOpener::~LabOpener()
 }
 
 /**
- * Start open
+ * Start open lab steps
  */
 void LabOpener::open()
 {	
@@ -68,6 +68,10 @@ void LabOpener::open()
 	//STEP 5
 	if(!createGraphicElements())
 		return;
+
+	//STEP 6 - last step
+	if(loadPlugins())
+		emit loadStepDone(7, true);
 }
 
 /**
@@ -547,14 +551,7 @@ bool LabOpener::createGraphicElements()
 			
 			/* Make link and connect the mapping */
 			LinkItem *link = new LinkItem(vmItemToConnect, cdItem, hi->getName());
-			LinkMapper::getInstance()->addNewMapping(link, hi);
-			
-			/* Test for plugins */
-			QString err;
-			qDebug() << "link" << hi->getName() << " plugins:" << XMLParser::getLinkPlugins(hi->getMyVirtualMachine()->getName(), hi->getName(),labPath, &err);
-			if(!err.isEmpty())
-				qDebug() << err;
-			
+			LinkMapper::getInstance()->addNewMapping(link, hi);	
 		}
 	}
 	
@@ -571,5 +568,40 @@ bool LabOpener::createGraphicElements()
  */
 bool LabOpener::loadPlugins()
 {
+	QString err;
+	PluginRegistry *registry = PluginRegistry::getInstance();
 	
+	/* Load plugins for all hardware interfaces */
+	foreach(HardwareInterface *hi, LinkMapper::getInstance()->getHardwareInterfaces())
+	{
+		//init all plugins for this hardware interface
+		QStringList plugins =
+			XMLParser::getLinkPlugins(
+					hi->getMyVirtualMachine()->getName(), hi->getName(), labPath, &err);
+		
+		//we have an xml error, stop all
+		if(!err.isEmpty())
+		{
+			errorString.append(err);
+			emit loadStepDone(6, false);
+			return false;
+		}
+		
+		foreach(QString plugin, plugins)
+		{
+			//TODO: call plugin init function to parse files and get infos
+			PluginProxy *proxy = registry->registerPlugin(plugin, hi);
+			
+			if(proxy == NULL)	//unknown plugin name
+			{
+				errorString.append("Unknow plugin name (").append(plugin).append(").");
+				emit loadStepDone(6, false);
+				return false;
+			}
+		}
+	}
+	
+	emit loadStepDone(6, true);
+	
+	return true;
 }
