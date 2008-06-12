@@ -459,6 +459,20 @@ bool LabOpener::createGraphicElements()
 		
 		vmItem->setLabelPos(vmLabelPos);
 		
+		error.clear();
+		QPointF vmMultiLabelPos = XMLParser::getVmPluginsAreaPosition(vm->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		vmItem->setMultiLabelPos(vmMultiLabelPos);
+		
 		vmItem->setPos(vmP);
 		VmMapper::getInstance()->addNewMapping(vmItem, vm);
 	}
@@ -501,6 +515,20 @@ bool LabOpener::createGraphicElements()
 		}
 		
 		cdItem->setLabelPos(cdLabelPos);
+		
+		error.clear();
+		QPointF cdMultiLabelPos = XMLParser::getCdPluginsAreaPosition(cd->getName(), labPath, &error);
+		
+		//XML error
+		if(!error.isEmpty())
+		{
+			errorString.append(error);
+			
+			emit loadStepDone(5, false);
+			return false;
+		}
+		
+		cdItem->setMultiLabelPos(cdMultiLabelPos);
 		
 		/**
 		 * Connect this Collision domain to all hosts

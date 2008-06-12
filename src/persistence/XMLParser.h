@@ -30,14 +30,11 @@
 #include "../core/Laboratory.h"
 
 /**
- * This object is a xml parser (using XPath) to read selective infos inside lab.xml
+ * This object is a xml parser to read selective infos inside lab.xml
  * This class offer some static functions
  */
 class XMLParser
 {
-	
-private:
-	XMLExpert *ex;
 public:
 	XMLParser();
 	virtual ~XMLParser();
@@ -45,9 +42,11 @@ public:
 	
 	static QPointF getVmPosition(QString vmName, QString labPath, QString *error = NULL);
 	static QPointF getVmLabelPosition(QString vmName, QString labPath, QString *error = NULL);
+	static QPointF getVmPluginsAreaPosition(QString vmName, QString labPath, QString *error = NULL);
 	
 	static QPointF getCdPosition(QString cdName, QString labPath, QString *error = NULL);
 	static QPointF getCdLabelPosition(QString cdName, QString labPath, QString *error = NULL);
+	static QPointF getCdPluginsAreaPosition(QString vmName, QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/

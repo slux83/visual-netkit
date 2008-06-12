@@ -188,9 +188,60 @@ QPointF XMLParser::getCdLabelPosition(QString cdName, QString labPath, QString *
 	return pos;
 }
 
+
 /**
  * [STATIC-PUBLIC]
- * Get the cd label position
+ * Get the cd shared area position
+ * If someting goes wrong, the error arg is setted
+ */
+QPointF XMLParser::getCdPluginsAreaPosition(QString cdName, QString labPath, QString *error)
+{
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QPointF pos;	//the return value
+	QDomNodeList nodeList = doc->elementsByTagName("collisiondomain");
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		if(nodeList.at(i).toElement().hasAttribute("id"))
+		{
+			if(nodeList.at(i).toElement().attribute("id") == cdName)
+			{
+				QDomElement labelNode = 
+					nodeList.at(i).toElement().elementsByTagName("multilabel").at(0).toElement();
+				
+				if(labelNode.isNull())
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: none multi-label not found inside the collision domain node with").append(" ID=").append(cdName);
+				}
+				else
+				{
+					//ok, get x and y coordinates, but before check consistency
+					if(!labelNode.hasAttribute("x") || !labelNode.hasAttribute("y"))
+					{
+						if(error != NULL)
+							error->append("Unvalid lab.xml: node multi-label inside collisiondomain").append(" ID=").append(cdName).append(" ").append("not standard.");
+						return pos;
+					}
+					
+					pos.setX(labelNode.attribute("x").toInt());
+					pos.setY(labelNode.attribute("y").toInt());					
+				}
+			}
+		}
+		else
+		{
+			if(error != NULL)
+				error->append("Unvalid lab.xml: none ID attribute for node collisiondomain").append(" ID=").append(cdName);
+		}
+	}
+	
+	return pos;
+}
+
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the vm label position
  * If someting goes wrong, the error arg is setted
  */
 QPointF XMLParser::getVmLabelPosition(QString vmName, QString labPath, QString *error)
@@ -219,6 +270,55 @@ QPointF XMLParser::getVmLabelPosition(QString vmName, QString labPath, QString *
 					{
 						if(error != NULL)
 							error->append("Unvalid lab.xml: node label inside virtual machine").append(" ID=").append(vmName).append(" ").append("not standard.");
+						return pos;
+					}
+					
+					pos.setX(labelNode.attribute("x").toInt());
+					pos.setY(labelNode.attribute("y").toInt());					
+				}
+			}
+		}
+		else
+		{
+			if(error != NULL)
+				error->append("Unvalid lab.xml: none ID attribute for node virtual machine").append(" ID=").append(vmName);
+		}
+	}
+	
+	return pos;
+}
+
+/**
+ * [STATIC-PUBLIC]
+ * Get the vm shared area position
+ * If someting goes wrong, the error arg is setted
+ */
+QPointF XMLParser::getVmPluginsAreaPosition(QString vmName, QString labPath, QString *error)
+{
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QPointF pos;	//the return value
+	QDomNodeList nodeList = doc->elementsByTagName("virtualmachine");
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		if(nodeList.at(i).toElement().hasAttribute("id"))
+		{
+			if(nodeList.at(i).toElement().attribute("id") == vmName)
+			{
+				QDomElement labelNode = 
+					nodeList.at(i).toElement().elementsByTagName("multilabel").at(0).toElement();
+				
+				if(labelNode.isNull())
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: none multi-label not found inside the virtual machine node with").append(" ID=").append(vmName);
+				}
+				else
+				{
+					//ok, get x and y coordinates, but before check consistency
+					if(!labelNode.hasAttribute("x") || !labelNode.hasAttribute("y"))
+					{
+						if(error != NULL)
+							error->append("Unvalid lab.xml: node multi-label inside virtual machine").append(" ID=").append(vmName).append(" ").append("not standard.");
 						return pos;
 					}
 					
