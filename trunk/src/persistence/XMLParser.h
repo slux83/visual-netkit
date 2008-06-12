@@ -47,6 +47,8 @@ public:
 	static QPointF getCdPosition(QString cdName, QString labPath, QString *error = NULL);
 	static QPointF getCdLabelPosition(QString cdName, QString labPath, QString *error = NULL);
 	static QPointF getCdPluginsAreaPosition(QString vmName, QString labPath, QString *error = NULL);
+	
+	static QStringList getLinkPlugins(QString vmName, QString ethName, QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/

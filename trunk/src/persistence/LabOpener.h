@@ -48,6 +48,7 @@ private:
 	bool fetchCds();					//step 3
 	bool fetchHis();					//step 4
 	bool createGraphicElements();		//step 5
+	bool loadPlugins();					//step 6
 	
 signals:
 	void loadStepDone(int step, bool result);
