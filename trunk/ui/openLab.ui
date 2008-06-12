@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>514</width>
-    <height>393</height>
+    <height>407</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -121,7 +121,7 @@
          <bool>false</bool>
         </property>
         <property name="text" >
-         <string>Creating graphics elements</string>
+         <string>Creating and drawing graphics elements</string>
         </property>
         <property name="tristate" >
          <bool>true</bool>
@@ -147,19 +147,6 @@
          <bool>false</bool>
         </property>
         <property name="text" >
-         <string>Drawing Network Graph</string>
-        </property>
-        <property name="tristate" >
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBox_8" >
-        <property name="enabled" >
-         <bool>false</bool>
-        </property>
-        <property name="text" >
          <string>All done</string>
         </property>
         <property name="tristate" >
@@ -168,6 +155,19 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="stepsProgressBar" >
+     <property name="maximum" >
+      <number>7</number>
+     </property>
+     <property name="value" >
+      <number>0</number>
+     </property>
+     <property name="format" >
+      <string>step %v of %m</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -190,6 +190,9 @@
      </property>
      <property name="standardButtons" >
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Open</set>
+     </property>
+     <property name="centerButtons" >
+      <bool>false</bool>
      </property>
     </widget>
    </item>

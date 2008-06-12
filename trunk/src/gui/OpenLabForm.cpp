@@ -33,7 +33,7 @@ OpenLabForm::OpenLabForm(QWidget *parent) : QDialog(parent)
 	
 	//connects
 	connect(labOpener, SIGNAL(loadStepDone(int, bool)),
-			this, SLOT(markLoadStep(int, bool)));
+			this, SLOT(markLoadedStep(int, bool)));
 	connect(browseButton, SIGNAL(clicked()),
 			this, SLOT(browseLab()));
 	connect(buttonBox, SIGNAL(accepted()),
@@ -94,8 +94,7 @@ void OpenLabForm::resetGui(bool clearPath)
 	checkBox_7->setCheckState(Qt::Unchecked);
 	checkBox_7->setEnabled(false);
 	
-	checkBox_8->setCheckState(Qt::Unchecked);
-	checkBox_8->setEnabled(false);
+	stepsProgressBar->setValue(0);
 }
 
 /**
@@ -124,26 +123,41 @@ void OpenLabForm::initStepMap()
 	steps.insert(5, checkBox_5);
 	steps.insert(6, checkBox_6);
 	steps.insert(7, checkBox_7);
-	steps.insert(8, checkBox_8);
-	
 }
 
 /**
  * [PRIVATE-SLOT]
  * Mark the step passed with the result
  */
-void OpenLabForm::markLoadStep(int step, bool result)
+void OpenLabForm::markLoadedStep(int step, bool result)
 {
 	if(!steps.contains(step))
 	{
-		qWarning() << "OpenLabForm::markLoadStep step" << step << "don't exist";
+		qWarning() << "OpenLabForm::markLoadedStep step" << step << "don't exist";
 		return;
 	}
+	
+	stepsProgressBar->setValue(step);
 	
 	if(result)
 	{
 		steps.value(step)->setCheckState(Qt::Checked);
-		//TODO: close the gui at the last step
+		
+		//close the gui at the last step
+		if(step == 7)
+		{
+			qDebug() << "Laboratory opened correctly.";
+			int resp = QMessageBox::information(this, tr("Visual Netkit - SUCCESS"),
+					tr("The Laboratory data has been successfully loaded!"),
+					QMessageBox::Ok, QMessageBox::Ok);
+			
+			if(resp == QMessageBox::Ok)
+			{
+				//when user click "ok" clear lab junk and reset the gui, not the path
+				close();
+				resetGui();
+			}
+		}		
 	}
 	else
 	{

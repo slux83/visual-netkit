@@ -41,7 +41,7 @@ private:
 private slots:
 	void browseLab();
 	void handleAccept();
-	void markLoadStep(int step, bool result);
+	void markLoadedStep(int step, bool result);
 	
 public:
 	OpenLabForm(QWidget *parent = 0);
