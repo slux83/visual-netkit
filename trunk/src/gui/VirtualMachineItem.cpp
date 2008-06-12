@@ -195,6 +195,7 @@ void VirtualMachineItem::restoreGroupActionCalled()
 void VirtualMachineItem::setPluginLine(QString pluginName, QString content)
 {
 	pluginsSharedArea->changeMyLine(pluginName, content);
+	refreshGroup();
 }
 
 /**
@@ -204,6 +205,7 @@ void VirtualMachineItem::setLabelVmName(QString newLabel)
 {
 	vmNameLabel->setText(newLabel);
 	SceneTreeMapper::getInstance()->changeVmLabel(this, newLabel);
+	refreshGroup();
 }
 
 /**

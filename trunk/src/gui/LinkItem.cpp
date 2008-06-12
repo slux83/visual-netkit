@@ -208,6 +208,16 @@ void LinkItem::managePluginsActionCalled()
 }
 
 /**
+ * [PRIVATE]
+ * Refresh the group size
+ */
+void LinkItem::refreshGroup()
+{
+	 removeFromGroup(myLabel);
+	 addToGroup(myLabel);
+}
+
+/**
  * [REIMPL]
  * Returns the shape of this item as a QPainterPath in local coordinates.
  */

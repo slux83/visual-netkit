@@ -58,7 +58,8 @@ private:
 	ManagePluginsDialog *pluginsManager;
 	
 	void initContextMenu();
-		
+	void refreshGroup();
+	
 public:
 	LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QString label);
 	virtual ~LinkItem();

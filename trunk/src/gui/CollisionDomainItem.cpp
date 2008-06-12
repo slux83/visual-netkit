@@ -218,6 +218,7 @@ void CollisionDomainItem::setLabelCdName(QString newLabel)
 {
 	myLabel->setText(newLabel);
 	SceneTreeMapper::getInstance()->changeCdLabel(this, newLabel);
+	refreshGroup();
 }
 
 /**
@@ -227,6 +228,7 @@ void CollisionDomainItem::setLabelCdName(QString newLabel)
 void CollisionDomainItem::setPluginLine(QString pluginName, QString content)
 {
 	pluginsSharedArea->changeMyLine(pluginName, content);
+	refreshGroup();
 }
 /**
  * [SLOT]

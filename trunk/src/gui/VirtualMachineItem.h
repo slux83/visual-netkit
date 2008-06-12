@@ -66,6 +66,7 @@ public:
 	SvgItemPrivate *getSvgPrivate() { return vmSvg; };
 	void setLabelVmName(QString newLabel);
 	void setLabelPos(QPointF &pos) { vmNameLabel->setPos(pos); refreshGroup(); };
+	void setMultiLabelPos(QPointF &pos) { pluginsSharedArea->setPos(pos); refreshGroup(); };
 	LabelItemPrivate* getLabelItemPrivate() { return vmNameLabel; };
 	
 	PluginsSharedArea* getPluginsSharedArea() { return pluginsSharedArea; };

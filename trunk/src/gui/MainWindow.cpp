@@ -312,6 +312,7 @@ void MainWindow::lockSceneAndActions()
 	actionSaveAs->setDisabled(true);
 	
 	labMiniature->setDisabled(true);
+	labMiniature->setScene(NULL);
 	
 	actionManageGraph->setDisabled(true);
 }

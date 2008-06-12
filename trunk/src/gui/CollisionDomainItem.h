@@ -65,6 +65,7 @@ public:
 	QString getLabel() { return myLabel->text(); };
 	void setLabelCdName(QString newLabel);
 	void setLabelPos(QPointF &pos) { myLabel->setPos(pos); refreshGroup(); };
+	void setMultiLabelPos(QPointF &pos) { pluginsSharedArea->setPos(pos); refreshGroup(); };
 	SvgItemPrivate* getSvgPrivate() { return collisionDomainSvg; };
 	void increaseDecreaseLinkCounter(bool increase);
 	LabelItemPrivate* getLabelItemPrivate() { return myLabel; };
