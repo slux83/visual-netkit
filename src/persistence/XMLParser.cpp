@@ -337,6 +337,52 @@ QPointF XMLParser::getVmPluginsAreaPosition(QString vmName, QString labPath, QSt
 	return pos;
 }
 
+QStringList XMLParser::getLinkPlugins(QString vmName, QString ethName,
+		QString labPath, QString *error)
+{
+	QStringList plugins;	//return list
+	QDomDocument *doc = XMLExpert::readDocument(labPath);
+	QPointF pos;	//the return value
+	QDomNodeList nodeList = doc->elementsByTagName("link");
+	
+	if(nodeList.size() == 0 && error != NULL)
+		error->append("Unvalid lab.xml: node link ").append(ethName).append(" for virtual-machine ").append(vmName).append(", not found.");
+	
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		QDomElement elem = nodeList.at(i).toElement();
+		
+		//check node consintance
+		if(!elem.hasAttribute("virtualmachine") || !elem.hasAttribute("interface"))
+		{
+			if(error != NULL)
+				error->append("Unvalid lab.xml: Node link ").append(ethName).append(", not standard");
+			return plugins;
+		}
+		
+		if(elem.attribute("virtualmachine") == vmName && elem.attribute("interface") == ethName)
+		{
+			//plugin nodes
+			QDomNodeList pluginsList = elem.elementsByTagName("plugin");
+			
+			for(int j=0; j<pluginsList.size(); j++)
+			{
+				QDomElement pluginNode = pluginsList.at(j).toElement();
+				if(!pluginNode.hasAttribute("name"))
+				{
+					if(error != NULL)
+						error->append("Unvalid lab.xml: Node plugin has no 'name' attribute.");
+					
+					return plugins;
+				}
+				
+				plugins << pluginNode.attribute("name");
+			}
+		}
+	}
+	
+	return plugins;
+}
 
 ///**
 // * Reads and store the QDomDocument representing laboratory graph.

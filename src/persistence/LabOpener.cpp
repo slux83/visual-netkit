@@ -548,10 +548,28 @@ bool LabOpener::createGraphicElements()
 			/* Make link and connect the mapping */
 			LinkItem *link = new LinkItem(vmItemToConnect, cdItem, hi->getName());
 			LinkMapper::getInstance()->addNewMapping(link, hi);
+			
+			/* Test for plugins */
+			QString err;
+			qDebug() << "link" << hi->getName() << " plugins:" << XMLParser::getLinkPlugins(hi->getMyVirtualMachine()->getName(), hi->getName(),labPath, &err);
+			if(!err.isEmpty())
+				qDebug() << err;
+			
 		}
 	}
 	
 	emit loadStepDone(5, true);
 	
 	return true;
+}
+
+/**
+ * [PRIVATE]
+ * 
+ * ## STEP-6 ##
+ * Create all plugins for each low lever element (vm, cd and hi)
+ */
+bool LabOpener::loadPlugins()
+{
+	
 }
