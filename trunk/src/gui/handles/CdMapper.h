@@ -48,6 +48,7 @@ public:
 	void showAddCdForm(QPointF pos);
 	void addNewMapping(CollisionDomainItem *cdItem, CollisionDomain *cd);
 	CollisionDomain* getCD(CollisionDomainItem *cdItem) { return mappings.value(cdItem); };
+	QList<CollisionDomain*> getCDs() { return mappings.values(); };
 	CollisionDomainItem* getCdItem(CollisionDomain *cd) { return mappings.key(cd); };
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
 	void updateCdCounter(CollisionDomain *cd, bool increase);

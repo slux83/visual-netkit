@@ -34,7 +34,7 @@ public:
 	XMLExpert();
 	virtual ~XMLExpert();
 	static bool dumpDocument(QDomDocument *doc, QString labPath);
-	static QDomDocument* readDocument(QString labPath);
+	static QDomDocument readDocument(QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLEXPERT_H_*/
