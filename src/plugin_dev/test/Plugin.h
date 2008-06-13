@@ -57,6 +57,8 @@ public:
 	qint32 getGroupID() { return -1; /* Unused */ };
 	
 	QString getDefaultGraphisLabel() {return QString("Hello from test!"); };
+	
+	void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("hello from test"); };
 };
 
 
