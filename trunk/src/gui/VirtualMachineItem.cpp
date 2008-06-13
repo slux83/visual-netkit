@@ -74,11 +74,11 @@ VirtualMachineItem::~VirtualMachineItem()
  */
 QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-	//qDebug() << boundingRect() << boundingRect().x() << boundingRect().y();
+	// value is the new position.
+	QPointF newPos = value.toPointF();
 	if (change == ItemPositionChange && scene())
 	{		
-		// value is the new position.
-		QPointF newPos = value.toPointF();
+		
 		QRectF rect = scene()->sceneRect();
 
 		// Keep the item inside the scene rect. (- 2 is a padding)
@@ -86,12 +86,14 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 				qMax(newPos.x(), rect.left())));
 		newPos.setY(qMin(rect.bottom()- boundingRect().height() - 2,
 				qMax(newPos.y(), rect.top())));
-
+		
 		return newPos;
 	}
 	
 	if(change == ItemPositionHasChanged && scene())
-			emit needBoundingrectRebuild();
+	{
+		emit needBoundingrectRebuild();
+	}
 	
 	//Prevent coredump when item is removed: no need to adjust the link :D
 	if(change != ItemChildRemovedChange && change != ItemVisibleHasChanged)

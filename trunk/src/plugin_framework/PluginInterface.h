@@ -40,26 +40,65 @@ public:
 	 */
 	virtual bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL) = 0;
 	
+	/**
+	 * Get a QSettings* that contains the description of the plugin ini file
+	 */
 	virtual QSettings* getMySettings() = 0;
+	
+	/**
+	 * Get a map of templates: the KEY is the template path relative to the laboratory
+	 * root; the Value represent the content of the file.
+	 */
 	virtual QMap<QString, QString> getTemplates() = 0;
+	
+	/**
+	 * This function return a map of properties owned by this plugin
+	 */
 	virtual QMap<QString, PluginProperty*> getPluginProperties() = 0;
+	
+	/**
+	 * Return my proxy
+	 */
 	virtual PluginProxy* getProxy() = 0;
+	
+	/**
+	 * Set my proxy
+	 * Called by the system at initialization time
+	 */
 	virtual void setProxy(PluginProxy* p) = 0;
 	
 	/**
-	 * [DEFAULT IMPLEMENTATION]
-	 * If unused, return -1
+	 * This function is the way that the system use to know the element group.
+	 * Default unused and return -1
 	 */
 	virtual void setGroupID(qint32 id) { Q_UNUSED(id) };
 	virtual qint32 getGroupID() { return -1; };
 	
 	/**
-	 * This function il called by the system (through the proxy) when the plugin
-	 * is created and attached to a base element. If you dont want show a label
+	 * This function is called by the system (through the proxy) when the plugin
+	 * is created and attached to a base element. If you don't want show a label
 	 * on plugin startup, you have to return a empty QString()
 	 */
 	virtual QString getDefaultGraphisLabel() = 0;
+	
+	/**
+	 * Get the name of this plugin, normally it's the name inside the plugin.ini
+	 * file
+	 */
 	virtual QString getName() = 0;
+	
+	/**
+	 * This function is called by the system (through the proxy) when the plugin
+	 * is created and attached to a base element during laboratory open.
+	 * Normally inside this function you have to parse config files (lab path is
+	 * passed as argument), initialize properties and finally if you want you can
+	 * set your own graphics label, through the proxy changeGraphicsLabel()
+	 * function.
+	 * 
+	 * The default implementation do nothing.
+	 */
+	virtual void init() {};
+	
 };
 
 /**

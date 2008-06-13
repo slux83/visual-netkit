@@ -144,3 +144,11 @@ bool PluginProxy::saveProperty(QString propName, QString propValue, QString *plu
 {
 	return pluginInterface->saveProperty(propName, propValue, pluginAlertMsg);
 }
+
+/**
+ * Get the laboratory path if the lab is saved, else return an empty string
+ */
+QString PluginProxy::getLabPath()
+{
+	return labPath;
+}

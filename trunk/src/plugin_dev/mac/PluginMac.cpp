@@ -181,6 +181,14 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 }
 
 /**
+ * Init the plugin's properties
+ */
+void PluginMac::init()
+{
+	myProxy->changeGraphicsLabel(myProxy->getLabPath());
+}
+
+/**
  * [PRIVATE]
  * Refresh the scene label if mac address is changed
  */

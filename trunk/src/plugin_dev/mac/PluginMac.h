@@ -56,6 +56,8 @@ public:
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	
 	QString getDefaultGraphisLabel() {return QString(); };
+	
+	void init();
 };
 
 
