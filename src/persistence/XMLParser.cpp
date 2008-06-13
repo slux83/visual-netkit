@@ -95,8 +95,8 @@ QPointF XMLParser::getVmPosition(QString vmName, QString labPath, QString *error
 					return vmPos;
 				}
 				
-				vmPos.setX(nodeList.at(i).toElement().attribute("x").toInt());
-				vmPos.setY(nodeList.at(i).toElement().attribute("y").toInt());
+				vmPos.setX(nodeList.at(i).toElement().attribute("x").toFloat());
+				vmPos.setY(nodeList.at(i).toElement().attribute("y").toFloat());
 				break;
 			}
 		}
@@ -135,8 +135,8 @@ QPointF XMLParser::getCdPosition(QString cdName, QString labPath, QString *error
 					return cdPos;
 				}
 				
-				cdPos.setX(nodeList.at(i).toElement().attribute("x").toInt());
-				cdPos.setY(nodeList.at(i).toElement().attribute("y").toInt());
+				cdPos.setX(nodeList.at(i).toElement().attribute("x").toFloat());
+				cdPos.setY(nodeList.at(i).toElement().attribute("y").toFloat());
 				break;
 			}
 		}
@@ -184,8 +184,8 @@ QPointF XMLParser::getCdLabelPosition(QString cdName, QString labPath, QString *
 						return pos;
 					}
 					
-					pos.setX(labelNode.attribute("x").toInt());
-					pos.setY(labelNode.attribute("y").toInt());					
+					pos.setX(labelNode.attribute("x").toFloat());
+					pos.setY(labelNode.attribute("y").toFloat());					
 				}
 			}
 		}
@@ -234,8 +234,8 @@ QPointF XMLParser::getCdPluginsAreaPosition(QString cdName, QString labPath, QSt
 						return pos;
 					}
 					
-					pos.setX(labelNode.attribute("x").toInt());
-					pos.setY(labelNode.attribute("y").toInt());					
+					pos.setX(labelNode.attribute("x").toFloat());
+					pos.setY(labelNode.attribute("y").toFloat());					
 				}
 			}
 		}
@@ -284,8 +284,8 @@ QPointF XMLParser::getVmLabelPosition(QString vmName, QString labPath, QString *
 						return pos;
 					}
 					
-					pos.setX(labelNode.attribute("x").toInt());
-					pos.setY(labelNode.attribute("y").toInt());					
+					pos.setX(labelNode.attribute("x").toFloat());
+					pos.setY(labelNode.attribute("y").toFloat());					
 				}
 			}
 		}
@@ -333,8 +333,8 @@ QPointF XMLParser::getVmPluginsAreaPosition(QString vmName, QString labPath, QSt
 						return pos;
 					}
 					
-					pos.setX(labelNode.attribute("x").toInt());
-					pos.setY(labelNode.attribute("y").toInt());					
+					pos.setX(labelNode.attribute("x").toFloat());
+					pos.setY(labelNode.attribute("y").toFloat());					
 				}
 			}
 		}
