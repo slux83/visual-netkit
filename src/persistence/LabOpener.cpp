@@ -591,7 +591,6 @@ bool LabOpener::loadPlugins()
 		
 		foreach(QString plugin, plugins)
 		{
-			//TODO: call plugin init function to parse files and get infos
 			PluginProxy *proxy = registry->registerPlugin(plugin, hi);
 			
 			if(proxy == NULL)	//unknown plugin name
@@ -600,6 +599,9 @@ bool LabOpener::loadPlugins()
 				emit loadStepDone(6, false);
 				return false;
 			}
+			
+			/* Init the plugin */
+			proxy->initPlugin();
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();
@@ -629,7 +631,6 @@ bool LabOpener::loadPlugins()
 		
 		foreach(QString plugin, plugins)
 		{
-			//TODO: call plugin init function to parse files and get infos
 			PluginProxy *proxy = registry->registerPlugin(plugin, vm);
 			
 			if(proxy == NULL)	//unknown plugin name
@@ -638,6 +639,9 @@ bool LabOpener::loadPlugins()
 				emit loadStepDone(6, false);
 				return false;
 			}
+			
+			/* Init the plugin */
+			proxy->initPlugin();
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();
@@ -667,7 +671,6 @@ bool LabOpener::loadPlugins()
 		
 		foreach(QString plugin, plugins)
 		{
-			//TODO: call plugin init function to parse files and get infos
 			PluginProxy *proxy = registry->registerPlugin(plugin, cd);
 			
 			if(proxy == NULL)	//unknown plugin name
@@ -676,6 +679,9 @@ bool LabOpener::loadPlugins()
 				emit loadStepDone(6, false);
 				return false;
 			}
+			
+			/* Init the plugin */
+			proxy->initPlugin();
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();

@@ -24,6 +24,7 @@
  * Constructor with some params
  */
 Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
+	: QObject()
 {
 	name = newName;
 	version = newVersion;

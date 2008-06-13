@@ -39,7 +39,8 @@ class PluginProxy : public QObject
 private:
 	PluginInterface *pluginInterface;
 	PluginRegistry *registry;
-	
+	QString labPath;	//This is updated by the slot setLabPath()
+
 public:
 	PluginProxy(PluginRegistry *r);
 	virtual ~PluginProxy();
@@ -55,6 +56,11 @@ public:
 	qint32 getPluginGroupID();
 	void changeGraphicsLabel(QString label);
 	void showDefaultGraphicsLabel();
+	void initPlugin() { pluginInterface->init(); };
+	QString getLabPath();
+
+public slots:
+	void setLabPath(QString path) { labPath = path; };
 	
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);
