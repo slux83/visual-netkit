@@ -601,7 +601,7 @@ bool LabOpener::loadPlugins()
 			}
 			
 			/* Init the plugin */
-			proxy->initPlugin();
+			proxy->initPlugin(labPath);
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();
@@ -641,7 +641,7 @@ bool LabOpener::loadPlugins()
 			}
 			
 			/* Init the plugin */
-			proxy->initPlugin();
+			proxy->initPlugin(labPath);
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();
@@ -681,7 +681,7 @@ bool LabOpener::loadPlugins()
 			}
 			
 			/* Init the plugin */
-			proxy->initPlugin();
+			proxy->initPlugin(labPath);
 			
 			/* Add paths offered by pluns to tree */
 			QList<QString> tplPaths = proxy->getTemplates().keys();

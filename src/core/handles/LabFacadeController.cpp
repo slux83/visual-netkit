@@ -73,7 +73,6 @@ void LabFacadeController::newLaboratory(bool needEmit)
 	{
 		qWarning() << "Alert, a current lab already exists!";
 		return;
-		//TODO: manage this scenario (variant)
 	}
 	
 	currentLab = new Laboratory();
@@ -83,7 +82,7 @@ void LabFacadeController::newLaboratory(bool needEmit)
 }
 
 /**
- * Saves the current laboratory. TODO
+ * Saves (As...) the current laboratory.
  */
 bool LabFacadeController::saveLab(const QString &savePath)
 {

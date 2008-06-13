@@ -88,7 +88,7 @@ public:
 	void setEmail(QString newValue) { email = newValue; };
 	void setWebsite(QString newValue) { website = newValue; };
 	void setSavedState(bool saveState) { isSaved = saveState; };
-	void setLabPath(QString path) { labPath.setPath(path); emit labPathChanged(path); };
+	void setLabPath(QString path) { labPath.setPath(path); };
 	
 	/* Other functions */
 	bool vmExist(QString vmName) { return machines.contains(vmName); };
@@ -98,8 +98,6 @@ public:
 	void updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd);
 	void updateVmKey(QString oldKey, QString newKey, VirtualMachine *vm);
 
-signals:
-	void labPathChanged(QString path);
 };
 
 #endif /*LABORATORY_H_*/
