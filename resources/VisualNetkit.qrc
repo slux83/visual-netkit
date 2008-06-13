@@ -27,6 +27,7 @@
         <file alias="zoom_in_icon" >menu_icons/zoom_in.png</file>
         <file alias="zoom_original_icon" >menu_icons/zoom_original.png</file>
         <file alias="zoom_out_icon" >menu_icons/zoom_out.png</file>
+        <file alias="fullscreen_icon" >menu_icons/view_fullscreen.png</file>
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>

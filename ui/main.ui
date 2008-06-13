@@ -18,10 +18,10 @@
   <widget class="QWidget" name="centralwidget" >
    <property name="geometry" >
     <rect>
-     <x>286</x>
+     <x>268</x>
      <y>71</y>
-     <width>472</width>
-     <height>537</height>
+     <width>490</width>
+     <height>449</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" >
@@ -41,8 +41,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>462</width>
-         <height>501</height>
+         <width>480</width>
+         <height>413</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -99,9 +99,16 @@
     <property name="title" >
      <string>Edit</string>
     </property>
+    <widget class="QMenu" name="menuWindow" >
+     <property name="title" >
+      <string>Window</string>
+     </property>
+     <addaction name="actionFullScreenMode" />
+    </widget>
     <addaction name="actionUndo" />
     <addaction name="actionRedo" />
     <addaction name="separator" />
+    <addaction name="menuWindow" />
    </widget>
    <widget class="QMenu" name="menuGraph" >
     <property name="enabled" >
@@ -204,8 +211,8 @@
     <rect>
      <x>0</x>
      <y>71</y>
-     <width>280</width>
-     <height>384</height>
+     <width>262</width>
+     <height>222</height>
     </rect>
    </property>
    <property name="floating" >
@@ -228,8 +235,8 @@
      <rect>
       <x>0</x>
       <y>23</y>
-      <width>280</width>
-      <height>361</height>
+      <width>262</width>
+      <height>199</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -263,7 +270,7 @@
      <x>764</x>
      <y>71</y>
      <width>262</width>
-     <height>252</height>
+     <height>123</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -281,7 +288,7 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>229</height>
+      <height>100</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -318,9 +325,9 @@
    <property name="geometry" >
     <rect>
      <x>764</x>
-     <y>329</y>
+     <y>200</y>
      <width>262</width>
-     <height>279</height>
+     <height>320</height>
     </rect>
    </property>
    <property name="sizePolicy" >
@@ -347,7 +354,7 @@
       <x>0</x>
       <y>23</y>
       <width>262</width>
-      <height>256</height>
+      <height>297</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -446,9 +453,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>461</y>
-     <width>280</width>
-     <height>147</height>
+     <y>299</y>
+     <width>262</width>
+     <height>221</height>
     </rect>
    </property>
    <property name="windowTitle" >
@@ -462,8 +469,8 @@
      <rect>
       <x>0</x>
       <y>23</y>
-      <width>280</width>
-      <height>124</height>
+      <width>262</width>
+      <height>198</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -495,9 +502,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>614</y>
+     <y>526</y>
      <width>1026</width>
-     <height>123</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="floating" >
@@ -515,7 +522,7 @@
       <x>0</x>
       <y>23</y>
       <width>1026</width>
-      <height>100</height>
+      <height>188</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -931,6 +938,21 @@
   <action name="actionPNGImage" >
    <property name="text" >
     <string>PNG image</string>
+   </property>
+  </action>
+  <action name="actionFullScreenMode" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../resources/VisualNetkit.qrc" >
+     <normaloff>:/menu/fullscreen_icon</normaloff>:/menu/fullscreen_icon</iconset>
+   </property>
+   <property name="text" >
+    <string>Full screen mode</string>
+   </property>
+   <property name="shortcut" >
+    <string>F11</string>
    </property>
   </action>
  </widget>
