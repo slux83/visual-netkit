@@ -183,9 +183,9 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 /**
  * Init the plugin's properties
  */
-void PluginMac::init()
+void PluginMac::init(QString laboratoryPath)
 {
-	myProxy->changeGraphicsLabel(myProxy->getLabPath());
+	myProxy->changeGraphicsLabel("lol inside " + laboratoryPath);
 }
 
 /**

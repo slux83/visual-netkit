@@ -65,9 +65,7 @@ PluginProxy * PluginLoaderFactory::createPlugin()
 	connect(p->getProxy(),
 			SIGNAL(needLabelChangedCd(CollisionDomain*, QString, QString)),
 			CdMapper::getInstance(),
-			SLOT(changeGraphicsLabelCd(CollisionDomain*, QString, QString)));
-	
-	//TODO connect the laboratory path changed to the proxy slot setpath
+			SLOT(changeGraphicsLabelCd(CollisionDomain*, QString, QString)));	
 	
 	return p->getProxy();
 }

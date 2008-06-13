@@ -57,7 +57,7 @@ public:
 	
 	QString getDefaultGraphisLabel() {return QString(); };
 	
-	void init();
+	void init(QString laboratoryPath);
 };
 
 

@@ -28,7 +28,7 @@
  * This object is acceded by Singleton and manage operations with the current
  * Laboratory
  */
-class LabFacadeController : QObject
+class LabFacadeController : public QObject
 {
 	Q_OBJECT
 	

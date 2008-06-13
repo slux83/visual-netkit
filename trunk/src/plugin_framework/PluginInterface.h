@@ -97,7 +97,7 @@ public:
 	 * 
 	 * The default implementation do nothing.
 	 */
-	virtual void init() {};
+	virtual void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) };
 	
 };
 

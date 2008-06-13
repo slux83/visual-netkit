@@ -56,11 +56,7 @@ public:
 	qint32 getPluginGroupID();
 	void changeGraphicsLabel(QString label);
 	void showDefaultGraphicsLabel();
-	void initPlugin() { pluginInterface->init(); };
-	QString getLabPath();
-
-public slots:
-	void setLabPath(QString path) { labPath = path; };
+	void initPlugin(QString path) { pluginInterface->init(path); };
 	
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);
