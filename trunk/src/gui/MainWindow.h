@@ -82,6 +82,7 @@ private slots:
 	void dumpToSVG();
 	void dumpToPNG();
 	void openLab();
+	void fullscreenMode();
 
 public slots:
 	void writeLogMessage(QString message);

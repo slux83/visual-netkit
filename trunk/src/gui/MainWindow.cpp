@@ -158,6 +158,9 @@ void MainWindow::createConnections()
 	
 	//connect: close lab
 	connect(actionCloseLab, SIGNAL(triggered()), labHandler, SLOT(closeLab()));
+	
+	//connect: action full screen mode
+	connect(actionFullScreenMode, SIGNAL(triggered()), this, SLOT(fullscreenMode()));
 }
 
 /**
@@ -539,3 +542,14 @@ void MainWindow::openLab()
 	olf.show();
 }
 
+/**
+ * [PRIVATE-SLOT]
+ * Set/Unset the window fullscreen mode
+ */
+void MainWindow::fullscreenMode()
+{
+	if(actionFullScreenMode->isChecked())
+		showFullScreen();
+	else
+		showNormal();
+}

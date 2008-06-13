@@ -600,6 +600,15 @@ bool LabOpener::loadPlugins()
 				emit loadStepDone(6, false);
 				return false;
 			}
+			
+			/* Add paths offered by pluns to tree */
+			QList<QString> tplPaths = proxy->getTemplates().keys();
+			// for each plugin and for each key in the templates map
+			for (int j=0; j<tplPaths.size(); j++)
+			{
+				// adds path to tree
+				LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
+			}
 		}
 	}
 
@@ -629,6 +638,15 @@ bool LabOpener::loadPlugins()
 				emit loadStepDone(6, false);
 				return false;
 			}
+			
+			/* Add paths offered by pluns to tree */
+			QList<QString> tplPaths = proxy->getTemplates().keys();
+			// for each plugin and for each key in the templates map
+			for (int j=0; j<tplPaths.size(); j++)
+			{
+				// adds path to tree
+				LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
+			}
 		}
 	}
 
@@ -657,6 +675,15 @@ bool LabOpener::loadPlugins()
 				errorString.append("Unknow plugin name (").append(plugin).append(").");
 				emit loadStepDone(6, false);
 				return false;
+			}
+			
+			/* Add paths offered by pluns to tree */
+			QList<QString> tplPaths = proxy->getTemplates().keys();
+			// for each plugin and for each key in the templates map
+			for (int j=0; j<tplPaths.size(); j++)
+			{
+				// adds path to tree
+				LabHandler::getInstance()->addPathToTree(tplPaths.at(j));
 			}
 		}
 	}
