@@ -308,7 +308,6 @@ bool PluginIPv4::init(QString laboratoryPath)
 	
 	ipRegExp.indexIn(startupContent);
 	QStringList capText = ipRegExp.capturedTexts();
-	qDebug() << capText[1] << capText[2] << capText[3];
 	
 	if(NetworkAddress::validateIp(capText[1]))
 	{
