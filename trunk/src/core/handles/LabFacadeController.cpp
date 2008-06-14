@@ -86,7 +86,6 @@ void LabFacadeController::newLaboratory(bool needEmit)
  */
 bool LabFacadeController::saveLab(const QString &savePath)
 {
-	qDebug() << savePath;
 	/* Check if current lab exist */
 	if(currentLab != NULL)
 	{
