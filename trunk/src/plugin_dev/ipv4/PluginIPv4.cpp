@@ -274,8 +274,67 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
  */
 bool PluginIPv4::init(QString laboratoryPath)
 {
-	Q_UNUSED(laboratoryPath)
-	return true;
+	/* Get my buddy */
+	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
+	if (hi == NULL)
+	{
+		qWarning() << "PluginIPv4::init(): null hardware interface.";
+		return false;
+	}
+	
+	QRegExp ipRegExp(".+/sbin/ifconfig " + hi->getName() + " (.+) netmask (.+) broadcast (.+) up|down.?");
+	
+	/* Parse my startup file and get the mac address if any */
+	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
+	startupPath.replace("//", "/");		//normalize path
+	
+	QFile startupFile(startupPath);
+	if(!startupFile.exists())
+	{
+		qWarning() << "PluginIPv4::init(): startup" << startupPath << " file don't exist";
+		return false;
+	}
+	
+	if(!startupFile.open(QFile::ReadOnly))
+	{
+		qWarning() << "PluginIPv4::init(): cannot open" << startupPath << "file in read only mode.";
+		return false;
+	}
+	
+	QString startupContent = startupFile.readAll();
+	startupFile.close();
+	
+	bool parseOk = false;
+	
+	ipRegExp.indexIn(startupContent);
+	QStringList capText = ipRegExp.capturedTexts();
+	qDebug() << capText[1] << capText[2] << capText[3];
+	
+	if(NetworkAddress::validateIp(capText[1]))
+	{
+		properties["address"]->setValue(capText[1]);
+		parseOk = true;
+	}
+	
+	if(NetworkAddress::validateNetmask(QHostAddress(capText[2])))
+	{
+		properties["netmask"]->setValue(capText[2]);
+		parseOk = true;
+	}
+	
+	//Broadcast can be omitted sometimes
+	properties["broadcast"]->setValue(capText[3]);
+	parseOk = true;
+	
+	if(parseOk)
+	{
+		myProxy->changeGraphicsLabel(properties["address"]->getValue() + "/" + 
+				properties["netmask"]->getValue());
+		
+		return true;
+	}
+	
+	return false;
 }
 
 /**
