@@ -43,6 +43,7 @@ private:
 	QString getTemplateLocation();
 	bool fetchProperties();
 	void refreshLabel();
+	bool validateMacAddress(QString &mac);
 	
 public:
 	PluginMac();
@@ -57,7 +58,7 @@ public:
 	
 	QString getDefaultGraphisLabel() {return QString(); };
 	
-	void init(QString laboratoryPath);
+	bool init(QString laboratoryPath);
 };
 
 

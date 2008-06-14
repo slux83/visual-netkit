@@ -58,7 +58,8 @@ public:
 	
 	QString getDefaultGraphisLabel() {return QString("test plugin"); };
 	
-	void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("test plugin"); };
+	bool init(QString laboratoryPath)
+		{ Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("test plugin"); return false; };
 };
 
 
