@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGIN_H_
-#define PLUGIN_H_
+#ifndef PLUGINTEST_H_
+#define PLUGINTEST_H_
 
 #include <QObject>
 #include <QString>
@@ -30,7 +30,7 @@
 /**
  * A simple plugin that do nothing
  */
-class Plugin : public PluginInterface
+class PluginTest : public PluginInterface
 {
 	
 private:
@@ -43,8 +43,8 @@ private:
 	QString getTemplateLocation();
 	
 public:
-	Plugin();
-	virtual ~Plugin();
+	PluginTest();
+	virtual ~PluginTest();
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QSettings* getMySettings() { return mySettings; };
 	QMap<QString, QString> getTemplates();
@@ -56,9 +56,9 @@ public:
 	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
 	qint32 getGroupID() { return -1; /* Unused */ };
 	
-	QString getDefaultGraphisLabel() {return QString("Hello from test!"); };
+	QString getDefaultGraphisLabel() {return QString("test plugin"); };
 	
-	void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("hello from test"); };
+	void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("test plugin"); };
 };
 
 
@@ -67,7 +67,7 @@ public:
 /* Factory (creator) */
 extern "C" PluginInterface* createPlugin()
 {
-    return new Plugin();
+    return new PluginTest();
 }
 
 /* Factory (destroyer) */
