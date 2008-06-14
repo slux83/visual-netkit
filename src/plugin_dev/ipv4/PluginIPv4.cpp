@@ -282,7 +282,7 @@ bool PluginIPv4::init(QString laboratoryPath)
 		return false;
 	}
 	
-	QRegExp ipRegExp(".+/sbin/ifconfig " + hi->getName() + " (.+) netmask (.+) broadcast (.+) up|down.?");
+	QRegExp ipRegExp(".+" + hi->getName() + " (.+) netmask (.+) broadcast (.+) .+");
 	
 	/* Parse my startup file and get the mac address if any */
 	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
@@ -301,34 +301,33 @@ bool PluginIPv4::init(QString laboratoryPath)
 		return false;
 	}
 	
-	QString startupContent = startupFile.readAll();
+	QStringList startupContent = QString(startupFile.readAll()).split("\n", QString::SkipEmptyParts);
 	startupFile.close();
 	
 	bool parseOk = false;
 	
-	ipRegExp.indexIn(startupContent);
-	QStringList capText = ipRegExp.capturedTexts();
-	
-	if(NetworkAddress::validateIp(capText[1]))
+	foreach(QString line, startupContent)
 	{
-		properties["address"]->setValue(capText[1]);
-		parseOk = true;
+		ipRegExp.indexIn(line);
+		QStringList capText = ipRegExp.capturedTexts();
+		
+		//It's my rule
+		if(capText[0].contains(hi->getName()))
+		{
+			properties["address"]->setValue(capText[1]);
+			properties["netmask"]->setValue(capText[2]);
+			properties["broadcast"]->setValue(capText[3]);
+			parseOk = true;
+			break;
+		}
 	}
-	
-	if(NetworkAddress::validateNetmask(QHostAddress(capText[2])))
-	{
-		properties["netmask"]->setValue(capText[2]);
-		parseOk = true;
-	}
-	
-	//Broadcast can be omitted sometimes
-	properties["broadcast"]->setValue(capText[3]);
-	parseOk = true;
 	
 	if(parseOk)
 	{
-		myProxy->changeGraphicsLabel(properties["address"]->getValue() + "/" + 
-				properties["netmask"]->getValue());
+		NetworkAddress addr(QHostAddress(properties["address"]->getValue()),
+			QHostAddress(properties["netmask"]->getValue()));
+		
+		myProxy->changeGraphicsLabel(addr.toString(PRINT_CIDR_NETMASK));
 		
 		return true;
 	}
@@ -342,7 +341,9 @@ bool PluginIPv4::init(QString laboratoryPath)
  */
 void PluginIPv4::refreshLabel()
 {
-	myProxy->changeGraphicsLabel(
-			properties["address"]->getValue() + "/" + properties["netmask"]->getValue());
+	NetworkAddress addr(QHostAddress(properties["address"]->getValue()),
+				QHostAddress(properties["netmask"]->getValue()));
+	
+	myProxy->changeGraphicsLabel(addr.toString(PRINT_CIDR_NETMASK));
 }
 

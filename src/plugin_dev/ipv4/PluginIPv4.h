@@ -29,6 +29,8 @@
 
 #include "NetworkAddress.h"
 
+#define PRINT_CIDR_NETMASK true
+
 /**
  * An IPv4 plugin
  */
