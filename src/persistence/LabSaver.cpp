@@ -147,93 +147,68 @@ bool LabSaver::saveTemplates()
 {
 	bool allok = true;
 	
-	/*
-	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
-	
-	// for each virtual machine
-	while(machineIterator.hasNext())
-	{
-		machineIterator.next();
-		qDebug() << "Machine of" << currentLab->getMachines().keys().size() <<": " << machineIterator.key();
+	QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getAllProxies();
+
+	// for each proxy
+	for (int p=0; p<plugins.size(); p++)
+	{		
+		// get all the templates to save
+		QMapIterator<QString, QString> tplIterator(plugins.at(p)->getTemplates());
 		
-		// gets all the associated proxies
-		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(machineIterator.value());
-		*/
-		
-		QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getAllProxies();
-	
-		// for each proxy
-		for (int p=0; p<plugins.size(); p++)
+		// for each template to be saved
+		while (tplIterator.hasNext())
 		{
-			qDebug() << "    Plugin "<< p << "of" << plugins.size() <<":" << plugins.at(p)->getPluginGroupID();
+			tplIterator.next();
 			
-			// get all the templates to save
-			QMapIterator<QString, QString> tplIterator(plugins.at(p)->getTemplates());
+			QStringList tplPathList = tplIterator.key().split("/");
+			tplPathList.removeLast();
+			QString tplPath = tplPathList.join("/");
+			QString tplName = tplIterator.key().split("/").last();
 			
-			// for each template to be saved
-			while (tplIterator.hasNext())
+			if (tplName.isEmpty())
 			{
-				tplIterator.next();
-				
-				qDebug() << "        Template of" << plugins.at(p)->getTemplates().keys().size()<< ": " << tplIterator.key();
-				
-				QStringList tplPathList = tplIterator.key().split("/");
-				tplPathList.removeLast();
-				QString tplPath = tplPathList.join("/");
-				QString tplName = tplIterator.key().split("/").last();
-				
-				qWarning() << "Template path: " << tplIterator.key();
-				if (tplName.isEmpty()) // || tplPath.isEmpty())    -->  il path può essere vuoto se locale al lab
+				qWarning() << "LabSaver::saveTemplates: error - null tplPath or tplName";
+				qWarning() << "tplPath = " << tplPath;
+				qWarning() << "tplName = " << tplName;
+				return false;
+			}
+			QString path = curPath + "/" + tplPath;
+			
+			QFile tpl(path + "/" + tplName);
+			QDir rootDir;
+			
+			// if current template exists on filesystem, append its content
+			if(tpl.exists())
+			{				
+				if(!tpl.open(QFile::Append))
 				{
-					qWarning() << "LabSaver::saveTemplates: error - null tplPath or tplName";
-					qWarning() << "tplPath = " << tplPath;
-					qWarning() << "tplName = " << tplName;
+					qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
+					errorString = "Cannot append content to file " + tplIterator.key() + tpl.errorString();
 					return false;
 				}
-				QString path = curPath + "/" + tplPath;
+				QTextStream out(&tpl);
+				QApplication::setOverrideCursor(Qt::WaitCursor);
+				out << tplIterator.value();
+				QApplication::restoreOverrideCursor();
+			}
+			else 
+			{				
+				// creates file and write the template content
+				rootDir.mkpath(path);
 				
-				QFile tpl(path + "/" + tplName);
-				qDebug() << "Path:" << path;
-				QDir rootDir;
-				
-				// if current template exists on filesystem, append its content
-				if(tpl.exists())
+				if (!tpl.open(QFile::WriteOnly | QFile::Text))
 				{
-					qDebug() << "File exists on filesystem.";
-					
-					if(!tpl.open(QFile::Append))
-					{
-						qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();
-						errorString = "Cannot append content to file " + tplIterator.key() + tpl.errorString();
-						return false;
-					}
-					QTextStream out(&tpl);
-					QApplication::setOverrideCursor(Qt::WaitCursor);
-					out << tplIterator.value();
-					QApplication::restoreOverrideCursor();
+					qWarning()	<< "Cannot write file" << tplIterator.key() << ":" << tpl.errorString();
+					errorString = "Cannot write file " + tplIterator.key() + tpl.errorString();
+					return false;
 				}
-				// otherwise, write the template to filesystem
-				else 
-				{
-					qDebug() << "File does not exists on filesystem.";
-					
-					// creates file and write the template content
-					rootDir.mkpath(path);
-					
-					if (!tpl.open(QFile::WriteOnly | QFile::Text))
-					{
-						qWarning()	<< "Cannot write file" << tplIterator.key() << ":" << tpl.errorString();
-						errorString = "Cannot write file " + tplIterator.key() + tpl.errorString();
-						return false;
-					}
-					QTextStream out(&tpl);
-					QApplication::setOverrideCursor(Qt::WaitCursor);
-					out << tplIterator.value();
-					QApplication::restoreOverrideCursor();
-				}
+				QTextStream out(&tpl);
+				QApplication::setOverrideCursor(Qt::WaitCursor);
+				out << tplIterator.value();
+				QApplication::restoreOverrideCursor();
 			}
 		}
-	//}
+	}
 	
 	return allok;
 }
@@ -373,7 +348,6 @@ bool LabSaver::removeDir(const QString d)
 					qWarning() << "Can't remove: " << fi.absoluteFilePath() << " (write-protect?)";
 			}
 		}
-		//qWarning() << "Removed:" << d << ".";
 		dir.rmdir(d);
 	}
 	return ret;
