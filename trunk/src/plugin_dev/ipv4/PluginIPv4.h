@@ -60,6 +60,7 @@ public:
 	qint32 getGroupID() { return -4; /* Unused */ };
 	
 	QString getDefaultGraphisLabel() {return QString("ipv4"); };
+	bool init(QString laboratoryPath);
 };
 
 

@@ -133,8 +133,6 @@ bool PluginMac::fetchProperties()
  */
 bool PluginMac::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
-	/* Mac validator */
-	QRegExpValidator macValidator(QRegExp("^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"), NULL);
 	
 	/* Check if property exist */
 	if (!properties.contains(propName))
@@ -159,10 +157,9 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 	else 
 	{
 		if (propName == "mac_address") 
-		{
-			int pos = 0;
+		{			
 			/* Validate the MAC address */
-			if(macValidator.validate(propValue, pos) != QValidator::Acceptable)
+			if(!validateMacAddress(propValue))
 			{
 				/* set a warning message */
 				pluginAlertMsg->append("Invalid MAC address");
@@ -181,11 +178,53 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 }
 
 /**
- * Init the plugin's properties
+ * Init the plugin's properties parsing files
  */
-void PluginMac::init(QString laboratoryPath)
+bool PluginMac::init(QString laboratoryPath)
 {
-	myProxy->changeGraphicsLabel("lol inside " + laboratoryPath);
+	/* Get my buddy */
+	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
+	if (hi == NULL)
+	{
+		qWarning() << "PluginMac::init(): null hardware interface name.";
+		return false;
+	}
+	
+	QRegExp macRegExp(".+/sbin/ifconfig " + hi->getName() + " hw ether (.+) up|down.?");
+	
+	/* Parse my startup file and get the mac address if any */
+	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
+	startupPath.replace("//", "/");		//normalize path
+	
+	QFile startupFile(startupPath);
+	if(!startupFile.exists())
+	{
+		qWarning() << "PluginMac::init(): startup" << startupPath << " file don't exist";
+		return false;
+	}
+	
+	if(!startupFile.open(QFile::ReadOnly))
+	{
+		qWarning() << "PluginMac::init(): cannot open" << startupPath << "file in read only mode.";
+		return false;
+	}
+	
+	QString startupContent = startupFile.readAll();
+	startupFile.close();
+	
+	macRegExp.indexIn(startupContent);
+	QString myMacAddress = macRegExp.capturedTexts().last();
+	
+	if(validateMacAddress(myMacAddress))
+	{
+		//Ok, save the mac address and show it on graphics element
+		properties.value("mac_address")->setValue(myMacAddress);
+		myProxy->changeGraphicsLabel(myMacAddress);
+		
+		return true;
+	}
+	
+	return false;	
 }
 
 /**
@@ -195,4 +234,19 @@ void PluginMac::init(QString laboratoryPath)
 void PluginMac::refreshLabel()
 {
 	myProxy->changeGraphicsLabel(properties["mac_address"]->getValue());
+}
+
+/**
+ * [PRIVATE]
+ * Validate mac address passed
+ */
+bool PluginMac::validateMacAddress(QString &mac)
+{
+	int pos = 0;
+	
+	/* Mac validator */
+	QRegExpValidator macValidator(QRegExp("^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"), NULL);
+	
+	/* Validate the MAC address */
+	return (macValidator.validate(mac, pos) == QValidator::Acceptable);
 }

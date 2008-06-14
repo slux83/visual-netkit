@@ -94,10 +94,11 @@ public:
 	 * passed as argument), initialize properties and finally if you want you can
 	 * set your own graphics label, through the proxy changeGraphicsLabel()
 	 * function.
-	 * 
-	 * The default implementation do nothing.
+	 * The function return true if the parser is able to recognize datas fetching
+	 * own files.
+	 * (also used with 3rd part laboratory)
 	 */
-	virtual void init(QString laboratoryPath) { Q_UNUSED(laboratoryPath) };
+	virtual bool init(QString laboratoryPath) = 0;
 	
 };
 

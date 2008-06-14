@@ -270,6 +270,15 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 }
 
 /**
+ * Init the plugin's properties parsing files
+ */
+bool PluginIPv4::init(QString laboratoryPath)
+{
+	Q_UNUSED(laboratoryPath)
+	return true;
+}
+
+/**
  * [PRIVATE]
  * Refresh the scene label if netmask or ip are changed
  */

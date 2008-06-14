@@ -56,7 +56,7 @@ public:
 	qint32 getPluginGroupID();
 	void changeGraphicsLabel(QString label);
 	void showDefaultGraphicsLabel();
-	void initPlugin(QString path) { pluginInterface->init(path); };
+	bool initPlugin(QString path) { return pluginInterface->init(path); };
 	
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);
