@@ -186,11 +186,11 @@ bool PluginMac::init(QString laboratoryPath)
 	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 	if (hi == NULL)
 	{
-		qWarning() << "PluginMac::init(): null hardware interface name.";
+		qWarning() << "PluginMac::init(): null hardware interface.";
 		return false;
 	}
 	
-	QRegExp macRegExp(".+/sbin/ifconfig " + hi->getName() + " hw ether (.+) up|down.?");
+	QRegExp macRegExp("([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}");
 	
 	/* Parse my startup file and get the mac address if any */
 	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
@@ -209,19 +209,25 @@ bool PluginMac::init(QString laboratoryPath)
 		return false;
 	}
 	
-	QString startupContent = startupFile.readAll();
+	QStringList startupContent = QString(startupFile.readAll()).split("\n");
 	startupFile.close();
 	
-	macRegExp.indexIn(startupContent);
-	QString myMacAddress = macRegExp.capturedTexts().last();
-	
-	if(validateMacAddress(myMacAddress))
+	/* reand and search my mac address */
+	foreach(QString line, startupContent)
 	{
-		//Ok, save the mac address and show it on graphics element
-		properties.value("mac_address")->setValue(myMacAddress);
-		myProxy->changeGraphicsLabel(myMacAddress);
-		
-		return true;
+		if(line.contains(hi->getName()))
+		{
+			macRegExp.indexIn(line);
+			QString myMacAddress = macRegExp.capturedTexts()[0];
+			if(validateMacAddress(myMacAddress))
+			{
+				//ok, founded my mac address
+				properties.value("mac_address")->setValue(myMacAddress);
+				myProxy->changeGraphicsLabel(myMacAddress);
+						
+				return true;
+			}
+		}
 	}
 	
 	return false;	
