@@ -64,17 +64,6 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	QDomElement root = doc->createElement("lab");
 	doc->appendChild(root);
 	
-	
-	//==========================================================================
-	//adds lab name
-	root.setAttribute("name", LabFacadeController::getInstance()->getCurrentLab()->getName());
-	
-	//adds lab date
-	root.setAttribute("date", LabFacadeController::getInstance()->getCurrentLab()->getDate());
-	//==========================================================================
-	
-	
-	
 	//adds lab scene infos
 	QDomElement scene = doc->createElement("scene");
 	root.appendChild(scene);
@@ -90,19 +79,16 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	//Y position value
 	sceneDim.setAttribute("height", QString(QByteArray::number(LabHandler::getInstance()->
 							getMainWindow()->getGraphicsView()->scene()->height())));
+
 	
-	
-	
-	//adds lab scene items if any. (Note: at least the green border line is in the list)
+	/* adds lab scene items if any. (Note: at least the green border line is in the list) */
 	QList<QGraphicsItem *> itemsList = LabHandler::getInstance()->getMainWindow()->getGraphicsView()->scene()->items();
 	if (!itemsList.isEmpty() && itemsList.size() > 1) 
 	{
 		QDomElement items = doc->createElement("items");
 		scene.appendChild(items);
-
 	
-		//==========================================================================	
-		// adds virtualmachine and router items
+		/* adds virtualmachine and router items */
 		QList<VirtualMachineItem *> vmlist = VmMapper::getInstance()->getVmItems();
 		if (vmlist.size() > 0) 
 		{	
@@ -165,12 +151,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				}
 			}
 		}
-		//==========================================================================
-	
 		
-		
-		//==========================================================================	
-		// adds collision domain items
+		/* adds collision domain items */
 		QList<CollisionDomainItem *> cdsList = CdMapper::getInstance()->getCdItems();
 		
 		if (cdsList.size() > 0) 
@@ -231,12 +213,8 @@ QDomDocument* XMLSaver::prepareDomDocument()
 	
 			}
 		}
-		//==========================================================================	
-		
-		
-		
-		//==========================================================================	
-		// adds link items
+
+		/* adds link items */
 		QList<LinkItem *> linksList = LinkMapper::getInstance()->getLinkItems();
 		
 		if (linksList.size() > 0) 

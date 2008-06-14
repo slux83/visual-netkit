@@ -94,17 +94,12 @@ void LabHandler::openLab(QString labPath)
 	LabFacadeController::getInstance()->newLaboratory();
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
 	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
-
-	QStringList splittedPath = labPath.split('/', QString::SkipEmptyParts);
 	
 	currLab->setLabPath(labPath);
 	
-	mainWindow->changeTreeNodeName(currLab->getName(), splittedPath.last(), true);
-	
-	currLab->setName(splittedPath.last());
-	
 	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
+	
 	currLab->setSavedState(true);
 	
 	mainWindow->actionCloseLab->setDisabled(false);
@@ -121,7 +116,7 @@ void LabHandler::saveLab(const QStringList &selectedFiles)
 		//ok, lab saved! save state and refresh window header text
 		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
 		currLab->setSavedState(true);
-		currLab->setLabPath(selectedFiles.first() + "/" + currLab->getName());
+		currLab->setLabPath(selectedFiles.first());
 		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 		mainWindow->writeLogMessage(tr("Lab saved as: ") + currLab->getLabPath().absolutePath());
 	}
@@ -141,12 +136,12 @@ void LabHandler::saveLab(const QStringList &selectedFiles)
  */
 void LabHandler::addCreatedLabOnTree(Laboratory *l)
 {
+	Q_UNUSED(l)
+	
 	qDebug() << "new lab ready to render";
 	
 	QTreeWidgetItem *root = new QTreeWidgetItem();
 	QTreeWidgetItem *labConf = new QTreeWidgetItem();
-	
-	root->setData(0, Qt::DisplayRole, l->getName());
 	
 	//type of element
 	root->setData(0, Qt::UserRole, "lab_element");

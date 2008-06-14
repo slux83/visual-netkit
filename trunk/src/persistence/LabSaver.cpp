@@ -58,14 +58,12 @@ bool LabSaver::saveLab()
 		allok = false;
 	if (allok && !saveTemplates())			// saves plugin templates
 		allok = false;
-	if (allok && !saveVmsConf())			// saves virtual machines configurations
-		allok = false;
 	
 	// remove the lab
 	if(!allok)
 	{
 		QDir rootDir;
-		QString labPath = curPath + "/" + currentLab->getName();
+		QString labPath = curPath ;
 		if(rootDir.exists(labPath))
 		{
 			//allok = rootDir.rmdir(labPath);
@@ -75,7 +73,7 @@ bool LabSaver::saveLab()
 		}
 		else 
 		{
-			errorString = "Cannot remove lab dir '" + curPath + "/" + currentLab->getName() + "':\n"+
+			errorString = "Cannot remove lab dir '" + curPath + "':\n"+
 						  "directory does not exist.";
 		}
 	}
@@ -91,7 +89,7 @@ bool LabSaver::saveLabConf()
 {
 	bool allok = true;
 	
-	QFile file(curPath + "/" + currentLab->getName() + "/" + LAB_CONF);
+	QFile file(curPath + "/" + LAB_CONF);
 	if (!file.open(QFile::WriteOnly | QFile::Text))
     {
     	qWarning() << "Cannot write file" << LAB_CONF << ":" << file.errorString();
@@ -120,7 +118,7 @@ bool LabSaver::saveStartups()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
-		QFile startup(curPath + "/" + currentLab->getName() + "/" + machineIterator.key() + ".startup");
+		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
 
 		if(!startup.open(QFile::WriteOnly | QFile::Text))
 		{
@@ -192,7 +190,7 @@ bool LabSaver::saveTemplates()
 					qWarning() << "tplName = " << tplName;
 					return false;
 				}
-				QString path = curPath + "/" + currentLab->getName() + "/" + tplPath;
+				QString path = curPath + "/" + tplPath;
 				
 				QFile tpl(path + "/" + tplName);
 				qDebug() << "Path:" << path;
@@ -307,27 +305,6 @@ QString LabSaver::prepareLabConfText()
 }
 
 /**
- * Saves passed router or host configuration to filesystem.
- */
-bool LabSaver::saveVmsConf()
-{
-	bool allok = true;
-	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
-	
-	/* iterates on machines */
-	while(machineIterator.hasNext() && allok)
-	{
-		machineIterator.next();
-		
-	//	qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPlugin()->getName();
-		
-		//TODO controllare l'esistenza dei plugin...se nn lo si fa segmentation fault!
-	//	qDebug() << PluginRegistry::getInstance()->getVmProxy(machineIterator.value())->getPluginProperties();
-	}	
-	return allok;
-}
-
-/**
  * Creates the lab folders as appearing in the lab tree in the Main GUI Window.
  * This function creates both routerX.conf file and routerX folder
  * (including subdirectories and subfiles).
@@ -340,11 +317,11 @@ bool LabSaver::createFolderSystem()
 	if (currentLab != NULL)
 	{
 		// creates main lab dir and check if it's created
-		if(!rootDir.exists(curPath + "/" + currentLab->getName()))
+		if(!rootDir.exists(curPath))
 		{
-			allok = rootDir.mkdir(curPath + "/" + currentLab->getName());
+			allok = rootDir.mkdir(curPath);
 			if(!allok)
-				errorString = "Cannot create root dir '" + curPath + "/" + currentLab->getName() + "'.";
+				errorString = "Cannot create root dir '" + curPath + "'.";
 		}
 		
 		QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
@@ -353,11 +330,11 @@ bool LabSaver::createFolderSystem()
 		while(machineIterator.hasNext() && allok)
 		{
 			machineIterator.next();
-			if(!rootDir.exists(curPath + "/" + currentLab->getName() + "/" + machineIterator.key()))
-				allok = rootDir.mkdir(curPath + "/" + currentLab->getName() + "/" + machineIterator.key());
+			if(!rootDir.exists(curPath + "/" + machineIterator.key()))
+				allok = rootDir.mkdir(curPath + "/" + machineIterator.key());
 			
 			if (!allok)
-				errorString = "Cannot create dir '" + curPath + "/" + currentLab->getName() + "/" + machineIterator.key() + "'.";
+				errorString = "Cannot create dir '" + curPath + "/" + machineIterator.key() + "'.";
 		}
 	} 
 	else 
