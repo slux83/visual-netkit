@@ -23,10 +23,9 @@
 /**
  * Constructor with some params
  */
-Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
+Laboratory::Laboratory(QString newVersion, QString newAuthors)
 	: QObject()
 {
-	name = newName;
 	version = newVersion;
 	authors = newAuthors;
 	isSaved = false;
@@ -36,8 +35,8 @@ Laboratory::Laboratory(QString newName, QString newVersion, QString newAuthors)
  * Constructor with no params
  */
 Laboratory::Laboratory()
+	: QObject()
 {
-	name = DEFAULT_LAB_NAME + QString("_") + QDateTime::currentDateTime().toString("yyyyMMddhhmm");
 	version = "1.0";
 	
 	/* Set the current date time */

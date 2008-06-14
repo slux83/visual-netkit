@@ -49,7 +49,6 @@ class Laboratory : public QObject
 	
 private:
 	bool isSaved;
-	QString name;
 	QString description;
 	QString version;
 	QString date;
@@ -61,12 +60,11 @@ private:
 	QDir labPath;
 	
 public:
-	Laboratory(QString newName, QString newVersion, QString newAuthors);
+	Laboratory(QString newVersion, QString newAuthors);
 	Laboratory();
 	virtual ~Laboratory();
 	
 	/* Getter functions */
-	QString getName() { return name; };
 	QString getDate() { return date; };
 	QString getVersion() { return version; };
 	QString getDescription() { return description; };
@@ -80,7 +78,6 @@ public:
 	QMap<QString, CollisionDomain *> getCollisionDomains() { return collisionDomains; };
 	
 	/* Setter functions */
-	void setName(QString newValue) { name = newValue; };
 	void setDate(QString newValue) { date = newValue; };
 	void setVersion(QString newValue) { version = newValue; };
 	void setDescription(QString newValue) { description = newValue; };

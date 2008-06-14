@@ -32,7 +32,6 @@ private:
 	QString errorString;
 	
 	bool saveLabConf();
-	bool saveVmsConf();
 	bool createFolderSystem();
 	bool saveStartups();
 	bool saveTemplates();

@@ -49,8 +49,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	dockLog->setVisible(false);
 	
 	/* init the file dialog (save mode) */
-	saveFileDialog = new QFileDialog(this, tr("Save laboratory"), QDir::homePath(), "");
-	saveFileDialog->setFileMode(QFileDialog::DirectoryOnly);
+	saveFileDialog = new QFileDialog(this, tr("Save laboratory as..."), QDir::homePath(), "");
+	saveFileDialog->setFileMode(QFileDialog::AnyFile);
+	saveFileDialog->setAcceptMode(QFileDialog::AcceptSave);
+	saveFileDialog->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+	
 	
 	//populte the 'View' menu
 	populateViewMenu();
