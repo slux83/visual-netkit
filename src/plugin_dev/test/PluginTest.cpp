@@ -20,13 +20,13 @@
 #include <QResource>
 #include <QFile>
 
-#include "Plugin.h"
+#include "PluginTest.h"
 
 
 /** 
  * Constructor 
  */
-Plugin::Plugin() : PluginInterface()
+PluginTest::PluginTest() : PluginInterface()
 {
 	mySettings = new QSettings(":/ini", QSettings::NativeFormat);
 	
@@ -43,7 +43,7 @@ Plugin::Plugin() : PluginInterface()
 /**
  * Deconstructor
  */
-Plugin::~Plugin()
+PluginTest::~PluginTest()
 {
 	//NOTE: The proxy is destroyed by the plugin framework
 	qDeleteAll(properties.values());
@@ -55,7 +55,7 @@ Plugin::~Plugin()
  * Returns the plugin template if resource file exists,
  * otherwise returns an empty QString.
  */
-QMap<QString, QString> Plugin::getTemplates()
+QMap<QString, QString> PluginTest::getTemplates()
 {
 	QMap<QString, QString> templates;
 	QString templateContent;
@@ -80,7 +80,7 @@ QMap<QString, QString> Plugin::getTemplates()
  * [PRIVATE]
  * Returns the path where save/append the template content
  */
-QString Plugin::getTemplateLocation()
+QString PluginTest::getTemplateLocation()
 {
 	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
 	if (vm == NULL)
@@ -95,7 +95,7 @@ QString Plugin::getTemplateLocation()
 /**
  * Fetches plugin properties and stores them in the properties map.
  */
-bool Plugin::fetchProperties()
+bool PluginTest::fetchProperties()
 {
 	bool allok = true;
 	
@@ -126,7 +126,7 @@ bool Plugin::fetchProperties()
 /**
  * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-bool Plugin::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginTest::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
 	qDebug() << "Plugin test" << "propName:" << propName << "propValue:" << propValue
 			<< "alert:" << pluginAlertMsg;
