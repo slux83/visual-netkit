@@ -24,7 +24,10 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/OpenLabForm.h \
+HEADERS = src/gui/TabWidget.h \
+    src/gui/handles/TabController.h \
+    src/gui/FileEditor.h \
+    src/gui/OpenLabForm.h \
     src/persistence/LabOpener.h \
     src/gui/ManagePluginsDialog.h \
     src/gui/handles/LinkPropertyController.h \
@@ -75,7 +78,10 @@ HEADERS = src/gui/OpenLabForm.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/OpenLabForm.cpp \
+SOURCES = src/gui/TabWidget.cpp \
+    src/gui/handles/TabController.cpp \
+    src/gui/FileEditor.cpp \
+    src/gui/OpenLabForm.cpp \
     src/persistence/LabOpener.cpp \
     src/gui/ManagePluginsDialog.cpp \
     src/gui/handles/LinkPropertyController.cpp \
