@@ -50,4 +50,8 @@
 /* PNG file compression for exporting */
 #define PNG_COPRESSION 30
 
+/* File editor font */
+#define FILE_EDITOR_FONT QFont("Monospace", 9, QFont::Normal)
+
+
 #endif /*COMMONCONFIGS_H_*/

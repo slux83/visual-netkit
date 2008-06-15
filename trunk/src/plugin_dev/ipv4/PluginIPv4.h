@@ -29,6 +29,7 @@
 
 #include "NetworkAddress.h"
 
+//true if the netmask must be printed in CIDR notation, false otherwise
 #define PRINT_CIDR_NETMASK true
 
 /**
@@ -57,9 +58,6 @@ public:
 	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
-	
-	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
-	qint32 getGroupID() { return -4; /* Unused */ };
 	
 	QString getDefaultGraphisLabel() {return QString("ipv4"); };
 	bool init(QString laboratoryPath);

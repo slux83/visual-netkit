@@ -53,9 +53,6 @@ public:
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	
-	void setGroupID(qint32 id) { Q_UNUSED(id) /* do nothing */ };	
-	qint32 getGroupID() { return -1; /* Unused */ };
-	
 	QString getDefaultGraphisLabel() {return QString("test plugin"); };
 	
 	bool init(QString laboratoryPath)

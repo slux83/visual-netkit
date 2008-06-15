@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>fileEditWidget</class>
- <widget class="QWidget" name="fileEditWidget" >
+ <class>FileEditWidget</class>
+ <widget class="QWidget" name="FileEditWidget" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -16,16 +16,7 @@
    <property name="spacing" >
     <number>3</number>
    </property>
-   <property name="leftMargin" >
-    <number>3</number>
-   </property>
-   <property name="topMargin" >
-    <number>3</number>
-   </property>
-   <property name="rightMargin" >
-    <number>3</number>
-   </property>
-   <property name="bottomMargin" >
+   <property name="margin" >
     <number>3</number>
    </property>
    <item>
@@ -45,7 +36,8 @@
         <string/>
        </property>
        <property name="icon" >
-        <iconset resource="../resources/VisualNetkit.qrc" >:/menu/undo_icon</iconset>
+        <iconset resource="../resources/VisualNetkit.qrc" >
+         <normaloff>:/menu/undo_icon</normaloff>:/menu/undo_icon</iconset>
        </property>
       </widget>
      </item>
@@ -61,7 +53,8 @@
         <string/>
        </property>
        <property name="icon" >
-        <iconset resource="../resources/VisualNetkit.qrc" >:/menu/redo_icon</iconset>
+        <iconset resource="../resources/VisualNetkit.qrc" >
+         <normaloff>:/menu/redo_icon</normaloff>:/menu/redo_icon</iconset>
        </property>
       </widget>
      </item>
@@ -84,7 +77,18 @@
         <string/>
        </property>
        <property name="icon" >
-        <iconset resource="../resources/VisualNetkit.qrc" >:/menu/save_icon</iconset>
+        <iconset resource="../resources/VisualNetkit.qrc" >
+         <normaloff>:/menu/save_icon</normaloff>:/menu/save_icon</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="backupCheckBox" >
+       <property name="text" >
+        <string>Backup</string>
+       </property>
+       <property name="checked" >
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -93,7 +97,7 @@
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>40</width>
          <height>20</height>
@@ -102,15 +106,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="closeButton" >
-       <property name="toolTip" >
-        <string>Close this tab</string>
-       </property>
+      <widget class="QCheckBox" name="wrapCheck" >
        <property name="text" >
-        <string/>
-       </property>
-       <property name="icon" >
-        <iconset resource="../resources/VisualNetkit.qrc" >:/menu/close_icon</iconset>
+        <string>Wrap line</string>
        </property>
       </widget>
      </item>
@@ -130,6 +128,16 @@
     <widget class="QTextEdit" name="fileTextEdit" >
      <property name="lineWrapMode" >
       <enum>QTextEdit::NoWrap</enum>
+     </property>
+     <property name="html" >
+      <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Bitstream Charter'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+     <property name="acceptRichText" >
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -162,8 +170,8 @@
    <slot>redo()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>68</x>
-     <y>6</y>
+     <x>66</x>
+     <y>10</y>
     </hint>
     <hint type="destinationlabel" >
      <x>79</x>
@@ -198,8 +206,24 @@
      <y>141</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>68</x>
-     <y>17</y>
+     <x>66</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileTextEdit</sender>
+   <signal>undoAvailable(bool)</signal>
+   <receiver>saveButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>209</x>
+     <y>75</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>100</x>
+     <y>14</y>
     </hint>
    </hints>
   </connection>

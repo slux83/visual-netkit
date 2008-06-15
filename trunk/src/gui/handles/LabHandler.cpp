@@ -21,6 +21,7 @@
 #include "VmMapper.h"
 #include "CdMapper.h"
 #include "LinkMapper.h"
+#include "TabController.h"
 
 #include <QTreeWidgetItem>
 #include <QTableWidgetItem>
@@ -237,7 +238,7 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 	
 	if(item->data(0, Qt::UserRole) == "config_file")
 	{
-		qDebug() << "Config file double clicked" << item->data(0, Qt::UserRole + 1).toString();
+		qDebug() << "Opening" << item->data(0, Qt::UserRole + 1).toString();
 		
 		/* the lab is saved? */
 		if(!lab->getSaveState())
@@ -249,8 +250,13 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 		}
 		else
 		{
-			//TODO: show this config file inside a new tab if none already exist,
-			//		otherwise, show the correct tab
+			QString pathToOpen = lab->getLabPath().absolutePath().append("/").append(item->data(0, Qt::UserRole + 1).toString());
+			
+			if(!TabController::getInstance()->openTab(pathToOpen))
+				QMessageBox::warning(mainWindow,
+					"Visual Netkit - Error",
+					tr("Cannot open the file").append(" ").append(pathToOpen),
+					QMessageBox::Ok);
 		}
 	}
 }
