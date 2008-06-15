@@ -16,31 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FILEEDITOR_H_
-#define FILEEDITOR_H_
+#ifndef SYNTAXHIGHLIGHTER_H_
+#define SYNTAXHIGHLIGHTER_H_
 
-#include <QWidget>
-#include <QDebug>
-
-#include "SyntaxHighLighter.h"
-
-#include "ui_fileEdit.h"
+#include <QSyntaxHighlighter>
 
 /**
- * This widget is a file editor showed inside the main tab widget
+ * This class contains rules for syntax highlighting
  */
-class FileEditor : public QWidget, public Ui::FileEditWidget
+class SyntaxHighLighter : public QSyntaxHighlighter
 {
 	Q_OBJECT
-	
-private:
-	SyntaxHighLighter *highlighter;
-public:
-	FileEditor(QString &fileContent, QWidget *parent = 0);
-	virtual ~FileEditor();
 
-private slots:
-	void changeWrapMode(int state);
+private:
+	QTextCharFormat singleLineCommentFormat;
+	QRegExp singleLineCommentRegExp;
+
+public:
+	SyntaxHighLighter(QTextDocument *parent = 0);
+	virtual ~SyntaxHighLighter();
+
+protected:
+	void highlightBlock(const QString &text);
+
 };
 
-#endif /*FILEEDITOR_H_*/
+#endif /*SYNTAXHIGHLIGHTER_H_*/

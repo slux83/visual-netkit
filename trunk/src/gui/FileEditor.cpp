@@ -26,7 +26,14 @@ FileEditor::FileEditor(QString &fileContent, QWidget *parent) : QWidget(parent)
 {
 	setupUi(this);
 	
-	fileTextEdit->setFont(FILE_EDITOR_FONT);
+	//set syntax highlighter
+	highlighter = new SyntaxHighLighter(fileTextEdit->document());
+	
+	//Set font
+	QFont font = FILE_EDITOR_FONT;
+	font.setFixedPitch(true);
+	
+	fileTextEdit->setFont(font);
 	
 	//Set the contend inside the qtextarea
 	fileTextEdit->setPlainText(fileContent);

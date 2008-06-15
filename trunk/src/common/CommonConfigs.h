@@ -51,7 +51,7 @@
 #define PNG_COPRESSION 30
 
 /* File editor font */
-#define FILE_EDITOR_FONT QFont("Monospace", 9, QFont::Normal)
+#define FILE_EDITOR_FONT QFont("Courier", 9, QFont::Normal)
 
 
 #endif /*COMMONCONFIGS_H_*/
