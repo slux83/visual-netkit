@@ -24,7 +24,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/TabWidget.h \
+HEADERS = src/gui/SyntaxHighLighter.h \
+    src/gui/TabWidget.h \
     src/gui/handles/TabController.h \
     src/gui/FileEditor.h \
     src/gui/OpenLabForm.h \
@@ -78,7 +79,8 @@ HEADERS = src/gui/TabWidget.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/TabWidget.cpp \
+SOURCES = src/gui/SyntaxHighLighter.cpp \
+    src/gui/TabWidget.cpp \
     src/gui/handles/TabController.cpp \
     src/gui/FileEditor.cpp \
     src/gui/OpenLabForm.cpp \

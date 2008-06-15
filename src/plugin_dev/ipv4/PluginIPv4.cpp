@@ -282,7 +282,7 @@ bool PluginIPv4::init(QString laboratoryPath)
 		return false;
 	}
 	
-	QRegExp ipRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+)\\b.?");
+	QRegExp ipRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+)\\bup|down?");
 	
 	/* Parse my startup file and get the mac address if any */
 	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
@@ -314,9 +314,13 @@ bool PluginIPv4::init(QString laboratoryPath)
 		//It's my rule
 		if(capText[0].contains(hi->getName()))
 		{
-			properties["address"]->setValue(capText[1]);
-			properties["netmask"]->setValue(capText[2]);
-			properties["broadcast"]->setValue(capText[3]);
+			QString addressVal = capText[1].trimmed();
+			QString netmaskVal = capText[2].trimmed();
+			QString broadcastVal = capText[3].trimmed();
+			
+			properties["address"]->setValue(addressVal);
+			properties["netmask"]->setValue(netmaskVal);
+			properties["broadcast"]->setValue(broadcastVal);
 			parseOk = true;
 			break;
 		}
