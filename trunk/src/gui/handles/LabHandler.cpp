@@ -237,9 +237,7 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
 	
 	if(item->data(0, Qt::UserRole) == "config_file")
-	{
-		qDebug() << "Opening" << item->data(0, Qt::UserRole + 1).toString();
-		
+	{	
 		/* the lab is saved? */
 		if(!lab->getSaveState())
 		{

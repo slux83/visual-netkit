@@ -29,6 +29,7 @@ TabController::TabController() : QObject()
 {
 	//Get the tab widget from main gui
 	tabWidget = LabHandler::getInstance()->getMainWindow()->centralTabWidget;
+	connect(this, SIGNAL(tabsHasChanged()), tabWidget, SLOT(updateTabList()));
 }
 
 /**
@@ -91,5 +92,20 @@ bool TabController::openTab(QString path)
 		tabWidget->setCurrentWidget(fileEditor);
 	}
 	
+	emit tabsHasChanged();	//emit signal
+	
 	return true;
+}
+
+/**
+ * Destroy widget and clear from my list
+ */
+void TabController::removeTab(FileEditor* fileEditor)
+{
+	QString key = activeTabs.key(fileEditor);
+	activeTabs.remove(key);
+	
+	delete fileEditor;
+	
+	emit tabsHasChanged();	//emit signal
 }

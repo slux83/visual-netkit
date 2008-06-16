@@ -35,9 +35,11 @@ class FileEditor : public QWidget, public Ui::FileEditWidget
 	
 private:
 	SyntaxHighLighter *highlighter;
+
 public:
 	FileEditor(QString &fileContent, QWidget *parent = 0);
 	virtual ~FileEditor();
+	bool textHasChanged() { return saveButton->isEnabled(); };
 
 private slots:
 	void changeWrapMode(int state);

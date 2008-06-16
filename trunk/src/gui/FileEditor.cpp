@@ -49,6 +49,7 @@ FileEditor::FileEditor(QString &fileContent, QWidget *parent) : QWidget(parent)
  */
 FileEditor::~FileEditor()
 {
+	delete highlighter;
 }
 
 /**

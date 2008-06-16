@@ -17,6 +17,7 @@
  */
 
 #include "TabWidget.h"
+#include "FileEditor.h"
 
 /**
  * Constructor
@@ -26,11 +27,23 @@ TabWidget::TabWidget(QWidget *parent) : QTabWidget(parent)
 	/* Init the close tab button */
 	closeTabButton = new QToolButton(this);
 	closeTabButton->setIcon(QIcon(":/menu/close_icon"));
-	closeTabButton->setToolTip(tr("Close the current Tab."));
+	closeTabButton->setToolTip(tr("Close the current Tab"));
 	
-	setCornerWidget(closeTabButton);
+	/* Init the tab list bottun */
+	listTabMenu = new QMenu(this);
+	tabListButton = new QToolButton(this);
+	tabListButton->setIcon(QIcon(":/menu/tab_list_icon"));
+	tabListButton->setToolTip(tr("Show tab list"));
+	tabListButton->setMenu(listTabMenu);
+	tabListButton->setPopupMode(QToolButton::InstantPopup);
+	
+	setCornerWidget(closeTabButton, Qt::TopRightCorner);
+	setCornerWidget(tabListButton, Qt::TopLeftCorner);
 	
 	connect(closeTabButton, SIGNAL(clicked()), this, SLOT(closeTab()));
+	
+	/* connect action */
+	connect(tabListButton, SIGNAL(triggered(QAction*)), this, SLOT(showSelectedTab(QAction*)));
 }
 
 /**
@@ -38,6 +51,8 @@ TabWidget::TabWidget(QWidget *parent) : QTabWidget(parent)
  */
 TabWidget::~TabWidget()
 {
+	delete closeTabButton;
+	delete tabListButton;
 }
 
 /**
@@ -46,6 +61,60 @@ TabWidget::~TabWidget()
  */
 void TabWidget::closeTab()
 {
-	qDebug() << "closing tab" << currentIndex();
+	/* Don't touch the graph tab */
+	if(currentIndex() == 0)
+	{
+		return;
+	}
+	
+	/* Get the current widget */
+	QWidget *tab;
+	if((tab = currentWidget()) == NULL)
+		return;
+	
+	/* Subcasting */
+	FileEditor *fe = static_cast<FileEditor*>(tab);
+	
+	if(fe->textHasChanged())
+	{
+		//TODO: save the changed text (delegate to low level)
+	}
+	
+	//remove tab from tab-stack
+	removeTab(currentIndex());
+	
+	TabController::getInstance()->removeTab(fe);
 }
 
+/**
+ * [PUBLIC-SLOT]
+ * Build and update the tab menu
+ */
+void TabWidget::updateTabList()
+{
+	/* Clear and rebuild menu */
+	listTabMenu->clear();
+	
+	for(int i=0; i<count(); i++)
+	{
+		QAction *action = new QAction(tabText(i), listTabMenu);
+		action->setData(i);		//save the tab index
+		
+		/* Set appropriate icon */
+		if(i==0)
+			action->setIcon(QIcon(":/small/graph"));
+		else
+			action->setIcon(QIcon(":/small/file_conf"));
+		
+		listTabMenu->addAction(action);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Show the selected tab on tabs list
+ */
+void TabWidget::showSelectedTab(QAction* action)
+{
+	setCurrentIndex(action->data().toInt());
+}
