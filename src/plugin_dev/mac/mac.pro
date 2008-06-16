@@ -3,9 +3,13 @@
 # #####################################################################
 TEMPLATE = lib
 TARGET = mac
-DEPENDPATH += .
 
+#prevent linking error on some system (like ubuntu)
+QMAKE_LFLAGS = -Wl,-rpath,$$[QT_INSTALL_LIBS] $$[QMAKE_LFLAGS_SHLIB]
+
+DEPENDPATH += .
 DESTDIR = ../../../bin/plugins
+
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
