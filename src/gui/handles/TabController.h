@@ -46,6 +46,10 @@ public:
 	virtual ~TabController();
 	static TabController* getInstance();
 	bool openTab(QString path);
+	void removeTab(FileEditor* fileEditor);
+
+signals:
+	void tabsHasChanged();
 };
 
 #endif /*TABCONTROLLER_H_*/

@@ -6,6 +6,7 @@
         <file alias="vm" >medium_icons/vm.png</file>
     </qresource>
     <qresource prefix="/menu" >
+    	<file alias="tab_list_icon" >menu_icons/arrow_down.png</file>
         <file alias="cd_icon" >menu_icons/cd.png</file>
         <file alias="close_icon" >menu_icons/close.png</file>
         <file alias="create_group" >menu_icons/create_group.png</file>
@@ -31,6 +32,7 @@
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>
+        <file alias="graph" >small_icons/graph.png</file>
         <file alias="folder_root" >small_icons/folder_root.png</file>
         <file alias="folder_vm" >small_icons/folder_vm.png</file>
         <file alias="plugin" >small_icons/plugin.png</file>

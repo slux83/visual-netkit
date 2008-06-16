@@ -22,6 +22,9 @@
 #include <QTabWidget>
 #include <QToolButton>
 #include <QDebug>
+#include <QMenu>
+
+#include "handles/TabController.h"
 
 /**
  * This is a QTabWidget with more features
@@ -31,10 +34,16 @@ class TabWidget : public QTabWidget
 	Q_OBJECT
 	
 private:
-	QToolButton *closeTabButton;
+	QToolButton *closeTabButton, *tabListButton;
+	QMenu *listTabMenu;
 
 private slots:
 	void closeTab();
+	void showSelectedTab(QAction* action);
+	
+public slots:
+	/* quint16 is the tab index, QString is the title of the tab */
+	void updateTabList();
 	
 public:
 	TabWidget(QWidget * parent = 0);
