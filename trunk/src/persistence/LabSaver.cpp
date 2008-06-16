@@ -26,6 +26,7 @@
 #include "TemplateExpert.h"
 
 #include "../plugin_framework/PluginRegistry.h"
+#include "../plugin_framework/PluginProxy.h"
 
 /**
  * Constructor.
