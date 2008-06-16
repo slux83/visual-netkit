@@ -21,11 +21,17 @@
 
 #include <QMap>
 #include <QObject>
-#include "PluginLoaderFactory.h"
+
 #include "../core/VirtualMachine.h"
 #include "../core/CollisionDomain.h"
 #include "../core/HardwareInterface.h"
 
+/**
+ * IMPORTANT:
+ * DO NOT INCLUDE OTHER HEADERS HERE, BROKE PLUGINS COMPILATION
+ * Use "class XXX" instead and "#include XXX" header inside PluginRegistry.cpp
+ */
+class PluginLoaderFactory;
 class PluginProxy;
 
 /**
