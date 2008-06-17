@@ -25,15 +25,6 @@ SyntaxHighLighter::SyntaxHighLighter(QTextDocument *parent) : QSyntaxHighlighter
 {
 	HighlightingRule rule;
 	
-	/* Single line comment */
-	singleLineCommentRegExp = QRegExp("#[^\n]*");
-	singleLineCommentFormat.setForeground(Qt::blue);
-	
-	rule.format = singleLineCommentFormat;
-	rule.pattern = singleLineCommentRegExp;
-	
-	highlightingRules.append(rule);
-	
 	/* Ipv4 address */
 	ipv4RegExp = QRegExp("\\b(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)(?:\\.(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)){3}\\b", 
 						Qt::CaseSensitive, QRegExp::RegExp2);
@@ -60,7 +51,25 @@ SyntaxHighLighter::SyntaxHighLighter(QTextDocument *parent) : QSyntaxHighlighter
 	QStringList keywordPatterns;
 	keywordPatterns	<< "\\bnetmask\\b" << "\\bbroadcast\\b" << "\\bup\\b"
 					<< "\\bdown\\b" << "\\bifconfig\\b" << "\\bhw\\b"
-					<< "\\bether\\b";
+					<< "\\bether\\b" << "\\broute\\b" << "\\badd\\b"
+					<< "\\bdefault\\b" << "\\bgw\\b" << "\\bdev\\b"
+					<< "\\bnameserver\\b" << "\\bsearch\\b" << "\\bbind\\b"
+					<< "\\bstart\\b" << "\\bstop\\b" << "\\bdomain\\b"
+					<< "\\bmachines=\\b" << "\\bmail\\b" << "\\binetd\\b"
+					<< "\\bexim4\\b" << "\\bbrctl\\b" << "\\baddbr\\b"
+					<< "\\baddif\\b" << "\\bstp\\b" << "\\bon\\b"
+					<< "\\boff\\b" << "\\bbrctl\\b" << "\\baddbr\\b"
+					<< "\\bzebra\\b" << "\\bbgpd\\b" << "\\bripd\\b"
+					<< "\\bospfd\\b" << "\\bospf6d\\b" << "\\bripngd\\b"
+					<< "\\bhostname\\b" << "\\bpassword\\b" << "\\brouter\\b"
+					<< "\\brip\\b" << "\\bredistribute\\b" << "\\bnetwork\\b"
+					<< "\\bfile\\b"  << "\\bbgp\\b"
+					<< "\\benable\\b" << "\\bdisable\\b" << "\\bremote-as\\b"
+					<< "\\bneighbor\\b" << "\\bpermit\\b" << "\\bany\\b"
+					<< "\\bdebug\\b" << "\\bin\\b" << "\\bout\\b"
+					<< "\\bdescription\\b" << "\\bprefix-list\\b" << "\\bdefault-originate\\b"
+					<< "\\broute-map\\b" << "\\bset\\b" << "\\bas-path\\b"
+					<< "\\bprepend\\b" << "\\bip\\b" << "\\blog[^\n]*\\b";
 	
 	foreach (QString pattern, keywordPatterns)
 	{
@@ -99,7 +108,16 @@ SyntaxHighLighter::SyntaxHighLighter(QTextDocument *parent) : QSyntaxHighlighter
 	rule.pattern = stringQuoteRegExp;
 	rule.format = stringQuoteFormat;
 	
-	highlightingRules.append(rule);	
+	highlightingRules.append(rule);
+	
+	/* Single line comment */
+	singleLineCommentRegExp = QRegExp("#[^\n]*|![^\n]*");
+	singleLineCommentFormat.setForeground(Qt::blue);
+	
+	rule.format = singleLineCommentFormat;
+	rule.pattern = singleLineCommentRegExp;
+	
+	highlightingRules.append(rule);
 }
 
 /**
