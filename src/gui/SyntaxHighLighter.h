@@ -29,8 +29,36 @@ class SyntaxHighLighter : public QSyntaxHighlighter
 	Q_OBJECT
 
 private:
+	
+	struct HighlightingRule
+	{
+		QRegExp pattern;
+		QTextCharFormat format;
+	};
+	
+	QVector<HighlightingRule> highlightingRules;
+	
+	//Comment rule
 	QTextCharFormat singleLineCommentFormat;
 	QRegExp singleLineCommentRegExp;
+	
+	//Ipv4 regexp
+	QRegExp ipv4RegExp;
+	
+	//Mac address regexp
+	QRegExp macAddressRegExp;
+	
+	//Lab conf rules
+	QTextCharFormat hostsFormat, labInfoFormat;
+	QRegExp hostsRegExp, labInfoRegExp;
+	
+	//Quoted Strings rule
+	QTextCharFormat stringQuoteFormat;
+	QRegExp stringQuoteRegExp;
+	
+	//Other formats
+	QTextCharFormat keywordFormat;
+	QTextCharFormat networkFormat;	
 
 public:
 	SyntaxHighLighter(QTextDocument *parent = 0);

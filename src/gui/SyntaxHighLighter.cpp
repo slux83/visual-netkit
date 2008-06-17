@@ -23,8 +23,83 @@
  */
 SyntaxHighLighter::SyntaxHighLighter(QTextDocument *parent) : QSyntaxHighlighter(parent)
 {
+	HighlightingRule rule;
+	
+	/* Single line comment */
 	singleLineCommentRegExp = QRegExp("#[^\n]*");
 	singleLineCommentFormat.setForeground(Qt::blue);
+	
+	rule.format = singleLineCommentFormat;
+	rule.pattern = singleLineCommentRegExp;
+	
+	highlightingRules.append(rule);
+	
+	/* Ipv4 address */
+	ipv4RegExp = QRegExp("\\b(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)(?:\\.(?:1\\d?\\d?|2(?:[0-4]\\d?|[6789]|5[0-5]?)?|[3-9]\\d?|0)){3}\\b", 
+						Qt::CaseSensitive, QRegExp::RegExp2);
+	
+	/* Mac address */
+	macAddressRegExp = QRegExp("\\b([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}\\b");
+	
+	/* Network format */
+	networkFormat.setForeground(Qt::darkMagenta);
+	networkFormat.setFontItalic(true);
+	networkFormat.setFontWeight(QFont::Bold);
+	
+	rule.format = networkFormat;
+	rule.pattern = ipv4RegExp;
+	highlightingRules.append(rule);
+	
+	rule.pattern = macAddressRegExp;
+	highlightingRules.append(rule);
+	
+	/* Keywords */
+	keywordFormat.setForeground(Qt::darkBlue);
+	keywordFormat.setFontWeight(QFont::Bold);
+	
+	QStringList keywordPatterns;
+	keywordPatterns	<< "\\bnetmask\\b" << "\\bbroadcast\\b" << "\\bup\\b"
+					<< "\\bdown\\b" << "\\bifconfig\\b" << "\\bhw\\b"
+					<< "\\bether\\b";
+	
+	foreach (QString pattern, keywordPatterns)
+	{
+		rule.pattern = QRegExp(pattern);
+		rule.format = keywordFormat;
+		highlightingRules.append(rule);
+	}
+	
+	/* lab.conf rules */
+	labInfoFormat.setFontWeight(QFont::Bold);
+	labInfoFormat.setFontItalic(true);
+	
+	QStringList labPatterns;
+	labPatterns << "\\bLAB_DESCRIPTION\\b" << "\\bLAB_VERSION\\b" << "\\bLAB_AUTHOR\\b"
+				<< "\\bLAB_EMAIL\\b" << "\\bLAB_WEB\\b";
+	
+	foreach (QString pattern, labPatterns)
+	{
+		rule.pattern = QRegExp(pattern);
+		rule.format = labInfoFormat;
+		highlightingRules.append(rule);
+	}
+	
+	hostsFormat.setForeground(Qt::darkRed);
+	hostsFormat.setFontWeight(QFont::Bold);
+	hostsRegExp = QRegExp("\\b[a-zA-Z0-9]+\\[([0-9]|[1-9][0-9])\\]");
+	
+	rule.pattern = hostsRegExp;
+	rule.format = hostsFormat;
+	
+	highlightingRules.append(rule);
+	
+	/* String quota */
+	stringQuoteRegExp = QRegExp("\".*\"");
+	stringQuoteFormat.setForeground(Qt::darkGreen);
+	rule.pattern = stringQuoteRegExp;
+	rule.format = stringQuoteFormat;
+	
+	highlightingRules.append(rule);	
 }
 
 /**
@@ -40,12 +115,17 @@ SyntaxHighLighter::~SyntaxHighLighter()
  */
 void SyntaxHighLighter::highlightBlock(const QString &text)
 {
-	int index = text.indexOf(singleLineCommentRegExp);
-	while(index >= 0)
+	foreach(HighlightingRule rule, highlightingRules)
 	{
-		int length = singleLineCommentRegExp.matchedLength();
-		setFormat(index, length, singleLineCommentFormat);
-		index = text.indexOf(singleLineCommentRegExp, index + length);
+		QRegExp expr(rule.pattern);
+		
+		int index = text.indexOf(expr);
+		while(index >= 0)
+		{
+			int length = expr.matchedLength();
+			setFormat(index, length, rule.format);
+			index = text.indexOf(expr, index + length);
+		}
 	}
 	
 	//setCurrentBlockState(0);
