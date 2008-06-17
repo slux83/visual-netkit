@@ -48,7 +48,8 @@ class Laboratory : public QObject
 	Q_OBJECT
 	
 private:
-	bool isSaved;
+	bool isSaved;		//true if the lab exist on filesystem
+	bool isChanged;		//true if a part of lab is changed by user
 	QString description;
 	QString version;
 	QString date;
@@ -72,6 +73,7 @@ public:
 	QString getEmail() { return email; };
 	QString getWebsite() { return website; };
 	bool getSaveState() { return isSaved; };
+	bool getChangedState() { return isChanged; };
 	QDir getLabPath() { return labPath; };
 	
 	QMap<QString, VirtualMachine *> getMachines() { return machines; };
@@ -85,6 +87,7 @@ public:
 	void setEmail(QString newValue) { email = newValue; };
 	void setWebsite(QString newValue) { website = newValue; };
 	void setSavedState(bool saveState) { isSaved = saveState; };
+	void setChangedState(bool changedState) { isChanged = changedState; };
 	void setLabPath(QString path) { labPath.setPath(path); };
 	
 	/* Other functions */

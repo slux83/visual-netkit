@@ -696,5 +696,9 @@ bool LabOpener::loadPlugins()
 
 	emit loadStepDone(6, true);
 	
+	LabHandler::getInstance()->setSaveLabState(true);
+	LabHandler::getInstance()->setChangedLabState(false);
+	
+	
 	return true;
 }

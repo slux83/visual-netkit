@@ -29,6 +29,7 @@ Laboratory::Laboratory(QString newVersion, QString newAuthors)
 	version = newVersion;
 	authors = newAuthors;
 	isSaved = false;
+	isChanged = false;
 }
 
 /**
