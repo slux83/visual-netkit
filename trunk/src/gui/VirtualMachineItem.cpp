@@ -92,6 +92,7 @@ QVariant VirtualMachineItem::itemChange(GraphicsItemChange change, const QVarian
 	
 	if(change == ItemPositionHasChanged && scene())
 	{
+		LabHandler::getInstance()->setChangedLabState();
 		emit needBoundingrectRebuild();
 	}
 	

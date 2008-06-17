@@ -94,14 +94,13 @@ void LabHandler::openLab(QString labPath)
 {	
 	LabFacadeController::getInstance()->newLaboratory();
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
-	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
+	
+	propertyController->setLab(currLab);
 	
 	currLab->setLabPath(labPath);
 	
 	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
-	
-	currLab->setSavedState(true);
 	
 	mainWindow->actionCloseLab->setDisabled(false);
 }
@@ -110,14 +109,15 @@ void LabHandler::openLab(QString labPath)
  * [SLOT]
  * Saves the lab
  */
-void LabHandler::saveLab(const QStringList &selectedFiles)
+void LabHandler::saveLabAs(const QStringList &selectedFiles)
 {
 	if(LabFacadeController::getInstance()->saveLab(selectedFiles.first()))
 	{
 		//ok, lab saved! save state and refresh window header text
 		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
-		currLab->setSavedState(true);
 		currLab->setLabPath(selectedFiles.first());
+		currLab->setSavedState(true);
+		currLab->setChangedState(false);
 		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 		mainWindow->writeLogMessage(tr("Lab saved as: ") + currLab->getLabPath().absolutePath());
 	}
@@ -281,6 +281,18 @@ bool LabHandler::getLabState()
 }
 
 /**
+ * Get the lab changed state
+ */
+bool LabHandler::getLabChangedState()
+{
+	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
+		return false;
+	
+	return LabFacadeController::getInstance()->getCurrentLab()->getChangedState();
+
+}
+
+/**
  * [SLOT]
  * Adds path to the tree.
  * If a node in the path is in the tree, it is not replaced but the rest of the path is 
@@ -419,5 +431,32 @@ void LabHandler::closeLab()
  */
 void LabHandler::setSceneSize(QRectF &size)
 {
+	setChangedLabState();
 	mainWindow->setSceneSize(size);
+}
+
+/**
+ * Change the save state of the currect lab
+ */
+void LabHandler::setSaveLabState(bool state)
+{
+	LabFacadeController::getInstance()->getCurrentLab()->setSavedState(state);
+}
+
+/**
+ * Set the 'changed' state of the current lab
+ */
+void LabHandler::setChangedLabState(bool state)
+{
+	Laboratory* l = LabFacadeController::getInstance()->getCurrentLab();
+	
+	if(l == NULL)
+		return;
+	
+	if(l->getSaveState() && state && !l->getChangedState())
+	{
+		l->setChangedState(state);
+		//mark with a "changed"
+		mainWindow->setWindowTitle(mainWindow->windowTitle() + " (" + tr("changed") + ")");
+	}
 }

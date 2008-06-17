@@ -136,8 +136,11 @@ QVariant CollisionDomainItem::itemChange(GraphicsItemChange change, const QVaria
 	}
 	
 	if(change == ItemPositionHasChanged && scene())
-		emit needBoundingrectRebuild();
-	
+	{
+		LabHandler::getInstance()->setChangedLabState();
+		emit needBoundingrectRebuild();		
+	}
+		
 	return QGraphicsItem::itemChange(change, value);
 }
 

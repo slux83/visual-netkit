@@ -55,14 +55,17 @@ public:
 	UndoStack *getUndoStack() { return undoStack; };
 	MainWindow* getMainWindow() { return mainWindow; };
 	bool getLabState();
+	bool getLabChangedState();
 	void prepareRenderLabProperties();
 	void setSceneSize(QRectF &size);
-
+	void setSaveLabState(bool state);
+	void setChangedLabState(bool state = true);
+	
 public slots:
 	void closeLab();
 	void newLab();
 	void openLab(QString labPath);
-	void saveLab(const QStringList &selectedFiles);
+	void saveLabAs(const QStringList &selectedFiles);
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);

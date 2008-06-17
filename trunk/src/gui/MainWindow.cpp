@@ -121,7 +121,7 @@ void MainWindow::createConnections()
 	
 	//connect: the save file dialog to the controller handler
 	connect(saveFileDialog, SIGNAL(filesSelected(const QStringList &)),
-			labHandler, SLOT(saveLab(const QStringList &)));
+			labHandler, SLOT(saveLabAs(const QStringList &)));
 	
 	//connect: item tree lab double clicked
 	connect(labTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)),
@@ -176,6 +176,8 @@ void MainWindow::writeLogMessage(QString message)
 	
 	//set status bar
 	statusBar()->showMessage(message , 0);
+	
+	labHandler->setChangedLabState();
 }
 
 /**
@@ -243,6 +245,8 @@ void MainWindow::resizeScene(QAction *action)
 	//update the miniature scale factor
 	updateMinuatureDock((int)newSize.width());
 	
+	labHandler->setChangedLabState();
+	
 	//Log action
 	writeLogMessage(tr("Scene resized") + " (" +
 			QByteArray::number(newSize.width()) +
@@ -276,6 +280,7 @@ void MainWindow::setSceneSize(QRectF &size)
 		
 	//update the miniature scale factor
 	updateMinuatureDock((int)size.width());
+	
 }
 
 /**
@@ -425,9 +430,9 @@ void MainWindow::clearPropertyDock()
  */
 void MainWindow::saveModifiedLab()
 {
-	if(!LabHandler::getInstance()->getLabState())
+	if(!LabHandler::getInstance()->getLabState() || !LabHandler::getInstance()->getLabChangedState())
 	{
-		showSaveFileDialog();
+		return;
 	}
 	else
 	{
