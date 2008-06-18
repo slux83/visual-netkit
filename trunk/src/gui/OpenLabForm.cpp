@@ -156,6 +156,7 @@ void OpenLabForm::markLoadedStep(int step, bool result)
 				//when user click "ok" clear lab junk and reset the gui, not the path
 				close();
 				resetGui();
+				LabHandler::getInstance()->setMainWindowTitle();
 			}
 		}		
 	}

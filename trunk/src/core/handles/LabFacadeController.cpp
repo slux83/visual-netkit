@@ -116,6 +116,42 @@ bool LabFacadeController::saveLab(const QString &savePath)
 }
 
 /**
+ * Saves the current laboratory.
+ */
+bool LabFacadeController::saveChandegLab()
+{
+	/* Check if current lab exist */
+	if(currentLab != NULL)
+	{
+		/* join all items inside the scene */
+		VmMapper::getInstance()->ensureAllItemsAreJoined();
+		CdMapper::getInstance()->ensureAllItemsAreJoined();
+		
+		// saves lab structure dirs and files
+		LabSaver ls(currentLab->getLabPath().absolutePath());
+		
+		// saves lab XML
+		XMLSaver xs(currentLab->getLabPath().absolutePath());
+		
+		if (ls.saveLab() && xs.saveLab())
+		{
+			qDebug() << "Lab saved!";
+			return true;
+		}
+		else
+		{
+			qWarning() << "Lab not saved...something wrong!";
+			return false;
+		}
+		
+	}
+	
+	return false;
+}
+
+
+
+/**
  * Destroy and reset all low lever strucutes 
  */
 void LabFacadeController::closeLowLevelLab()

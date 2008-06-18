@@ -119,7 +119,15 @@ bool LabSaver::saveStartups()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
+		
 		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
+		
+		/* Save a backup copy */
+		if(startup.exists())
+		{
+			QFile::rename(curPath + "/" + machineIterator.key() + ".startup",
+					curPath + "/" + machineIterator.key() + ".startup~");
+		}
 
 		if(!startup.open(QFile::WriteOnly | QFile::Text))
 		{
@@ -180,7 +188,14 @@ bool LabSaver::saveTemplates()
 			
 			// if current template exists on filesystem, append its content
 			if(tpl.exists())
-			{				
+			{	
+				/* Create a backup copy */
+				if(tpl.exists())
+				{
+					QFile::rename(path + "/" + tplName,
+							path + "/" + tplName + "~");
+				}
+				
 				if(!tpl.open(QFile::Append))
 				{
 					qWarning()	<< "Cannot append content to file" << tplIterator.key() << ":" << tpl.errorString();

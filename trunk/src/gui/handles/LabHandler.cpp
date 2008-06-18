@@ -126,7 +126,7 @@ void LabHandler::saveLabAs(const QStringList &selectedFiles)
 		currLab->setLabPath(selectedFiles.first());
 		currLab->setSavedState(true);
 		currLab->setChangedState(false);
-		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
+		setMainWindowTitle();
 		mainWindow->writeLogMessage(tr("Lab saved as: ") + currLab->getLabPath().absolutePath());
 	}
 	else
@@ -138,6 +138,32 @@ void LabHandler::saveLabAs(const QStringList &selectedFiles)
 	}
 }
 
+/**
+ * [SLOT]
+ * Save the current lab (because something is changed)
+ */
+void LabHandler::saveLab()
+{
+	if(LabFacadeController::getInstance()->saveChandegLab())
+	{
+		//ok, lab saved! save state and refresh window header text
+		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
+		currLab->setSavedState(true);
+		currLab->setChangedState(false);
+		setMainWindowTitle();
+		mainWindow->writeLogMessage(tr("Lab saved"));
+		
+	}
+	else
+	{
+		/* Show a warning message */
+		QMessageBox::warning(mainWindow, tr("VisualNetkit - Error"),
+				tr("There was a problem saving the laboratory data.\nPlease check your access rights on the directory that you have choosed."),
+				QMessageBox::Ok);
+	}
+	
+	setMainWindowTitle();
+}
 
 /**
  * [SLOT]
@@ -357,7 +383,8 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 				path.removeFirst();
 				
 				// adds the new node to the current node
-				node->addChild(elem);
+				node->addChild(elem);		mainWindow->setWindowTitle(mainWindow->windowTitle() + " (" + tr("changed") + ")");
+
 				
 				if (!path.isEmpty())
 					addPathToNode(path, elem, fullPath);
@@ -402,8 +429,10 @@ QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWid
 
 /**
  * Confirm the lab close
+ * if abort is passed, the function set abort to TRUE if the user choosed a
+ * abort response (Cancel or No during "close lab" question) 
  */
-bool LabHandler::confirmCloseLab()
+bool LabHandler::confirmCloseLab(bool *abort)
 {
 	if(!isCurrentLab())		//there's none lab active
 			return true;
@@ -421,11 +450,25 @@ bool LabHandler::confirmCloseLab()
 		
 		if(resp == QMessageBox::Yes)
 		{
-			//TODO: call save lab
+			/* Save or save as? */			
+			if(!getLabState())	//save as
+			{
+				mainWindow->showSaveFileDialog();
+				return false;
+			}
+			
+			if(getLabChangedState())	//save changes
+			{
+				saveLab();
+			}
 		}
 		
 		if(resp == QMessageBox::Cancel)
+		{
+			if(abort != NULL)
+				*abort = true;
 			return false;
+		}
 		
 		return true;	//close the lab anyway
 	}
@@ -437,7 +480,11 @@ bool LabHandler::confirmCloseLab()
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 	
 	if(resp == QMessageBox::No)
+	{
+		if(abort != NULL)
+			*abort = true;
 		return false;
+	}
 	
 	return true;
 	
@@ -549,3 +596,17 @@ bool LabHandler::isCurrentLab()
 {
 	return (LabFacadeController::getInstance()->getCurrentLab() != NULL);
 }
+
+/**
+ * Set the main window title
+ */
+void LabHandler::setMainWindowTitle()
+{
+	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
+	
+	if(isCurrentLab())
+	{
+		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
+	}
+}
+

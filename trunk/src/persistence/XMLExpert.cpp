@@ -41,6 +41,14 @@ XMLExpert::~XMLExpert()
 bool XMLExpert::dumpDocument(QDomDocument *doc, QString labPath)
 {	
 	QFile data(labPath + "/" + XML_DEFAULT_FILE_NAME);
+	
+	/* Save a backup */
+	if(data.exists())
+	{
+		QFile::rename(labPath + "/" + XML_DEFAULT_FILE_NAME,
+				labPath + "/" + XML_DEFAULT_FILE_NAME + "~");
+	}
+	
 	bool returnVal = false;
 	
 	if (data.open(QFile::WriteOnly | QFile::Truncate)) 
