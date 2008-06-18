@@ -86,6 +86,9 @@ void LabHandler::newLab()
 	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
 	
 	mainWindow->actionCloseLab->setDisabled(false);
+	mainWindow->unlockSceneAndActions();
+	QRectF sceneSize(0,0,1000,1000);
+	mainWindow->setSceneSize(sceneSize);
 }
 
 /**
