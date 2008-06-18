@@ -44,6 +44,7 @@ public:
 	bool saveLab(QString const &savePath);
 	Laboratory * getCurrentLab() { return currentLab; };
 	void closeLowLevelLab();
+	bool saveChandegLab();
 
 signals:
 	void createdNewLab(Laboratory *newLab);

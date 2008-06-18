@@ -61,14 +61,16 @@ public:
 	void setSaveLabState(bool state);
 	void setChangedLabState(bool state = true);
 	bool isCurrentLab();
-	bool confirmCloseLab();
+	bool confirmCloseLab(bool *abort = NULL);
 	void closeLabForced();
+	void setMainWindowTitle();
 	
 public slots:
 	void closeLab();
 	void newLab();
 	void openLab(QString labPath);
 	void saveLabAs(const QStringList &selectedFiles);
+	void saveLab();
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);

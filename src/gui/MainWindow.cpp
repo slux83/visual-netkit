@@ -177,7 +177,8 @@ void MainWindow::writeLogMessage(QString message)
 	//set status bar
 	statusBar()->showMessage(message , 0);
 	
-	labHandler->setChangedLabState();
+	if(!message.contains("Lab saved"))
+		labHandler->setChangedLabState();
 }
 
 /**
@@ -430,13 +431,21 @@ void MainWindow::clearPropertyDock()
  */
 void MainWindow::saveModifiedLab()
 {
-	if(!LabHandler::getInstance()->getLabState() || !LabHandler::getInstance()->getLabChangedState())
+	if(labHandler->isCurrentLab() && !labHandler->getLabState())
 	{
+		//Save as...
+		showSaveFileDialog();
+		return;
+	}
+	
+	if(!labHandler->getLabChangedState())
+	{
+		qDebug() << "Lab null or not need to be saved";
 		return;
 	}
 	else
 	{
-		//TODO
+		labHandler->saveLab();
 	}
 }
 
@@ -546,7 +555,22 @@ void MainWindow::dumpToPNG()
  */
 void MainWindow::openLab()
 {
-	labHandler->confirmCloseLab();
+	if(labHandler->isCurrentLab())
+	{
+		QMessageBox::warning(this, "Visual Netkit - warning",
+				tr("You have to close the active lab before opening a new one!"),
+				QMessageBox::Yes);
+		
+		return;
+	}
+	
+	bool abort = false;
+	labHandler->confirmCloseLab(&abort);
+	
+	// abort operation because the user have choosed "cancel"
+	// (or "no" when asked him "do you want close etc...) 
+	if(abort)
+		return;
 	
 	labHandler->closeLabForced();
 	
