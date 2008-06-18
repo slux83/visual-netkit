@@ -78,6 +78,8 @@ LabHandler* LabHandler::getInstance()
  */
 void LabHandler::newLab()
 {
+	closeLab();
+	
 	LabFacadeController::getInstance()->newLaboratory();
 	
 	//set the current lab inside the property controller
@@ -92,6 +94,9 @@ void LabHandler::newLab()
  */
 void LabHandler::openLab(QString labPath)
 {	
+	
+	closeLab();
+	
 	LabFacadeController::getInstance()->newLaboratory();
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
 	
@@ -393,14 +398,87 @@ QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWid
 }
 
 /**
+ * Confirm the lab close
+ */
+bool LabHandler::confirmCloseLab()
+{
+	if(!isCurrentLab())		//there's none lab active
+			return true;
+		
+	/* Check if another lab exist and need to be saved */
+	//qDebug() << "changestate:" << getLabChangedState() << "savestate:" << getLabState();
+	if(!getLabState() || getLabChangedState())
+	{
+		qDebug() << "lab exist and need to be saved";
+		
+		int resp = QMessageBox::question(mainWindow,
+				"Visual Netkit - Question",
+				tr("The lab is changed. Do you want save it?"),
+				QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+		
+		if(resp == QMessageBox::Yes)
+		{
+			//TODO: call save lab
+		}
+		
+		if(resp == QMessageBox::Cancel)
+			return false;
+		
+		return true;	//close the lab anyway
+	}
+	
+	/* Close the current lab if any */
+	int resp = QMessageBox::question(mainWindow,
+			"Visual Netkit - Question",
+			tr("The lab is allready saved. Do you want close it?"),
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+	
+	if(resp == QMessageBox::No)
+		return false;
+	
+	return true;
+	
+}
+
+/**
  * [SLOT]
  * Close the lab: clear mappings, scene, graphics items and Main gui.
  */
 void LabHandler::closeLab()
 {
-	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
+	if(!confirmCloseLab())
 		return;
 	
+	//Destroy mappings
+	VmMapper::getInstance()->clear();
+	CdMapper::getInstance()->clear();
+	LinkMapper::getInstance()->clear();
+	
+	//Destroy all items
+	mainWindow->getLabScene()->clearScene();
+	
+	//reset tree views
+	mainWindow->labTree->clear();
+	SceneTreeMapper::getInstance()->clear();
+	
+	//other gui stuffs
+	mainWindow->clearPropertyDock();
+	mainWindow->setWindowTitle("VisualNetkit");
+	mainWindow->lockSceneAndActions();
+	
+	//Destroy low level stuff
+	LabFacadeController::getInstance()->closeLowLevelLab();
+	
+	mainWindow->writeLogMessage("Lab Closed");
+	
+	mainWindow->actionCloseLab->setDisabled(true);
+}
+
+/**
+ * Close the lab (forced): clear mappings, scene, graphics items and Main gui.
+ */
+void LabHandler::closeLabForced()
+{
 	//Destroy mappings
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();
@@ -459,4 +537,12 @@ void LabHandler::setChangedLabState(bool state)
 		//mark with a "changed"
 		mainWindow->setWindowTitle(mainWindow->windowTitle() + " (" + tr("changed") + ")");
 	}
+}
+
+/**
+ * Check if a current lab exist
+ */
+bool LabHandler::isCurrentLab()
+{
+	return (LabFacadeController::getInstance()->getCurrentLab() != NULL);
 }

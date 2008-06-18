@@ -72,6 +72,16 @@ QMap<QString, QString> PluginMac::getTemplates()
 		templateContent.replace("<HI_STATE>", status);
 		
 		templateContent.replace("<MAC>", properties.value("mac_address")->getValue());
+
+		/* Append comment */
+		QString lineComment;
+
+		if(hi != NULL)
+			lineComment = QString("'").append(hi->getMyCollisionDomain()->getName()).append("' collision domain ##");
+		else
+			lineComment = QString("'unknown' collision domain ##");
+		
+		templateContent.replace("<COMMENT>", lineComment);
 	}
 	else
 	{
