@@ -358,6 +358,16 @@ void PluginIPv4::refreshLabel()
 	NetworkAddress addr(QHostAddress(properties["address"]->getValue()),
 				QHostAddress(properties["netmask"]->getValue()));
 	
+	QString netmask = properties["netmask"]->getValue();
+	
+	bool isInt;
+	int cidrNetmask = netmask.toInt(&isInt);
+	
+	if(isInt)
+	{
+		addr.setCidrNetmask((quint8)cidrNetmask);
+	}
+	
 	myProxy->changeGraphicsLabel(addr.toString(PRINT_CIDR_NETMASK));
 }
 
