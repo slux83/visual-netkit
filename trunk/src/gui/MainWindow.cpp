@@ -546,6 +546,10 @@ void MainWindow::dumpToPNG()
  */
 void MainWindow::openLab()
 {
+	labHandler->confirmCloseLab();
+	
+	labHandler->closeLabForced();
+	
 	olf.resetGui();
 	olf.show();
 }

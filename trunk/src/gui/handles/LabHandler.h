@@ -60,6 +60,9 @@ public:
 	void setSceneSize(QRectF &size);
 	void setSaveLabState(bool state);
 	void setChangedLabState(bool state = true);
+	bool isCurrentLab();
+	bool confirmCloseLab();
+	void closeLabForced();
 	
 public slots:
 	void closeLab();

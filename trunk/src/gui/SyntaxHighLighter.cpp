@@ -69,6 +69,8 @@ SyntaxHighLighter::SyntaxHighLighter(QTextDocument *parent) : QSyntaxHighlighter
 					<< "\\bdebug\\b" << "\\bin\\b" << "\\bout\\b"
 					<< "\\bdescription\\b" << "\\bprefix-list\\b" << "\\bdefault-originate\\b"
 					<< "\\broute-map\\b" << "\\bset\\b" << "\\bas-path\\b"
+					<< "\\bospf\\b" << "\\barea\\b" << "\\brouter-id\\b"
+					<< "\\bcost\\b" << "\\binterface\\b"
 					<< "\\bprepend\\b" << "\\bip\\b" << "\\blog[^\n]*\\b";
 	
 	foreach (QString pattern, keywordPatterns)
