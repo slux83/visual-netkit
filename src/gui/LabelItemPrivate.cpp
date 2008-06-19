@@ -19,6 +19,8 @@
 #include "LabelItemPrivate.h"
 #include "../common/CommonConfigs.h"
 #include <QFont>
+#include <QPen>
+#include <QBrush>
 
 /**
  * Constructor
@@ -29,4 +31,9 @@ LabelItemPrivate::LabelItemPrivate(const QString &text, QGraphicsItem *parent)
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	setZValue(1100);
 	setFont(GRAPHICS_FONT);
+	QPen pen(Qt::black);
+	setPen(pen);
+	
+	QBrush brush(Qt::white);
+	setBrush(brush);
 }
