@@ -93,8 +93,8 @@ bool LabFacadeController::saveLab(const QString &savePath)
 		VmMapper::getInstance()->ensureAllItemsAreJoined();
 		CdMapper::getInstance()->ensureAllItemsAreJoined();
 		
-		// saves lab structure dirs and files
-		LabSaver ls(savePath);
+		// saves lab structure dirs and files (no bacukps)
+		LabSaver ls(savePath, false);
 		
 		// saves lab XML
 		XMLSaver xs(savePath);
@@ -127,7 +127,7 @@ bool LabFacadeController::saveChandegLab()
 		VmMapper::getInstance()->ensureAllItemsAreJoined();
 		CdMapper::getInstance()->ensureAllItemsAreJoined();
 		
-		// saves lab structure dirs and files
+		// saves lab structure dirs and files (with backups)
 		LabSaver ls(currentLab->getLabPath().absolutePath());
 		
 		// saves lab XML

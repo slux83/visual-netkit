@@ -1,1 +1,1 @@
-/sbin/ifconfig <HI> hw ether <MAC> <HI_STATE>		## <COMMENT>
+/sbin/ifconfig <HI> hw ether <MAC> <HI_STATE> ## <COMMENT>
