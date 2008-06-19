@@ -30,6 +30,7 @@ private:
 	QString curFile;
 	QString curPath;
 	QString errorString;
+	bool needBackup;
 	
 	bool saveLabConf();
 	bool createFolderSystem();
@@ -40,7 +41,7 @@ private:
 	bool removeDir(const QString d);
 
 public:
-	LabSaver(const QString &path);
+	LabSaver(const QString &path, bool backup = true);
 	virtual ~LabSaver();
 	
 	bool saveLab();

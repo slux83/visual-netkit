@@ -481,7 +481,13 @@ void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootE
 		
 	
 	if(nodes.size() == 1)
+	{
 		nodes.first()->setData(0, Qt::DisplayRole, newName);
+		
+		//update path
+		if(nodes.first()->data(0, Qt::UserRole).toString() == "config_file")
+			nodes.first()->setData(0, Qt::UserRole + 1, newName);	//path
+	}
 	else
 		qWarning() << "MainWindow::changeTreeNodeName nodes.size() is" << nodes.size();
 	

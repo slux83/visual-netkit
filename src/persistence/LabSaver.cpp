@@ -33,9 +33,10 @@
  * 
  * Path is the directory where to save the lab root folder.
  */
-LabSaver::LabSaver(const QString & path)
+LabSaver::LabSaver(const QString &path, bool backup)
 {
 	curPath = path;
+	needBackup = backup;
 }
 
 LabSaver::~LabSaver()
@@ -91,6 +92,17 @@ bool LabSaver::saveLabConf()
 	bool allok = true;
 	
 	QFile file(curPath + "/" + LAB_CONF);
+	
+	/* Create a backup file */
+	if(file.exists() && needBackup)
+	{
+		//Clear old backup
+		if(QFile::exists(curPath + "/" + LAB_CONF + "~"))
+			QFile::remove(curPath + "/" + LAB_CONF + "~");
+		
+		QFile::rename(curPath + "/" + LAB_CONF, curPath + "/" + LAB_CONF + "~");
+	}
+	
 	if (!file.open(QFile::WriteOnly | QFile::Text))
     {
     	qWarning() << "Cannot write file" << LAB_CONF << ":" << file.errorString();
@@ -123,8 +135,12 @@ bool LabSaver::saveStartups()
 		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
 		
 		/* Save a backup copy */
-		if(startup.exists())
+		if(startup.exists() && needBackup)
 		{
+			//Clear old backup
+			if(QFile::exists(curPath + "/" + machineIterator.key() + ".startup~"))
+				QFile::remove(curPath + "/" + machineIterator.key() + ".startup~");
+			
 			QFile::rename(curPath + "/" + machineIterator.key() + ".startup",
 					curPath + "/" + machineIterator.key() + ".startup~");
 		}
@@ -157,6 +173,10 @@ bool LabSaver::saveTemplates()
 	bool allok = true;
 	
 	QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getAllProxies();
+	
+	//This list contains a list of allready backuped files.
+	//In this way we can know when rename (backup) a template and when we can't.
+	QStringList backupedFiles;
 
 	// for each proxy
 	for (int p=0; p<plugins.size(); p++)
@@ -189,9 +209,16 @@ bool LabSaver::saveTemplates()
 			// if current template exists on filesystem, append its content
 			if(tpl.exists())
 			{	
-				/* Create a backup copy */
-				if(tpl.exists())
+				/* Create a backup copy (.startup files are backuped by LabSaver::saveStartups() */
+				if(!backupedFiles.contains(path + "/" + tplName) && needBackup
+						&& !tpl.fileName().contains(QRegExp("startup$")))
 				{
+					backupedFiles.append(path + "/" + tplName);	//store filename
+					
+					//Clear old backup
+					if(QFile::exists(path + "/" + tplName + "~"))
+						QFile::remove(path + "/" + tplName + "~");
+						
 					QFile::rename(path + "/" + tplName,
 							path + "/" + tplName + "~");
 				}
