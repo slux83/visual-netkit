@@ -292,7 +292,7 @@ QGraphicsLineItem* LabScene::initNewLinkLine()
 {
 	//this link is only a fake. the true line will be created later...
 	QGraphicsLineItem *link = new QGraphicsLineItem();
-	link->setPen(QPen(Qt::blue, 4, Qt::DotLine, Qt::RoundCap, Qt::RoundJoin));
+	link->setPen(QPen(Qt::yellow, 6, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	
 	return link;
 }
