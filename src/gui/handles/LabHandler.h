@@ -64,6 +64,7 @@ public:
 	bool confirmCloseLab(bool *abort = NULL);
 	void closeLabForced();
 	void setMainWindowTitle();
+	void removePathFromTree(QString &path);
 	
 public slots:
 	void closeLab();

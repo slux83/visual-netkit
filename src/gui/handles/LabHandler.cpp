@@ -219,11 +219,11 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	
 	//Properties
 	elem->setData(0, Qt::DisplayRole, m->getName());
-	elem->setData(0, Qt::UserRole, "vm_element");
+	elem->setData(0, Qt::UserRole, "vm_element");	//don't touch this value!
 	elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
 	
 	startupConf->setData(0, Qt::DisplayRole, QString(m->getName() + ".startup"));
-	startupConf->setData(0, Qt::UserRole, "config_file");		//type
+	startupConf->setData(0, Qt::UserRole, "config_file");		//type (don't change this value)
 	startupConf->setData(0, Qt::UserRole + 1, QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	
@@ -327,6 +327,54 @@ bool LabHandler::getLabChangedState()
 }
 
 /**
+ * Remove a path from tree
+ * Post-conditions: if a vm is inside the path, this will not be deleted
+ */
+void LabHandler::removePathFromTree(QString &path)
+{
+	QTreeWidgetItem *currentNode = mainWindow->labTree->topLevelItem(0);
+	QTreeWidgetItem *rootToDelete = NULL;
+	QStringList splittedPath = path.split("/");
+		
+	/* Search the root of the path (no vm dir) to delete */
+	foreach(QString piece, splittedPath)
+	{
+		if(rootToDelete != NULL)
+			break;
+				
+		mainWindow->labTree->setCurrentItem(currentNode, 0);	//update current node to searc in deep
+		
+		QMap<QString, QTreeWidgetItem*> childs = findItems(piece, mainWindow->labTree);
+		
+		QMapIterator<QString, QTreeWidgetItem*> childsIterator(childs);
+		while(childsIterator.hasNext())
+		{
+			childsIterator.next();
+			
+			/* this node is a virtual machine dir? */
+			if(childsIterator.value()->data(0, Qt::UserRole).toString() == "vm_element")
+			{				
+				currentNode = childsIterator.value();	//update current
+				break;	//do not delete the vm element
+			}
+			else
+			{
+				QTreeWidgetItem *toDelete = childsIterator.value();
+								
+				rootToDelete = toDelete;
+				break;
+			}
+		}
+	}
+	
+	/* delete from last current node */
+	if(rootToDelete != NULL)
+	{
+		currentNode->removeChild(rootToDelete);
+	}
+}
+
+/**
  * [SLOT]
  * Adds path to the tree.
  * If a node in the path is in the tree, it is not replaced but the rest of the path is 
@@ -376,7 +424,7 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 			else
 			{	
 				elem->setData(0, Qt::DisplayRole, path.first());
-				elem->setData(0, Qt::UserRole, "vm_element");
+				elem->setData(0, Qt::UserRole, "generic_element");
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
 				
 				// apply recursion to the path (without first element)
