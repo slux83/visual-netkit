@@ -194,9 +194,7 @@ QList<PluginProxy*> PluginRegistry::unregisterVmPlugins(VirtualMachine *vm, QStr
 	foreach(PluginProxy* pp, vmAssociations.values(vm))
 		if(toDelete.contains(pp->getPlugin()->getName()))
 			*paths << pp->getTemplates().keys();
-	
-	qDebug() << "unreg paths" << *paths;
-	
+		
 	/* take all before */
 	for(int i=0; i<vmAssociations.values(vm).size(); i++)
 	{
@@ -237,7 +235,6 @@ QSet<QString> PluginRegistry::getAllUsedPaths()
 	{
 		paths << i.next()->getTemplates().keys();
 	}
-	qDebug() << paths.toSet();
 	
 	return paths.toSet();
 }

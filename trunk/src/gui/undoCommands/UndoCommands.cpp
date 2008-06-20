@@ -223,8 +223,8 @@ void DeleteVmPluginsCommand::redo()
 				startupValidator.validate(path, pos) == QValidator::Invalid &&
 				!allPaths.contains(path))
 		{
-			qDebug() << "Path to delete:" << path;
-			//TODO call someone to delete this path inside the lab tree view
+			//Delete path from tree
+			LabHandler::getInstance()->removePathFromTree(path);
 		}
 	}
 }
