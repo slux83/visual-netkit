@@ -383,8 +383,7 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 				path.removeFirst();
 				
 				// adds the new node to the current node
-				node->addChild(elem);		mainWindow->setWindowTitle(mainWindow->windowTitle() + " (" + tr("changed") + ")");
-
+				node->addChild(elem);
 				
 				if (!path.isEmpty())
 					addPathToNode(path, elem, fullPath);
@@ -585,7 +584,7 @@ void LabHandler::setChangedLabState(bool state)
 	{
 		l->setChangedState(state);
 		//mark with a "changed"
-		mainWindow->setWindowTitle(mainWindow->windowTitle() + " (" + tr("changed") + ")");
+		mainWindow->setWindowTitle(l->getLabPath().absolutePath().append(" - VisualNetkit") + " (" + tr("changed") + ")");
 	}
 }
 
