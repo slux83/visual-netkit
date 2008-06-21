@@ -569,6 +569,9 @@ void LabHandler::closeLab()
 	mainWindow->writeLogMessage("Lab Closed");
 	
 	mainWindow->actionCloseLab->setDisabled(true);
+	
+	/* Destroy undo stack */
+	undoStack->clear();
 }
 
 /**
@@ -599,6 +602,9 @@ void LabHandler::closeLabForced()
 	mainWindow->writeLogMessage("Lab Closed");
 	
 	mainWindow->actionCloseLab->setDisabled(true);
+	
+	/* Destroy undo stack */
+	undoStack->clear();
 }
 
 /**
@@ -657,3 +663,10 @@ void LabHandler::setMainWindowTitle()
 	}
 }
 
+/**
+ * Remove an item from the lab scene
+ */
+void LabHandler::removeItemFromScene(QGraphicsItem *item)
+{
+	mainWindow->graphicsView->scene()->removeItem(item);
+}

@@ -48,6 +48,8 @@ public:
 	QList<HardwareInterface*> getHardwareInterfaces() { return mappings.values(); };
 	LinkItem* getLink(HardwareInterface *hi) { return mappings.key(hi, NULL); };
 	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
+	void destroyMapper(LinkItem *linkItem) { mappings.remove(linkItem); };
+	QString getVmName(LinkItem *linkItem);
 
 public slots:
 	void clear();

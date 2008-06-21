@@ -53,6 +53,7 @@ public:
 	bool hiNameExist(HardwareInterface *hi, QString toCheck);
 	void updateLinkName(HardwareInterface *hi, QString newName);
 	void renderLinkProperties(LinkItem *linkItem);
+	void deleteLink(LinkItem *link);
 
 public slots:
 	void saveChangedProperty(int row, int column);

@@ -18,6 +18,7 @@
 
 #include "LinkItem.h"
 #include "handles/LinkMapper.h"
+#include "handles/LinkHandler.h"
 #include <QPointF>
 #include <QPen>
 
@@ -158,7 +159,7 @@ void LinkItem::forceBoundingrectRebuild()
  */
 void LinkItem::initContextMenu()
 {
-	deleteAction = new QAction(tr("Delete Hardware Interface"), this);
+	deleteAction = new QAction(tr("Delete Link"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	managePluginsAction = new QAction(tr("Manage plugins"), this);
 	managePluginsAction->setIcon(QIcon(QString::fromUtf8(":/small/plugin")));
@@ -180,10 +181,18 @@ void LinkItem::initContextMenu()
  */
 void LinkItem::deleteLinkActionCalled()
 {
-	QMessageBox::warning(NULL,
-		tr("NOT IMPLEMENTED"),
-		tr("This function is not implemented yet >_<"),
-		QMessageBox::Ok);
+	QString myVmName = LinkMapper::getInstance()->getVmName(this);
+	int resp = QMessageBox::question(NULL,
+		tr("Visual Netkit - question"),
+		tr("Do you want delete the selected link?") + "\n" + myVmName + "[" + myLabel->text() + "]",
+		QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	
+	if(resp == QMessageBox::No)
+		return;
+	
+	/* before delete this link, ensure its joined (not need for link) */
+	
+	LinkHandler::getInstance()->deleteLink(this);	
 }
 
 /**

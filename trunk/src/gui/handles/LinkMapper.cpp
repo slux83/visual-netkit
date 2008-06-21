@@ -131,3 +131,20 @@ void LinkMapper::clear()
 	qDeleteAll(mappings.keys());	//values is destroyed by low level objects
 	mappings.clear();
 }
+
+/**
+ * Get the virtual machine name associated to the passed link
+ */
+QString LinkMapper::getVmName(LinkItem *linkItem)
+{
+	QString returnName;
+	
+	HardwareInterface *hi = mappings.value(linkItem);
+	if(hi == NULL)
+		qWarning() << "LinkMapper::getVmName: hi is NULL.";
+	else
+		returnName = hi->getMyVirtualMachine()->getName();
+	
+	return returnName;
+	
+}

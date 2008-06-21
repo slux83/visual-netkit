@@ -277,3 +277,31 @@ void PluginRegistry::clean()
 	hiAssociations.clear();
 	cdAssociations.clear();
 }
+
+/**
+ * Destroy a plugin by its proxy
+ */
+void PluginRegistry::destroyPlugin(PluginProxy *proxy)
+{
+	//check existance
+	if(!factories.contains(proxy->getPlugin()->getName()))
+	{
+		qWarning() << "PluginRegistry::destroyPlugin()" << "unknown factory for plugin" << proxy->getPlugin()->getName();
+		return;
+	}
+	
+	/* Destroy plugin */
+	factories.value(proxy->getPlugin()->getName())->destroyPlugin(proxy);
+}
+
+/**
+ * Clear and return plugin`s proxies for a hardware interface
+ */
+QList<PluginProxy*> PluginRegistry::takeHiProxies(HardwareInterface* hi)
+{
+	QList<PluginProxy*> proxies = hiAssociations.values(hi);
+	
+	hiAssociations.remove(hi);	//clear
+	
+	return proxies;
+}
