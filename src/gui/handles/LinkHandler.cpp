@@ -167,3 +167,33 @@ void LinkHandler::saveChangedProperty(int row, int column)
 			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
 
+/**
+ * Delete link
+ */
+void LinkHandler::deleteLink(LinkItem *link)
+{
+	LinkMapper *mapper = LinkMapper::getInstance();
+	/* Get the low level object */
+	HardwareInterface *hi = mapper->getHardwareIterface(link);
+	
+	/* Destroy the mapper */
+	mapper->destroyMapper(link);
+	
+	/* Remove item from scene */
+	labHandler->removeItemFromScene(link);
+	
+	/* Decrease the collision domain link counter */
+	link->getCollisionDomainItem()->increaseDecreaseLinkCounter(false);
+	
+	/* Take proxies for this link */
+	QList<PluginProxy*> proxies = PluginRegistry::getInstance()->takeHiProxies(hi);
+	
+	/* Create the undo command */
+	labHandler->getUndoStack()->push(new DeleteLinkCommand(hi, proxies, link));
+	
+	/* Remove link from vm (lov level) */
+	hi->getMyVirtualMachine()->deleteHi(hi->getName());
+	
+	/* Remove the ethernet from tree scene view */
+	SceneTreeMapper::getInstance()->removeLink(link, link->getVirtualMachineItem());
+}

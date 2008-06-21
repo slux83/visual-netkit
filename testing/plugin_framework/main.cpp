@@ -73,6 +73,11 @@ int main(int argc, char* argv[])
 	loadPlugin("plugins/plugin1/libplugin1.so");
 	loadPlugin("plugins/plugin2/libplugin2.so");
 	
+	QString *s = new QString("pippo");
+	qDebug() << "s:" << s;
+	delete s;
+	qDebug() << "s is null:" << (s == NULL);
+	
 	return 0;
 	
 }

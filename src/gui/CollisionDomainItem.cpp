@@ -199,7 +199,7 @@ void CollisionDomainItem::restoreGroupActionCalled()
 }
 
 /**
- * A new link is added.. update the link counter.
+ * A link is added/removed.. update the link counter.
  */
 void CollisionDomainItem::increaseDecreaseLinkCounter(bool increase)
 {

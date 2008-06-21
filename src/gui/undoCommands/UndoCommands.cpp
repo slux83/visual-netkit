@@ -35,6 +35,8 @@ AddVmCommand::AddVmCommand(VirtualMachineItem *newVmItem, VirtualMachine *newVm,
  */ 
 AddVmCommand::~AddVmCommand()
 {
+	//NOTE: do not destroy elemes here
+	plugins.clear();
 }
 
 /**
@@ -88,7 +90,8 @@ AddCdCommand::AddCdCommand(CollisionDomainItem *newCdItem, CollisionDomain *newC
  * Deconstructor
  */ 
 AddCdCommand::~AddCdCommand()
-{
+{	
+	plugins.clear();
 }
 
 /**
@@ -150,6 +153,7 @@ AddLinkCommand::AddLinkCommand(LinkItem *newLinkItem, HardwareInterface *newHi,
  */ 
 AddLinkCommand::~AddLinkCommand()
 {
+	plugins.clear();
 }
 
 /**
@@ -204,6 +208,8 @@ DeleteVmPluginsCommand::DeleteVmPluginsCommand(VirtualMachine *vmP, QList<Plugin
  */ 
 DeleteVmPluginsCommand::~DeleteVmPluginsCommand()
 {
+	//NOTE: do not destroy plugin here (see addCommands)
+	plugins.clear();
 }
 
 /**
@@ -233,6 +239,48 @@ void DeleteVmPluginsCommand::redo()
  * Undo action
  */
 void DeleteVmPluginsCommand::undo()
+{
+	//TODO
+}
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+DeleteLinkCommand::DeleteLinkCommand(HardwareInterface *hInterface, QList<PluginProxy *> pList,
+		LinkItem *lItem, QUndoCommand *parent) : QUndoCommand(parent)
+{
+	hi = hInterface;
+	plugins = pList;
+	linkItem = lItem;
+	
+	// host12[eth3]
+	setText(tr("Deleted link ") +
+			hi->getMyVirtualMachine()->getName().append("[").append(hi->getName()).append("]"));
+}
+
+/**
+ * Deconstructor
+ */ 
+DeleteLinkCommand::~DeleteLinkCommand()
+{
+	plugins.clear();
+}
+
+/**
+ * Redo action
+ */
+void DeleteLinkCommand::redo()
+{
+	qDebug() << "link deleted";
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(text());
+}
+
+/**
+ * Undo action
+ */
+void DeleteLinkCommand::undo()
 {
 	//TODO
 }

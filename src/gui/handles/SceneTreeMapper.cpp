@@ -218,3 +218,31 @@ void SceneTreeMapper::clear()
 	//root element is deleted by sceneTree clear() call
 	rootElement = NULL;
 }
+
+/**
+ * Remove a link from tree and other structures
+ */
+void SceneTreeMapper::removeLink(LinkItem *linkItem, VirtualMachineItem *parent)
+{
+	/* Get the parent node */
+	QTreeWidgetItem *parentNode = vmMap.value(parent);
+	if(!parentNode)
+	{
+		qWarning() << "SceneTreeMapper::removeLink unknown parent.";
+		return;
+	}
+	
+	/* Remove mapping */
+	QTreeWidgetItem *node = linkMap.take(linkItem);
+	if(!node)
+	{
+		qWarning() << "SceneTreeMapper::removeLink unknown link node.";
+		return;
+	}
+	
+	/* remove child */
+	parentNode->removeChild(node);
+	
+	delete node;
+}
+

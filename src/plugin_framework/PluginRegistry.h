@@ -61,6 +61,7 @@ public:
 	QList<PluginProxy*> getVmProxies(VirtualMachine* vm)	{ return vmAssociations.values(vm); };
 	QList<PluginProxy*> getCdProxies(CollisionDomain* cd)	{ return cdAssociations.values(cd); };
 	QList<PluginProxy*> getHiProxies(HardwareInterface* hi)	{ return hiAssociations.values(hi); };
+	QList<PluginProxy*> takeHiProxies(HardwareInterface* hi);
 	
 	QObject* getBaseElement(PluginProxy* proxy);
 	QList<PluginProxy*> unregisterVmPlugins(VirtualMachine *vm, QStringList toDelete, QStringList *paths);
@@ -68,6 +69,7 @@ public:
 	
 	QList<PluginProxy*> getAllProxies();
 	QSet<QString> getAllUsedPaths();
+	void destroyPlugin(PluginProxy *proxy);
 };
 
 #endif /*PLUGINREGISTRY_H_*/

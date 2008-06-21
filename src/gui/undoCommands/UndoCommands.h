@@ -126,4 +126,27 @@ public:
 	void redo();
 };
 
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Delete a link/hardware interface
+ */
+class DeleteLinkCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	HardwareInterface *hi;
+	LinkItem *linkItem;
+	QList<PluginProxy*> plugins;
+	
+public:
+	DeleteLinkCommand(HardwareInterface *hInterface, QList<PluginProxy *> pList,
+			LinkItem *lItem, QUndoCommand *parent = 0);
+	virtual ~DeleteLinkCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
 #endif /*UNDOCOMMANDS_H_*/

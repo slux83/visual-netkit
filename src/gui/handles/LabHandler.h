@@ -65,6 +65,7 @@ public:
 	void closeLabForced();
 	void setMainWindowTitle();
 	void removePathFromTree(QString &path);
+	void removeItemFromScene(QGraphicsItem *item);
 	
 public slots:
 	void closeLab();
