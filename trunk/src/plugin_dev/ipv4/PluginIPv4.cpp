@@ -67,10 +67,6 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "ethUNKNOWN");
 		
-		QString status;
-		(hi != NULL && hi->getState())? status = "up" : status = "down";
-		templateContent.replace("<HI_STATE>", status);
-		
 		PluginProperty *pp = properties.value("address");
 		templateContent.replace("<IP>", pp->getValue());
 		

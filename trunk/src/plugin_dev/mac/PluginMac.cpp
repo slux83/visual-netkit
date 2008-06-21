@@ -67,10 +67,6 @@ QMap<QString, QString> PluginMac::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
 		
-		QString status;
-		(hi != NULL && hi->getState())? status = "up" : status = "down";
-		templateContent.replace("<HI_STATE>", status);
-		
 		templateContent.replace("<MAC>", properties.value("mac_address")->getValue());
 
 		/* Append comment */
