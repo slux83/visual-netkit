@@ -1,17 +1,9 @@
-To compile this program, you have to install Qt >= 4.3 inside your Linux Box
+To compile this program, you have to install Qt >= 4.4 inside your Linux Box
 
-When you are inside the application root directory, type these commands:
-	- qmake
-	- make
+When you are inside the application root directory, run the script `build.sh`.
+This bash script build all plugins and the main application and run it!
 
-a binary inside bin/ will be create.
-
-Now you have to compile all plugins inside src/plugin_dev/*
-
-for each directory (plugin) inside src/plugin_dev/ you have to type
-	- qmake
-	- make
-
-Now you can start the application bin/VisualNetkit
+All binary stuffs are located inside bin/VisualNetkit (the application bin)
+and /bin/plugins/*.so (the plugins).
 
 Enjoy!
