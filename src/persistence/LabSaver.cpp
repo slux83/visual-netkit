@@ -157,7 +157,6 @@ bool LabSaver::saveStartups()
 		}
 		
 		/* Get the template content */
-		QString ifconfig = "/sbin/ifconfig <HI> <HI_STATE> ## <COMMENT>\n";
 		QByteArray tplContent = TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
 		
 		QTextStream out(&startup);
@@ -165,17 +164,6 @@ bool LabSaver::saveStartups()
 		
 		out << tplContent;	//write file header
 		
-		/* foreach link in this machine */
-		foreach(HardwareInterface *hi, machineIterator.value()->getInterfaces().values())
-		{
-			QString ifConfigCopy = ifconfig;
-			QString lineComment = QString("'").append(hi->getMyCollisionDomain()->getName()).append("' collision domain ##");
-			ifConfigCopy.replace("<HI>", hi->getName());
-			ifConfigCopy.replace("<HI_STATE>", (hi->getState())? "up" : "down");
-			ifConfigCopy.replace("<COMMENT>", lineComment);
-			
-			out << ifConfigCopy.toUtf8();	//write interface status
-		}
 		QApplication::restoreOverrideCursor();
 	}
 	
@@ -268,6 +256,45 @@ bool LabSaver::saveTemplates()
 				QApplication::restoreOverrideCursor();
 			}
 		}
+	}
+	
+	/* Store the ethX state at the end of each .startup files */
+	QMapIterator<QString, VirtualMachine*> machineIterator(currentLab->getMachines());
+	while(machineIterator.hasNext())
+	{
+		machineIterator.next();
+		
+		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
+		
+		if(!startup.open(QFile::Append))
+		{
+			qWarning()	<< "Cannot append eth state inside startup file"
+						<< machineIterator.key() + ".startup"
+						<< ":" << startup.errorString();
+			errorString = "Cannot append eth state inside startup file " +
+							machineIterator.key() + ".startup: " +
+							startup.errorString();
+			return false;
+		}
+		
+		/* Get the template content */
+		QString ifconfig = "/sbin/ifconfig <HI> <HI_STATE> ## <COMMENT>\n";
+		
+		QTextStream out(&startup);
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+		
+		/* foreach link in this machine */
+		foreach(HardwareInterface *hi, machineIterator.value()->getInterfaces().values())
+		{
+			QString ifConfigCopy = ifconfig;
+			QString lineComment = QString("'").append(hi->getMyCollisionDomain()->getName()).append("' collision domain ##");
+			ifConfigCopy.replace("<HI>", hi->getName());
+			ifConfigCopy.replace("<HI_STATE>", (hi->getState())? "up" : "down");
+			ifConfigCopy.replace("<COMMENT>", lineComment);
+			
+			out << ifConfigCopy.toUtf8();	//write interface status
+		}
+		QApplication::restoreOverrideCursor();
 	}
 	
 	return allok;
