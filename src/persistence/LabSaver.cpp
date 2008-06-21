@@ -156,9 +156,26 @@ bool LabSaver::saveStartups()
 			return false;
 		}
 		
+		/* Get the template content */
+		QString ifconfig = "/sbin/ifconfig <HI> <HI_STATE> ## <COMMENT>\n";
+		QByteArray tplContent = TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
+		
 		QTextStream out(&startup);
 		QApplication::setOverrideCursor(Qt::WaitCursor);
-		out << TemplateExpert::template2string(QString::fromUtf8(":/tpl/startup"));
+		
+		out << tplContent;	//write file header
+		
+		/* foreach link in this machine */
+		foreach(HardwareInterface *hi, machineIterator.value()->getInterfaces().values())
+		{
+			QString ifConfigCopy = ifconfig;
+			QString lineComment = QString("'").append(hi->getMyCollisionDomain()->getName()).append("' collision domain ##");
+			ifConfigCopy.replace("<HI>", hi->getName());
+			ifConfigCopy.replace("<HI_STATE>", (hi->getState())? "up" : "down");
+			ifConfigCopy.replace("<COMMENT>", lineComment);
+			
+			out << ifConfigCopy.toUtf8();	//write interface status
+		}
 		QApplication::restoreOverrideCursor();
 	}
 	
