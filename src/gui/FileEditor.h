@@ -40,6 +40,7 @@ public:
 	FileEditor(QString &fileContent, QWidget *parent = 0);
 	virtual ~FileEditor();
 	bool textHasChanged() { return saveButton->isEnabled(); };
+	bool needBackup() { return (backupCheckBox->checkState() == Qt::Checked); };
 
 private slots:
 	void changeWrapMode(int state);

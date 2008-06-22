@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMessageBox>
+
 #include "TabWidget.h"
 #include "FileEditor.h"
 
@@ -77,7 +79,26 @@ void TabWidget::closeTab()
 	
 	if(fe->textHasChanged())
 	{
-		//TODO: save the changed text (delegate to low level)
+		int resp = QMessageBox::question(this, "VisualNetkit - question",
+				tr("The document has been modified. Do you want to save it before closing?"),
+				QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+		
+		if(resp == QMessageBox::Cancel)
+			return;
+		
+		//Save the changed document
+		if(resp == QMessageBox::Yes)
+		{
+			QString error;
+			if(!TabController::getInstance()->saveFile(fe, &error))
+			{
+				int forceClose = QMessageBox::warning(this, "VisualNetkit - warning",
+						tr("There was an error during the document save. Do you want to force the tab closing?") +
+						"\n\nError: " + error,
+						QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+				return;
+			}
+		}
 	}
 	
 	//remove tab from tab-stack

@@ -288,7 +288,7 @@ bool PluginIPv4::init(QString laboratoryPath)
 		return false;
 	}
 	
-	QRegExp ipRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+)\\bup|down?");
+	QRegExp ipRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+) \\b");
 	
 	/* Parse my startup file and get the mac address if any */
 	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
