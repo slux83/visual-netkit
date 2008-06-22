@@ -58,7 +58,7 @@ TabWidget::~TabWidget()
 }
 
 /**
- * [PRIVATE-SLOT]
+ * [SLOT]
  * Close tab handler
  */
 void TabWidget::closeTab()
@@ -96,7 +96,9 @@ void TabWidget::closeTab()
 						tr("There was an error during the document save. Do you want to force the tab closing?") +
 						"\n\nError: " + error,
 						QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-				return;
+				
+				if(forceClose == QMessageBox::No)
+					return;
 			}
 		}
 	}
