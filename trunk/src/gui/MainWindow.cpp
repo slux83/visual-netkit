@@ -500,6 +500,8 @@ void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootE
  */
 void MainWindow::dumpToPDF() 
 {
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	
 	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 	printer->setOutputFormat(QPrinter::PdfFormat);
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
@@ -510,6 +512,8 @@ void MainWindow::dumpToPDF()
 	
 	delete pdfPainter;
 	delete printer;
+	
+	QApplication::restoreOverrideCursor();
 }
 
 /**
@@ -518,6 +522,8 @@ void MainWindow::dumpToPDF()
  */
 void MainWindow::dumpToSVG()
 {
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	
 	QSvgGenerator *gen = new QSvgGenerator();
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to SVG"), "~/untitled.svg", tr("File (*.svg)"));
 	gen->setFileName(fileName);
@@ -529,6 +535,8 @@ void MainWindow::dumpToSVG()
 	
 	delete svgPainter;
 	delete gen;
+	
+	QApplication::restoreOverrideCursor();
 }
 
 
@@ -538,6 +546,8 @@ void MainWindow::dumpToSVG()
  */
 void MainWindow::dumpToPNG()
 {
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PNG"), "~/untitled.png", tr("File (*.png)"));
 	QPixmap *pngImage =
 		new QPixmap(graphicsView->scene()->sceneRect().width(), graphicsView->scene()->sceneRect().height());
@@ -553,6 +563,8 @@ void MainWindow::dumpToPNG()
 	
 	delete painter;
 	delete pngImage;
+	
+	QApplication::restoreOverrideCursor();
 }
 
 /**
@@ -594,4 +606,18 @@ void MainWindow::fullscreenMode()
 		showFullScreen();
 	else
 		showNormal();
+}
+
+/**
+ * [PROTECTED]
+ * Close application event
+ */
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	qDebug() << "Closing VisualNetkit...";
+	
+	if(!labHandler->isCurrentLab())
+		event->accept();	//close the application
+	
+	labHandler->closeLab();
 }

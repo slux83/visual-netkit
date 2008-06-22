@@ -28,6 +28,7 @@ class LabHandler;
 #include <QWidget>
 #include <QTreeWidget>
 #include <QFileDialog>
+#include <QCloseEvent>
 
 /**
  * The main window class
@@ -82,7 +83,10 @@ private slots:
 	void dumpToPNG();
 	void openLab();
 	void fullscreenMode();
-
+	
+protected:
+	void closeEvent(QCloseEvent *event);
+	
 public slots:
 	void writeLogMessage(QString message);
 	void resizeScene(QAction *action);
