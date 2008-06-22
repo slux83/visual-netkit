@@ -97,6 +97,7 @@ public:
 	void addCollisionDomain(CollisionDomain *cd);
 	void updateCdKey(QString oldKey, QString newKey, CollisionDomain *cd);
 	void updateVmKey(QString oldKey, QString newKey, VirtualMachine *vm);
+	void removeCd(CollisionDomain *cd) { collisionDomains.remove(cd->getName()); };
 
 };
 

@@ -148,3 +148,21 @@ QString LinkMapper::getVmName(LinkItem *linkItem)
 	return returnName;
 	
 }
+/**
+ * Get a filtred map that contain all pairs connected to the collision domain passed
+ */
+QMap<LinkItem*, HardwareInterface*> LinkMapper::getMappingsByCd(const CollisionDomain *cd)
+{
+	QMap<LinkItem*, HardwareInterface*> retVal(mappings);
+	QMapIterator<LinkItem*, HardwareInterface*> it(retVal);
+	
+	/* Remove all paris that doesn't connected to *cd */
+	while(it.hasNext())
+	{
+		it.next();
+		if(!(it.value()->getMyCollisionDomain() == cd))
+			retVal.remove(it.key());
+	}
+	
+	return retVal;
+}

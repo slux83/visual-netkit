@@ -246,3 +246,22 @@ void SceneTreeMapper::removeLink(LinkItem *linkItem, VirtualMachineItem *parent)
 	delete node;
 }
 
+/**
+ * Remove a collision domain from tree and other structures
+ */
+void SceneTreeMapper::removeCd(CollisionDomainItem *cdItem)
+{
+	/* Get the Cd node */
+	QTreeWidgetItem *cdNode = cdMap.take(cdItem);
+	if(!cdNode)
+	{
+		qWarning() << "SceneTreeMapper::removeCd unknown cdNode.";
+		return;
+	}
+	
+	/* remove child */
+	rootElement->removeChild(cdNode);
+	
+	delete cdNode;
+}
+

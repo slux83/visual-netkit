@@ -162,3 +162,13 @@ void LabFacadeController::closeLowLevelLab()
 	delete currentLab;
 	currentLab = NULL;
 }
+
+/**
+ * Remove a collision domain
+ */
+void LabFacadeController::removeCd(CollisionDomain *cd)
+{
+	currentLab->removeCd(cd);
+}
+
+

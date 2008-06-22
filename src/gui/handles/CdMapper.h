@@ -53,6 +53,7 @@ public:
 	QList<CollisionDomainItem*> getCdItems() { return mappings.keys(); };
 	void updateCdCounter(CollisionDomain *cd, bool increase);
 	void ensureAllItemsAreJoined();
+	void destroyMapper(CollisionDomainItem *cdItem) { mappings.remove(cdItem); };
 
 public slots:
 	void changeGraphicsLabelCd(CollisionDomain *cd, QString pluginName, QString label);

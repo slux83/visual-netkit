@@ -50,6 +50,7 @@ public:
 	HardwareInterface *getHardwareIterface(LinkItem *linkItem) { return mappings.value(linkItem); };
 	void destroyMapper(LinkItem *linkItem) { mappings.remove(linkItem); };
 	QString getVmName(LinkItem *linkItem);
+	QMap<LinkItem*, HardwareInterface*> getMappingsByCd(const CollisionDomain *cd);
 
 public slots:
 	void clear();

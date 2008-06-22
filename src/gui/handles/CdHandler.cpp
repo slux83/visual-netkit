@@ -143,3 +143,51 @@ void CdHandler::saveChangedProperty(int row, int column)
 	propertyController->saveChangedProperty(
 			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
+
+/**
+ * Delete a collision domain and all links connected
+ */
+void CdHandler::deleteCd(CollisionDomainItem *cdItem)
+{
+	/* Get the low level object */
+	CollisionDomain *cd = CdMapper::getInstance()->getCD(cdItem);
+	
+	/* Get all links connected */
+	QMap<LinkItem*, HardwareInterface*> links = LinkMapper::getInstance()->getMappingsByCd(cd);
+	
+	/* Destroy the mapper */
+	CdMapper::getInstance()->destroyMapper(cdItem);
+	
+	/* Remove item from scene */
+	labHandler->removeItemFromScene(cdItem);
+	
+	/* Remove connected links from the scene and from the three scene view */
+	foreach(LinkItem* link, links.keys())
+	{
+		labHandler->removeItemFromScene(link);
+		SceneTreeMapper::getInstance()->removeLink(link, link->getVirtualMachineItem());
+	}
+	
+	/* Remove all link from own vm (lov level) and get all proxies */
+	QMap<HardwareInterface*, PluginProxy*> hiProxies;	//used with insert-multi
+	foreach(HardwareInterface* hi, links.values())
+	{
+		hi->getMyVirtualMachine()->deleteHi(hi->getName());
+		foreach(PluginProxy *p, PluginRegistry::getInstance()->takeHiProxies(hi))
+			hiProxies.insertMulti(hi, p);
+	}
+	
+	QList<PluginProxy*> cdProxies;
+	/* Take proxies for this collision domain */
+	cdProxies = PluginRegistry::getInstance()->takeCdProxies(cd);
+	
+	/* Remove cd from low-level */
+	LabFacadeController::getInstance()->removeCd(cd);
+	
+	/* Create the undo command */
+//	labHandler->getUndoStack()->push(new DeleteLinkCommand(hi, proxies, link));
+	
+	/* Remove the Collision domain from tree scene view */
+	SceneTreeMapper::getInstance()->removeCd(cdItem);
+
+}

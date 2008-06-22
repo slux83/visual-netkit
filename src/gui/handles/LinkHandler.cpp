@@ -173,6 +173,7 @@ void LinkHandler::saveChangedProperty(int row, int column)
 void LinkHandler::deleteLink(LinkItem *link)
 {
 	LinkMapper *mapper = LinkMapper::getInstance();
+	
 	/* Get the low level object */
 	HardwareInterface *hi = mapper->getHardwareIterface(link);
 	

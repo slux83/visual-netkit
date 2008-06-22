@@ -45,6 +45,7 @@ public:
 	Laboratory * getCurrentLab() { return currentLab; };
 	void closeLowLevelLab();
 	bool saveChandegLab();
+	void removeCd(CollisionDomain *cd);
 
 signals:
 	void createdNewLab(Laboratory *newLab);
