@@ -18,6 +18,8 @@
 
 #include "CollisionDomainItem.h"
 #include "handles/SceneTreeMapper.h"
+#include "handles/CdHandler.h"
+
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -178,10 +180,20 @@ void CollisionDomainItem::ungroupActionCalled()
  */
 void CollisionDomainItem::deleteCdActionCalled()
 {
-	QMessageBox::warning(NULL,
-			tr("NOT IMPLEMENTED"),
-			tr("This function is not implemented yet >_<"),
-			QMessageBox::Ok);
+	int resp = QMessageBox::question(NULL,
+		tr("Visual Netkit - question"),
+		tr("Do you want delete the selected collision domain with all connected links?") + "\nCollision domain: "
+		+ myLabel->text(),
+		QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	
+	if(resp == QMessageBox::No)
+		return;
+	
+	/* before delete this group, ensure its joined */
+	restoreGroupActionCalled();
+	
+	CdHandler::getInstance()->deleteCd(this);
+	
 }
 
 /**

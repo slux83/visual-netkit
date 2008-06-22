@@ -47,6 +47,7 @@ public:
 	static CdHandler* getInstance();
 	bool cdNameExist(QString cdNameToCheck);
 	void renderCdProperties(CollisionDomainItem *cdItem);
+	void deleteCd(CollisionDomainItem *cdItem);
 	
 public slots:
 	void handleAddNewCd(QString cdName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);

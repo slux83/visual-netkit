@@ -67,6 +67,7 @@ public:
 	void changeVmLabel(VirtualMachineItem *vmItem, QString newLabel);
 	void changeLinkLabel(LinkItem *linkItem, QString newLabel);
 	void removeLink(LinkItem *linkItem, VirtualMachineItem *parent);
+	void removeCd(CollisionDomainItem *cdItem);
 	void clear();
 };
 

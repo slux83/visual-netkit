@@ -305,3 +305,17 @@ QList<PluginProxy*> PluginRegistry::takeHiProxies(HardwareInterface* hi)
 	
 	return proxies;
 }
+
+/**
+ * Clear and return plugin`s proxies for a collision domain
+ */
+QList<PluginProxy*> PluginRegistry::takeCdProxies(CollisionDomain* cd)
+{
+	QList<PluginProxy*> proxies = cdAssociations.values(cd);
+	
+	cdAssociations.remove(cd);	//clear
+	
+	return proxies;
+}
+
+
