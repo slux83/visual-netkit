@@ -316,7 +316,7 @@ bool PluginIPv4::init(QString laboratoryPath)
 	{
 		ipRegExp.indexIn(line);
 		QStringList capText = ipRegExp.capturedTexts();
-		qDebug() << capText;
+		
 		//It's my rule
 		if(capText[0].contains(hi->getName()))
 		{
