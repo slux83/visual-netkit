@@ -42,7 +42,6 @@ private slots:
 	void showSelectedTab(QAction* action);
 	
 public slots:
-	/* quint16 is the tab index, QString is the title of the tab */
 	void updateTabList();
 	
 public:

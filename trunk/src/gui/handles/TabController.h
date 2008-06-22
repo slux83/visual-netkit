@@ -47,6 +47,7 @@ public:
 	static TabController* getInstance();
 	bool openTab(QString path);
 	void removeTab(FileEditor* fileEditor);
+	bool saveFile(FileEditor* fileEditor, QString *error = NULL);
 
 signals:
 	void tabsHasChanged();

@@ -109,3 +109,67 @@ void TabController::removeTab(FileEditor* fileEditor)
 	
 	emit tabsHasChanged();	//emit signal
 }
+
+/**
+ * Save the changed content inside the passed file editor
+ * If false is returned and a QString *error is passed,
+ * this will be filled with an error description
+ */
+bool TabController::saveFile(FileEditor* fileEditor, QString *error)
+{
+	//Check consistance
+	QString path = activeTabs.key(fileEditor); 
+	QString pathBkp = path + "~";
+	if(path == "")
+	{
+		qWarning() << "TabController::saveFile() file editor unknown";
+		if(error != NULL)
+			error->append(tr("Hey this is a BUG: file editor unmapped!"));
+		return false;
+	}
+	
+	QFile fileToSave(path);
+	
+	/* We need to save a backup? */
+	if(fileEditor->needBackup())
+	{
+		//delete old bkp
+		if(QFile::exists(pathBkp) && !QFile::remove(pathBkp))
+		{
+			qWarning()	<< "TabController::saveFile() Cannot remove the old backup" << pathBkp;
+			if(error != NULL)
+				error->append(tr("Cannot remove the old backup file ").append(pathBkp));
+			
+			return false;
+		}
+		
+		if(!QFile::copy(path, pathBkp))
+		{
+			qWarning()	<< "TabController::saveFile() Cannot create the backup copy for file" << path;
+			if(error != NULL)
+				error->append(tr("Cannot create the backup copy for file ").append(path));
+			
+			return false;
+		}
+	}
+	
+	/* Ok, we can save the document */
+	if(!fileToSave.open(QFile::WriteOnly | QFile::Text))
+	{
+		qWarning()	<< "TabController::saveFile() Cannot open the file" << path << "in write mode."
+					<< fileToSave.errorString();
+		if(error != NULL)
+			error->append(fileToSave.errorString());
+		
+		return false;
+	}
+	QTextStream out(&fileToSave);
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+	out << fileEditor->fileTextEdit->toPlainText().toUtf8();
+	QApplication::restoreOverrideCursor();
+	
+	fileToSave.close();
+
+	
+	return true;
+}
