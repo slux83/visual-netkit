@@ -26,6 +26,8 @@
 
 #include "../FileEditor.h"
 
+class TabWidget;
+
 /**
  * This class is the handler/controller for main tab widget.
  * It can create new tabs, manage them and interact with the user`s actions
@@ -36,7 +38,7 @@ class TabController : public QObject
 
 private:
 	static TabController* instance;
-	QTabWidget *tabWidget;
+	TabWidget *tabWidget;
 	
 	//map: key=FilePath value=Widget file editor
 	QMap<QString, FileEditor*> activeTabs;
@@ -48,6 +50,7 @@ public:
 	bool openTab(QString path);
 	void removeTab(FileEditor* fileEditor);
 	bool saveFile(FileEditor* fileEditor, QString *error = NULL);
+	void closeAllTabs();
 
 signals:
 	void tabsHasChanged();

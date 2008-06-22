@@ -546,6 +546,9 @@ void LabHandler::closeLab()
 	if(!confirmCloseLab())
 		return;
 	
+	/* Close all tabs */
+	TabController::getInstance()->closeAllTabs();
+	
 	//Destroy mappings
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();
@@ -579,6 +582,9 @@ void LabHandler::closeLab()
  */
 void LabHandler::closeLabForced()
 {
+	/* Close all tabs */
+	TabController::getInstance()->closeAllTabs();
+	
 	//Destroy mappings
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();

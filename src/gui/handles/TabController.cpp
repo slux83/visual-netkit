@@ -18,6 +18,7 @@
 
 #include "TabController.h"
 #include "LabHandler.h"
+#include "../TabWidget.h"
 
 /* Init the controller NULL instance */
 TabController* TabController::instance = NULL;
@@ -172,4 +173,17 @@ bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 
 	
 	return true;
+}
+
+/**
+ * Close all tabs (not the first)
+ */
+void TabController::closeAllTabs()
+{
+	/* Close all tabs (editors) */
+	foreach(FileEditor *fe, activeTabs.values())
+	{
+		tabWidget->setCurrentWidget(fe);
+		tabWidget->closeTab();
+	}	
 }

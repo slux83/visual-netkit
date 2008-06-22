@@ -38,11 +38,11 @@ private:
 	QMenu *listTabMenu;
 
 private slots:
-	void closeTab();
 	void showSelectedTab(QAction* action);
 	
 public slots:
 	void updateTabList();
+	void closeTab();
 	
 public:
 	TabWidget(QWidget * parent = 0);
