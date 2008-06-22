@@ -284,3 +284,49 @@ void DeleteLinkCommand::undo()
 {
 	//TODO
 }
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+DeleteCdCommand::DeleteCdCommand(CollisionDomain *cdD, CollisionDomainItem *cdItemD,
+		QList<PluginProxy*> pList, QMap<LinkItem*, HardwareInterface*> linksMap,
+		QMap<HardwareInterface*, PluginProxy*> hiProxiesMap, QUndoCommand *parent) : QUndoCommand(parent)
+{
+	cd = cdD;
+	cdItem = cdItemD;
+	cdPlugins = pList;
+	links = linksMap;
+	hiProxies = hiProxiesMap;
+	
+	// host12[eth3]
+	setText(tr("Deleted collision domain ") + "\"" + cd->getName() + "\"");
+}
+
+/**
+ * Deconstructor
+ */ 
+DeleteCdCommand::~DeleteCdCommand()
+{
+	cdPlugins.clear();
+	hiProxies.clear();
+	links.clear();
+}
+
+/**
+ * Redo action
+ */
+void DeleteCdCommand::redo()
+{
+	qDebug() << "Cd deleted";
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(text());
+}
+
+/**
+ * Undo action
+ */
+void DeleteCdCommand::undo()
+{
+	//TODO
+}

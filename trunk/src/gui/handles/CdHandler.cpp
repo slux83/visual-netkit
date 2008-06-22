@@ -185,7 +185,7 @@ void CdHandler::deleteCd(CollisionDomainItem *cdItem)
 	LabFacadeController::getInstance()->removeCd(cd);
 	
 	/* Create the undo command */
-//	labHandler->getUndoStack()->push(new DeleteLinkCommand(hi, proxies, link));
+	labHandler->getUndoStack()->push(new DeleteCdCommand(cd, cdItem, cdProxies, links, hiProxies));
 	
 	/* Remove the Collision domain from tree scene view */
 	SceneTreeMapper::getInstance()->removeCd(cdItem);

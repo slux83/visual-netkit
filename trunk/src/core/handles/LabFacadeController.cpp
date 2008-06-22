@@ -149,8 +149,6 @@ bool LabFacadeController::saveChandegLab()
 	return false;
 }
 
-
-
 /**
  * Destroy and reset all low lever strucutes 
  */
@@ -170,5 +168,4 @@ void LabFacadeController::removeCd(CollisionDomain *cd)
 {
 	currentLab->removeCd(cd);
 }
-
 
