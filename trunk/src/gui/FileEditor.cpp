@@ -16,8 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMessageBox>
+
 #include "FileEditor.h"
 #include "../common/CommonConfigs.h"
+#include "handles/TabController.h"
 
 /**
  * Constructor
@@ -38,10 +41,21 @@ FileEditor::FileEditor(QString &fileContent, QWidget *parent) : QWidget(parent)
 	//Set the contend inside the qtextarea
 	fileTextEdit->setPlainText(fileContent);
 	
-	//Connections
+	//Connection: wraph
 	connect(wrapCheck, SIGNAL(stateChanged(int)),
 			this, SLOT(changeWrapMode(int)));
 	
+	//Connection: save document
+	connect(saveButton, SIGNAL(clicked()),
+			this, SLOT(saveChangedDocument()));
+	
+	//Connection: mark modified
+	connect(fileTextEdit, SIGNAL(textChanged()),
+			this, SLOT(markModified()));
+	
+	//Connection: mark modified
+	connect(fileTextEdit, SIGNAL(undoAvailable(bool)),
+			this, SLOT(undoIsAvailable(bool)));
 }
 
 /**
@@ -69,3 +83,45 @@ void FileEditor::changeWrapMode(int state)
 		fileTextEdit->setLineWrapMode(QTextEdit::NoWrap);
 	}
 }
+
+/**
+ * [PRIVATE-SLOT]
+ * Save handler
+ */
+void FileEditor::saveChangedDocument()
+{
+	QString error;
+
+	if(!TabController::getInstance()->saveFile(this, &error))
+	{
+		QMessageBox::warning(this, "VisualNetkit - error",
+			tr("There was an error during the document save!") +
+			"\n\nError: " + error,
+			QMessageBox::Ok, QMessageBox::Ok);
+	}
+	else
+	{
+		saveButton->setDisabled(true);
+		TabController::getInstance()->markTabAsModified(this, false);
+	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Set tab as modified
+ */
+void FileEditor::markModified()
+{
+	TabController::getInstance()->markTabAsModified(this, true);
+	saveButton->setDisabled(false);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Set tab as modified
+ */
+void FileEditor::undoIsAvailable(bool state)
+{
+	TabController::getInstance()->markTabAsModified(this, state);
+}
+

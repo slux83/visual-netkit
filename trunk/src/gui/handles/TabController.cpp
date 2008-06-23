@@ -187,3 +187,20 @@ void TabController::closeAllTabs()
 		tabWidget->closeTab();
 	}	
 }
+
+/**
+ * [SLOT]
+ * Mark a tap modified or saved
+ */
+void TabController::markTabAsModified(FileEditor* fe, bool isModified)
+{
+	int index = tabWidget->indexOf(fe);
+	
+	if(index == -1)
+		return;
+	
+	if(isModified)
+		tabWidget->setTabIcon(index, QIcon(":/menu/save_icon"));
+	else
+		tabWidget->setTabIcon(index, QIcon());
+}

@@ -44,6 +44,9 @@ public:
 
 private slots:
 	void changeWrapMode(int state);
+	void saveChangedDocument();
+	void markModified();
+	void undoIsAvailable(bool state);
 };
 
 #endif /*FILEEDITOR_H_*/

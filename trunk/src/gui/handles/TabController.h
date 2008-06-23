@@ -52,6 +52,9 @@ public:
 	bool saveFile(FileEditor* fileEditor, QString *error = NULL);
 	void closeAllTabs();
 
+public slots:
+	void markTabAsModified(FileEditor* fe, bool isModified);
+
 signals:
 	void tabsHasChanged();
 };
