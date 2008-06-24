@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # the visual netkit plugin paths (separed by ":")
-export VISUAL_NETKIT_PLUGINS="`pwd`/plugins:$HOME/.visualnetkit/plugins"
+APP=`which $0`
+APP_PATH=${APP/\/visualnetkit.sh/}
 
-./VisualNetkit
+export VISUAL_NETKIT_PLUGINS="$APP_PATH/plugins:$HOME/.visualnetkit/plugins"
+
+$APP_PATH/VisualNetkit
