@@ -152,56 +152,6 @@ void PluginRegistry::fetchPlugins()
 		
 	}
 }
-	// checks if directory exists
-//	QDir pluginDir(DEFAULT_PLUGIN_DIR);
-//	if (!pluginDir.exists())
-//	{
-//		qWarning() << "Cannot find the plugin directory" << DEFAULT_PLUGIN_DIR;
-//		qDebug() << pluginDir.path();
-//	}	
-//	else
-//	{
-//		pluginDir.setFilter( QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot );
-//
-//		// gets plugins list in the dir
-//		QStringList list = pluginDir.entryList();
-//		QRegExp rx("*.so");
-//		rx.setPatternSyntax(QRegExp::Wildcard);
-//		QStringList filteredList = list.filter(rx);
-//		if (!filteredList.empty()) 
-//		{
-//			for (int i = 0; i < filteredList.size(); i++)
-//			{
-//				//loads the i-th plugin
-//				qDebug() << "Loading" << filteredList.at(i);
-//				
-//				//inserts plugin and factory in factories map
-//				PluginLoaderFactory* factory =
-//					new PluginLoaderFactory(pluginDir.filePath(filteredList.at(i)));
-//				
-//				if (factory->initPluginLibrary()) 
-//				{
-//					if(!factories.contains(factory->getName()))
-//						factories.insert(factory->getName(), factory);
-//					else
-//					{
-//						qWarning() << "Duplicated plugin name:" << factory->getName();
-//						delete factory;
-//					}
-//				}
-//				else
-//				{
-//					delete factory;
-//				}
-//			}
-//		}
-//		else
-//		{
-//			qWarning() << "No plugins in" << DEFAULT_PLUGIN_DIR;
-//		}
-//	}
-	
-
 
 /**
  * Get the associated base element, passed the proxy
