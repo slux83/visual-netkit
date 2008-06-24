@@ -35,6 +35,7 @@ class LabFacadeController : public QObject
 private:
 	static LabFacadeController *instance; 
 	Laboratory *currentLab;
+	QDir vnHome;
 	
 public:
 	LabFacadeController();
@@ -46,6 +47,8 @@ public:
 	void closeLowLevelLab();
 	bool saveChandegLab();
 	void removeCd(CollisionDomain *cd);
+	void setAppHome(QDir path) { vnHome = path; };
+	QDir getAppHome() { return vnHome; };
 
 signals:
 	void createdNewLab(Laboratory *newLab);
