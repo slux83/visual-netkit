@@ -31,6 +31,23 @@ int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 	
+	/* Create the home dir (if not exist) */
+	QDir visualNetkitHome(QDir::homePath().append("/.visualnetkit"));
+	if(!visualNetkitHome.exists())
+	{
+		if(!visualNetkitHome.mkpath(visualNetkitHome.absolutePath().append("/plugins")))
+		{
+			qWarning() << "Cannot create the application home dir:" << visualNetkitHome.absolutePath();
+			qWarning() << "ABORTING...";
+			app.exit(1);
+		}
+		
+		qDebug() << "Created the home dir:" << visualNetkitHome.absolutePath();
+		
+	}
+	
+	LabFacadeController::getInstance()->setAppHome(visualNetkitHome);
+	
 	/* Load splashscreen */
 	QPixmap pixmap(":/splashscreens/ss_10");
 	QSplashScreen splash(pixmap);
