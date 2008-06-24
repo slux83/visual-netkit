@@ -81,7 +81,8 @@ compile()
 		echo
 		echo ">>> STARTING ./bin/VisualNetkit <<<"
 		echo
-		./bin/VisualNetkit
+		cd bin
+		./visualnetkit.sh
 	fi
 	                                 
 }

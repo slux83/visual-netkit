@@ -19,6 +19,8 @@
 #ifndef PLUGINREGISTRY_H_
 #define PLUGINREGISTRY_H_
 
+#include <QDir>
+#include <QList>
 #include <QMap>
 #include <QObject>
 
@@ -44,6 +46,8 @@ private:
 	
 	QMap<QString, PluginLoaderFactory*> factories;
 	
+	QList<QDir> pluginPaths;
+	
 	//Multi maps: the value for each key can have multi-values
 	QMap<VirtualMachine*, PluginProxy*> vmAssociations;
 	QMap<CollisionDomain*, PluginProxy*> cdAssociations;
@@ -55,7 +59,7 @@ public:
 	static PluginRegistry* getInstance();
 	void clean();
 	
-	bool fetchPlugins();
+	void fetchPlugins();
 	PluginProxy* registerPlugin(QString pluginName, QObject* baseElement);
 	
 	QList<PluginProxy*> getVmProxies(VirtualMachine* vm)	{ return vmAssociations.values(vm); };
@@ -70,6 +74,8 @@ public:
 	
 	QList<PluginProxy*> getAllProxies();
 	QSet<QString> getAllUsedPaths();
+	
+	void addPluginPath(QString pluginPath) { pluginPaths << QDir(pluginPath); };
 	void destroyPlugin(PluginProxy *proxy);
 };
 

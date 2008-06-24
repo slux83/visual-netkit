@@ -18,10 +18,15 @@
 
 #include <QApplication>
 #include <QSplashScreen>
+#include <QProcess>
+
 #include "gui/MainWindow.h"
 #include "common/BugDumper.h"
 #include "plugin_framework/PluginRegistry.h"
 
+/**
+ * The main ^^'
+ */
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
@@ -37,6 +42,30 @@ int main(int argc, char *argv[])
 	/* Load plugins */
 	splash.showMessage("Loading plugins");
 	qDebug() << "Loading plugins";
+	QStringList env = QProcess::systemEnvironment();
+	QRegExp envRegExp("VISUAL_NETKIT_PLUGINS=(.+)");
+	QStringList paths;	//all plugin paths
+	
+	//search the env var
+	bool foundEnv = false;
+	foreach(QString envLine, env)
+	{
+		if(envRegExp.exactMatch(envLine))
+		{
+			envRegExp.indexIn(envLine);
+			paths = envRegExp.capturedTexts()[1].split(":", QString::SkipEmptyParts);
+			foundEnv = true;
+			break;
+		}
+	}
+	
+	//add plugin paths to the registry
+	foreach(QString path, paths)
+		PluginRegistry::getInstance()->addPluginPath(path);
+	
+	if(!foundEnv)
+		qWarning("PLUGINS DISABLED: You don't have the 'VISUAL_NETKIT_PLUGINS' container exported as environment variable!");
+	
 	PluginRegistry::getInstance()->fetchPlugins();
 	qDebug() << "Founded" << PluginRegistry::getInstance()->getAllPluginFactories().size() << "plugin(s)";
 	
