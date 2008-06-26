@@ -223,4 +223,9 @@ void VmHandler::deleteVm(VirtualMachineItem *vmItem)
 	
 	/* Remove the Virtual machine from tree scene view */
 	SceneTreeMapper::getInstance()->removeVm(vmItem);
+	
+	/* Clear tree lab */
+	QString temp = vm->getName();
+	LabHandler::getInstance()->removePathFromTree(temp, true);
+	LabHandler::getInstance()->removePathFromTree(temp.append(".startup"), true);
 }

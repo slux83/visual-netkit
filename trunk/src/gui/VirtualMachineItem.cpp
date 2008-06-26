@@ -151,6 +151,9 @@ void VirtualMachineItem::initContextMenu()
 				this, SLOT(restoreGroupActionCalled()));
 	connect(managePluginsAction, SIGNAL(triggered()),
 				this, SLOT(managePluginsActionCalled()));
+	
+	//disabled because not finished
+	managePluginsAction->setDisabled(true);
 }
 
 /**

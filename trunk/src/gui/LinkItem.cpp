@@ -167,6 +167,9 @@ void LinkItem::initContextMenu()
 	contextMenu.addAction(deleteAction);
 	contextMenu.addAction(managePluginsAction);
 	
+	//disabled because not finished
+	managePluginsAction->setDisabled(true);
+	
 	/* Connects */
 	connect(deleteAction, SIGNAL(triggered()),
 			this, SLOT(deleteLinkActionCalled()));
