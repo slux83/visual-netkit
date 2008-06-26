@@ -24,7 +24,10 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/SyntaxHighLighter.h \
+HEADERS = src/core/handles/SettingsFacadeController.h \
+    src/gui/handles/SettingsHandler.h \
+    src/persistence/SettingsManager.h \
+    src/gui/SyntaxHighLighter.h \
     src/gui/TabWidget.h \
     src/gui/handles/TabController.h \
     src/gui/FileEditor.h \
@@ -79,7 +82,10 @@ HEADERS = src/gui/SyntaxHighLighter.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/SyntaxHighLighter.cpp \
+SOURCES = src/core/handles/SettingsFacadeController.cpp \
+    src/gui/handles/SettingsHandler.cpp \
+    src/persistence/SettingsManager.cpp \
+    src/gui/SyntaxHighLighter.cpp \
     src/gui/TabWidget.cpp \
     src/gui/handles/TabController.cpp \
     src/gui/FileEditor.cpp \
