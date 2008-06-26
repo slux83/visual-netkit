@@ -50,6 +50,7 @@ public:
 	bool vmNameExist(QString vmNameToCheck);
 	void renderVmProperties(VirtualMachineItem *vmItem);
 	void removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToRemove);
+	void deleteVm(VirtualMachineItem *vmItem);
 
 signals:
 	void logEvent(QString message);

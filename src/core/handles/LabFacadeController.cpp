@@ -169,3 +169,11 @@ void LabFacadeController::removeCd(CollisionDomain *cd)
 	currentLab->removeCd(cd);
 }
 
+/**
+ * Remove a virtual machine
+ */
+void LabFacadeController::removeVm(VirtualMachine *vm)
+{
+	currentLab->removeVm(vm);
+}
+

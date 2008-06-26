@@ -178,3 +178,49 @@ void VmHandler::removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToR
 	
 	emit logEvent(QString(vm->getName()).append(": ").append(tr("deleted plugins")).append(" [").append(pluginsToString).append("]"));
 }
+
+/**
+ * Delete a virtual machine
+ */
+void VmHandler::deleteVm(VirtualMachineItem *vmItem)
+{
+	/* Get the low level object */
+	VirtualMachine *vm = VmMapper::getInstance()->getMachine(vmItem);
+	
+	/* Get all links connected */
+	QMap<LinkItem*, HardwareInterface*> links = LinkMapper::getInstance()->getMappingsByVm(vm);
+	
+	/* Destroy the mapper */
+	VmMapper::getInstance()->destroyMapper(vmItem);
+	
+	/* Remove item from scene */
+	labHandler->removeItemFromScene(vmItem);
+	
+	/* Remove connected links from the scene and from the three scene view */
+	foreach(LinkItem* link, links.keys())
+	{
+		labHandler->removeItemFromScene(link);
+		SceneTreeMapper::getInstance()->removeLink(link, link->getVirtualMachineItem());
+	}
+	
+	/* get all interfaces proxies */
+	QMap<HardwareInterface*, PluginProxy*> hiProxies;	//used with insert-multi
+	foreach(HardwareInterface* hi, links.values())
+	{
+		foreach(PluginProxy *p, PluginRegistry::getInstance()->takeHiProxies(hi))
+			hiProxies.insertMulti(hi, p);
+	}
+	
+	QList<PluginProxy*> vmProxies;
+	/* Take proxies for this virtual machine */
+	vmProxies = PluginRegistry::getInstance()->takeVmProxies(vm);
+	
+	/* Remove virtual machine from low-level */
+	LabFacadeController::getInstance()->removeVm(vm);
+	
+	/* Create the undo command */
+	labHandler->getUndoStack()->push(new DeleteVmCommand(vm, vmItem, vmProxies, links, hiProxies));
+	
+	/* Remove the Virtual machine from tree scene view */
+	SceneTreeMapper::getInstance()->removeVm(vmItem);
+}

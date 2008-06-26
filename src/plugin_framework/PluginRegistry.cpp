@@ -313,4 +313,15 @@ QList<PluginProxy*> PluginRegistry::takeCdProxies(CollisionDomain* cd)
 	return proxies;
 }
 
+/**
+ * Clear and return plugin`s proxies for a virtual machine
+ */
+QList<PluginProxy*> PluginRegistry::takeVmProxies(VirtualMachine *vm)
+{
+	QList<PluginProxy*> proxies = vmAssociations.values(vm);
+	
+	vmAssociations.remove(vm);	//clear
+	
+	return proxies;
+}
 

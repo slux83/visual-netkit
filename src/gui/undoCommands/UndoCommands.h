@@ -150,9 +150,11 @@ public:
 	void redo();
 };
 
+/******************************************************************************/
+
 /**
  * [COMMAND]
- * Delete a Collision domain interface
+ * Delete a Collision domain
  */
 class DeleteCdCommand : public QObject, public QUndoCommand
 {
@@ -163,7 +165,7 @@ private:
 	QList<PluginProxy*> cdPlugins;
 	QMap<LinkItem*, HardwareInterface*> links;
 	
-	//a multi-map
+	//NOTE: it's a multi-map
 	QMap<HardwareInterface*, PluginProxy*> hiProxies;
 	
 public:
@@ -178,4 +180,33 @@ public:
 	void redo();
 };
 
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Delete a Virtual machine
+ */
+class DeleteVmCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	VirtualMachine *vm;
+	VirtualMachineItem *vmItem;
+	QList<PluginProxy*> vmPlugins;
+	QMap<LinkItem*, HardwareInterface*> links;
+	
+	//NOTE: it's a multi-map
+	QMap<HardwareInterface*, PluginProxy*> hiProxies;
+	
+public:
+	DeleteVmCommand(VirtualMachine *vmD, VirtualMachineItem *vmItemD,
+			QList<PluginProxy*> pList, QMap<LinkItem*, HardwareInterface*> linksMap,
+			QMap<HardwareInterface*, PluginProxy*> hiProxiesMap,
+			QUndoCommand *parent = 0);
+	virtual ~DeleteVmCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
 #endif /*UNDOCOMMANDS_H_*/
