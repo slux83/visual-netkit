@@ -18,6 +18,7 @@
 
 #include "VirtualMachineItem.h"
 #include "handles/SceneTreeMapper.h"
+#include "handles/VmHandler.h"
 #include <QGraphicsScene>
 #include <QCursor>
 #include <QMessageBox>
@@ -171,10 +172,20 @@ void VirtualMachineItem::ungroupActionCalled()
  */
 void VirtualMachineItem::deleteVmActionCalled()
 {
-	QMessageBox::warning(NULL,
-			tr("NOT IMPLEMENTED"),
-			tr("This function is not implemented yet >_<"),
-			QMessageBox::Ok);
+	int resp = QMessageBox::question(NULL,
+		tr("Visual Netkit - question"),
+		tr("Do you want delete the selected virtual machine with all its links?") + "\nVirtual Machine: "
+		+ vmNameLabel->text(),
+		QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	
+	if(resp == QMessageBox::No)
+		return;
+	
+	/* before delete this group, ensure its joined */
+	restoreGroupActionCalled();
+	
+	VmHandler::getInstance()->deleteVm(this);
+	
 }
 
 /**

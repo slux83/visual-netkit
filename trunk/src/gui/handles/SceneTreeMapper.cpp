@@ -243,6 +243,7 @@ void SceneTreeMapper::removeLink(LinkItem *linkItem, VirtualMachineItem *parent)
 	/* remove child */
 	parentNode->removeChild(node);
 	
+	/* Free memory */
 	delete node;
 }
 
@@ -255,13 +256,44 @@ void SceneTreeMapper::removeCd(CollisionDomainItem *cdItem)
 	QTreeWidgetItem *cdNode = cdMap.take(cdItem);
 	if(!cdNode)
 	{
-		qWarning() << "SceneTreeMapper::removeCd unknown cdNode.";
+		qWarning() << "SceneTreeMapper::removeCd() unknown cdNode.";
 		return;
 	}
 	
 	/* remove child */
 	rootElement->removeChild(cdNode);
 	
+	/* Free memory */
 	delete cdNode;
 }
 
+/**
+ * Remove a virtual machine from tree and other structures
+ */
+void SceneTreeMapper::removeVm(VirtualMachineItem *vmItem)
+{
+	/* Get the VM node */
+	QTreeWidgetItem *vmNode = vmMap.take(vmItem);
+	if(!vmNode)
+	{
+		qWarning() << "SceneTreeMapper::removeVm() unknown vmNode.";
+		return;
+	}
+	
+	/* remove vm childs (eths) and remove from mappings */
+	QList<QTreeWidgetItem*> vmChildren = vmNode->takeChildren();
+	QMapIterator<LinkItem*, QTreeWidgetItem*> linkIterator(linkMap);
+	while(linkIterator.hasNext())
+	{
+		linkIterator.next();
+		if(vmChildren.contains(linkIterator.value()))
+			linkMap.remove(linkIterator.key());	//ok, delete the mapping
+	}
+	
+	/* remove child */
+	rootElement->removeChild(vmNode);
+	
+	/* Free memory */
+	qDeleteAll(vmChildren);
+	delete vmNode;
+}

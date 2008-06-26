@@ -299,8 +299,7 @@ DeleteCdCommand::DeleteCdCommand(CollisionDomain *cdD, CollisionDomainItem *cdIt
 	cdPlugins = pList;
 	links = linksMap;
 	hiProxies = hiProxiesMap;
-	
-	// host12[eth3]
+
 	setText(tr("Deleted collision domain ") + "\"" + cd->getName() + "\"");
 }
 
@@ -327,6 +326,53 @@ void DeleteCdCommand::redo()
  * Undo action
  */
 void DeleteCdCommand::undo()
+{
+	//TODO
+}
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+DeleteVmCommand::DeleteVmCommand(VirtualMachine *vmD, VirtualMachineItem *vmItemD,
+		QList<PluginProxy*> pList, QMap<LinkItem*, HardwareInterface*> linksMap,
+		QMap<HardwareInterface*, PluginProxy*> hiProxiesMap,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	vm = vmD;
+	vmItem = vmItemD;
+	vmPlugins = pList;
+	links = linksMap;
+	hiProxies = hiProxiesMap;
+	
+	// host12
+	setText(tr("Deleted virtual machine ") + "\"" + vm->getName() + "\"");
+}
+
+/**
+ * Deconstructor
+ */ 
+DeleteVmCommand::~DeleteVmCommand()
+{
+	vmPlugins.clear();
+	hiProxies.clear();
+	links.clear();
+}
+
+/**
+ * Redo action
+ */
+void DeleteVmCommand::redo()
+{
+	qDebug() << "Vm deleted";
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(text());
+}
+
+/**
+ * Undo action
+ */
+void DeleteVmCommand::undo()
 {
 	//TODO
 }

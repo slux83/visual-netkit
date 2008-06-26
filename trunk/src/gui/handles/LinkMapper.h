@@ -51,6 +51,7 @@ public:
 	void destroyMapper(LinkItem *linkItem) { mappings.remove(linkItem); };
 	QString getVmName(LinkItem *linkItem);
 	QMap<LinkItem*, HardwareInterface*> getMappingsByCd(const CollisionDomain *cd);
+	QMap<LinkItem*, HardwareInterface*> getMappingsByVm(const VirtualMachine *vm);
 
 public slots:
 	void clear();

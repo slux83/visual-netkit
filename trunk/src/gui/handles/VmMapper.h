@@ -56,6 +56,7 @@ public:
 	VirtualMachine * getMachine(VirtualMachineItem *vmItem) { return mappings.value(vmItem); };
 	QList<VirtualMachine *> getMachines() { return mappings.values(); };
 	void ensureAllItemsAreJoined();
+	void destroyMapper(VirtualMachineItem *vmItem) { mappings.remove(vmItem); };
 
 public slots:
 	void changeGraphicsLabelVm(VirtualMachine *vm, QString pluginName, QString label);

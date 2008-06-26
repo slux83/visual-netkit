@@ -47,6 +47,7 @@ public:
 	void closeLowLevelLab();
 	bool saveChandegLab();
 	void removeCd(CollisionDomain *cd);
+	void removeVm(VirtualMachine *vm);
 	void setAppHome(QDir path) { vnHome = path; };
 	QDir getAppHome() { return vnHome; };
 
