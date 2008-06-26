@@ -330,7 +330,7 @@ bool LabHandler::getLabChangedState()
  * Remove a path from tree
  * Post-conditions: if a vm is inside the path, this will not be deleted
  */
-void LabHandler::removePathFromTree(QString &path)
+void LabHandler::removePathFromTree(QString &path, bool removeVm)
 {
 	QTreeWidgetItem *currentNode = mainWindow->labTree->topLevelItem(0);
 	QTreeWidgetItem *rootToDelete = NULL;
@@ -351,8 +351,8 @@ void LabHandler::removePathFromTree(QString &path)
 		{
 			childsIterator.next();
 			
-			/* this node is a virtual machine dir? */
-			if(childsIterator.value()->data(0, Qt::UserRole).toString() == "vm_element")
+			/* this node is a virtual machine dir? remove? */
+			if(!removeVm && childsIterator.value()->data(0, Qt::UserRole).toString() == "vm_element")
 			{				
 				currentNode = childsIterator.value();	//update current
 				break;	//do not delete the vm element
