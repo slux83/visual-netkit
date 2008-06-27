@@ -67,7 +67,7 @@ QMap<QString, QString> PluginMac::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
 		
-		templateContent.replace("<MAC>", properties.value("mac_address")->getValue());
+		templateContent.replace("<MAC>", getPropertyByName("mac_address")->getValue());
 
 		/* Append comment */
 		QString lineComment;
@@ -123,7 +123,7 @@ bool PluginMac::fetchProperties()
 			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
 			
 			PluginProperty *pp = new PluginProperty(p_name, p_default_value, p_description);
-			properties.insert(p_name, pp);
+			properties.append(pp);
 		}
 	} else {
 		qWarning() << "No properties for plugin:" << myName;
@@ -141,20 +141,20 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 {
 	
 	/* Check if property exist */
-	if (!properties.contains(propName))
+	if (getPropertyByName(propName) == NULL)
 	{
 		qWarning() << "PluginMac::initProperty: properties doesn't contain property" + propName;
 		return true;
 	}	
 	
 	/* Skip storage if the value is equals default */
-	if (propValue == properties.value(propName)->getDefaultValue())
+	if (propValue == getPropertyByName(propName)->getDefaultValue())
 		return true;
 	
 	/* Force property save? */
 	if (pluginAlertMsg == NULL)
 	{
-		PluginProperty *prop = properties.value(propName);
+		PluginProperty *prop = getPropertyByName(propName);
 		prop->setValue(propValue);
 		refreshLabel();
 		
@@ -172,7 +172,7 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 			}
 			else 
 			{
-				PluginProperty *prop = properties.value(propName);
+				PluginProperty *prop = getPropertyByName(propName);
 				prop->setValue(propValue);
 				refreshLabel();
 				return true;
@@ -228,7 +228,7 @@ bool PluginMac::init(QString laboratoryPath)
 			if(validateMacAddress(myMacAddress))
 			{
 				//ok, founded my mac address
-				properties.value("mac_address")->setValue(myMacAddress);
+				getPropertyByName("mac_address")->setValue(myMacAddress);
 				myProxy->changeGraphicsLabel(myMacAddress);
 						
 				return true;
@@ -245,7 +245,7 @@ bool PluginMac::init(QString laboratoryPath)
  */
 void PluginMac::refreshLabel()
 {
-	myProxy->changeGraphicsLabel(properties["mac_address"]->getValue());
+	myProxy->changeGraphicsLabel(getPropertyByName("mac_address")->getValue());
 }
 
 /**
@@ -261,4 +261,17 @@ bool PluginMac::validateMacAddress(QString &mac)
 	
 	/* Validate the MAC address */
 	return (macValidator.validate(mac, pos) == QValidator::Acceptable);
+}
+
+/**
+ * [PRIVATE]
+ * Get the property by name (or return null
+ */
+PluginProperty* PluginMac::getPropertyByName(QString propName)
+{
+	foreach(PluginProperty *p, properties)
+		if(p->getName() == propName)
+			return p;
+	
+	return NULL;
 }

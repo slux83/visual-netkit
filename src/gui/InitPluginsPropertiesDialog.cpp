@@ -57,7 +57,7 @@ InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
 void InitPluginsPropertiesDialog::handleUserConfirm()
 {
 	QStringList keys = propertiesAssoc.keys();
-
+	
 	//for each plugin inside "pluginsToManage"
 	for (int j=0; j < pluginsToManage.size(); j++) 
 	{
@@ -139,14 +139,14 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 		PluginProxy *proxy = it.next();
 		
 		// if any property has to be set, build the UI
-		if(proxy->getPluginProperties().values().size() > 0)
+		if(proxy->getPluginProperties().size() > 0)
 		{
 			QWidget *w = new QWidget();	//the container
 			QVBoxLayout *layout = new QVBoxLayout(w);
 			layout->setMargin(3);
 			layout->setSpacing(3);
 			
-			QListIterator<PluginProperty*> ii(proxy->getPluginProperties().values());
+			QListIterator<PluginProperty*> ii(proxy->getPluginProperties());
 			
 			/* foraech property */
 			while(ii.hasNext())
@@ -158,8 +158,14 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 				layout->addWidget(label);
 				layout->addWidget(lineEdit);
 				
-				// save mapping
+				// save mapping; the key is "PluginName|a*n|PropertyName
+				// where a*n is the char a moltiplied for property order times
+				// and | is a not standard character separator
+				QString orderString = QString::number(prop->getOrder());
+				
+				
 				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
+										SEPARATOR + orderString + 
 										SEPARATOR + prop->getName(),
 										lineEdit);
 			}

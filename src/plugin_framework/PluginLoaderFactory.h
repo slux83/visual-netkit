@@ -37,7 +37,7 @@ private:
 	createPlugin_t* createPluginFactory;
 	destroyPlugin_t* destroyPluginFactory;
 	QString name, description, version, deps, author, type;
-	QList<PluginProperty*> properties;	//a copy for a fast access
+	QList<PluginProperty*> properties;	//a copy for a fast access (unused)
 	
 public:
 	PluginLoaderFactory(const QString &fileName, QObject *parent = 0);

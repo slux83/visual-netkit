@@ -39,7 +39,7 @@ class PluginIPv4 : public PluginInterface
 {
 	
 private:
-	QMap<QString, PluginProperty*> properties;
+	QList<PluginProperty*> properties;
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
@@ -47,6 +47,8 @@ private:
 	QString getTemplateLocation();
 	bool fetchProperties();
 	void refreshLabel();
+	PluginProperty *getPropertyByName(QString propName);
+	void sortProperties(QList<PluginProperty*> &props);
 	
 public:
 	PluginIPv4();
@@ -55,7 +57,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QMap<QString, QString> getTemplates();
 	QString getName() { return myName; };
-	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
+	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	

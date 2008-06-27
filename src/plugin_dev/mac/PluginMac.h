@@ -35,7 +35,7 @@ class PluginMac : public PluginInterface
 {
 	
 private:
-	QMap<QString, PluginProperty*> properties;
+	QList<PluginProperty*> properties;
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
@@ -44,6 +44,7 @@ private:
 	bool fetchProperties();
 	void refreshLabel();
 	bool validateMacAddress(QString &mac);
+	PluginProperty *getPropertyByName(QString propName);
 	
 public:
 	PluginMac();
@@ -52,7 +53,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QMap<QString, QString> getTemplates();
 	QString getName() { return myName; };
-	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
+	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	

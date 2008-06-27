@@ -28,6 +28,7 @@ private:
 	QString defaultValue;
 	QString description;
 	QString value;
+	int order;
 	
 public:
 	PluginProperty();
@@ -39,11 +40,13 @@ public:
 	QString getDefaultValue() { return defaultValue; };
 	QString getDescription() { return description; };
 	QString getValue() { return value; };
+	int getOrder() { return order; };
 	
 	void setName(QString &n) { name = n; };
 	void setDefaultValue(QString &d) { defaultValue = d; };
 	void setValue(QString &d) { value = d; };
 	void setDescription(QString &d) { description = d; };
+	void setOrder(int ordNumber) { order = ordNumber; };
 };
 
 #endif /*PLUGINPROPERTY_H_*/
