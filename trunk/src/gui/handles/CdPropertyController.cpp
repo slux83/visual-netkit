@@ -73,7 +73,7 @@ void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
 	while(i.hasNext())
 	{
 		PluginProxy *p = i.next();
-		QMapIterator<QString, PluginProperty*> j(p->getPluginProperties());
+		QListIterator<PluginProperty*> j(p->getPluginProperties());
 		
 		/* Build header for this plugin (span 2 columns) */
 		if(j.hasNext())
@@ -92,19 +92,20 @@ void CdPropertyController::renderCdProperties(QTableWidget *tableWidget)
 		/* render propertyes for this plugin */
 		while(j.hasNext())
 		{
-			j.next();
+			PluginProperty *pp = j.next();
+			
 			//property name
 			tableWidget->setRowCount(tableWidget->rowCount() + 1);
 			property = new QTableWidgetItem();
-			property->setData(Qt::DisplayRole, j.key());
+			property->setData(Qt::DisplayRole, pp->getName());
 			property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
 			
 			//property value
 			property = new QTableWidgetItem();
-			property->setData(Qt::DisplayRole, j.value()->getValue());
-			property->setData(Qt::ToolTipRole, j.value()->getDescription());
-			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + j.key());
+			property->setData(Qt::DisplayRole, pp->getValue());
+			property->setData(Qt::ToolTipRole, pp->getDescription());
+			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + pp->getName());
 			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
 			tableWidget->setSpan(tableWidget->rowCount() - 1, 1, 1, 1);
 		}

@@ -46,7 +46,7 @@ PluginTest::PluginTest() : PluginInterface()
 PluginTest::~PluginTest()
 {
 	//NOTE: The proxy is destroyed by the plugin framework
-	qDeleteAll(properties.values());
+	qDeleteAll(properties);
 	properties.clear();
 	delete mySettings;
 }
@@ -93,7 +93,7 @@ QString PluginTest::getTemplateLocation()
 }
 
 /**
- * Fetches plugin properties and stores them in the properties map.
+ * Fetches plugin properties and stores them in the properties list.
  */
 bool PluginTest::fetchProperties()
 {
@@ -111,7 +111,7 @@ bool PluginTest::fetchProperties()
 			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
 			
 			PluginProperty *pp = new PluginProperty(p_name, p_default_value, p_description);
-			properties.insert(p_name, pp);
+			properties.append(pp);
 		}
 	} else {
 		qWarning() << "No properties for plugin:" << myName;

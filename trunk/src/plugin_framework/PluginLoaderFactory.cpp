@@ -133,20 +133,10 @@ bool PluginLoaderFactory::initPluginLibrary()
 		retVal = false;
 	}
 	
-	//TODO: plugin name must be unique
-	
 	pluginSetting->endGroup();
 	
 	/* copy all properties for fast info access */
-	QListIterator<PluginProperty *>propIterator(tester->getPluginProperties().values());
-	while(propIterator.hasNext())
-	{
-		//Clone property
-		PluginProperty *original = propIterator.next();
-		PluginProperty *clone =
-			new PluginProperty(name, original->getDefaultValue(), original->getDescription());
-		properties.append(clone);
-	}
+	properties = tester->getPluginProperties();
 	
 	destroyPlugin(tester);
 	

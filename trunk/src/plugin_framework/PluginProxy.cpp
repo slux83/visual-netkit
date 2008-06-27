@@ -87,7 +87,7 @@ void PluginProxy::showDefaultGraphicsLabel()
 /**
  * Returns the associated plugin properties.
  */
-QMap< QString, PluginProperty* > PluginProxy::getPluginProperties()
+QList<PluginProperty*> PluginProxy::getPluginProperties()
 {
 	return pluginInterface->getPluginProperties();
 }

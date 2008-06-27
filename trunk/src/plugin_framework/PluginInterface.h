@@ -19,14 +19,16 @@
 #ifndef PLUGIN_INTERFACE_H_
 #define PLUGIN_INTERFACE_H_
 
-#include <QTableWidgetItem>
-#include <QSettings>
 
 class PluginProxy;
 class PluginProperty;
 
+/**
+ * The Plugin intenface
+ */
 class PluginInterface
 {
+	
 public:
 	virtual ~PluginInterface() {};
 	
@@ -38,7 +40,8 @@ public:
 	 * If the pluginAlertMsg doesn't passed (default as NULL) the property is
 	 * saved without any consistent check, and allways return TRUE.
 	 */
-	virtual bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL) = 0;
+	virtual bool saveProperty(QString propName, QString propValue,
+			QString *pluginAlertMsg = NULL) = 0;
 	
 	/**
 	 * Get a QSettings* that contains the description of the plugin ini file
@@ -52,9 +55,9 @@ public:
 	virtual QMap<QString, QString> getTemplates() = 0;
 	
 	/**
-	 * This function return a map of properties owned by this plugin
+	 * This function return a list of properties owned by this plugin
 	 */
-	virtual QMap<QString, PluginProperty*> getPluginProperties() = 0;
+	virtual QList<PluginProperty*> getPluginProperties() = 0;
 	
 	/**
 	 * Return my proxy

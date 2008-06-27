@@ -34,6 +34,7 @@ PluginProperty::PluginProperty(QString pluginName, QString defValue, QString des
 	defaultValue = defValue;
 	value = defValue;
 	description = desc;
+	order = 0;
 }
 
 
@@ -47,6 +48,7 @@ PluginProperty::PluginProperty(QString pluginName, QString defValue,
 	defaultValue = defValue;
 	value = initValue;
 	description = desc;
+	order = 0;
 }
 
 /** 

@@ -34,7 +34,7 @@ class PluginTest : public PluginInterface
 {
 	
 private:
-	QMap<QString, PluginProperty*> properties;
+	QList<PluginProperty*> properties;
 	QSettings *mySettings;
 	PluginProxy *myProxy;
 	QString myName;
@@ -49,7 +49,7 @@ public:
 	QSettings* getMySettings() { return mySettings; };
 	QMap<QString, QString> getTemplates();
 	QString getName() { return myName; };
-	QMap<QString, PluginProperty*> getPluginProperties() { return properties; };
+	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	
