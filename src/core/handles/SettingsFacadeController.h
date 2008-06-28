@@ -35,6 +35,10 @@ public:
 	SettingsFacadeController();
 	virtual ~SettingsFacadeController();
 	static SettingsFacadeController* getInstance();
+	
+	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
+	QByteArray restoreWindowGeometry();
+	QByteArray restoreWindowState();
 };
 
 #endif /*SETTINGSFACADECONTROLLER_H_*/

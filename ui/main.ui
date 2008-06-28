@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1026</width>
+    <width>950</width>
     <height>762</height>
    </rect>
   </property>
@@ -19,9 +19,9 @@
    <property name="geometry" >
     <rect>
      <x>268</x>
-     <y>71</y>
-     <width>490</width>
-     <height>449</height>
+     <y>68</y>
+     <width>414</width>
+     <height>448</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" >
@@ -41,8 +41,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>480</width>
-         <height>413</height>
+         <width>404</width>
+         <height>415</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -69,8 +69,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1026</width>
-     <height>32</height>
+     <width>950</width>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile" >
@@ -174,9 +174,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>737</y>
-     <width>1026</width>
-     <height>25</height>
+     <y>740</y>
+     <width>950</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -184,7 +184,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>32</y>
+     <y>29</y>
      <width>228</width>
      <height>39</height>
     </rect>
@@ -210,9 +210,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>71</y>
+     <y>68</y>
      <width>262</width>
-     <height>222</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="floating" >
@@ -234,9 +234,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>23</y>
+      <y>20</y>
       <width>262</width>
-      <height>199</height>
+      <height>201</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -267,10 +267,10 @@
   <widget class="QDockWidget" name="dockProperty" >
    <property name="geometry" >
     <rect>
-     <x>764</x>
-     <y>71</y>
+     <x>688</x>
+     <y>68</y>
      <width>262</width>
-     <height>123</height>
+     <height>125</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -286,9 +286,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>23</y>
+      <y>20</y>
       <width>262</width>
-      <height>100</height>
+      <height>105</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -324,10 +324,10 @@
   <widget class="QDockWidget" name="dockMiniature" >
    <property name="geometry" >
     <rect>
-     <x>764</x>
-     <y>200</y>
+     <x>688</x>
+     <y>199</y>
      <width>262</width>
-     <height>320</height>
+     <height>317</height>
     </rect>
    </property>
    <property name="sizePolicy" >
@@ -352,7 +352,7 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>23</y>
+      <y>20</y>
       <width>262</width>
       <height>297</height>
      </rect>
@@ -453,7 +453,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>299</y>
+     <y>295</y>
      <width>262</width>
      <height>221</height>
     </rect>
@@ -468,9 +468,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>23</y>
+      <y>20</y>
       <width>262</width>
-      <height>198</height>
+      <height>201</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -502,9 +502,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>526</y>
-     <width>1026</width>
-     <height>211</height>
+     <y>522</y>
+     <width>950</width>
+     <height>218</height>
     </rect>
    </property>
    <property name="floating" >
@@ -520,9 +520,9 @@
     <property name="geometry" >
      <rect>
       <x>0</x>
-      <y>23</y>
-      <width>1026</width>
-      <height>188</height>
+      <y>20</y>
+      <width>950</width>
+      <height>198</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -561,8 +561,8 @@
    <property name="geometry" >
     <rect>
      <x>228</x>
-     <y>32</y>
-     <width>798</width>
+     <y>29</y>
+     <width>722</width>
      <height>39</height>
     </rect>
    </property>

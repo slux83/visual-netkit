@@ -18,6 +18,7 @@
 
 #include "MainWindow.h"
 #include "handles/LabHandler.h"
+#include "handles/SettingsHandler.h"
 #include "handles/VmHandler.h"
 #include "GraphicsView.h"
 #include <QHeaderView>
@@ -61,6 +62,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	//connections and scene
 	createConnections();
 	createScene();
+	
+	/* restore window settings */
+	restoreWindow();
 	
 	//status bar show a ready state
 	statusBar()->showMessage(tr("Ready"), 10000);
@@ -616,8 +620,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
 	qDebug() << "Closing VisualNetkit...";
 	
+	/* save the window settings */
+	SettingsHandler::getInstance()->saveWindowSettings(saveState(), saveGeometry());
+	
 	if(!labHandler->isCurrentLab())
 		event->accept();	//close the application
 	
 	labHandler->closeLab();
+}
+
+/**
+ * [PRIVATE]
+ * Restore the window state and geometry
+ */
+void MainWindow::restoreWindow()
+{
+	/* restore the window geometry */
+	QByteArray geometry = SettingsHandler::getInstance()->restoreWindowGeometry();
+	if(!geometry.isEmpty())
+	{
+		restoreGeometry(geometry);
+	}
+
+	/* restore the window state */
+	QByteArray state = SettingsHandler::getInstance()->restoreWindowState();	
+	if(!state.isEmpty())
+	{
+		restoreState(state);
+	}
 }

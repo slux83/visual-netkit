@@ -71,6 +71,7 @@ private:
 	void createScene();
 	void initMiniatureDock();
 	void updateMinuatureDock(int size);
+	void restoreWindow();
 	
 private slots:
 	void zoomLabView(int value);

@@ -32,3 +32,43 @@ SettingsManager::SettingsManager(const QString &fileName, Format format, QObject
 SettingsManager::~SettingsManager()
 {
 }
+
+/**
+ * Save the window state
+ */
+void SettingsManager::saveWindowSettings(const QByteArray &windowState,
+		const QByteArray &windowGeometry)
+{
+	beginGroup("MainWindow");
+	setValue("geometry", windowGeometry);
+	setValue("state", windowState);
+    endGroup();
+}
+
+/**
+ * Restore the window geometry reading the settings
+ */
+QByteArray SettingsManager::restoreWindowGeometry()
+{
+	QByteArray geometry;	//the return value
+	
+	beginGroup("MainWindow");
+	geometry = value("geometry").toByteArray();
+	endGroup();
+	
+	return geometry;
+}
+
+/**
+ * Restore the window state reading the settings
+ */
+QByteArray SettingsManager::restoreWindowState()
+{
+	QByteArray state;	//the return value
+	
+	beginGroup("MainWindow");
+	state = value("state").toByteArray();
+	endGroup();
+	
+	return state;
+}

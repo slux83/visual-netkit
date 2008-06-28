@@ -20,6 +20,7 @@
 #define SETTINGSMANAGER_H_
 
 #include <QSettings>
+#include <QDebug>
 
 /**
  * This is a QSettings class that store application preferences
@@ -31,6 +32,10 @@ public:
 	SettingsManager(const QString &fileName,
 			Format format = NativeFormat, QObject *parent = 0);
 	virtual ~SettingsManager();
+	
+	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
+	QByteArray restoreWindowGeometry();
+	QByteArray restoreWindowState();
 };
 
 #endif /*SETTINGSMANAGER_H_*/
