@@ -35,6 +35,10 @@ public:
 	SettingsHandler();
 	virtual ~SettingsHandler();
 	static SettingsHandler * getInstance();
+	
+	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
+	QByteArray restoreWindowGeometry();
+	QByteArray restoreWindowState();
 };
 
 #endif /*SETTINGSHANDLER_H_*/

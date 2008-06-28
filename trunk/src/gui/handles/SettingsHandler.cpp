@@ -50,3 +50,28 @@ SettingsHandler * SettingsHandler::getInstance()
 
 	return instance;
 }
+
+/**
+ * Foreward the action to the facade controller
+ */
+void SettingsHandler::saveWindowSettings(const QByteArray &windowState,
+		const QByteArray &windowGeometry)
+{
+	settingsController->saveWindowSettings(windowState, windowGeometry);
+}
+
+/**
+ * Foreward the action to the facade controller
+ */
+QByteArray SettingsHandler::restoreWindowGeometry()
+{
+	return settingsController->restoreWindowGeometry();
+}
+
+/**
+ * Foreward the action to the facade controller
+ */
+QByteArray SettingsHandler::restoreWindowState()
+{
+	return settingsController->restoreWindowState();
+}

@@ -41,6 +41,7 @@ SettingsFacadeController::SettingsFacadeController()
  */
 SettingsFacadeController::~SettingsFacadeController()
 {
+	delete settings;
 }
 
 /**
@@ -53,4 +54,29 @@ SettingsFacadeController * SettingsFacadeController::getInstance()
 		instance = new SettingsFacadeController();
 	
 	return instance;
+}
+
+/**
+ * Save the window settings
+ */
+void SettingsFacadeController::saveWindowSettings(const QByteArray &windowState,
+		const QByteArray &windowGeometry)
+{
+	settings->saveWindowSettings(windowState, windowGeometry);
+}
+
+/**
+ * Get the saved window geometry
+ */
+QByteArray SettingsFacadeController::restoreWindowGeometry()
+{
+	return settings->restoreWindowGeometry();
+}
+
+/**
+ * Get the saved window state
+ */
+QByteArray SettingsFacadeController::restoreWindowState()
+{
+	return settings->restoreWindowState();
 }
