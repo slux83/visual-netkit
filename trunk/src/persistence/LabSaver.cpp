@@ -61,6 +61,9 @@ bool LabSaver::saveLab()
 	if (allok && !saveTemplates())			// saves plugin templates
 		allok = false;
 	
+	if(allok)
+		removeUnusedStuff();
+	
 	// remove the lab
 	if(!allok)
 	{
@@ -412,12 +415,13 @@ bool LabSaver::createFolderSystem()
 /**
  * [PRIVATE]
  * Removes passed dir and contained files.
+ * NOTE: this function is copied from www.qtcentre.org/forum
  */
 bool LabSaver::removeDir(const QString d)
 {
 	bool ret = true;
 	QDir dir(d);
-	qWarning() << "Deleting dir " << d << "...";
+
 	if (dir.exists())
 	{
 		const QFileInfoList list = dir.entryInfoList();
@@ -438,6 +442,52 @@ bool LabSaver::removeDir(const QString d)
 		dir.rmdir(d);
 	}
 	return ret;
+}
+
+/**
+ * [PRIVATE]
+ * Remove the dirs and files unused
+ * @return a list of deleted machines/dirs
+ */
+QStringList LabSaver::removeUnusedStuff()
+{
+	QMap<QString, VirtualMachine*> activeMachines =
+		currentLab->getMachines();
+	
+	QStringList removedDirs;
+	
+	/* 
+	 * Now scan the lab root dir and delete unused machines
+	 * (with files that match MACHINE_NAME*)
+	 */
+	QDir labRoot = QDir(curPath);
+	labRoot.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+	
+	//search unused dirs
+	foreach(QString dir, labRoot.entryList())
+	{
+		if(!activeMachines.contains(dir))
+		{
+			/* To delete:
+			 *  - lab-path/machine/				(recoursively)
+			 *  - lab-path/machine.startup		(if exist)
+			 *  - lab-path/machine.shutdown		(if exist)
+			 */
+			
+			removeDir(labRoot.absolutePath().append('/').append(dir));
+			
+			if(QFile::exists(labRoot.absolutePath().append('/').append(dir).append(".startup")))
+				QFile::remove(labRoot.absolutePath().append('/').append(dir).append(".startup"));
+			
+			if(QFile::exists(labRoot.absolutePath().append('/').append(dir).append(".shutdown")))
+				QFile::remove(labRoot.absolutePath().append('/').append(dir).append(".shutdown"));
+				
+			removedDirs << dir;
+		}
+	}
+	
+	return removedDirs;
+	
 }
 
 /**
