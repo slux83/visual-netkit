@@ -160,7 +160,7 @@
     <property name="title" >
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_Visual_Netkit" />
+    <addaction name="actionAboutVisualNetkit" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -640,7 +640,7 @@
     <string>Log Panel</string>
    </property>
   </action>
-  <action name="actionAbout_Visual_Netkit" >
+  <action name="actionAboutVisualNetkit" >
    <property name="text" >
     <string>About Visual Netkit</string>
    </property>

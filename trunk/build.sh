@@ -34,7 +34,22 @@ usage()
 	echo "	-bg		Build all in Debug mode (using GDB)"
 	echo "	-c		Clear plugins and Visual Netkit"
 	echo "	-cb		Clear and Re-Build plugins and Visual Netkit"
+	echo "	-r		Build Visual Netkit for release (Stripped)"
 	echo	
+}
+
+release()
+{
+	compile r
+	strip bin/VisualNetkit
+	strip bin/plugins/*
+	
+	echo
+	echo "######################"
+	echo "# RELEASE BUILD DONE #"
+	echo "######################"
+	echo
+	echo "All stuff (binary, startup script and plugins) is inside $VN_HOME/bin/"
 }
 
 compile()
@@ -77,14 +92,15 @@ compile()
 		echo ">>> DEBUG MODE STARTING ./bin/VisualNetkit <<<"
 		echo
 		$GDB ./bin/VisualNetkit
-	else
+	fi
+	if [ "$1" = "" ]; then
 		echo
 		echo ">>> STARTING ./bin/VisualNetkit <<<"
 		echo
 		cd bin
 		./visualnetkit.sh
 	fi
-	                                 
+	
 }
 
 clean()
@@ -140,6 +156,9 @@ if [ "$#" != "0" ]; then
 		-cb)
 			clean
 			compile
+		;;
+		-r)
+			release
 		;;
 		*)
 			usage
