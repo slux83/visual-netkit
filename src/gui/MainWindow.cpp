@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	saveFileDialog->setAcceptMode(QFileDialog::AcceptSave);
 	saveFileDialog->setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
 	
+	aboutDialog = NULL;
 	
 	//populte the 'View' menu
 	populateViewMenu();
@@ -180,6 +181,10 @@ void MainWindow::createConnections()
 	//connect: history menu' trigger
 	connect(menuHistory, SIGNAL(triggered(QAction*)),
 			this, SLOT(handleHistoryAction(QAction*)));
+	
+	//connect: about action
+	connect(actionAboutVisualNetkit, SIGNAL(triggered()),
+			this, SLOT(showAbout()));
 }
 
 /**
@@ -734,4 +739,16 @@ void MainWindow::handleHistoryAction(QAction* action)
 	{
 		openLabFromHistory(action->data().toString());
 	}
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Show the About dialog
+ */
+void MainWindow::showAbout()
+{
+	if(aboutDialog == NULL)
+		aboutDialog = new AboutDialog();
+	
+	aboutDialog->show();
 }

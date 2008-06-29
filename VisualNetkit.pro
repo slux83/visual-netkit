@@ -4,7 +4,8 @@ DEPENDPATH += . \
     ui
 INCLUDEPATH += . \
     src
-FORMS += ui/openLab.ui \
+FORMS += ui/about.ui \
+    ui/openLab.ui \
     ui/managePlugins.ui \
     ui/addCd.ui \
     ui/addVm.ui \
@@ -24,7 +25,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/core/handles/SettingsFacadeController.h \
+HEADERS = src/gui/AboutDialog.h \
+    src/core/handles/SettingsFacadeController.h \
     src/gui/handles/SettingsHandler.h \
     src/persistence/SettingsManager.h \
     src/gui/SyntaxHighLighter.h \
@@ -66,7 +68,6 @@ HEADERS = src/core/handles/SettingsFacadeController.h \
     src/core/handles/VmFacadeController.h \
     src/gui/undoCommands/UndoCommands.h \
     src/gui/UndoStack.h \
-    src/common/Errors.h \
     src/common/Types.h \
     src/core/handles/LabFacadeController.h \
     src/gui/handles/LabHandler.h \
@@ -82,7 +83,8 @@ HEADERS = src/core/handles/SettingsFacadeController.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/core/handles/SettingsFacadeController.cpp \
+SOURCES = src/gui/AboutDialog.cpp \
+    src/core/handles/SettingsFacadeController.cpp \
     src/gui/handles/SettingsHandler.cpp \
     src/persistence/SettingsManager.cpp \
     src/gui/SyntaxHighLighter.cpp \

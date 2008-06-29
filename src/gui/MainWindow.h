@@ -21,6 +21,7 @@
 
 #include "ui_main.h"
 #include "OpenLabForm.h"
+#include "AboutDialog.h"
 
 class VmHandler;
 class LabHandler;
@@ -65,6 +66,9 @@ private:
 	//The lab scene
 	LabScene *scene;
 	
+	//The about dialog
+	AboutDialog *aboutDialog;
+	
 	void populateViewMenu();
 	void createConnections();
 	void createActionGroups();
@@ -87,6 +91,7 @@ private slots:
 	void fullscreenMode();
 	void rebuildHistory();
 	void handleHistoryAction(QAction* action);
+	void showAbout();
 	
 protected:
 	void closeEvent(QCloseEvent *event);
