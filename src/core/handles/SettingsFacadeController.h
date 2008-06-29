@@ -21,12 +21,18 @@
 
 #include "../../persistence/SettingsManager.h"
 
+#include <QObject>
+
 /**
  * The facade controller to access to settings actions
  */
-class SettingsFacadeController
+class SettingsFacadeController : public QObject
 {
+	Q_OBJECT
 	
+signals:
+	void historyChanged();
+
 private:
 	static SettingsFacadeController *instance;
 	SettingsManager *settings;
@@ -39,6 +45,8 @@ public:
 	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
 	QByteArray restoreWindowGeometry();
 	QByteArray restoreWindowState();
+	QStringList getLabHistory() { return settings->getLabHistory(); };
+	void setLabHistory(const QString &newPath) { settings->setLabHistory(newPath); };
 };
 
 #endif /*SETTINGSFACADECONTROLLER_H_*/

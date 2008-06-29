@@ -18,6 +18,7 @@
 
 #include "OpenLabForm.h"
 #include "handles/LabHandler.h"
+#include "handles/SettingsHandler.h"
 
 /**
  * Constructor
@@ -153,6 +154,9 @@ void OpenLabForm::markLoadedStep(int step, bool result)
 			
 			if(resp == QMessageBox::Ok)
 			{
+				/* save path inside the lab history */
+				SettingsHandler::getInstance()->setLabHistory(labPathLineEdit->text());
+				
 				//when user click "ok" clear lab junk and reset the gui, not the path
 				close();
 				resetGui();

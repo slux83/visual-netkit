@@ -28,7 +28,7 @@ TabWidget::TabWidget(QWidget *parent) : QTabWidget(parent)
 {
 	/* Init the close tab button */
 	closeTabButton = new QToolButton(this);
-	closeTabButton->setIcon(QIcon(":/menu/close_icon"));
+	closeTabButton->setIcon(QIcon(":/menu/tab_close_icon"));
 	closeTabButton->setToolTip(tr("Close the current Tab"));
 	
 	/* Init the tab list bottun */

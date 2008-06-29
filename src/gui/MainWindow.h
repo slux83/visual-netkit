@@ -84,6 +84,8 @@ private slots:
 	void dumpToPNG();
 	void openLab();
 	void fullscreenMode();
+	void rebuildHistory();
+	void handleHistoryAction(QAction* action);
 	
 protected:
 	void closeEvent(QCloseEvent *event);
@@ -93,6 +95,7 @@ public slots:
 	void resizeScene(QAction *action);
 	void forceManageGraphAction() { actionManageGraph->setChecked(true); };
 	void showSaveFileDialog() { saveFileDialog->show(); };
+	void buildLabHistory(const QStringList &history);
 
 };
 

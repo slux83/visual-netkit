@@ -26,10 +26,13 @@ SettingsHandler *SettingsHandler::instance = NULL;
 /**
  * Constructor
  */
-SettingsHandler::SettingsHandler()
+SettingsHandler::SettingsHandler() : QObject()
 {
 	/* get the setting controller */
 	settingsController = SettingsFacadeController::getInstance();
+	
+	// foreward the signal
+	connect(settingsController, SIGNAL(historyChanged()), this, SIGNAL(historyChanged()));
 }
 
 /**

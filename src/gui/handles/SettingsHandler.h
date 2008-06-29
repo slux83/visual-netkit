@@ -24,9 +24,14 @@
 /**
  * The handler for settings operations
  */
-class SettingsHandler
+class SettingsHandler : public QObject
 {
+	
+	Q_OBJECT
 
+signals:
+	void historyChanged();
+	
 private:
 	SettingsFacadeController *settingsController;
 	static SettingsHandler *instance;
@@ -39,6 +44,8 @@ public:
 	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
 	QByteArray restoreWindowGeometry();
 	QByteArray restoreWindowState();
+	QStringList getLabHistory() { return settingsController->getLabHistory(); };
+	void setLabHistory(const QString &newPath) { settingsController->setLabHistory(newPath); };
 };
 
 #endif /*SETTINGSHANDLER_H_*/
