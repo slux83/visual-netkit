@@ -118,3 +118,15 @@ void SettingsManager::setLabHistory(const QString &newPath)
 	
 	emit historyChanged();
 }
+
+/**
+ * Clear the lab opened history
+ */
+void SettingsManager::clearLabHistory()
+{
+	beginGroup("OpenedLabHistory");
+	setValue("history", QStringList());
+	endGroup();
+	
+	emit historyChanged();	//emit history changed signal
+}

@@ -83,6 +83,7 @@ private slots:
 	void dumpToSVG();
 	void dumpToPNG();
 	void openLab();
+	void openLabFromHistory(QString path);
 	void fullscreenMode();
 	void rebuildHistory();
 	void handleHistoryAction(QAction* action);

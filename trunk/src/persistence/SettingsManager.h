@@ -44,6 +44,7 @@ public:
 	QByteArray restoreWindowState();
 	QStringList getLabHistory();
 	void setLabHistory(const QString &newPath);
+	void clearLabHistory();
 };
 
 #endif /*SETTINGSMANAGER_H_*/
