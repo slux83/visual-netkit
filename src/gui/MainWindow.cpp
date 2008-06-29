@@ -614,6 +614,35 @@ void MainWindow::openLab()
 
 /**
  * [PRIVATE-SLOT]
+ * Show the dialog open lab (called by history action)
+ */
+void MainWindow::openLabFromHistory(QString path)
+{
+	if(labHandler->isCurrentLab())
+	{
+		QMessageBox::warning(this, "Visual Netkit - warning",
+				tr("You have to close the active lab before opening a new one!"),
+				QMessageBox::Yes);
+		
+		return;
+	}
+	
+	bool abort = false;
+	labHandler->confirmCloseLab(&abort);
+	
+	// abort operation because the user have choosed "cancel"
+	// (or "no" when asked him "do you want close etc...) 
+	if(abort)
+		return;
+	
+	labHandler->closeLabForced();
+	
+	olf.labPathLineEdit->setText(path);
+	olf.show();
+}
+
+/**
+ * [PRIVATE-SLOT]
  * Set/Unset the window fullscreen mode
  */
 void MainWindow::fullscreenMode()
@@ -698,10 +727,11 @@ void MainWindow::handleHistoryAction(QAction* action)
 	/* Clear menu */
 	if(action->data().toString() == "clear")
 	{
-		qDebug() << "clear";
+		SettingsHandler::getInstance()->clearLabHistory();
+		qDebug() << "Cleared history.";
 	}
 	else
 	{
-		qDebug() << "Open:" << action->data().toString();
+		openLabFromHistory(action->data().toString());
 	}
 }
