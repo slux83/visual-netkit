@@ -39,6 +39,7 @@ private:
 	QString prepareLabConfText();
 	QString strippedName(const QString &fullFileName);
 	bool removeDir(const QString d);
+	QStringList removeUnusedStuff();
 
 public:
 	LabSaver(const QString &path, bool backup = true);
