@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	LabFacadeController::getInstance()->setAppHome(visualNetkitHome);
 	
 	/* Load splashscreen */
-	QPixmap pixmap(":/splashscreens/ss_10");
+	QPixmap pixmap(":/splashscreens/ss");
 	QSplashScreen splash(pixmap);
 	splash.setWindowFlags(Qt::WindowStaysOnTopHint);
 	splash.setWindowFlags(Qt::SplashScreen);

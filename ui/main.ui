@@ -12,6 +12,10 @@
   <property name="windowTitle" >
    <string>Visual Netkit</string>
   </property>
+  <property name="windowIcon" >
+   <iconset resource="../resources/VisualNetkit.qrc" >
+    <normaloff>:/big/visualnetkit</normaloff>:/big/visualnetkit</iconset>
+  </property>
   <property name="dockOptions" >
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::VerticalTabs</set>
   </property>
