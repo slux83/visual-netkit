@@ -77,16 +77,15 @@
     <property name="title" >
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuRecent_Labs" >
+    <widget class="QMenu" name="menuHistory" >
      <property name="title" >
       <string>Recent Labs</string>
      </property>
      <addaction name="separator" />
-     <addaction name="actionClearMenu" />
     </widget>
     <addaction name="actionNewLab" />
     <addaction name="actionOpenLab" />
-    <addaction name="menuRecent_Labs" />
+    <addaction name="menuHistory" />
     <addaction name="separator" />
     <addaction name="actionSave" />
     <addaction name="actionSaveAs" />

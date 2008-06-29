@@ -72,3 +72,49 @@ QByteArray SettingsManager::restoreWindowState()
 	
 	return state;
 }
+
+/**
+ * Get the lab open history
+ * It's a QStringList that contains paths
+ */
+QStringList SettingsManager::getLabHistory()
+{
+	QStringList history;
+	
+	beginGroup("OpenedLabHistory");
+	history = value("history").toStringList();
+	endGroup();
+	
+	return history;
+}
+
+/**
+ * Set a new path to the history list
+ */
+void SettingsManager::setLabHistory(const QString &newPath)
+{
+	QStringList oldHistory = getLabHistory();
+	
+	/* store only unknown paths */
+	if(oldHistory.contains(newPath))
+		return;
+	
+	QStringList newHistory;
+	
+	newHistory.prepend(newPath);	//the first of the list
+	
+	/* Now get the 0 to N-2 old paths */
+	if(oldHistory.size() == LAB_OPENED_HISTORY_SIZE)
+		for(int i=0; i<LAB_OPENED_HISTORY_SIZE-1; i++)
+			newHistory.append(oldHistory.at(i));
+	else
+		newHistory << oldHistory;
+	
+	beginGroup("OpenedLabHistory");
+	setValue("history", newHistory);
+	endGroup();
+	
+	sync();
+	
+	emit historyChanged();
+}

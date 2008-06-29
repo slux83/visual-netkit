@@ -20,13 +20,19 @@
 #define SETTINGSMANAGER_H_
 
 #include <QSettings>
+#include <QStringList>
 #include <QDebug>
+#include "../common/CommonConfigs.h"
 
 /**
  * This is a QSettings class that store application preferences
  */
 class SettingsManager : public QSettings
 {
+	Q_OBJECT
+
+signals:
+	void historyChanged();
 	
 public:
 	SettingsManager(const QString &fileName,
@@ -36,6 +42,8 @@ public:
 	void saveWindowSettings(const QByteArray &windowState, const QByteArray &windowGeometry);
 	QByteArray restoreWindowGeometry();
 	QByteArray restoreWindowState();
+	QStringList getLabHistory();
+	void setLabHistory(const QString &newPath);
 };
 
 #endif /*SETTINGSMANAGER_H_*/

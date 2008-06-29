@@ -66,6 +66,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	/* restore window settings */
 	restoreWindow();
 	
+	/* build the menu' lab history */
+	buildLabHistory(SettingsHandler::getInstance()->getLabHistory());
+	
 	//status bar show a ready state
 	statusBar()->showMessage(tr("Ready"), 10000);
 
@@ -138,6 +141,7 @@ void MainWindow::createConnections()
 	//connect: undo/redo actions with QUndoStack state
 	connect(labHandler->getUndoStack(), SIGNAL(canRedoChanged(bool)),
 			actionRedo, SLOT(setEnabled(bool)));
+
 	connect(labHandler->getUndoStack(), SIGNAL(canUndoChanged(bool)),
 			actionUndo, SLOT(setEnabled(bool)));
 	
@@ -168,6 +172,14 @@ void MainWindow::createConnections()
 	
 	//connect: action full screen mode
 	connect(actionFullScreenMode, SIGNAL(triggered()), this, SLOT(fullscreenMode()));
+	
+	//connect: build history
+	connect(SettingsHandler::getInstance(), SIGNAL(historyChanged()),
+				this, SLOT(rebuildHistory()));
+	
+	//connect: history menu' trigger
+	connect(menuHistory, SIGNAL(triggered(QAction*)),
+			this, SLOT(handleHistoryAction(QAction*)));
 }
 
 /**
@@ -647,5 +659,49 @@ void MainWindow::restoreWindow()
 	if(!state.isEmpty())
 	{
 		restoreState(state);
+	}
+}
+
+/**
+ * [SLOT]
+ * Build the lab history menu
+ */
+void MainWindow::buildLabHistory(const QStringList &history)
+{
+	/* Restore menu */
+	menuHistory->clear();
+	
+	//rebuild menu
+	foreach(QString path, history)
+		menuHistory->addAction(QIcon(":/small/folder_vm"), path)->setData(path);
+	
+	/* add separator and clear menu' action */
+	menuHistory->addSeparator();
+	menuHistory->addAction(QIcon(":/menu/trash"), tr("Clear Menu"))->setData("clear");
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Rebuild the lab history
+ */
+void MainWindow::rebuildHistory()
+{
+	buildLabHistory(SettingsHandler::getInstance()->getLabHistory());
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * handle the history trigger signal
+ */
+void MainWindow::handleHistoryAction(QAction* action)
+{
+	/* Clear menu */
+	if(action->data().toString() == "clear")
+	{
+		qDebug() << "clear";
+	}
+	else
+	{
+		qDebug() << "Open:" << action->data().toString();
 	}
 }

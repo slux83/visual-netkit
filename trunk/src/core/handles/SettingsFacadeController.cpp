@@ -27,13 +27,16 @@ SettingsFacadeController* SettingsFacadeController::instance = NULL;
 /**
  * Constructor
  */
-SettingsFacadeController::SettingsFacadeController()
+SettingsFacadeController::SettingsFacadeController() : QObject()
 {
 	QString iniPath =
 		LabFacadeController::getInstance()->getAppHome().absolutePath() + "/visualnetkit.ini";
 	
 	// init the settings
 	settings = new SettingsManager(iniPath);
+	
+	// foreward the signal
+	connect(settings, SIGNAL(historyChanged()), this, SIGNAL(historyChanged()));
 }
 
 /**

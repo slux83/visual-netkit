@@ -50,5 +50,8 @@
 /* File editor font */
 #define FILE_EDITOR_FONT QFont("Courier", 9, QFont::Normal)
 
+/* Lab opened history size */
+#define LAB_OPENED_HISTORY_SIZE 5
+
 
 #endif /*COMMONCONFIGS_H_*/
