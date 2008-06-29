@@ -42,8 +42,7 @@
         <file alias="visualnetkit" >big_icons/visualnetkit.png</file>
     </qresource>
     <qresource prefix="/splashscreens" >
-        <file alias="ss_00" >splash_screens/ss_00.png</file>
-        <file alias="ss_10" >splash_screens/ss_10.png</file>
+        <file alias="ss" >splash_screens/ss.png</file>
     </qresource>
     <qresource prefix="/svg" >
         <file alias="cs_off" >svg/collision_domain_off.svg</file>
