@@ -384,23 +384,26 @@ bool LabOpener::fetchHis()
 			
 			bool linkState = true;
 			QFile startupFile(labPath + "/" + vm->getName() + ".startup");
-			QRegExp linkStatusRegExp(QRegExp::escape(QString("/sbin/ifconfig")) + ".+"
-					+ QRegExp::escape(QString("eth").append(caps[2]))
-					+ ".+(up|down)$");
-			
+			QRegExp linkStatusRegExp("\\b(up|down)\\b", Qt::CaseSensitive, QRegExp::RegExp2);
+						
 			if (valid && startupFile.open(QIODevice::ReadOnly | QIODevice::Text))
 			{
 				QString startupContent = startupFile.readAll(); 
 				
 				foreach(QString line, startupContent.split("\n", QString::SkipEmptyParts))
 				{
+					// check only my eth line
+					if(!line.contains("eth" + caps[2]))
+						continue;
+					
 					linkStatusRegExp.indexIn(line);
+
 					//get the status
 					QString capState = linkStatusRegExp.capturedTexts()[1];
 					if(capState != "")
 					{
 						linkState = (capState == "up");
-						break; //stop status search to the first
+						break; //stop to the first
 					}
 				}
 			}
