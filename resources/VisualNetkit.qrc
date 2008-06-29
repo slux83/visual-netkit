@@ -38,6 +38,9 @@
         <file alias="folder_vm" >small_icons/folder_vm.png</file>
         <file alias="plugin" >small_icons/plugin.png</file>
     </qresource>
+    <qresource prefix="/big" >
+        <file alias="visualnetkit" >big_icons/visualnetkit.png</file>
+    </qresource>
     <qresource prefix="/splashscreens" >
         <file alias="ss_00" >splash_screens/ss_00.png</file>
         <file alias="ss_10" >splash_screens/ss_10.png</file>
