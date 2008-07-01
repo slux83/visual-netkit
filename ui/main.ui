@@ -25,7 +25,7 @@
      <x>268</x>
      <y>68</y>
      <width>414</width>
-     <height>448</height>
+     <height>449</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" >
@@ -46,7 +46,7 @@
          <x>0</x>
          <y>0</y>
          <width>404</width>
-         <height>415</height>
+         <height>416</height>
         </rect>
        </property>
        <attribute name="title" >
@@ -215,7 +215,7 @@
      <x>0</x>
      <y>68</y>
      <width>262</width>
-     <height>221</height>
+     <height>222</height>
     </rect>
    </property>
    <property name="floating" >
@@ -239,7 +239,7 @@
       <x>0</x>
       <y>20</y>
       <width>262</width>
-      <height>201</height>
+      <height>202</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -273,7 +273,7 @@
      <x>688</x>
      <y>68</y>
      <width>262</width>
-     <height>125</height>
+     <height>126</height>
     </rect>
    </property>
    <property name="allowedAreas" >
@@ -291,7 +291,7 @@
       <x>0</x>
       <y>20</y>
       <width>262</width>
-      <height>105</height>
+      <height>106</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
@@ -328,7 +328,7 @@
    <property name="geometry" >
     <rect>
      <x>688</x>
-     <y>199</y>
+     <y>200</y>
      <width>262</width>
      <height>317</height>
     </rect>
@@ -449,6 +449,19 @@
        </item>
       </layout>
      </item>
+     <item>
+      <spacer name="verticalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -456,7 +469,7 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>295</y>
+     <y>296</y>
      <width>262</width>
      <height>221</height>
     </rect>
@@ -505,9 +518,9 @@
    <property name="geometry" >
     <rect>
      <x>0</x>
-     <y>522</y>
+     <y>523</y>
      <width>950</width>
-     <height>218</height>
+     <height>217</height>
     </rect>
    </property>
    <property name="floating" >
@@ -525,7 +538,7 @@
       <x>0</x>
       <y>20</y>
       <width>950</width>
-      <height>198</height>
+      <height>197</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" >
