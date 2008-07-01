@@ -492,7 +492,7 @@ bool LabHandler::confirmCloseLab(bool *abort)
 		
 		int resp = QMessageBox::question(mainWindow,
 				"Visual Netkit - Question",
-				tr("The lab is changed. Do you want save it?"),
+				tr("The lab is changed or not saved.\nDo you want save it?"),
 				QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
 		
 		if(resp == QMessageBox::Yes)

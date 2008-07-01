@@ -672,7 +672,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	if(!labHandler->isCurrentLab())
 		event->accept();	//close the application
 	
-	labHandler->closeLab();
+	bool abort = false;
+	labHandler->confirmCloseLab(&abort);
+	
+	if(abort)
+		event->ignore();
+	else
+		labHandler->closeLabForced();
 }
 
 /**
