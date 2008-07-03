@@ -168,7 +168,7 @@ void LinkItem::initContextMenu()
 	contextMenu.addAction(managePluginsAction);
 	
 	//disabled because not finished
-	managePluginsAction->setDisabled(true);
+	managePluginsAction->setVisible(false);
 	
 	/* Connects */
 	connect(deleteAction, SIGNAL(triggered()),

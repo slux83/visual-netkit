@@ -107,7 +107,7 @@ void CollisionDomainItem::initContextMenu()
 				this, SLOT(managePluginsActionCalled()));
 	
 	//disabled because not finished
-	managePluginsAction->setDisabled(true);
+	managePluginsAction->setVisible(false);
 }
 
 /**
