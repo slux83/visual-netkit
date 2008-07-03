@@ -1,4 +1,5 @@
 #summary (Italian) Come risolvo questo problema?
+#labels Deprecated
 
 ===Domande, difficoltà, punti critici, dilemmi...===
 
