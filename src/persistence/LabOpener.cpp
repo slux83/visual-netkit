@@ -91,15 +91,15 @@ bool LabOpener::validateLab()
 	if(!QFile::exists(labPath + "/lab.conf"))
 	{
 		valid = false;
-		qWarning() << "LabOpener::validateLab()" << "lab.conf don't exist";
-		errorString = "lab.conf don't extst.";
+		qWarning() << "LabOpener::validateLab()" << "lab.conf doesn't exist";
+		errorString = "lab.conf doesn't exist.";
 	}
 	
 	if(valid && !QFile::exists(labPath + "/lab.xml"))
 	{
 		valid = false;
-		qWarning() << "LabOpener::validateLab()" << "lab.xml don't exist";
-		errorString = "lab.xml don't extst.";
+		qWarning() << "LabOpener::validateLab()" << "lab.xml doesn't exist";
+		errorString = "lab.xml doesn't exist.";
 	}
 	
 	/* Get the content of lab.conf */
