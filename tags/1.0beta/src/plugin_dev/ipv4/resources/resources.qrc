@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/" >
+        <file alias="ipv4_basic_tpl" >basic.tpl</file>
+        <file alias="iniipv4" >plugin.ini</file>
+    </qresource>
+</RCC>
