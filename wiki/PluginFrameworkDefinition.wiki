@@ -1,5 +1,5 @@
 #summary Cosa un plugin puo' richiedere/offrire
-#labels Featured,Phase-Requirements,Phase-Design
+#labels Featured,Phase-Requirements,Phase-Design,Deprecated
 
 = Plugin framework definition =
 
