@@ -1,5 +1,5 @@
 #summary UML Class Diagrams
-#labels UML,DCD
+#labels UML,DCD,Deprecated
 
 == UML Class Diagrams for Visual Netkit project ==
 ----
