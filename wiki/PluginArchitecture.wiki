@@ -1,0 +1,10 @@
+#summary The plugin architecture and how to make a plugin for VisualNetkit
+
+NOT FINISHED!
+
+=UML class diagram=
+[http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta.jpg http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta-thumb.jpg]
+
+As you can see, all wheel around the `PluginRegistry` _Singleton_ class. This is the controller of mappings between BaseElement<-->[Plugin-1, ... ,Plugin-N] where BaseElement is a Virtual machine, Collision domain or a link.
+
+The Registry offer a directory service to get and init a new plugins passing the plugin name. In this case, the loader fartory class initialize a new instance of the selected plugins returning a Proxy.
