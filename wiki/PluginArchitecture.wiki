@@ -1,10 +1,12 @@
 #summary The plugin architecture and how to make a plugin for VisualNetkit
-
-NOT FINISHED!
+#labels Featured,Phase-Design,Phase-Implementation
 
 =UML class diagram=
-[http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta.jpg http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta-thumb.jpg]
+[http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta.jpg]
 
-As you can see, all wheel around the `PluginRegistry` _Singleton_ class. This is the controller of mappings between BaseElement<-->[Plugin-1, ... ,Plugin-N] where BaseElement is a Virtual machine, Collision domain or a link.
+As you can see, all wheel around the `PluginRegistry` _Singleton_ class.
+This is the controller of mappings between BaseElement and the plugins attached, where BaseElement is a Virtual machine, Collision domain or a link.
 
-The Registry offer a directory service to get and init a new plugins passing the plugin name. In this case, the loader fartory class initialize a new instance of the selected plugins returning a Proxy.
+The Registry offer a directory service to get and init a new plugin passing its name. In this case, the loader fartory class initialize a new instance of the selected plugins returning its Proxy.
+
+The only possible way that plugin have to comunicate with the system is through the proxy, because it is coupled with mappings and other controllers.
