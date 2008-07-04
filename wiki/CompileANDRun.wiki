@@ -1,5 +1,5 @@
 #summary How to compile and run VisualNetkit
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 =HOW TO COMPILE=
 
