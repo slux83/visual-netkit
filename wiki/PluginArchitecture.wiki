@@ -10,3 +10,7 @@ This is the controller of mappings between BaseElement and the plugins attached,
 The Registry offer a directory service to get and init a new plugin passing its name. In this case, the loader fartory class initialize a new instance of the selected plugins returning its Proxy.
 
 The only possible way that plugin have to comunicate with the system is through the proxy, because it is coupled with mappings and other controllers.
+
+
+=Making a simple plugin for a VirtualMachine element=
+TODO
