@@ -1,4 +1,5 @@
 #summary (Italian) Casi d'uso
+#labels Deprecated
 
 = Introduzione =
 
