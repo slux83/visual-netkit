@@ -6,7 +6,8 @@ environment. Support for other environments (e.g., BSD, potentially Windows) is
 not far from being achieved, but not currently provided. Remember that NetKit actually works only on *GNU/Linux*
 
 The only requirement is to have a version of the Qt development files that is
-at least as recent as _4.4_.
+at least as recent as _4.4_. 
 
-Debian distributions provide the required files and
-utilities inside the `libqt4-dev` package.
+----
+
+Please, visit http://www.trolltech.com to obtain the last version of Qt.
