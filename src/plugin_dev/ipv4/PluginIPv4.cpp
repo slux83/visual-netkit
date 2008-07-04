@@ -51,7 +51,7 @@ PluginIPv4::~PluginIPv4()
 
 /**
  * [PRIVATE]
- * Get the property by name (or return null
+ * Get the property by name (or return null)
  */
 PluginProperty* PluginIPv4::getPropertyByName(QString propName)
 {
