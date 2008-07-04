@@ -4,9 +4,8 @@
 
 Descrizione dei casi d'uso in modo strutturato.
 
-
-
 ----
+
 = UC-Crea lab `[DONE: 100%]` =
 
 *Attore:* utente finale
@@ -44,7 +43,7 @@ Descrizione dei casi d'uso in modo strutturato.
 *Scenario Principale di Successo:* l'utente vuol modificare alcune proprietà del lab (quali versione, data, descrizione, etc...). L'utente seleziona l'elemento "root" presente all'interno del Tree della dock Laboratory e il sistema dopo la selezione carica nella dock Property editor tutte le varie coppie (chiave, valore).
 L'utente accede (doppio click) ad un valore desiderato e lo modifica. Una volta modificato il campo, il sistema provvede ad effettuare la modifica per il campo scelto.
 
-----
+
 = UC-Crea VM `[DONE: 100%]` =
 
 *Attore:* utente finale
@@ -63,20 +62,38 @@ La form in particolare mostra campi per l'inserimento di dati quali: nome della 
 Al momento di creazione l'utente puo' decidere se inizializzare manualmente le varie proprieta' offerte dai plugins attivati, oppure mantenere i valori di default.
 
 
-= UC-Modifica proprieta' di una VM `[DONE: 100%]` =
+= UC-Crea Collision Domain `[DONE: 100%]` =
 
 *Attore:* utente finale
 
 *Contesto:* applicazione principale
 
 
-*Pre-condizioni:* esiste una VM in memoria
+*Pre-condizioni:* esiste un lab in memoria ed è il lab corrente
 
 
-*Post-condizioni:* una proprieta' della VM  prescelta (o di un suo plugin) è stata cambiata
+*Post-condizioni:* è stato creato uno nuovo collision domain (comprensivo di tutti i plugins scelti) ed è stato associato al lab corrente
 
 
-*Scenario Principale di Successo:* l'utente seleziona una delle vm presenti nella dock della vista ad albero della scena, oppure doppio click su una macchina posta sulla scena. Il sistema provvede a mostrare tutte li proprieta' della macchina all'interno della dock "property editor" seguite dalle proprieta' offerte da eventuali plugins usati da quella macchina virtuale. L'utente tramite quest'ultima puo' modificare le varie proprieta' e il sistema provvede ad aggiornare i dati previa validazione.
+*Scenario Principale di Successo:* L'utente seleziona dal menu'/toolbar l'azione di "add collision domain" che risulta mutuamente esclusiva rispetto alle altre azioni che governano la scena. L'utente clicca con il mouse su un'area della scena e il sistema mostra una form per l'acquisizione dei dati riguardanti il CD.
+La form in particolare mostra campi per l'inserimento di dati quali: nome del collision domain e eventuali plugins che si vogliono utilizzare. L'utente clicca su OK, e il sistema crea tutte le varie instanze degli oggetti, i vari mappings e mostra sulla scena il collision domain etichettato dal suo nome, ed eventuali etichette offerte dai plugins prescelti.
+Al momento di creazione l'utente puo' decidere se inizializzare manualmente le varie proprieta' offerte dai plugins attivati, oppure mantenere i valori di default.
+
+
+= UC-Modifica proprieta' di un elemento `[DONE: 100%]` =
+
+*Attore:* utente finale
+
+*Contesto:* applicazione principale
+
+
+*Pre-condizioni:* esiste un elemento in memoria
+
+
+*Post-condizioni:* una proprieta' dell'elemento prescelto (o di un suo plugin) è stata cambiata
+
+
+*Scenario Principale di Successo:* l'utente seleziona uno degli elementi base presenti nella dock della vista ad albero della scena, oppure doppio click sulla scena. Il sistema provvede a mostrare tutte li proprieta' per quell'elemento selezionato all'interno della dock "property editor" seguite dalle proprieta' offerte da eventuali plugins usati. L'utente tramite quest'ultima puo' modificare le varie proprieta' e il sistema provvede ad aggiornare i dati previa validazione.
 La validazione offerta dai plugins, non e' restrittiva; l'utente puo' sempre settare un valore di una proprieta' anche se questa risulta sintatticamente errata.
 
 
