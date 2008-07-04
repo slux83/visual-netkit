@@ -71,11 +71,21 @@ author="author1, author2, author3"
 [properties]
 propName1/p_default_value=DefaultValue1
 propName1/p_description="Property Description1"
+propName1/p_init_order=a
 
 propName2/p_default_value=DefaultValue2
 propName2/p_description="Property Description2"
+propName2/p_init_order=c
 
 propName3/p_default_value=DefaultValue3
 propName3/p_description="Property Description3"
+propName3/p_init_order=b
 }}}
 *NOTE:* se il valore di una proprieta' richiede piu' parole e caratteri separati da uno spazio (vedi dependencies), ricordarsi di avvolgere il tutto con un doppio apice.
+
+Ogni proprieta' puo' avere un p_init_order che rappresenta un carattere (ordinamento alfabetico) che descrive la posizione della property al momento di inizializzazione/presentazione della lista di properties per il plugins.
+
+Nell'esempio le properties verrebbero presentate nel seguente ordine: 
+ # propName1
+ # propName3
+ # propName2
