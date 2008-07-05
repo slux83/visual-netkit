@@ -102,6 +102,9 @@ typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);
 
 
+
+
+
 #endif /*PLUGIN_INTERFACE_H_*/
 }}}
 
@@ -177,11 +180,11 @@ dependencies=""
 author="Alessio Di Fazio"
 
 [properties]
-"use PS1"/p_default_value=true
-"use PS1"/p_description="Set true if you want add a cool and coloured Bash promt inside the root .bashrc file, false otherwise"
+use PS1/p_default_value=true
+use PS1/p_description="Set true if you want add a cool and coloured Bash promt inside the root .bashrc file, false otherwise"
 
-"use aliases"/p_default_value=true
-"use aliases"/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
+use aliases/p_default_value=true
+use aliases/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
 }}}
 
 ==The templates==
@@ -224,4 +227,14 @@ export PS1='\n\[\033[1;30m\][\[\033[0;33m\]\D{%d/%m/%Y %T}\[\033[1;30m\]]\n\[\03
 These two last templates is appended to the main .bashrc file if the properties are setted to "true".
 
 ==Implementing the VisualNetkit plugin==
+Sources:
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/bashrc.pro bashrc/bashrc.pro]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/PluginBashRc.h bashrc/PluginBashRc.h]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/PluginBashRc.cpp bashrc/PluginBashRc.cpp]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/resources.qrc bashrc/resources/resources.qrc]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/plugin.ini bashrc/resources/plugin.ini]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/bashrc bashrc/resources/bashrc]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/ps1 bashrc/resources/ps1]
+ * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/aliases bashrc/resources/aliases]
+
 TODO
