@@ -226,7 +226,7 @@ export PS1='\n\[\033[1;30m\][\[\033[0;33m\]\D{%d/%m/%Y %T}\[\033[1;30m\]]\n\[\03
 
 These two last templates is appended to the main .bashrc file if the properties are setted to "true".
 
-==Implementing the VisualNetkit plugin==
+==Implementing a plugin for VisualNetkit==
 Sources:
  * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/bashrc.pro bashrc/bashrc.pro]
  * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/PluginBashRc.h bashrc/PluginBashRc.h]
