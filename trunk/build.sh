@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 # VisualNetkit Builder script
 # Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
@@ -18,7 +18,7 @@
 
 QMAKE="qmake"
 GDB="gdb"
-VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" "src/plugin_dev/mac")
+VN_PLUGINS=( "src/plugin_dev/test" "src/plugin_dev/ipv4" "src/plugin_dev/mac" "src/plugin_dev/bashrc"  )
 VN_HOME=`pwd`
 MAKE="make -j2"
 

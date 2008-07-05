@@ -22,7 +22,6 @@
 
 #include "PluginTest.h"
 
-
 /** 
  * Constructor 
  */
@@ -34,6 +33,7 @@ PluginTest::PluginTest() : PluginInterface()
 	mySettings->beginGroup("global");
 	myName = mySettings->value("name").toString();
 	mySettings->endGroup();
+	
 	
 	myProxy = NULL;
 	fetchProperties();
@@ -128,9 +128,6 @@ bool PluginTest::fetchProperties()
  */
 bool PluginTest::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
 {
-	qDebug() << "Plugin test" << "propName:" << propName << "propValue:" << propValue
-			<< "alert:" << pluginAlertMsg;
-	
 	myProxy->changeGraphicsLabel(propValue);
 	
 	return true;

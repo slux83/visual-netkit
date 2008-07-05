@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/" >
+        <file alias="bash_main" >bashrc</file>
+        <file alias="bash_aliases" >aliases</file>
+        <file alias="bash_ps1" >ps1</file>
+        <file alias="ini_bashrc" >plugin.ini</file>
+    </qresource>
+</RCC>
