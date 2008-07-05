@@ -184,4 +184,39 @@ author="Alessio Di Fazio"
 "use aliases"/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
 }}}
 
-TODO...
+==The templates==
+Inside our plugin we have tree templates, used to build the .bashrc final file!
+===.bashrc - main===
+{{{
+#
+# .bashrc file created by VisualNetkit BashRC plugin
+#
+
+umask 022
+export TERM=xterm
+
+# Bash completion
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+}}}
+
+===.bashrc - aliases part===
+{{{
+# Aliases
+alias ls='ls --color'
+alias grep='grep --color'
+alias xorpsh='su xorp -p -c xorpsh'
+alias ll='ls -lih --color'
+alias la='ls -alh --color'
+alias l='ls -ah --color'
+alias ls='ls -h --color'
+alias cd..='cd ..'
+alias nano='nano -i -m -w -B -F -L'
+}}}
+
+===.bashrc - promt part===
+{{{
+# Bash promt
+export PS1='\n\[\033[1;30m\][\[\033[0;33m\]\D{%d/%m/%Y %T}\[\033[1;30m\]]\n\[\033[31;04m\]\u\[\033[37;00m\]@\[\033[36;01m\]\h\[\033[37;00m\][\w]\n~> '
+}}}
