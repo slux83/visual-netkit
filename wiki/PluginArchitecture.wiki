@@ -185,7 +185,7 @@ author="Alessio Di Fazio"
 }}}
 
 ==The templates==
-Inside our plugin we have tree templates, used to build the .bashrc final file!
+Inside our plugin we have tree templates used to build the .bashrc final file!
 ===.bashrc - main===
 {{{
 #
@@ -220,3 +220,7 @@ alias nano='nano -i -m -w -B -F -L'
 # Bash promt
 export PS1='\n\[\033[1;30m\][\[\033[0;33m\]\D{%d/%m/%Y %T}\[\033[1;30m\]]\n\[\033[31;04m\]\u\[\033[37;00m\]@\[\033[36;01m\]\h\[\033[37;00m\][\w]\n~> '
 }}}
+
+These two last templates is appended to the main .bashrc file if the properties are setted to "true".
+
+==Implementing the VisualNetkit plugin==
