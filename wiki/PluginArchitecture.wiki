@@ -188,7 +188,7 @@ use aliases/p_description="Set true if you want add some useful aliases inside t
 }}}
 
 ==The templates==
-Inside our plugin we have tree templates used to build the .bashrc final file!
+Inside our plugin we have three templates used to build the .bashrc final file!
 ===.bashrc - main===
 {{{
 #
