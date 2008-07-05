@@ -102,7 +102,6 @@ typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);
 
 
-
 #endif /*PLUGIN_INTERFACE_H_*/
 }}}
 
@@ -125,5 +124,62 @@ extern "C" void destroyPlugin(PluginInterface* p)
 }
 }}}
 
+=A sample of plugin.ini=
+{{{
+[global]
+name=PlugiName
+type=vm|cd|link
+description="a long Plugin destription
+that take more then a single line!"
+version=1.0
+dependencies="plugin1 plugin2 plugin3"
+author="author1, author2, author3"
+
+[properties]
+propName1/p_default_value=DefaultValue1
+propName1/p_description="Property Description1"
+propName1/p_init_order=1
+
+propName2/p_default_value=DefaultValue2
+propName2/p_description="Property Description2"
+propName2/p_init_order=3
+
+propName3/p_default_value=DefaultValue3
+propName3/p_description="Property Description3"
+propName3/p_init_order=2
+}}}
+
+Each property can have a `p_init_order` that represent the order integer for property position in presentation and init time.
+
+In the our fac-simile the properties will be presented in this order:
+
+ # propName1
+ # propName3
+ # propName2 
+
 =Making a simple plugin for a VirtualMachine element=
-TODO
+In this section we try to make a Plugin for a Virtual Machine. The plugin is very simple. It's just export the PS1 environment variable and some aliases.
+
+Our plugin will have only two properties that can be two values ("true" or "false"):
+ * `set PS1`
+ * `set aliases`
+
+The plugin name is *BashRC* because the plugin offer only two templates; one for PS1 and one for aliases.
+
+==The plugin.ini==
+{{{
+[global]
+name=BashRG
+type=vm
+description="This plugin set PS1 env variable and/or some aliases in /root/.bashrc"
+version=1.0
+dependencies=""
+author="Alessio Di Fazio"
+
+[properties]
+"use PS1"/p_default_value=true
+"use PS1"/p_description="Set true if you want add a cool and coloured Bash promt inside the root .bashrc file, false otherwise"
+
+"use aliases"/p_default_value=ture
+"use aliases"/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
+}}}
