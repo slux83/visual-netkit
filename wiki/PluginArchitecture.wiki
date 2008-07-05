@@ -1,4 +1,4 @@
-#summary The plugin architecture and how to make a plugin for VisualNetkit
+#summary The plugin architecture of VisualNetkit
 #labels Featured,Phase-Design,Phase-Implementation
 
 =UML class diagram=
@@ -101,10 +101,6 @@ public:
 typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);
 
-
-
-
-
 #endif /*PLUGIN_INTERFACE_H_*/
 }}}
 
@@ -159,82 +155,3 @@ In the our fac-simile the properties will be presented in this order:
  # propName1
  # propName3
  # propName2 
-
-=Making a simple plugin for a VirtualMachine element=
-In this section we try to make a Plugin for a Virtual Machine. The plugin is very simple. It's just export the PS1 environment variable and some aliases.
-
-Our plugin will have only two properties that can be two values ("true" or "false"):
- * `set PS1`
- * `set aliases`
-
-The plugin name is *BashRC* because the plugin offer only two templates; one for PS1 and one for aliases.
-
-==The plugin.ini==
-{{{
-[global]
-name=BashRG
-type=vm
-description="This plugin set PS1 env variable and/or some aliases in /root/.bashrc"
-version=1.0
-dependencies=""
-author="Alessio Di Fazio"
-
-[properties]
-use PS1/p_default_value=true
-use PS1/p_description="Set true if you want add a cool and coloured Bash promt inside the root .bashrc file, false otherwise"
-
-use aliases/p_default_value=true
-use aliases/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
-}}}
-
-==The templates==
-Inside our plugin we have three templates used to build the .bashrc final file!
-===.bashrc - main===
-{{{
-#
-# .bashrc file created by VisualNetkit BashRC plugin
-#
-
-umask 022
-export TERM=xterm
-
-# Bash completion
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
-}}}
-
-===.bashrc - aliases part===
-{{{
-# Aliases
-alias ls='ls --color'
-alias grep='grep --color'
-alias xorpsh='su xorp -p -c xorpsh'
-alias ll='ls -lih --color'
-alias la='ls -alh --color'
-alias l='ls -ah --color'
-alias ls='ls -h --color'
-alias cd..='cd ..'
-alias nano='nano -i -m -w -B -F -L'
-}}}
-
-===.bashrc - promt part===
-{{{
-# Bash promt
-export PS1='\n\[\033[1;30m\][\[\033[0;33m\]\D{%d/%m/%Y %T}\[\033[1;30m\]]\n\[\033[31;04m\]\u\[\033[37;00m\]@\[\033[36;01m\]\h\[\033[37;00m\][\w]\n~> '
-}}}
-
-These two last templates is appended to the main .bashrc file if the properties are setted to "true".
-
-==Implementing a plugin for VisualNetkit==
-Sources:
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/bashrc.pro bashrc/bashrc.pro]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/PluginBashRc.h bashrc/PluginBashRc.h]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/PluginBashRc.cpp bashrc/PluginBashRc.cpp]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/resources.qrc bashrc/resources/resources.qrc]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/plugin.ini bashrc/resources/plugin.ini]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/bashrc bashrc/resources/bashrc]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/ps1 bashrc/resources/ps1]
- * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/aliases bashrc/resources/aliases]
-
-TODO
