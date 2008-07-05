@@ -180,6 +180,8 @@ author="Alessio Di Fazio"
 "use PS1"/p_default_value=true
 "use PS1"/p_description="Set true if you want add a cool and coloured Bash promt inside the root .bashrc file, false otherwise"
 
-"use aliases"/p_default_value=ture
+"use aliases"/p_default_value=true
 "use aliases"/p_description="Set true if you want add some useful aliases inside the root .bashrc file, false otherwise"
 }}}
+
+TODO...
