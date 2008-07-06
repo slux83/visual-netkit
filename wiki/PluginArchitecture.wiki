@@ -160,5 +160,5 @@ In our fac-simile the properties will be presented in this order:
 The only way that the plugin can converse with the system, is through by its *Plugin Proxy*.
 
 The plugin can ask:
- * `QObject* getBaseElement()` Return a QObject* that is the base element owned by the plugin (can be `NULL`)
- * `void changeGraphicsLabel(QString label)` The plugin can change its graphics label on the scene calling this function.
+ * `QObject* getBaseElement()` Return a pointer to `QObject` that is the base element owned by the plugin. You need to cast this object. (can return `NULL`).
+ * `void changeGraphicsLabel(QString label)` The plugin can change its graphics label on the scene calling this function. Normally the label is changed when a property change, and at ~~load~~ time, when plugin `init()` is called and/or when `getDefaultGraphisLabel()` at ~~init~~ time.
