@@ -126,3 +126,20 @@ Our plugin must extend the PluginInterface.h (see PluginArchitecture to obtain m
 {{{
 class PluginBashRc : public PluginInterface
 }}}
+
+The private stuff of our plugin class is showed:
+{{{
+private:
+        QMap<QString, PluginProperty*> properties;
+        QSettings *mySettings;
+        PluginProxy *myProxy;
+        QString myName;
+
+        void fetchProperties();
+        QString getTemplateLocation();
+}}}
+We use a `QMap` for store properties, a `QSetting*` to open and parse authomatically the `plugin.ini` file, the `PluginProxy*` required by interface, a `QString` that represent the plugin name readed inside the `.ini` file and two private functions.
+
+The first is called by the constructor to fill the properties `QMap` reading these from the setting class.
+
+The second is just for convenient; it return a `QString` that contain the template relative path (in our case: "VM_NAME/root/.bashrc".
