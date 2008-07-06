@@ -78,4 +78,8 @@ Sources:
  * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/ps1 bashrc/resources/ps1]
  * [http://code.google.com/p/visual-netkit/source/browse/trunk/src/plugin_dev/bashrc/resources/aliases bashrc/resources/aliases]
 
-TODO
+===bashrc.pro - Qt project file===
+Project files contain all the information required by `qmake` to build your application, library, or plugin.
+
+The most important variables are `TARGET`, `HEADERS` and `SOURCES`.
+`TARGET` is the plugin (project) name. If you set `TARGET = foo` the plugin file will be named `libfoo.so`.
