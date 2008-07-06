@@ -170,5 +170,33 @@ PluginBashRc::PluginBashRc() : PluginInterface()
 }}}
 It init some private variables like settings, name (reading from plugin.ini), fetch the preperties and set `myProxy` to `NULL` because it's initialized and passed (`void setProxy(PluginProxy* p)`) by the system.
 
+An important function is `saveProperty()`
+{{{
+/**
+ * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
+ */
+bool PluginBashRc::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+{
+        /* Check the property name */
+        if(!properties.contains(propName))
+        {
+                if(pluginAlertMsg != NULL) { pluginAlertMsg->append("Property not found."); }
+                
+                return false;
+        }
+        
+        /* Validate the value of the property: only "true" or "false" */
+        if(pluginAlertMsg != NULL && propValue != "true" && propValue != "false")
+        {
+                pluginAlertMsg->append("You can set only \"true\" or \"false\" values.");
+                return false;
+        }
+        
+        /* All is ok, store the property */
+        properties.value(propName)->setValue(propValue);
+        
+        return true;
+}
+}}}
 
 TODO
