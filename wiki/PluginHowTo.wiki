@@ -13,7 +13,7 @@ The plugin name is *BashRC* because the plugin offer only two templates; one for
 ==The plugin.ini==
 {{{
 [global]
-name=BashRG
+name=BashRC
 type=vm
 description="This plugin set PS1 env variable and/or some aliases in /root/.bashrc"
 version=1.0
