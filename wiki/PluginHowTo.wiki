@@ -4,11 +4,11 @@
 =Making a simple plugin for a Virtual Machine element=
 In this section we try to make a Plugin for a Virtual Machine. The plugin is very simple. It's just export the PS1 environment variable and some aliases.
 
-Our plugin will have only two properties that can be two values ("true" or "false"):
+Our plugin will have only two properties that can have two values ("true" or "false"):
  * `use PS1`
  * `use aliases`
 
-The plugin name is *BashRC* because the plugin offer only two templates; one for PS1 and one for aliases.
+The plugin name is *BashRC* because the plugin offer only one template builded in base of the properties values.
 
 ==The plugin.ini==
 {{{
