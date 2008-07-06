@@ -155,3 +155,10 @@ In our fac-simile the properties will be presented in this order:
  # propName1
  # propName3
  # propName2 
+
+=How the plugin can converse with the system?=
+The only way that the plugin can converse with the system, is through by its *Plugin Proxy*.
+
+The plugin can ask:
+ * `QObject* getBaseElement()` Return a QObject* that is the base element owned by the plugin (can be `NULL`)
+ * `void changeGraphicsLabel(QString label)` The plugin can change its graphics label on the scene calling this function.
