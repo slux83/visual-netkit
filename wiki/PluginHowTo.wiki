@@ -280,6 +280,29 @@ In our example we return a `QMap` of size 1 and the key is `VIRTUAL_MACHINE_NAME
 *REMEMBER:*
 If more than one plugin want write some content inside the same file, the system will be append the contents.
 
+*The `init()` function* is normally more complex.
+{{{
+/* Do nothing on init. Just show a label "/root/.bashrc" */ 
+bool PluginBashRc::init(QString laboratoryPath)
+{
+    Q_UNUSED(laboratoryPath)
+    myProxy->changeGraphicsLabel("/root/.bashrc");
+    return false;
+}
+}}}
+As you can read in PluginArchitecture, the init() function is called by the system (later the plugin constructor) when the plugin il attached to an element on _Lab Loading_ time. 
+
+In this function you can do stuff like parsing filesystem files to fetch properties values like inside PluginIpv4 and PluginMac that parse `.startup` files to get netmask, broadcast, mac and ip address.
+
+====Why `init()` return a boolean???====
+Thinking in future, in particolar to importing a lab created by hands (not standard) we cannot know which plugins attach to elements. Probably we can init all plugins for each element and if `init()` return `TRUE`, this mean that the plugin is able to parse (maybe not totally) files and the plugin can remain attached to the element. If the `init()` return `FALSE` at import time the plugin will be trashed.
+
+At present the returned boolean is ignored by the system.
+
+In our plugins we do nothing. Just show a label on graphics.
+
+----
+
 Other function are simple and "standard".
 
 Enjoy! :D
