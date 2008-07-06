@@ -105,4 +105,6 @@ Our resource file:
 </RCC>
 }}}
 
-*NOTE:* The most important thing that you don't forgot is that the aliases inside the `.qrc` file must be unique for each plugins! I suggest to add the plugin name on `prefix` attribute (prefix="/bashrc"), or be careful do not mix resources of other plugins.
+*NOTE:* The most important thing that you don't forget is that the aliases inside the `.qrc` file must be unique for each plugins! I suggest to add the plugin name on `prefix` attribute (prefix="/bashrc"), or be careful do not mix resources of other plugins using the same alias for two or more plugin`s resources.
+
+If you want more informations, please read the Qt-doc: http://doc.trolltech.com/4.4/resources.html
