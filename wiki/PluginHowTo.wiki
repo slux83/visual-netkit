@@ -199,4 +199,9 @@ bool PluginBashRc::saveProperty(QString propName, QString propValue, QString *pl
 }
 }}}
 
-TODO
+As described on PluginArchitecture page, this function allow the user to change a property passing the name, the new value and a pointer to a `QString`.
+
+*The `QString *pluginAlertMsg` meaning:*
+This last argument (default `NULL`) is a easy way to pass an alert message to the system. When the user want change a property, the `pluginAlertMsg` is allways passed (the first time), and you have to set a message in this string if the property value is not validated and return `FALSE`.
+
+When the alert is showed to the user, a possible behaviour is that the user want ignore this alert and store the value of the property also if this is uncorrect. If so, this function is re-called by the system, but in this case the `pluginAlertMsg` is `NULL` and you must save the property as it is and return true.
