@@ -143,3 +143,7 @@ We use a `QMap` for store properties, a `QSetting*` to open and parse authomatic
 The first is called by the constructor to fill the properties `QMap` reading these from the setting class.
 
 The second is just for convenient; it return a `QString` that contain the template relative path (in our case: "VM_NAME/root/.bashrc".
+
+The public part of the class is the classic header of a C++ class that contains only function of the super class to implement.
+
+TODO
