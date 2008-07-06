@@ -110,3 +110,19 @@ Our resource file:
 In our example we use four templates (text files): one of these is the plugin.ini described in PluginArchitecture wiki page.
 
 If you want more informations, please read the Qt-doc: http://doc.trolltech.com/4.4/resources.html
+
+===PluginBashRc.h - The plugin class header===
+
+The includes are quite standard for each plugin:
+{{{
+#include <QSettings>
+#include "PluginInterface.h"
+#include "PluginProxy.h"
+#include "PluginProperty.h"
+#include "VirtualMachine.h"
+}}}
+
+Our plugin must extend the PluginInterface.h (see PluginArchitecture to obtain more info) that is a pure C++ abstract class.
+{{{
+class PluginBashRc : public PluginInterface
+}}}
