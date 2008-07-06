@@ -209,8 +209,7 @@ When the alert is showed to the user, a possible behaviour is that the user want
 *The function `getTemplates()`:*
 {{{
 /**
- * Returns the plugin template if resource file exists,
- * otherwise returns an empty QString.
+ * Returns the plugin templates
  */
 QMap<QString, QString> PluginBashRc::getTemplates()
 {
@@ -276,4 +275,14 @@ Normally to create the file content you need to parse plugin properties and "bui
 
 As sayd, the `KEY` of the map is a location; in particolar this is the relative path (stanting from lab root dir) of the file that you want fill your datas.
 
-In our example we return a `QMap` of size 1 and the key is `VIRTUAL_MACHINE_NAME/root/.bashrc`, where `VIRTUAL_MACHINE_NAME` is offers by `getTemplateLocation()` private function
+In our example we return a `QMap` of size 1 and the key is `VIRTUAL_MACHINE_NAME/root/.bashrc`, where `VIRTUAL_MACHINE_NAME` is offers by `getTemplateLocation()` private function.
+
+*REMEMBER:*
+If more than one plugin want write some content inside the same file, the system will be append the contents.
+
+Other function are simple and "standard".
+
+Enjoy! :D
+
+==The plugin at work!!!==
+[http://www.capponcino.it/alessio/./files/universita/tesi-visual-netkit/plugin_bashrc_at_work.png http://www.capponcino.it/alessio/./files/universita/tesi-visual-netkit/plugin_bashrc_at_work-thumb.png]
