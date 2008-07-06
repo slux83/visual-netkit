@@ -146,4 +146,29 @@ The second is just for convenient; it return a `QString` that contain the templa
 
 The public part of the class is the classic header of a C++ class that contains only function of the super class to implement.
 
+On the end we have to do factory and destroy functions as explained in PluginArchitecture page.
+
+===PluginBashRc.cpp - The plugin class implementation===
+The constructor is quite standard for each plugin.
+{{{
+/** 
+ * Constructor 
+ */
+PluginBashRc::PluginBashRc() : PluginInterface()
+{
+        //get the ini file from resource
+        mySettings = new QSettings(":/ini_bashrc", QSettings::NativeFormat);
+        
+        /* Save the name of this plugin for future uses */
+        mySettings->beginGroup("global");
+        myName = mySettings->value("name").toString();
+        mySettings->endGroup();
+        
+        myProxy = NULL;
+        fetchProperties();      //read properties from ini file
+}
+}}}
+It init some private variables like settings, name (reading from plugin.ini), fetch the preperties and set `myProxy` to `NULL` because it's initialized and passed (`void setProxy(PluginProxy* p)`) by the system.
+
+
 TODO
