@@ -84,8 +84,25 @@ Project files contain all the information required by `qmake` to build your appl
 The most important variables are `TARGET`, `HEADERS` and `SOURCES`.
 `TARGET` is the plugin (project) name. If you set `TARGET = foo` the plugin file will be named `libfoo.so`.
 
-The `.pro` file for each plugin is quite standard; you have to change `HEADERS` and `SOURCES` but only adding plugin files suck as PluginClass{.cpp .h} and other private classes. Do not touch the other files.
+The `.pro` file for each plugin is quite standard; you have to change `HEADERS` and `SOURCES` but only adding plugin files such as PluginClass{.cpp .h} and other private classes. Do not touch the other files.
 
 If you want more informations, please read the Qt-doc: http://doc.trolltech.com/4.4/qmake-project-files.html
 
-======
+===resources.qrc - Qt Resource system===
+The Qt resource system is a platform-independent mechanism for storing binary files in the application's executable. This is useful if your application always needs a certain set of files (icons, translation files, etc.) and you don't want to run the risk of losing the files.
+
+The resources associated with an application are specified in a `.qrc` file, an *XML-based* file format that lists files on the disk and optionally assigns them a resource name that the application must use to access the resource.
+
+Our resource file:
+{{{
+<RCC>
+    <qresource prefix="/" >
+        <file alias="bash_main" >bashrc</file>
+        <file alias="bash_aliases" >aliases</file>
+        <file alias="bash_ps1" >ps1</file>
+        <file alias="ini_bashrc" >plugin.ini</file>
+    </qresource>
+</RCC>
+}}}
+
+*NOTE:* The most important thing that you don't forgot is that the aliases inside the `.qrc` file must be unique for each plugins! I suggest to add the plugin name on `prefix` attribute (prefix="/bashrc"), or be careful do not mix resources of other plugins.
