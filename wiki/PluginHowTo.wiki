@@ -204,4 +204,76 @@ As described on PluginArchitecture page, this function allow the user to change 
 *The `QString *pluginAlertMsg` meaning:*
 This last argument (default `NULL`) is a easy way to pass an alert message to the system. When the user want change a property, the `pluginAlertMsg` is allways passed (the first time), and you have to set a message in this string if the property value is not validated and return `FALSE`.
 
-When the alert is showed to the user, a possible behaviour is that the user want ignore this alert and store the value of the property also if this is uncorrect. If so, this function is re-called by the system, but in this case the `pluginAlertMsg` is `NULL` and you must save the property as it is and return true.
+When the alert is showed to the user, a possible behaviour is that the user want ignore this alert and store the value of the property also if this is uncorrect. If so, the function is re-called by the system, but in this case the `pluginAlertMsg` is `NULL` and you must save the property as it is and return `TRUE`.
+
+*The function `getTemplates()`:*
+{{{
+/**
+ * Returns the plugin template if resource file exists,
+ * otherwise returns an empty QString.
+ */
+QMap<QString, QString> PluginBashRc::getTemplates()
+{
+        QMap<QString, QString> templates;
+        QString mainBashContent;
+        
+        QFile data(":/bash_main");
+        QFile aliases(":/bash_aliases");
+        QFile ps1(":/bash_ps1");
+        
+        /* Read bash main */
+        if (data.open(QFile::ReadOnly)) 
+        {
+                QTextStream in(&data);
+                mainBashContent = in.readAll();
+                data.close();
+        }
+        else
+        {
+                qWarning() << "The plugin getTemplate() failed:" << data.errorString();
+        }
+                
+        /* append PS1 and/or asiases according to propertie values */
+        if(properties["use aliases"]->getValue() == "true")
+        {
+                /* Read bash aliases */
+                if (aliases.open(QFile::ReadOnly)) 
+                {
+                        QTextStream in(&aliases);
+                        mainBashContent.append(in.readAll());   //append to bashrc content
+                        aliases.close();
+                }
+                else
+                {
+                        qWarning() << "The plugin getTemplate() failed:" << aliases.errorString();
+                }
+        }
+        
+        if(properties["use PS1"]->getValue() == "true")
+        {
+                /* Read bash aliases */
+                if (ps1.open(QFile::ReadOnly)) 
+                {
+                        QTextStream in(&ps1);
+                        mainBashContent.append(in.readAll());   //append to bashrc content
+                        ps1.close();
+                }
+                else
+                {
+                        qWarning() << "The plugin getTemplate() failed:" << ps1.errorString();
+                }
+        }
+        
+        //we have only one template file
+        templates.insert(getTemplateLocation(), mainBashContent);
+        
+        return templates;
+}
+}}}
+In this function you have to "build" your templates (your files) and return a `QMap<QString, QString>` where the `KEY` is the file location, and the `VALUE` is the content of the file.
+
+Normally to create the file content you need to parse plugin properties and "build" it dinamically, or if you wish you can return a static template.
+
+As sayd, the `KEY` of the map is a location; in particolar this is the relative path (stanting from lab root dir) of the file that you want fill your datas.
+
+In our example we return a `QMap` of size 1 and the key is `VIRTUAL_MACHINE_NAME/root/.bashrc`, where `VIRTUAL_MACHINE_NAME` is offers by `getTemplateLocation()` private function
