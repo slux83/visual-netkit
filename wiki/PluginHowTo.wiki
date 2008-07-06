@@ -107,4 +107,6 @@ Our resource file:
 
 *NOTE:* The most important thing that you don't forget is that the aliases inside the `.qrc` file must be unique for each plugins! I suggest to add the plugin name on `prefix` attribute (prefix="/bashrc"), or be careful do not mix resources of other plugins using the same alias for two or more plugin`s resources.
 
+In our example we use four templates (text files): one of these is the plugin.ini described in PluginArchitecture wiki page.
+
 If you want more informations, please read the Qt-doc: http://doc.trolltech.com/4.4/resources.html
