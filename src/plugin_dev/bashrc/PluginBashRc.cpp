@@ -51,8 +51,7 @@ PluginBashRc::~PluginBashRc()
 }
 
 /**
- * Returns the plugin template if resource file exists,
- * otherwise returns an empty QString.
+ * Returns the plugin templates
  */
 QMap<QString, QString> PluginBashRc::getTemplates()
 {
