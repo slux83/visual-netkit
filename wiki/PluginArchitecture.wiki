@@ -150,7 +150,7 @@ propName3/p_init_order=2
 
 Each property can have a `p_init_order` that represent the order integer for property position in presentation and init time.
 
-In the our fac-simile the properties will be presented in this order:
+In our fac-simile the properties will be presented in this order:
 
  # propName1
  # propName3
