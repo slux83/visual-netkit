@@ -60,13 +60,11 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 	property->setData(Qt::DisplayRole, tr("Name"));
 	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 	tableWidget->setItem(0, 0, property);
-	tableWidget->setSpan(0, 0, 1, 1);
 	
 	property = new QTableWidgetItem();
 	property->setData(Qt::DisplayRole, vm->getName());
 	property->setData(Qt::UserRole, VM_NAME);
 	tableWidget->setItem(0, 1, property);
-	tableWidget->setSpan(0, 1, 1, 1);
 	
 	QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getVmProxies(vm));
 	
@@ -81,26 +79,30 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 		{
 			tableWidget->setRowCount(tableWidget->rowCount() + 1);
 			property = new QTableWidgetItem();
-			property->setFlags(!Qt::ItemIsSelectable || !Qt::ItemIsEditable);
+			property->setFlags(property->flags() & ~Qt::ItemIsEnabled & ~Qt::ItemIsSelectable);
 			property->setData(Qt::DisplayRole, tr("Plugin: ") + p->getPlugin()->getName());
 			property->setBackgroundColor(Qt::gray);
 			property->setForeground(Qt::blue);
 			property->setFont(QFont("Sand Serif", 9, QFont::Bold));
 			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
-			tableWidget->setSpan(tableWidget->rowCount() - 1, 0, 1, 2);
+			
+			property = new QTableWidgetItem();
+			property->setFlags(property->flags() & ~Qt::ItemIsEnabled & ~Qt::ItemIsSelectable);
+			property->setBackgroundColor(Qt::gray);
+			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
 		}
 		
 		/* render propertyes for this plugin */
 		while(j.hasNext())
 		{
 			PluginProperty *pp = j.next();
+			
 			//property name
 			tableWidget->setRowCount(tableWidget->rowCount() + 1);
 			property = new QTableWidgetItem();
 			property->setData(Qt::DisplayRole, pp->getName());
 			property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
 			tableWidget->setItem(tableWidget->rowCount() - 1, 0, property);
-			tableWidget->setSpan(tableWidget->rowCount() - 1, 0, 1, 1);
 			
 			//property value
 			property = new QTableWidgetItem();
@@ -108,7 +110,6 @@ void VmPropertyController::renderVmProperties(QTableWidget *tableWidget)
 			property->setData(Qt::ToolTipRole, pp->getDescription());
 			property->setData(Qt::UserRole, p->getPlugin()->getName() + SEPARATOR + pp->getName());
 			tableWidget->setItem(tableWidget->rowCount() - 1, 1, property);
-			tableWidget->setSpan(tableWidget->rowCount() - 1, 1, 1, 1);
 		}
 	}
 }
