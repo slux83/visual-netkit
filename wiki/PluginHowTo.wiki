@@ -305,7 +305,7 @@ In our plugins we do nothing. Just show a label on graphics.
 
 ----
 
-Other function are simple and "standard".
+Other functions are simple and "standard".
 
 Enjoy! :D
 
