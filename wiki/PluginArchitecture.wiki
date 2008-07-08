@@ -157,7 +157,7 @@ In our fac-simile the properties will be presented in this order:
  # propName2 
 
 =How the plugin can converse with the system?=
-The only way that the plugin can converse with the system, is through by its *Plugin Proxy*.
+The only way that the plugin can converse with the system, is through its *Plugin Proxy*.
 
 The plugin can ask:
  * `QObject* getBaseElement()` Return a pointer to `QObject` (can be `NULL`) that is the base element owned by the plugin. You need to downcast this object to a Base Element.
