@@ -1,5 +1,5 @@
 /**
- * A simple Wiki (how-to) plugin for Visual Netkit 
+ * Zebra plugin
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PLUGINBASHRC_H_
-#define PLUGINBASHRC_H_
+#ifndef PLUGINZEBRA_H_
+#define PLUGINZEBRA_H_
 
 #include <QObject>
 #include <QString>
@@ -28,9 +28,9 @@
 #include "VirtualMachine.h"
 
 /**
- * A simple plugin that create a modular .bashrc
+ * Zebra plugin
  */
-class PluginBashRc : public PluginInterface
+class PluginZebra : public PluginInterface
 {
 	
 private:
@@ -43,8 +43,8 @@ private:
 	QString getTemplateLocation();
 	
 public:
-	PluginBashRc();
-	virtual ~PluginBashRc();
+	PluginZebra();
+	virtual ~PluginZebra();
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QSettings* getMySettings() { return mySettings; };
 	QMap<QString, QString> getTemplates();
@@ -53,11 +53,9 @@ public:
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	
-	QString getDefaultGraphisLabel() {return QString(".bashrc"); };
+	QString getDefaultGraphisLabel() {return QString("Zebra"); };
 	
-	/* Do nothing on init. Just show a label "/root/.bashrc" */ 
-	bool init(QString laboratoryPath)
-		{ Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel(".bashrc"); return false; };
+	bool init(QString laboratoryPath);
 };
 
 
@@ -66,7 +64,7 @@ public:
 /* Factory (creator) */
 extern "C" PluginInterface* createPlugin()
 {
-    return new PluginBashRc();
+    return new PluginZebra();
 }
 
 /* Factory (destroyer) */
