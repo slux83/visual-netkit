@@ -67,7 +67,7 @@ QMap<QString, QString> PluginMac::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
 		
-		templateContent.replace("<MAC>", getPropertyByName("mac_address")->getValue());
+		templateContent.replace("<MAC>", getPropertyByName("mac address")->getValue());
 
 		/* Append comment */
 		QString lineComment;
@@ -162,7 +162,7 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
 	} 
 	else 
 	{
-		if (propName == "mac_address") 
+		if (propName == "mac address") 
 		{			
 			/* Validate the MAC address */
 			if(!validateMacAddress(propValue))
@@ -228,7 +228,7 @@ bool PluginMac::init(QString laboratoryPath)
 			if(validateMacAddress(myMacAddress))
 			{
 				//ok, founded my mac address
-				getPropertyByName("mac_address")->setValue(myMacAddress);
+				getPropertyByName("mac address")->setValue(myMacAddress);
 				myProxy->changeGraphicsLabel(myMacAddress);
 						
 				return true;
@@ -245,7 +245,7 @@ bool PluginMac::init(QString laboratoryPath)
  */
 void PluginMac::refreshLabel()
 {
-	myProxy->changeGraphicsLabel(getPropertyByName("mac_address")->getValue());
+	myProxy->changeGraphicsLabel(getPropertyByName("mac address")->getValue());
 }
 
 /**
