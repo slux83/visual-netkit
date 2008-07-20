@@ -190,6 +190,9 @@ void LabHandler::addCreatedLabOnTree(Laboratory *l)
 	//if config_file, this role show the relative path for the config file
 	labConf->setData(0, Qt::UserRole + 1, LAB_CONF);
 	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+	labConf->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	labConf->setCheckState(0, Qt::Checked);
+	labConf->setToolTip(0, tr("Check to Save this file."));
 	
 	root->addChild(labConf);
 	
@@ -226,6 +229,9 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	startupConf->setData(0, Qt::UserRole, "config_file");		//type (don't change this value)
 	startupConf->setData(0, Qt::UserRole + 1, QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+	startupConf->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	startupConf->setCheckState(0, Qt::Checked);
+	startupConf->setToolTip(0, tr("Check to Save this file."));
 	
 	QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
 	
@@ -413,7 +419,10 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 				elem->setData(0, Qt::DisplayRole, path.first());
 				elem->setData(0, Qt::UserRole, "config_file");		//type
 				elem->setData(0, Qt::UserRole + 1, fullPath);		//path
+				elem->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+				elem->setCheckState(0, Qt::Checked);
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
+				elem->setToolTip(0, tr("Check to Save this file."));
 
 				// adds the new node to the current node
 				node->addChild(elem);
