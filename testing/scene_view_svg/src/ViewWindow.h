@@ -34,5 +34,6 @@ private slots:
 	void zoomPlus();
 	void makeGroup();
 	void destroyGroup();
+	void makeArea();
 };
 #endif

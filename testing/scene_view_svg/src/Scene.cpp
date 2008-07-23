@@ -5,7 +5,7 @@
 
 Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
-	myMode = InsertLine;
+	myMode = InsertItem;
 	line = NULL;
 }
 
@@ -39,7 +39,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if (mouseEvent->button() != Qt::LeftButton)
         return;
 
-    QPointF *end = new QPointF(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
+    //QPointF *end = new QPointF(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
     
     
     //SvgItemNode *item;
@@ -52,11 +52,13 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             //emit itemInserted(item);
             break;
         
-        case InsertLine:
+        case InsertArea:
+        	qDebug() << "adding an area";
+        	addItem(new AreaItem());
         	//qDebug() << "Mouse:  start--> " << mouseEvent->scenePos() << "  end --> " << mouseEvent->scenePos();
-            line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), *end));
-            line->setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-            addItem(line);
+            //line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(), *end));
+            //line->setPen(QPen(Qt::black, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+            //addItem(line);
             break;
 
         /*
@@ -83,44 +85,12 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (myMode == InsertLine && line != NULL) {
-    	QLineF newLine(line->line().p1(), mouseEvent->scenePos());
-    	line->setLine(newLine);
-        
-    } else if (myMode == MoveItem) {
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
-    }
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (line != 0 && myMode == InsertLine) {
-        QList<QGraphicsItem *> startItems = items(line->line().p1());
-        if (startItems.count() && startItems.first() == line)
-            startItems.removeFirst();
-        QList<QGraphicsItem *> endItems = items(line->line().p2());
-        if (endItems.count() && endItems.first() == line)
-            endItems.removeFirst();
-
-        removeItem(line);
-        delete line;
-
-        if (startItems.count() > 0 && endItems.count() > 0 &&
-            startItems.first()->type() == SvgItemNode::Type &&
-            endItems.first()->type() == SvgItemNode::Type &&
-            startItems.first() != endItems.first()) {
-        	SvgItemNode *startItem = qgraphicsitem_cast<SvgItemNode *>(startItems.first());
-            SvgItemNode *endItem = qgraphicsitem_cast<SvgItemNode *>(endItems.first());
-            SvgItemLink *arrow = new SvgItemLink(startItem, endItem);
-            arrow->setColor(myLineColor);
-            startItem->addLink(arrow);
-            endItem->addLink(arrow);
-            arrow->setZValue(-1000.0);
-            addItem(arrow);
-            arrow->updatePosition();
-        }
-    }
-    line = 0;
+ 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 

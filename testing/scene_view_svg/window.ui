@@ -20,14 +20,20 @@
      </property>
      <layout class="QVBoxLayout" >
       <item>
-       <widget class="QPushButton" name="connectButton" >
+       <widget class="QPushButton" name="areaButton" >
         <property name="text" >
-         <string>Connect</string>
+         <string>Area</string>
+        </property>
+        <property name="checkable" >
+         <bool>true</bool>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="addMachineButton" >
+        <property name="enabled" >
+         <bool>true</bool>
+        </property>
         <property name="text" >
          <string>Machine</string>
         </property>
@@ -42,6 +48,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="groupButton" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
         <property name="text" >
          <string>Create Group</string>
         </property>
@@ -49,6 +58,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="ungroupButton" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
         <property name="text" >
          <string>Delete Group</string>
         </property>
@@ -104,7 +116,7 @@
         <property name="orientation" >
          <enum>Qt::Vertical</enum>
         </property>
-        <property name="sizeHint" >
+        <property name="sizeHint" stdset="0" >
          <size>
           <width>20</width>
           <height>40</height>

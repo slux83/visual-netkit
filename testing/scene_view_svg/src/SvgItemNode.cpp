@@ -3,6 +3,7 @@
 SvgItemNode::SvgItemNode() : QGraphicsSvgItem("host.svg")
 {
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+	setZValue(100);
 }
 
 QList<SvgItemLink *> SvgItemNode::getLinks()

@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "SvgItemNode.h"
 #include "SvgItemLink.h"
+#include "AreaItem.h"
 
 class QGraphicsSceneMouseEvent;
 class QMenu;
@@ -14,6 +15,8 @@ class QGraphicsLineItem;
 //class QGraphicsTextItem;
 class QColor;
 
+enum Mode { InsertItem, InsertArea };
+
 class Scene : public QGraphicsScene
 {
 	Q_OBJECT
@@ -22,7 +25,6 @@ public:
 	Scene();
 	virtual ~Scene();
 	
-	enum Mode { InsertItem, InsertLine, InsertText, MoveItem };
 	QMenu *myItemMenu;
 	Mode myMode;
 	bool leftButtonDown;
@@ -37,8 +39,8 @@ public:
 private:
 	bool isItemChange(int type);
 
-//public slots:
-//	void setMode(Mode mode);
+public slots:
+	void setMode(Mode mode) { myMode = mode; };
 	
 signals:
      void vmInserted(SvgItemNode *item);

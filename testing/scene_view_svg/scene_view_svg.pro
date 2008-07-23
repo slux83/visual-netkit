@@ -12,7 +12,8 @@ MOC_DIR = build
 RCC_DIR = build
 UI_DIR = build
 OBJECTS_DIR = build
-SOURCES += src/SvgItemLink.cpp \
+SOURCES += AreaItem.cpp \
+    src/SvgItemLink.cpp \
     main.cpp \
     src/Scene.cpp \
     src/SvgItemNode.cpp \
