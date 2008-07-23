@@ -18,6 +18,7 @@ ViewWindow::ViewWindow(Scene *s) : QWidget()
 	connect(plusButton, SIGNAL(clicked()), this, SLOT(zoomPlus()));
 	connect(groupButton, SIGNAL(clicked()), this, SLOT(makeGroup()));
 	connect(ungroupButton, SIGNAL(clicked()), this, SLOT(destroyGroup()));
+	connect(areaButton, SIGNAL(clicked()), this, SLOT(makeArea()));
 
 }
 
@@ -127,3 +128,19 @@ void ViewWindow::addVM()
 	scene->addItem(vm);
 }
 
+void ViewWindow::makeArea()
+{
+	if(areaButton->isChecked())
+	{
+		qDebug() << "ready to add the area";
+		scene->setMode(InsertArea);
+	}	
+	else
+	{
+		scene->setMode(InsertItem);
+	}
+	
+	
+		
+	
+}
