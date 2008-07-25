@@ -38,6 +38,7 @@ public:
 
 private:
 	bool isItemChange(int type);
+	bool readyToResize(QGraphicsItem *item, QPointF mousePoint, bool overrideCursor = false);
 
 public slots:
 	void setMode(Mode mode) { myMode = mode; };

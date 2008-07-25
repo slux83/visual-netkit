@@ -13,7 +13,9 @@ public:
 	virtual ~AreaItem();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0 ); 
 	QRectF boundingRect() const;
- 
+	QPainterPath shape() const;
+	
+	int type() const { return QGraphicsItem::Type + 100; };
 
 	
 };
