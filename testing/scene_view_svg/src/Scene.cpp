@@ -1,7 +1,9 @@
 #include <QtGui>
 #include <QPointF>
+#include <QGraphicsItem>
 
 #include "Scene.h"
+#include "AreaItem.h"
 
 Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
@@ -41,6 +43,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     //QPointF *end = new QPointF(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
     
+    QGraphicsItem *item = itemAt(mouseEvent->scenePos());
+    readyToResize(item, mouseEvent->scenePos());
     
     //SvgItemNode *item;
     switch (myMode)
@@ -86,6 +90,9 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
 	QGraphicsScene::mouseMoveEvent(mouseEvent);
+	
+	QGraphicsItem *item = itemAt(mouseEvent->scenePos());
+	readyToResize(item, mouseEvent->scenePos(), true);
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -101,4 +108,34 @@ bool Scene::isItemChange(int type)
             return true;
     }
     return false;
+}
+
+bool Scene::readyToResize(QGraphicsItem *item, QPointF mousePoint, bool overrideCursor)
+{
+	AreaItem *aItem = static_cast<AreaItem*>(item);
+	if(!aItem)
+	{
+		QApplication::restoreOverrideCursor();
+		return false;
+	}
+	
+	QPointF mousePosOnArea = item->mapFromScene(mousePoint);
+	QRectF resizeRegion;
+	QRectF itemBrect = item->boundingRect();
+	resizeRegion.setX(itemBrect.width() - 10);
+	resizeRegion.setY(itemBrect.height() - 10);
+	resizeRegion.setWidth(10);
+	resizeRegion.setHeight(10);
+	
+	
+	if(overrideCursor && resizeRegion.contains(mousePosOnArea) && item->isSelected())
+	{
+		QApplication::setOverrideCursor(Qt::SizeFDiagCursor);
+	}
+	else
+	{
+		QApplication::restoreOverrideCursor();
+	}
+	
+	return resizeRegion.contains(mousePosOnArea);
 }

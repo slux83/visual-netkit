@@ -86,7 +86,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	}
 	
 	/* selection tool active */
-	if ( m->actionSelectionTool->isChecked() /*&& (itemAt(mouseEvent->scenePos()))->parentItem() == NULL */) 
+	if (m->actionSelectionTool->isChecked()) 
 	{
 		// draws the selection area on mouse move
 		QRectF rect(mouseEvent->scenePos(), mouseEvent->scenePos());
