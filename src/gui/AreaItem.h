@@ -22,6 +22,7 @@
 #include <QGraphicsRectItem>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QGraphicsScene>
 #include <QMap>
 #include <QMenu>
 #include <QObject>
@@ -48,7 +49,7 @@ private:
 
 private slots:
 	void deleteAreaActionCalled() {};
-	void changeAreaColor(QAction *action) {};
+	void changeAreaColor(QAction *action);
 	
 public:
 	AreaItem();
@@ -63,6 +64,7 @@ public:
 	QString getLabel() { return label; };
 
 protected:
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 };
 
