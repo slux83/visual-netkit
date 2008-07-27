@@ -121,6 +121,9 @@
      <string>Graph</string>
     </property>
     <widget class="QMenu" name="menuZoom" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
      <property name="title" >
       <string>Zoom</string>
      </property>
@@ -151,6 +154,7 @@
     <addaction name="actionAddVirtualMachine" />
     <addaction name="actionAddCollisionDomain" />
     <addaction name="actionAddLink" />
+    <addaction name="actionAddArea" />
     <addaction name="actionManageGraph" />
     <addaction name="actionSelectionTool" />
     <addaction name="separator" />
@@ -598,6 +602,7 @@
    <addaction name="actionAddVirtualMachine" />
    <addaction name="actionAddCollisionDomain" />
    <addaction name="actionAddLink" />
+   <addaction name="actionAddArea" />
    <addaction name="actionManageGraph" />
    <addaction name="actionSelectionTool" />
   </widget>
@@ -969,6 +974,18 @@
    </property>
    <property name="shortcut" >
     <string>F11</string>
+   </property>
+  </action>
+  <action name="actionAddArea" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../resources/VisualNetkit.qrc" >
+     <normaloff>:/menu/area</normaloff>:/menu/area</iconset>
+   </property>
+   <property name="text" >
+    <string>Add area</string>
    </property>
   </action>
  </widget>

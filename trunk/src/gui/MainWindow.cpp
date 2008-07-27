@@ -216,6 +216,7 @@ void MainWindow::createActionGroups()
 	labItemGroup->addAction(actionManageGraph);
 	labItemGroup->addAction(actionAddLink);
 	labItemGroup->addAction(actionSelectionTool);
+	labItemGroup->addAction(actionAddArea);
 	labItemGroup->setDisabled(true);
 	
 	/* Group for scene size */
@@ -347,7 +348,6 @@ void MainWindow::lockSceneAndActions()
 	labMiniature->setDisabled(true);
 	labMiniature->setScene(NULL);
 	
-	actionManageGraph->setDisabled(true);
 }
 
 
