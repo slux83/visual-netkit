@@ -83,6 +83,8 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	/* The user want to add an area? */
 	if(mouseEvent->button() == Qt::LeftButton && m->actionAddArea->isChecked())
 	{
+		AreaItem *aItem = new AreaItem();
+		aItem->setPos(mouseEvent->scenePos());
 		addItem(new AreaItem());
 	}
 

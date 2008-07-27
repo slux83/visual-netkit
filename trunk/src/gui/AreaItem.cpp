@@ -25,7 +25,7 @@
 AreaItem::AreaItem() : QGraphicsRectItem()
 {
 	setZValue(10);
-	setRect(0, 0, 200, 200);	//the default size
+	setRect(0, 0, 100, 100);	//the default size
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 	
 	//default text
@@ -39,7 +39,6 @@ AreaItem::AreaItem() : QGraphicsRectItem()
 	backgroundColours.insert(tr("Grey"), QColor(197, 197, 197));
 	backgroundColours.insert(tr("Green"), QColor(122, 197, 120));
 	backgroundColours.insert(tr("Cyan"), Qt::cyan);
-	backgroundColours.insert(tr("Transparent"), Qt::transparent);
 	
 	//build context menu
 	initContextMenu();
@@ -94,8 +93,8 @@ void AreaItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 QRectF AreaItem::boundingRect() const
 {
 	QRectF bRect = QGraphicsRectItem::boundingRect();
-	bRect.setHeight(bRect.height() + 5);
-	bRect.setWidth(bRect.width() + 5);
+	bRect.setHeight(bRect.height() + pointSize + 1);
+	bRect.setWidth(bRect.width()   + pointSize + 1);
 	
 	return bRect;
 }
@@ -127,7 +126,7 @@ void AreaItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
  */
 void AreaItem::initContextMenu()
 {
-	deleteAction = new QAction(tr("Delete Virtual Machine"), this);
+	deleteAction = new QAction(tr("Delete Area"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	
 	contextMenu.addAction(deleteAction);
@@ -149,4 +148,43 @@ void AreaItem::initContextMenu()
 	/* Connect all the submenu */
 	connect(colourMenu, SIGNAL(triggered(QAction *)),
 			this, SLOT(changeAreaColor(QAction *)));
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Change background color
+ */
+void AreaItem::changeAreaColor(QAction *action)
+{
+	if(!backgroundColours.contains(action->text()))
+		return;
+	
+	activeColor = backgroundColours.value(action->text());
+	update(boundingRect());
+}
+
+/**
+ * [PROTECTED]
+ * Controls the movements of this item and doesn't permit that it's drawed outside
+ * the scene rect
+ */
+QVariant AreaItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	// value is the new position.
+	QPointF newPos = value.toPointF();
+	if (change == ItemPositionChange && scene())
+	{		
+		
+		QRectF rect = scene()->sceneRect();
+
+		// Keep the item inside the scene rect. (- 2 is a padding)
+		newPos.setX(qMin(rect.right() - boundingRect().width() - 2,
+				qMax(newPos.x(), rect.left())));
+		newPos.setY(qMin(rect.bottom()- boundingRect().height() - 2,
+				qMax(newPos.y(), rect.top())));
+		
+		return newPos;
+	}
+	
+	return QGraphicsItem::itemChange(change, value);
 }
