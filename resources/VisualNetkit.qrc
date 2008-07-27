@@ -31,6 +31,7 @@
         <file alias="fullscreen_icon" >menu_icons/view_fullscreen.png</file>
         <file alias="trash" >menu_icons/trash.png</file>
         <file alias="area" >menu_icons/area.png</file>
+        <file alias="color_edit" >menu_icons/color_edit.png</file>
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>
