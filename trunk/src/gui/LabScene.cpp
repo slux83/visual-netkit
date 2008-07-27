@@ -22,6 +22,7 @@
 #include "handles/CdMapper.h"
 #include "handles/LinkMapper.h"
 #include "handles/LinkHandler.h"
+#include "AreaItem.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -79,6 +80,12 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		addItem(link);	//the fake link is added inside the scene...
 	}
 	
+	/* The user want to add an area? */
+	if(mouseEvent->button() == Qt::LeftButton && m->actionAddArea->isChecked())
+	{
+		addItem(new AreaItem());
+	}
+
 	/* default action when the arrow icon is checked */
 	if(m->actionManageGraph->isChecked())
 	{
