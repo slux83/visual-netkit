@@ -16,7 +16,6 @@ AreaItem::~AreaItem()
 void AreaItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	/* Draw the area */
-	
 	painter->save();
 	painter->setOpacity(100);
 	painter->setPen(QPen(Qt::black, 1));

@@ -7,7 +7,7 @@
 
 class AreaItem : public QGraphicsRectItem
 {
-	
+
 public:
 	AreaItem();
 	virtual ~AreaItem();
