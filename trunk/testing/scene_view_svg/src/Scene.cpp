@@ -9,32 +9,12 @@ Scene::Scene() : QGraphicsScene(0, 0, 1000, 1000)
 {
 	myMode = InsertItem;
 	line = NULL;
+	resizeItem = NULL;
 }
 
 Scene::~Scene()
 {
 }
-
-
-/*
-void Scene::dumpToPDF() {
-	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
-	printer->setOutputFormat(QPrinter::PdfFormat);
-	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
-	printer->setOutputFileName(fileName);
-	QPainter *pdfPainter = new QPainter(printer);
-	scene()->render(pdfPainter);
-	pdfPainter->end();
-}
-
-void Scene::dumpToSVG() {
-	QSvgGenerator *gen = new QSvgGenerator();
-	gen->setFileName("~/out.svg");
-	QPainter *svgPainter = new QPainter(gen);
-	scene()->render(svgPainter);
-	svgPainter->end();
-}
-*/
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -44,7 +24,13 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     //QPointF *end = new QPointF(mouseEvent->scenePos().x(), mouseEvent->scenePos().y());
     
     QGraphicsItem *item = itemAt(mouseEvent->scenePos());
-    readyToResize(item, mouseEvent->scenePos());
+    
+    //if the user click the resize ball
+    if(readyToResize(item, mouseEvent->scenePos(), true))
+    {
+    	resizeItem = item;
+    	resizing = true;
+    }
     
     //SvgItemNode *item;
     switch (myMode)
@@ -89,15 +75,41 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-	QGraphicsScene::mouseMoveEvent(mouseEvent);
-	
 	QGraphicsItem *item = itemAt(mouseEvent->scenePos());
 	readyToResize(item, mouseEvent->scenePos(), true);
+	if(mouseEvent->button() != Qt::LeftButton && resizing)
+	{
+		AreaItem *aItem;
+		if(!(aItem = static_cast<AreaItem*>(resizeItem)))
+			return;
+		
+		//resize the area
+		qreal width = aItem->rect().width() + (mouseEvent->scenePos().x() - (aItem->scenePos().x() + aItem->rect().width()));
+		qreal height = aItem->rect().height() + (mouseEvent->scenePos().y() - (aItem->scenePos().y() + aItem->rect().height()));
+		
+		/* Size control */
+		if(width < 20)
+			width = aItem->rect().width();
+		if(height < 20)
+			height = aItem->rect().height();
+		
+		aItem->setRect(0, 0, width , height);
+		
+	}
+	else
+		QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
- 
+	QGraphicsItem *item = itemAt(mouseEvent->scenePos());
+	readyToResize(item, mouseEvent->scenePos(), true);
+	if(resizing)
+	{
+		resizing = false;
+		QApplication::restoreOverrideCursor();
+		resizeItem = NULL;
+	}
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
