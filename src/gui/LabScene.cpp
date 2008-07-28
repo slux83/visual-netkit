@@ -22,7 +22,6 @@
 #include "handles/CdMapper.h"
 #include "handles/LinkMapper.h"
 #include "handles/LinkHandler.h"
-#include "AreaItem.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -35,6 +34,9 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	
 	link = NULL;
 	selectionRect = NULL;
+	resizing = false;
+	resizeItem = NULL;
+	
 }
 
 /**
@@ -85,7 +87,7 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	{
 		AreaItem *aItem = new AreaItem();
 		aItem->setPos(mouseEvent->scenePos());
-		addItem(new AreaItem());
+		addItem(aItem);
 	}
 
 	/* default action when the arrow icon is checked */
@@ -104,6 +106,16 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		selectionRect->setPen(QPen(Qt::black, 1, Qt::DashLine, Qt::SquareCap, Qt::RoundJoin));
     	addItem(selectionRect);
 	}
+	 
+    /* User want resize an area */
+    QGraphicsItem *item = itemAt(mouseEvent->scenePos());
+    if(mouseEvent->button() == Qt::LeftButton && 
+    		readyToResize(item, mouseEvent->scenePos()))
+    {
+    	resizeItem = static_cast<AreaItem*>(item);
+    	resizing = true;
+    	QGraphicsScene::mousePressEvent(mouseEvent);
+    }
 
 }
 
@@ -130,7 +142,27 @@ void LabScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     	selectionRect->setRect(newRect);
 	}
 	
-	QGraphicsScene::mouseMoveEvent(mouseEvent);
+	/* Resize the area */
+	if(resizeItem && resizing && m->actionManageGraph->isChecked())
+	{		
+		//calculate resize factor
+		qreal width = resizeItem->rect().width() +
+			(mouseEvent->scenePos().x() - (resizeItem->scenePos().x() + resizeItem->rect().width()));
+		qreal height = resizeItem->rect().height() +
+			(mouseEvent->scenePos().y() - (resizeItem->scenePos().y() + resizeItem->rect().height()));
+		
+		/* Size control */
+		if(width < 20)
+			width = resizeItem->rect().width();
+		if(height < 20)
+			height = resizeItem->rect().height();
+		
+		resizeItem->setRect(0, 0, width , height);
+		
+	}
+	
+	if(!resizing)
+		QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 /**
@@ -236,7 +268,13 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     	m->forceManageGraphAction();
     }
 	
-	QGraphicsScene::mouseReleaseEvent(mouseEvent);
+	if(resizing)
+	{
+		resizing = false;
+		resizeItem = NULL;
+	}
+	
+
 }
 
 /**
@@ -329,9 +367,33 @@ void LabScene::initBorder()
 	border->setPen(pen);
 	//set the rect
 	border->setRect(sceneRect());
-	border->setFlags(QGraphicsItem::ItemClipsToShape);
-	border->setZValue(100);
+	border->setZValue(1);
 	
 	/* Adds the border to this scene */
-	addItem(border);
+	//addItem(border);
 }
+
+/**
+ * [PRIVATE]
+ * If the mouse is on the bottom-right corner of an area, the user can resize it
+ */
+bool LabScene::readyToResize(QGraphicsItem *item, QPointF mousePoint)
+{
+	AreaItem *aItem = static_cast<AreaItem*>(item);
+	if(!aItem)
+	{
+		QApplication::restoreOverrideCursor();
+		return false;
+	}
+	
+	QPointF mousePosOnArea = item->mapFromScene(mousePoint);
+	QRectF resizeRegion;
+	QRectF itemBrect = item->boundingRect();
+	resizeRegion.setX(itemBrect.width() - (pointSize * 2));	//+1 is the border size
+	resizeRegion.setY(itemBrect.height() - (pointSize * 2));
+	resizeRegion.setWidth(pointSize * 2);
+	resizeRegion.setHeight(pointSize * 2);
+		
+	return resizeRegion.contains(mousePosOnArea);
+}
+

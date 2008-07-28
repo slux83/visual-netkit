@@ -25,16 +25,26 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
+#include "AreaItem.h"
+
+/**
+ * The graph scene
+ */
 class LabScene : public QGraphicsScene
 {
 	Q_OBJECT
 	
 private:
-	QGraphicsRectItem *border;	//the path for the scene border
+	QGraphicsRectItem *border;			//the path for the scene border
 	QGraphicsRectItem *selectionRect;	//the selection rect
-	QGraphicsLineItem *link;	//a fake link
+	QGraphicsLineItem *link;			//a fake link
+	bool resizing;						//if the area will be resized
+	AreaItem *resizeItem;			//current ready to resize selected area
+		
 	QGraphicsLineItem *initNewLinkLine();
 	void initBorder();
+	bool readyToResize(QGraphicsItem *item, QPointF mousePoint);
+	
 	
 private slots:
 	void adjustSceneBorder(QRectF r);

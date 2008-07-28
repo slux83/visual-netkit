@@ -27,6 +27,8 @@
 #include <QMenu>
 #include <QObject>
 
+#include "../common/Types.h"
+
 static const int pointSize = 5;
 static const quint8 areaOpacity = 100; //when the area is selected
 
@@ -58,7 +60,7 @@ public:
 	QRectF boundingRect() const;
 	QPainterPath shape() const;
 	
-	int type() const { return QGraphicsItem::Type + 100; };
+	int type() const { return QGraphicsItem::Type + AreaRectItem; };
 
 	void setLabel(QString text) { label = text; };
 	QString getLabel() { return label; };
