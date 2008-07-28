@@ -88,6 +88,9 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		AreaItem *aItem = new AreaItem();
 		aItem->setPos(mouseEvent->scenePos());
 		addItem(aItem);
+		//TODO: save a refer to area item
+		
+		m->forceManageGraphAction();
 	}
 
 	/* default action when the arrow icon is checked */
@@ -268,13 +271,14 @@ void LabScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     	m->forceManageGraphAction();
     }
 	
+	//Stop resizing area
 	if(resizing)
 	{
 		resizing = false;
 		resizeItem = NULL;
 	}
 	
-
+	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
 /**
@@ -340,6 +344,7 @@ QGraphicsLineItem* LabScene::initNewLinkLine()
 	//this link is only a fake. the true line will be created later...
 	QGraphicsLineItem *link = new QGraphicsLineItem();
 	link->setPen(QPen(Qt::yellow, 6, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	link->setZValue(20);
 	
 	return link;
 }
@@ -362,7 +367,7 @@ void LabScene::initBorder()
 	border = new QGraphicsRectItem();
 		
 	//the pen & flags
-	QPen pen(Qt::green, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+	QPen pen(Qt::darkRed, 4, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 	border->setFlags(QGraphicsItem::ItemClipsToShape);
 	border->setPen(pen);
 	//set the rect
@@ -370,7 +375,7 @@ void LabScene::initBorder()
 	border->setZValue(1);
 	
 	/* Adds the border to this scene */
-	//addItem(border);
+	addItem(border);
 }
 
 /**
