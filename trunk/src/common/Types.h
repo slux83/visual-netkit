@@ -28,7 +28,8 @@ enum ItemType
 	VmItem = 1,
 	CdItem = 2,
 	SvgItem = 3,
-	LnkItem = 4
+	LnkItem = 4,
+	AreaRectItem = 5
 };
 
 #endif /*TYPES_H_*/
