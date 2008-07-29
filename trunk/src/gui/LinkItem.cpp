@@ -21,6 +21,7 @@
 #include "handles/LinkHandler.h"
 #include <QPointF>
 #include <QPen>
+#include <math.h>
 
 /**
  * Constructor
@@ -205,7 +206,7 @@ void LinkItem::deleteLinkActionCalled()
 void LinkItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	Q_UNUSED(event);
-	
+	qDebug() << ::acos(lineItem->line().dx() / lineItem->line().length());
 	contextMenu.exec(QCursor::pos());
 }
 
@@ -233,37 +234,9 @@ void LinkItem::refreshGroup()
  * [REIMPL]
  * Returns the shape of this item as a QPainterPath in local coordinates.
  */
-/*QRectF LinkItem::boundingRect() const
-{
-	QPainterPath path;
-	QRectF rect;
-	
-	// link line optimized bounding rect
-	qreal extra = (lineItem->pen().width() + 20) / 2.0;
-	//QRectF lineBR(lineItem->line().p1(), QSizeF(lineItem->line().p2().x() - lineItem->line().p1().x(), lineItem->line().p2().y() - lineItem->line().p1().y()));
-	//path.addRect(lineBR.normalized().adjusted(-extra, -extra, extra, extra));	// adds the line path
-	
-	QPolygonF lineBR;
-	lineBR << QPointF(lineItem->line().p1().x(), lineItem->line().p1().y()+extra) 
-		   << QPointF(lineItem->line().p2().x(), lineItem->line().p2().y()+extra) 
-		   << QPointF(lineItem->line().p2().x(), lineItem->line().p2().y()-extra) 
-		   << QPointF(lineItem->line().p1().x(), lineItem->line().p1().y()-extra);
-	
-	path.addPolygon(lineBR);
-	//path.addRect(myLabel->shape().boundingRect());	// adds the label path
-	
-	//QRectF base_rect(myLabel->shape().boundingRect());
-	
-	//adds a QRectF with height as n*base_rect.height
-	 */
-	/*path.addRect(myLabel->shape().boundingRect().x(),
-				 myLabel->shape().boundingRect().y(), 
-				 base_rect.width(), 
-				 base_rect.height() * pluginsSharedArea->getPluginsArea().size());
-	*/
 /*
-	rect = path.boundingRect();
-	
-	return rect;
+QRectF LinkItem::boundingRect() const
+{
+	return lineItem->boundingRect();
 }
 */

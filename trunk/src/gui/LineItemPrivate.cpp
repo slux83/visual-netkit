@@ -33,18 +33,15 @@ LineItemPrivate::LineItemPrivate(QGraphicsItem *parent) : QGraphicsLineItem(pare
  * [REIMPL]
  * Redefined the bounding rect
  */
-
 /*QRectF LineItemPrivate::boundingRect() const
 {
-     //qreal extra = (pen().width() + 20) / 2.0;
      
-     return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
-                                      line().p2().y() - line().p1().y()))
-		           .normalized();
-		           //.adjusted(-extra, -extra, extra, extra);
-	//return QRectF();
-}
-*/
+	return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
+				line().p2().y() - line().p1().y()))
+				.normalized()
+				.adjusted(-10, -10, 10, 10);
+}*/
+
 
 /**
  * Set the line style gived the hardware interface state
