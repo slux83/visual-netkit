@@ -228,4 +228,7 @@ void VmHandler::deleteVm(VirtualMachineItem *vmItem)
 	QString temp = vm->getName();
 	LabHandler::getInstance()->removePathFromTree(temp, true);
 	LabHandler::getInstance()->removePathFromTree(temp.append(".startup"), true);
+	
+	/* Clear property dock content */
+	LabHandler::getInstance()->getMainWindow()->clearPropertyDock();
 }

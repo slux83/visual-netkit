@@ -197,4 +197,8 @@ void LinkHandler::deleteLink(LinkItem *link)
 	
 	/* Remove the ethernet from tree scene view */
 	SceneTreeMapper::getInstance()->removeLink(link, link->getVirtualMachineItem());
+	
+	/* Clear property dock content */
+	LabHandler::getInstance()->getMainWindow()->clearPropertyDock();
+
 }
