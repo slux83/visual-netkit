@@ -190,4 +190,7 @@ void CdHandler::deleteCd(CollisionDomainItem *cdItem)
 	/* Remove the Collision domain from tree scene view */
 	SceneTreeMapper::getInstance()->removeCd(cdItem);
 
+	/* Clear property dock content */
+	LabHandler::getInstance()->getMainWindow()->clearPropertyDock();
+
 }
