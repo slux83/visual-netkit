@@ -36,7 +36,7 @@ LabScene::LabScene() : QGraphicsScene(0, 0, 1000, 1000)
 	selectionRect = NULL;
 	resizing = false;
 	resizeItem = NULL;
-	
+		
 }
 
 /**

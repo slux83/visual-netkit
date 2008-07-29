@@ -73,6 +73,7 @@ public:
 	/* Reimpl */
 	int type() const { return UserType + LnkItem; };
 	//QRectF boundingRect() const;
+	QPainterPath shape () const;
 	
 protected:
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

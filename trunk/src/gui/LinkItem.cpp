@@ -240,3 +240,13 @@ QRectF LinkItem::boundingRect() const
 	return lineItem->boundingRect();
 }
 */
+
+/**
+ * [REIMPL]
+ * The new shape is the line shape a bit expanded
+ */
+QPainterPath LinkItem::shape() const
+{
+	QPainterPath path = lineItem->shape();
+	return path;
+}
