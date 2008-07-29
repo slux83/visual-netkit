@@ -293,38 +293,44 @@ void LabScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
 	MainWindow *m = LabHandler::getInstance()->getMainWindow();
 	
 	/* The user double click */
-	if(mouseEvent->button() == Qt::LeftButton && 
-			m->actionManageGraph->isChecked())
+	if(!mouseEvent->button() == Qt::LeftButton || 
+			!m->actionManageGraph->isChecked())
+	return;
+	
+	/* Get one selected item */
+	QList<QGraphicsItem*> selectedItems = this->selectedItems();
+	
+	if (selectedItems.isEmpty())
+		return;
+	
+	QGraphicsItem *selectedItem = selectedItems.first();
+	if(selectedItem != NULL)
 	{
-		/* Get one selected item */
-		QList<QGraphicsItem*> selectedItems = this->selectedItems();
-		
-		if (!selectedItems.isEmpty())
+		switch(selectedItem->type())
 		{
-			QGraphicsItem *selectedItem = selectedItems.first();
-			if(selectedItem != NULL)
-			{
-				switch(selectedItem->type())
-				{
-					//Virtual Machine item
-					case QGraphicsItem::UserType + VmItem:
-						VmHandler::getInstance()->renderVmProperties(
-							dynamic_cast<VirtualMachineItem*>(selectedItem));
-						break;
-						
-					//Collision Domain item
-					case QGraphicsItem::UserType + CdItem:
-						CdHandler::getInstance()->renderCdProperties(
-							dynamic_cast<CollisionDomainItem*>(selectedItem));
-						 break;
-						
-					//Link item
-					case QGraphicsItem::UserType + LnkItem:
-						LinkHandler::getInstance()->renderLinkProperties(
-								dynamic_cast<LinkItem*>(selectedItem));
-						break;
-				}
-			}
+			//Virtual Machine item
+			case QGraphicsItem::UserType + VmItem:
+				VmHandler::getInstance()->renderVmProperties(
+						dynamic_cast<VirtualMachineItem*>(selectedItem));
+				break;
+				
+			//Collision Domain item
+			case QGraphicsItem::UserType + CdItem:
+				CdHandler::getInstance()->renderCdProperties(
+						dynamic_cast<CollisionDomainItem*>(selectedItem));
+				 break;
+				
+			//Link item
+			case QGraphicsItem::UserType + LnkItem:
+				LinkHandler::getInstance()->renderLinkProperties(
+						dynamic_cast<LinkItem*>(selectedItem));
+				break;
+				
+			//Area item
+			case QGraphicsItem::UserType + AreaRectItem:
+				AreaController::getInstance()->renderAreaProperties(
+						dynamic_cast<AreaItem*>(selectedItem));
+				break;
 		}
 	}
 }

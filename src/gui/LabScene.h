@@ -39,7 +39,7 @@ private:
 	QGraphicsRectItem *selectionRect;	//the selection rect
 	QGraphicsLineItem *link;			//a fake link
 	bool resizing;						//if the area will be resized
-	AreaItem *resizeItem;			//current ready to resize selected area
+	AreaItem *resizeItem;				//current ready to resize selected area
 		
 	QGraphicsLineItem *initNewLinkLine();
 	void initBorder();

@@ -218,3 +218,14 @@ void AreaItem::deleteAreaActionCalled()
 	if(resp == QMessageBox::Yes)
 		aController->deleteArea(this);
 }
+
+/**
+ * [PRIVATE]
+ * Change area text
+ */
+void AreaItem::setLabel(QString text)
+{
+	label = text;
+	aController->setChangedLabState();
+	update(boundingRect());
+}

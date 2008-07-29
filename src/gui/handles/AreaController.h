@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QTableWidget>
 
 class AreaItem;
 
@@ -34,12 +35,19 @@ class AreaController : public QObject
 private:
 	static AreaController* instance;
 	QList<AreaItem *> areas;
+	AreaItem* currentArea;
+	
+	void renderProperties(QTableWidget *tableWidget);
+
+public slots:
+	void saveChangedProperty(int row, int column);
 	
 public:
 	AreaController();
 	virtual ~AreaController();
 	static AreaController* getInstance();
 	
+	void renderAreaProperties(AreaItem* area);
 	void addArea(AreaItem* newArea);
 	void setChangedLabState();
 	void deleteArea(AreaItem *aItem);
