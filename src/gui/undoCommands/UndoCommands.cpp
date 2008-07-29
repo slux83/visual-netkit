@@ -431,7 +431,6 @@ AddAreaCommand::AddAreaCommand(AreaItem* addedArea,
  */ 
 AddAreaCommand::~AddAreaCommand()
 {
-	delete area;
 }
 
 /**
