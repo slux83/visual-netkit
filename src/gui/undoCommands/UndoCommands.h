@@ -27,6 +27,7 @@
 #include "../../core/CollisionDomain.h"
 #include "../../core/HardwareInterface.h"
 #include "../LinkItem.h"
+#include "../AreaItem.h"
 #include "../handles/VmMapper.h"
 #include "../handles/CdMapper.h"
 #include "../handles/LinkMapper.h"
@@ -209,4 +210,49 @@ public:
 	void undo();
 	void redo();
 };
+
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Delete an area
+ */
+class DeleteAreaCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	AreaItem *area;
+	
+public:
+	DeleteAreaCommand(AreaItem *deletedArea,
+			QUndoCommand *parent = 0);
+	virtual ~DeleteAreaCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
+
+/******************************************************************************/
+
+/**
+ * [COMMAND]
+ * Add an area
+ */
+class AddAreaCommand : public QObject, public QUndoCommand
+{
+	
+private:
+	AreaItem *area;
+	
+public:
+	AddAreaCommand(AreaItem *addedArea,
+			QUndoCommand *parent = 0);
+	virtual ~AddAreaCommand();
+	
+	//TODO
+	void undo();
+	void redo();
+};
+
 #endif /*UNDOCOMMANDS_H_*/

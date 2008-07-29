@@ -28,6 +28,7 @@
 #include <QObject>
 
 #include "../common/Types.h"
+#include "handles/AreaController.h"
 
 static const int pointSize = 5;
 static const quint8 areaOpacity = 100; //when the area is selected
@@ -46,11 +47,12 @@ private:
 	QColor activeColor;
 	QMenu contextMenu, *colourMenu;
 	QAction *deleteAction;
-
+	AreaController *aController;
+	
 	void initContextMenu();
 
 private slots:
-	void deleteAreaActionCalled() {};
+	void deleteAreaActionCalled();
 	void changeAreaColor(QAction *action);
 	
 public:
@@ -62,7 +64,7 @@ public:
 	
 	int type() const { return QGraphicsItem::Type + AreaRectItem; };
 
-	void setLabel(QString text) { label = text; };
+	void setLabel(QString text) { label = text; aController->setChangedLabState(); };
 	QString getLabel() { return label; };
 
 protected:

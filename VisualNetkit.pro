@@ -25,7 +25,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/AreaItem.h \
+HEADERS = src/gui/handles/AreaController.h \
+    src/gui/AreaItem.h \
     src/gui/AboutDialog.h \
     src/core/handles/SettingsFacadeController.h \
     src/gui/handles/SettingsHandler.h \
@@ -84,7 +85,8 @@ HEADERS = src/gui/AreaItem.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/AreaItem.cpp \
+SOURCES = src/gui/handles/AreaController.cpp \
+    src/gui/AreaItem.cpp \
     src/gui/AboutDialog.cpp \
     src/core/handles/SettingsFacadeController.cpp \
     src/gui/handles/SettingsHandler.cpp \
