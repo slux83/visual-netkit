@@ -59,13 +59,13 @@ public:
 	AreaItem();
 	virtual ~AreaItem();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0 ); 
+	void setLabel(QString text);
+	QString getLabel() { return label; };
+	
+	/* OVERRIDE */
+	int type() const { return QGraphicsItem::UserType + AreaRectItem; };
 	QRectF boundingRect() const;
 	QPainterPath shape() const;
-	
-	int type() const { return QGraphicsItem::Type + AreaRectItem; };
-
-	void setLabel(QString text) { label = text; aController->setChangedLabState(); };
-	QString getLabel() { return label; };
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
