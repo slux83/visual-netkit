@@ -18,12 +18,17 @@
 
 #include "AreaItem.h"
 #include <QDebug>
+#include <QMessageBox>
 
 /**
  * Constructor
  */
 AreaItem::AreaItem() : QGraphicsRectItem()
 {
+	/* init the controller */
+	aController =  AreaController::getInstance();
+	
+	/* set some stuff */
 	setZValue(10);
 	setRect(0, 0, 100, 100);	//the default size
 	setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
@@ -49,6 +54,8 @@ AreaItem::AreaItem() : QGraphicsRectItem()
  */
 AreaItem::~AreaItem()
 {
+	delete deleteAction;
+	delete colourMenu;
 }
 
 /**
@@ -57,6 +64,9 @@ AreaItem::~AreaItem()
  */
 void AreaItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+	Q_UNUSED(option)
+	Q_UNUSED(widget)
+	
 	/* Draw the area */
 	painter->save();
 	painter->setPen(QPen(Qt::black, 1));
@@ -186,5 +196,25 @@ QVariant AreaItem::itemChange(GraphicsItemChange change, const QVariant &value)
 		return newPos;
 	}
 	
+	// lab has changed
+	if(change == ItemPositionHasChanged && scene())
+	{
+		AreaController::getInstance()->setChangedLabState();
+	}
+	
 	return QGraphicsItem::itemChange(change, value);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Delete area handler
+ */
+void AreaItem::deleteAreaActionCalled()
+{
+	//ask before delete
+	int resp = QMessageBox::question(NULL, tr("VisualNetkit - question"), tr("Do you want delete the selected Area?"),
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	
+	if(resp == QMessageBox::Yes)
+		aController->deleteArea(this);
 }

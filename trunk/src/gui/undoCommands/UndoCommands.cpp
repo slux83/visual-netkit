@@ -376,3 +376,76 @@ void DeleteVmCommand::undo()
 {
 	//TODO
 }
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+DeleteAreaCommand::DeleteAreaCommand(AreaItem* deletedArea,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	area = deletedArea;
+	
+	setText(tr("Deleted Area ") + "\"" + area->getLabel() + "\"");
+}
+
+/**
+ * Deconstructor
+ */ 
+DeleteAreaCommand::~DeleteAreaCommand()
+{
+}
+
+/**
+ * Redo action
+ */
+void DeleteAreaCommand::redo()
+{
+	qDebug() << "Area deleted";
+}
+
+/**
+ * Undo action
+ */
+void DeleteAreaCommand::undo()
+{
+	//TODO
+}
+
+/******************************************************************************/
+
+/**
+ * Contructor
+ */
+AddAreaCommand::AddAreaCommand(AreaItem* addedArea,
+		QUndoCommand *parent) : QUndoCommand(parent)
+{
+	area = addedArea;
+	
+	setText(tr("Added Area "));
+}
+
+/**
+ * Deconstructor
+ */ 
+AddAreaCommand::~AddAreaCommand()
+{
+	delete area;
+}
+
+/**
+ * Redo action
+ */
+void AddAreaCommand::redo()
+{
+	qDebug() << "Area added";
+}
+
+/**
+ * Undo action
+ */
+void AddAreaCommand::undo()
+{
+	//TODO
+}

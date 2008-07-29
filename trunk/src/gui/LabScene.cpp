@@ -22,6 +22,7 @@
 #include "handles/CdMapper.h"
 #include "handles/LinkMapper.h"
 #include "handles/LinkHandler.h"
+#include "handles/AreaController.h"
 
 /**
  * Constructor: the scene size is Normal = 1000x1000
@@ -88,7 +89,9 @@ void LabScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 		AreaItem *aItem = new AreaItem();
 		aItem->setPos(mouseEvent->scenePos());
 		addItem(aItem);
-		//TODO: save a refer to area item
+		
+		//save the item inside its controller
+		AreaController::getInstance()->addArea(aItem);
 		
 		m->forceManageGraphAction();
 	}
