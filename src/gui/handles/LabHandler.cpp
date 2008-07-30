@@ -21,6 +21,7 @@
 #include "VmMapper.h"
 #include "CdMapper.h"
 #include "LinkMapper.h"
+#include "AreaController.h"
 #include "TabController.h"
 
 #include <QTreeWidgetItem>
@@ -562,6 +563,7 @@ void LabHandler::closeLab()
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();
 	LinkMapper::getInstance()->clear();
+	AreaController::getInstance()->clear();
 	
 	//Destroy all items
 	mainWindow->getLabScene()->clearScene();
