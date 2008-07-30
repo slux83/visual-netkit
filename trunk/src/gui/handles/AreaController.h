@@ -51,6 +51,7 @@ public:
 	void addArea(AreaItem* newArea);
 	void setChangedLabState();
 	void deleteArea(AreaItem *aItem);
+	void clear();
 };
 
 #endif /*AREACONTROLLER_H_*/

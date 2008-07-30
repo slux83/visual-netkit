@@ -166,3 +166,12 @@ void AreaController::renderProperties(QTableWidget *tableWidget)
 	property->setData(Qt::UserRole, AREA_TEXT);
 	tableWidget->setItem(0, 1, property);
 }
+
+/**
+ * Clear the controller
+ */
+void AreaController::clear()
+{
+	currentArea = NULL;
+	areas.clear();
+}
