@@ -53,7 +53,7 @@ public:
 	PluginProxy* getProxy() { return myProxy; };
 	void setProxy(PluginProxy* p) { myProxy = p; };
 	
-	QString getDefaultGraphisLabel() {return QString("Zebra"); };
+	QString getDefaultGraphisLabel() {return QString("zebra"); };
 	
 	bool init(QString laboratoryPath);
 };

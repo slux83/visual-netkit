@@ -107,7 +107,7 @@ QString PluginZebra::getTemplateLocation()
 		return QString();
 	}
 	
-	return QString(vm->getName() + "/etc/");
+	return QString(vm->getName() + "/etc/zebra/");
 }
 
 /**
@@ -178,7 +178,7 @@ bool PluginZebra::init(QString laboratoryPath)
 	Q_UNUSED(laboratoryPath)
 	
 	/* Set the graphic label */
-	myProxy->changeGraphicsLabel("Zebra");
+	myProxy->changeGraphicsLabel("zebra");
 	
 	return false;
 }
