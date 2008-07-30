@@ -20,6 +20,7 @@
 #include "../gui/handles/VmMapper.h"
 #include "../gui/handles/CdMapper.h"
 #include "../gui/handles/LinkMapper.h"
+#include "../gui/handles/AreaController.h"
 #include "../common/Types.h"
 #include "../common/CommonConfigs.h"
 
@@ -88,7 +89,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 		QDomElement items = doc->createElement("items");
 		scene.appendChild(items);
 	
-		/* adds virtualmachine and router items */
+		/* adds virtualmachine items */
 		QList<VirtualMachineItem *> vmlist = VmMapper::getInstance()->getVmItems();
 		if (vmlist.size() > 0) 
 		{	
@@ -265,6 +266,37 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				}
 			}
 		}
+		
+		/* Add area items */
+		QList<AreaItem *> areas = AreaController::getInstance()->getAreas();
+		if (areas.size() > 0) 
+		{
+			//adding to XML all area type items
+			QDomElement areasNode = doc->createElement("areas");
+			items.appendChild(areasNode);
+			
+			foreach(AreaItem* area, areas) 
+			{
+				QDomElement areaNode = doc->createElement("area");
+				areasNode.appendChild(areaNode);
+				
+				//adds area position & size
+				areaNode.setAttribute("x", QString::number(area->scenePos().x()));
+				areaNode.setAttribute("y", QString::number(area->scenePos().y()));
+				areaNode.setAttribute("width", QString::number(area->rect().width()));
+				areaNode.setAttribute("height", QString::number(area->rect().height()));
+				
+				//color in R,G,B syntax
+				areaNode.setAttribute("color",	QString::number(area->getCurrentColor().red()) + "," +
+												QString::number(area->getCurrentColor().green()) + "," +
+												QString::number(area->getCurrentColor().blue()));
+				
+				QByteArray areaTextB64 = area->getLabel().toUtf8().toBase64();
+				QDomCDATASection areaText = doc->createCDATASection(QString(areaTextB64));			
+				areaNode.appendChild(areaText);
+			}
+		}
+		
 	}
 	
 	return doc;

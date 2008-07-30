@@ -61,6 +61,7 @@ public:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0 ); 
 	void setLabel(QString text);
 	QString getLabel() { return label; };
+	QColor getCurrentColor() { return activeColor; };
 	
 	/* OVERRIDE */
 	int type() const { return QGraphicsItem::UserType + AreaRectItem; };

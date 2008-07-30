@@ -47,6 +47,7 @@ public:
 	virtual ~AreaController();
 	static AreaController* getInstance();
 	
+	QList<AreaItem *> getAreas() { return areas; };
 	void renderAreaProperties(AreaItem* area);
 	void addArea(AreaItem* newArea);
 	void setChangedLabState();
