@@ -46,6 +46,7 @@ public:
 	AreaController();
 	virtual ~AreaController();
 	static AreaController* getInstance();
+	void loadNewArea(QPointF pos, qreal width, qreal height, QString color, QString text);
 	
 	QList<AreaItem *> getAreas() { return areas; };
 	void renderAreaProperties(AreaItem* area);

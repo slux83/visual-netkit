@@ -174,6 +174,15 @@ void AreaItem::changeAreaColor(QAction *action)
 }
 
 /**
+ * Set the current color
+ */
+void AreaItem::setCurrentCorol(QColor &color)
+{
+	activeColor = color;
+	update(boundingRect());
+}
+
+/**
  * [PROTECTED]
  * Controls the movements of this item and doesn't permit that it's drawed outside
  * the scene rect
