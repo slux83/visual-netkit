@@ -40,7 +40,7 @@ private:
 	QString myName;
 
 	void fetchProperties();
-	QString getTemplateLocation();
+	QString getTemplateLocation(bool startup = false);
 	
 public:
 	PluginZebra();
