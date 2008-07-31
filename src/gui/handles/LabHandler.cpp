@@ -687,3 +687,40 @@ void LabHandler::removeItemFromScene(QGraphicsItem *item)
 {
 	mainWindow->graphicsView->scene()->removeItem(item);
 }
+
+/**
+ * Return a list of excluded paths (unchecked nodes)
+ * Recursive tree visit
+ */
+QStringList LabHandler::getExcludePaths(QTreeWidgetItem *currNode)
+{
+	QStringList paths;
+	QTreeWidget *tree = mainWindow->labTree;
+	
+	if(!currNode)
+		tree->setCurrentItem(tree->topLevelItem(0), 0);
+	else
+		tree->setCurrentItem(currNode, 0);
+	
+	QTreeWidgetItem *curr = tree->currentItem();
+	
+	// visit all children for the passed node
+	for(int i=0; i<curr->childCount(); i++) 
+	{
+		//it's a selected leaf?
+		if(curr->child(i)->data(0, Qt::UserRole).toString() == "config_file" &&
+			curr->child(i)->checkState(0) == Qt::Unchecked)
+		{
+			paths << curr->child(i)->data(0, Qt::UserRole + 1).toString();
+		}
+		
+		//it's a folder?
+		if(curr->child(i)->data(0, Qt::UserRole).toString() == "vm_element" || 
+			curr->child(i)->data(0, Qt::UserRole).toString() == "generic_element")
+		{
+			paths << getExcludePaths(curr->child(i));
+		}
+	}
+	
+	return paths;
+}
