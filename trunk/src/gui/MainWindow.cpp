@@ -520,12 +520,11 @@ void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootE
  * Dump the scene inside an PDF (A4 format) file
  */
 void MainWindow::dumpToPDF() 
-{
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-	
+{	
 	QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 	printer->setOutputFormat(QPrinter::PdfFormat);
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PDF"), "~/untitled.pdf", tr("File (*.pdf, *.ps)"));
+	QApplication::setOverrideCursor(Qt::WaitCursor);
 	printer->setOutputFileName(fileName);
 	QPainter *pdfPainter = new QPainter(printer);
 	graphicsView->scene()->render(pdfPainter);
@@ -542,11 +541,10 @@ void MainWindow::dumpToPDF()
  * Dump the scene inside an SVG file
  */
 void MainWindow::dumpToSVG()
-{
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-	
+{	
 	QSvgGenerator *gen = new QSvgGenerator();
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to SVG"), "~/untitled.svg", tr("File (*.svg)"));
+	QApplication::setOverrideCursor(Qt::WaitCursor);
 	gen->setFileName(fileName);
 	gen->setResolution(10);
 	QPainter *svgPainter = new QPainter(gen);
@@ -566,10 +564,10 @@ void MainWindow::dumpToSVG()
  * Dump the scene inside a PNG file
  */
 void MainWindow::dumpToPNG()
-{
-	QApplication::setOverrideCursor(Qt::WaitCursor);
-	
+{	
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Export to PNG"), "~/untitled.png", tr("File (*.png)"));
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+
 	QPixmap *pngImage =
 		new QPixmap(graphicsView->scene()->sceneRect().width(), graphicsView->scene()->sceneRect().height());
 	

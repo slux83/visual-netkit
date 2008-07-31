@@ -470,3 +470,62 @@ QStringList XMLParser::getCdPlugins(QString cdName, QString labPath, QString *er
 	
 	return plugins;
 }
+
+/**
+ * [STATIC-PUBLIC]
+ * Get all areas described by a QMap<QString, QVariant>
+ * 
+ * The returned value:
+ * 		areas
+ * 		{
+ * 			QMap
+ * 			{
+ *				"position"	= QPointF,
+ * 				"width"		= qreal,
+ * 				"height"	= qreal,
+ * 				"color"		= QString,		// "R,G,B"
+ * 				"label"		= QString 
+ * 			}
+ * 			...
+ * 		}
+ */
+QList< QMap<QString, QVariant> > XMLParser::getAreas(QString labPath, QString *error)
+{
+	QList< QMap<QString, QVariant> > areas;		//return val
+	
+	QDomDocument doc = XMLExpert::readDocument(labPath);
+	QDomNodeList nodeList = doc.elementsByTagName("area");
+	
+	for(int i=0; i<nodeList.size(); i++)
+	{
+		QDomElement elemArea = nodeList.at(i).toElement();
+		
+		// validate node area
+		if(!elemArea.hasAttribute("x") ||
+			!elemArea.hasAttribute("y") || 
+			!elemArea.hasAttribute("width") || 
+			!elemArea.hasAttribute("height") || 
+			!elemArea.hasAttribute("color"))
+		{
+			if(error)
+				error->append("Unvalid lab.xml: Area node not standard.");
+			
+			return areas;
+		}
+		
+		QMap<QString, QVariant> areaInfo;
+		
+		//save infos of this area inside the map
+		areaInfo.insert("position", QPointF(elemArea.attribute("x").toDouble(), elemArea.attribute("y").toDouble()));
+		areaInfo.insert("width", elemArea.attribute("width").toDouble());
+		areaInfo.insert("height", elemArea.attribute("height").toDouble());
+		areaInfo.insert("color", elemArea.attribute("color").toAscii());
+		
+		//get the text inside the cdata element (it's in base64)
+		areaInfo.insert("label", QString(QByteArray::fromBase64(elemArea.text().toUtf8())));
+		
+		areas.append(areaInfo);
+	}
+	
+	return areas;
+}

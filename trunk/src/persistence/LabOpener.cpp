@@ -560,6 +560,46 @@ bool LabOpener::createGraphicElements()
 		}
 	}
 	
+	/**
+	 * Create areas
+	 */
+	QString errorXml;
+	QList< QMap<QString, QVariant> > areas = XMLParser::getAreas(labPath, &errorXml);
+	
+	if(!errorXml.isEmpty())
+	{
+		//some error corrupt
+		errorString.append(errorXml);
+		emit loadStepDone(5, false);
+		return false;
+	}
+	
+	QListIterator< QMap<QString, QVariant> > areasIt(areas);
+	while(areasIt.hasNext())
+	{
+		/*	
+		 * QMap
+		 * {
+		 *	"position"	= QPointF,
+		 * 	"width"		= qreal,
+		 * 	"height"	= qreal,
+		 * 	"color"		= QString,		// "R,G,B"
+		 * 	"label"		= QString 
+		 * }
+		 */
+		QMap<QString, QVariant> areaInfo = areasIt.next();
+
+		//Load the area
+		AreaController::getInstance()->loadNewArea(areaInfo["position"].toPointF(),
+				(qreal)areaInfo["width"].toDouble(),
+				(qreal)areaInfo["height"].toDouble(),
+				areaInfo["color"].toString(),
+				areaInfo["label"].toString());
+	}
+	
+	
+	
+	//ok, step 5 completed
 	emit loadStepDone(5, true);
 	
 	return true;

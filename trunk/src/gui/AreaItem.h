@@ -62,6 +62,7 @@ public:
 	void setLabel(QString text);
 	QString getLabel() { return label; };
 	QColor getCurrentColor() { return activeColor; };
+	void setCurrentCorol(QColor &color);
 	
 	/* OVERRIDE */
 	int type() const { return QGraphicsItem::UserType + AreaRectItem; };

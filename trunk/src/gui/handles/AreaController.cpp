@@ -175,3 +175,39 @@ void AreaController::clear()
 	currentArea = NULL;
 	areas.clear();
 }
+
+/**
+ * Load (create) a saved area
+ */
+void AreaController::loadNewArea(QPointF pos, qreal width,
+		qreal height, QString color, QString text)
+{
+	//make a new area
+	AreaItem *area = new AreaItem();
+	area->setPos(pos);
+	area->setRect(0, 0, width, height);
+	
+	//create the color
+	QStringList rgb = color.split(',');
+	QColor areaBg;
+	if(rgb.size() == 3)
+	{
+		areaBg.setRed(rgb[0].toInt());
+		areaBg.setGreen(rgb[1].toInt());
+		areaBg.setBlue(rgb[2].toInt());
+	}
+	
+	//attach the color if valid
+	if(areaBg.isValid())
+		area->setCurrentCorol(areaBg);
+	else
+		qWarning() << "Color" << color << "is invalid as area background." << "Setting default color.";
+	
+	//text
+	area->setLabel(text);
+	
+	//save and draw
+	areas.append(area);
+	LabHandler::getInstance()->getMainWindow()->getLabScene()->addItem(area);
+	
+}

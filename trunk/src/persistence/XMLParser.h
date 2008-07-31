@@ -51,6 +51,8 @@ public:
 	static QStringList getCdPlugins(QString cdName, QString labPath, QString *error = NULL);
 	
 	static QStringList getLinkPlugins(QString vmName, QString ethName, QString labPath, QString *error = NULL);
+	
+	static QList< QMap<QString, QVariant> > getAreas(QString labPath, QString *error = NULL);
 };
 
 #endif /*XMLPARSER_H_*/
