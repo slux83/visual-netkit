@@ -89,7 +89,10 @@ QMap<QString, QString> PluginZebra::getTemplates()
 	else
 	{
 		qWarning() << "The plugin getTemplate() failed:" << daemons.errorString();
-	}		
+	}
+	
+	/* Startup file to init zebra */
+	templates.insert(getTemplateLocation(true), "\n/etc/init.d/zebra start\n");
 	
 	return templates;
 }
@@ -98,7 +101,7 @@ QMap<QString, QString> PluginZebra::getTemplates()
  * [PRIVATE]
  * Returns the path where save/append the template content
  */
-QString PluginZebra::getTemplateLocation()
+QString PluginZebra::getTemplateLocation(bool startup)
 {
 	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
 	if (vm == NULL)
@@ -107,7 +110,10 @@ QString PluginZebra::getTemplateLocation()
 		return QString();
 	}
 	
-	return QString(vm->getName() + "/etc/zebra/");
+	if(startup)
+		return QString(vm->getName() + ".startup");
+	else
+		return QString(vm->getName() + "/etc/zebra/");
 }
 
 /**
