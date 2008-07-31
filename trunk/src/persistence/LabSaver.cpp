@@ -37,6 +37,7 @@ LabSaver::LabSaver(const QString &path, bool backup)
 {
 	curPath = path;
 	needBackup = backup;
+	excludedPaths = LabHandler::getInstance()->getExcludePaths();
 }
 
 LabSaver::~LabSaver()
@@ -94,6 +95,10 @@ bool LabSaver::saveLabConf()
 {
 	bool allok = true;
 	
+	/* exclude file? */
+	if(excludedPaths.contains(LAB_CONF))
+		return true;
+	
 	QFile file(curPath + "/" + LAB_CONF);
 	
 	/* Create a backup file */
@@ -134,6 +139,10 @@ bool LabSaver::saveStartups()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
+		
+		/* Exclude this file? */
+		if(excludedPaths.contains(machineIterator.key() + ".startup"))
+			continue;
 		
 		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
 		
@@ -196,6 +205,10 @@ bool LabSaver::saveTemplates()
 		while (tplIterator.hasNext())
 		{
 			tplIterator.next();
+			
+			/* Exclude this file? */
+			if(excludedPaths.contains(tplIterator.key()))
+				continue;
 			
 			QStringList tplPathList = tplIterator.key().split("/");
 			tplPathList.removeLast();
@@ -266,6 +279,10 @@ bool LabSaver::saveTemplates()
 	while(machineIterator.hasNext())
 	{
 		machineIterator.next();
+		
+		/* Exclude this file? */
+		if(excludedPaths.contains(machineIterator.key() + ".startup"))
+			continue;
 		
 		QFile startup(curPath + "/" + machineIterator.key() + ".startup");
 		

@@ -171,6 +171,9 @@ void AreaItem::changeAreaColor(QAction *action)
 	
 	activeColor = backgroundColours.value(action->text());
 	update(boundingRect());
+	
+	AreaController::getInstance()->setChangedLabState();
+
 }
 
 /**
@@ -205,7 +208,7 @@ QVariant AreaItem::itemChange(GraphicsItemChange change, const QVariant &value)
 		return newPos;
 	}
 	
-	// lab has changed
+	// item has changed position
 	if(change == ItemPositionHasChanged && scene())
 	{
 		AreaController::getInstance()->setChangedLabState();

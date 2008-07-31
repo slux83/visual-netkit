@@ -66,6 +66,7 @@ public:
 	void setMainWindowTitle();
 	void removePathFromTree(QString &path, bool removeVm = false);
 	void removeItemFromScene(QGraphicsItem *item);
+	QStringList getExcludePaths(QTreeWidgetItem *currNode = NULL);
 	
 public slots:
 	void closeLab();

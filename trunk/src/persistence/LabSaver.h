@@ -30,6 +30,7 @@ private:
 	QString curFile;
 	QString curPath;
 	QString errorString;
+	QStringList excludedPaths;
 	bool needBackup;
 	
 	bool saveLabConf();
