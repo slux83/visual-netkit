@@ -1,0 +1,115 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PREAMBOLO - INIZIO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,12pt]{report}
+
+%%%%%%%%%%% PACCHETTI %%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{graphicx}	% per le immagini
+\usepackage{fancyhdr}	% per le impostazioni della pagina
+\usepackage[pdftex,bookmarks=true]{hyperref} % per gli hyperlinks
+
+% PACCHETTO MOLTO CONSIGLIATO! Serve ad impostare i margini in modo professionale!
+%\usepackage{layaureo}	% Il layout della tesi (richiede il pacchetto aggiuntivo LayAureo)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Carattere Bitstream Character
+\renewcommand{\familydefault}{bch}
+
+% Assicura che le eventuali pagine bianche non abbiano intestazioni e pie' di pagina
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+% numerazione delle pagine "araba"
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PREAMBOLO - FINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DOCUMENTO - INIZIO %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	% alcune parole: sillabazione
+	\hyphenation{up-load} 
+	
+% Ridefinisco localmente lo stile plain (ovvero lo stile che usa la prima
+	% pagina di ogni capitolo), per nascondere il numero della
+	% pagina anche all'inizio di Prefazione e Indice.
+	\fancypagestyle{plain}{%
+		\fancyhf{}
+		\renewcommand{\headrulewidth}{0pt}
+	}
+	
+	\addtolength{\skip\footins}{2em}	%Spaziatura testo - footnota
+	
+	\baselineskip=16pt	%L'interlinea 1,5 circa
+	\pagestyle{empty}
+
+	%%%%%%%%%%% FREONTESPIZIO DEDICA ED INDICE %%%%%
+	\include{capitoli/frontespizio}
+	% inizio tesi senza intestazione di pagina e pie' di pagina
+	
+	\include{capitoli/dedica}%	
+	\tableofcontents	% l'indice
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% PREFAZIONE
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+	\include{capitoli/prefazione}
+		
+	% Le righe seguenti impostano la struttura che avra' tutto il resto della tesi
+	
+	\fancypagestyle{plain}{%	% ripristino il numPag nell'ambiente plain
+		\fancyhf{}
+		\cfoot{\thepage}
+		\renewcommand{\headrulewidth}{0pt}
+	}
+	% Imposto intestazione e pie' di pagina della altre pagine
+	\pagestyle{fancy}	
+	\rhead{\footnotesize\bfseries\leftmark}
+	\lhead{\footnotesize\chaptername \ \thechapter}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CAPITOLO 1
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\include{capitoli/cap1}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CAPITOLO 2
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\include{capitoli/cap2}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CAPITOLO 3
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\include{capitoli/cap3}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CAPITOLO 4
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\include{capitoli/cap4}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CAPITOLO 5
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\include{capitoli/cap5}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% CONCLUSIONI
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Elimino l'intestazione della pagina per le conclusioni e la bibliografia
+	\rhead{}
+	\lhead{}	
+	\renewcommand{\headrulewidth}{0pt}
+	
+	\include{capitoli/conclusioni}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% BIBLIOGRAFIA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\include{capitoli/bibliografia}
+	
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DOCUMENTO - FINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
