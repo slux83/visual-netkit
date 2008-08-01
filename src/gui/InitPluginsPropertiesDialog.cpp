@@ -158,12 +158,10 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins)
 				layout->addWidget(label);
 				layout->addWidget(lineEdit);
 				
-				// save mapping; the key is "PluginName|a*n|PropertyName
-				// where a*n is the char a moltiplied for property order times
-				// and | is a not standard character separator
+				// save mapping; the key is "PluginName|000n|PropertyName
 				QString orderString = QString::number(prop->getOrder());
-				
-				
+				orderString.prepend(QString().fill('0', 5 - orderString.size()));
+								
 				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
 										SEPARATOR + orderString + 
 										SEPARATOR + prop->getName(),

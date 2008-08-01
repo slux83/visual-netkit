@@ -45,7 +45,7 @@ public:
 	void lockSceneAndActions();
 	QGraphicsView* getGraphicsView() { return graphicsView; };
 	void clearPropertyDock();
-	void changeTreeNodeName(QString oldName, QString newName, bool rootElement = false);
+	void changeTreeNodeName(QString oldName, QString newName);
 	LabScene *getLabScene() { return scene; };
 	void setSceneSize(QRectF &size);
 	
@@ -76,6 +76,7 @@ private:
 	void initMiniatureDock();
 	void updateMinuatureDock(int size);
 	void restoreWindow();
+	void updatePathDeph(QString oldName, QString newName, QTreeWidgetItem *startNode);
 	
 private slots:
 	void zoomLabView(int value);
