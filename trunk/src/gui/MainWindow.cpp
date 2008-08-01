@@ -474,46 +474,55 @@ void MainWindow::saveModifiedLab()
  * Change the name of a node inside the tree with the new name
  * Match criteria: MatchExactly
  */
-void MainWindow::changeTreeNodeName(QString oldName, QString newName, bool rootElement)
+void MainWindow::changeTreeNodeName(QString oldName, QString newName)
 {
-	QList<QTreeWidgetItem *> nodes;
-	
-	if(rootElement)
-	{
-		nodes = labTree->findItems(oldName, Qt::MatchExactly);
-	}
-	else
-	{
-		//Find the node as child of root element
-		QTreeWidgetItem *root = labTree->topLevelItem(0);		
-		if(root == NULL)
-		{
-			qWarning() << "MainWindow::changeTreeNodeName lab tree top element not found!";
-			return;
-		}
-		
-		for(int i=0; i<root->childCount(); i++)
-		{
-			if(root->child(i)->data(0, Qt::DisplayRole).toString() == oldName)
-				nodes << root->child(i);
-		}
+	QTreeWidgetItem * nodeVm;
 
-	}
-		
-	
-	if(nodes.size() == 1)
+	//Find the node as child of root element
+	QTreeWidgetItem *root = labTree->topLevelItem(0);		
+	if(root == NULL)
 	{
-		nodes.first()->setData(0, Qt::DisplayRole, newName);
-		
-		//update path
-		if(nodes.first()->data(0, Qt::UserRole).toString() == "config_file")
-			nodes.first()->setData(0, Qt::UserRole + 1, newName);	//path
+		qWarning() << "MainWindow::changeTreeNodeName lab tree top element not found!";
+		return;
 	}
-	else
-		qWarning() << "MainWindow::changeTreeNodeName nodes.size() is" << nodes.size();
 	
+	//get the hostnode
+	for(int i=0; i<root->childCount(); i++)
+	{
+		if(root->child(i)->data(0, Qt::DisplayRole).toString() == oldName)
+			nodeVm = root->child(i);
+	}
+	
+	nodeVm->setData(0, Qt::DisplayRole, newName);
+	
+	updatePathDeph(oldName, newName, nodeVm);	//start a recursive update path of all childs	
 }
 
+/**
+ * [PRIVATE]
+ * Recursive visit of a node to change/update the path of config files
+ */
+void MainWindow::updatePathDeph(QString oldName, QString newName, QTreeWidgetItem *startNode)
+{
+	//this is a leaf (update path and exit)
+	if(startNode->data(0, Qt::UserRole).toString() == "config_file")
+	{
+		//get the old path, and change it
+		QString tmp = startNode->data(0, Qt::UserRole + 1).toString();
+		tmp.replace(oldName, newName);
+		
+		//save the updated path
+		startNode->setData(0, Qt::UserRole + 1, tmp);
+		
+		return;
+	}
+	
+	// visit all children for the passed node
+	for(int i=0; i<startNode->childCount(); i++) 
+	{		
+		updatePathDeph(oldName, newName, startNode->child(i));	//recursive call
+	}
+}
 
 /**
  * [PRIVATE-SLOT]
