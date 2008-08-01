@@ -83,7 +83,17 @@ QMap<QString, QString> PluginZebra::getTemplates()
 	if (zebraConf.open(QFile::ReadOnly)) 
 	{
 		QTextStream in(&zebraConf);
-		templates.insert(getTemplateLocation().append("zebra.conf"), in.readAll());
+		QString fileContent = in.readAll();
+		
+		/* Change tags */
+		VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
+		QString hostname = (vm)? vm->getName() : "zebra";
+
+		fileContent.replace("<ZEBRA_HOSTNAME>",		hostname);
+		fileContent.replace("<ZEBRA_PASSWORD>",		properties["zebra password"]->getValue());
+		fileContent.replace("<ZEBRA_LOG_PATH>",		properties["zebra log path"]->getValue());
+	
+		templates.insert(getTemplateLocation().append("zebra.conf"), fileContent);
 		zebraConf.close();
 	}
 	else
@@ -163,21 +173,20 @@ bool PluginZebra::saveProperty(QString propName, QString propValue, QString *plu
 	}
 	
 	/* Validate the value for daemons list: only "no" or "yes" */
-	if(pluginAlertMsg != NULL && propValue != "no" && propValue != "yes")
+	if(pluginAlertMsg != NULL && propValue != "no" && propValue != "yes" && propName.startsWith("use "))
 	{
-		pluginAlertMsg->append("You can set only \"yes\" or \"no\" values.");
+		pluginAlertMsg->append("You can set only \"yes\" or \"no\" values for daemons properties.");
 		return false;
 	}
 	
 	/* All is ok, store the property */
-	properties.value(propName)->setValue(propValue);
+	properties.value(propName)->setValue(propValue);	
 	
 	return true;
 }
 
 /**
  * Init the plugin on load
- * TODO
  */
 bool PluginZebra::init(QString laboratoryPath)
 {
