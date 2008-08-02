@@ -141,6 +141,9 @@ bool LabOpener::validateLab()
 		}
 	}
 	
+	if(valid)	//update the paths to uncheck on tree
+		LabHandler::getInstance()->setExcludedPaths(XMLParser::getExcludedPaths(labPath));
+	
 	emit loadStepDone(0, valid);
 	return valid;
 }

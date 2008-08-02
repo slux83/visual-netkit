@@ -529,3 +529,29 @@ QList< QMap<QString, QVariant> > XMLParser::getAreas(QString labPath, QString *e
 	
 	return areas;
 }
+
+/**
+ * [STATIC-PUBLIC]
+ * Get all 'excluded from save' paths
+ */
+QStringList XMLParser::getExcludedPaths(QString labPath, QString *error)
+{
+	Q_UNUSED(error)
+	
+	QStringList exclPaths;		//return val
+		
+	QDomDocument doc = XMLExpert::readDocument(labPath);
+	QDomNodeList pathNodes = doc.elementsByTagName("path");
+	
+	for(int i=0; i<pathNodes.size(); i++)
+	{
+		QDomElement elemPath = pathNodes.at(i).toElement();
+		
+		if(elemPath.text().isEmpty())
+			qWarning() << "Node excluded-path have empty CDATA section. Skipped.";
+		else
+			exclPaths << elemPath.text();
+	}
+	
+	return exclPaths;	
+}

@@ -43,6 +43,7 @@ private:
 	MainWindow *mainWindow;
 	UndoStack *undoStack;
 	LabPropertyController *propertyController;
+	QStringList excludedPaths;
 	
 	void addPathToNode(QStringList path, QTreeWidgetItem *node, QString fullPath);
 	QMap<QString, QTreeWidgetItem*> findItems(QString nodeName, QTreeWidget *node);
@@ -67,6 +68,9 @@ public:
 	void removePathFromTree(QString &path, bool removeVm = false);
 	void removeItemFromScene(QGraphicsItem *item);
 	QStringList getExcludePaths(QTreeWidgetItem *currNode = NULL);
+	void setExcludedPaths(QStringList exclPaths) { excludedPaths.clear();  excludedPaths = exclPaths; };
+	QStringList getXmlExcludedPaths() { return excludedPaths; };
+	
 	
 public slots:
 	void closeLab();
