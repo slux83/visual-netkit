@@ -231,7 +231,13 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 	startupConf->setData(0, Qt::UserRole + 1, QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	startupConf->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	startupConf->setCheckState(0, Qt::Checked);
+	
+	//set check state of this file
+	if(excludedPaths.contains(QString(m->getName() + ".startup")))
+		startupConf->setCheckState(0, Qt::Unchecked);
+	else
+		startupConf->setCheckState(0, Qt::Checked);
+	
 	startupConf->setToolTip(0, tr("Check to Save this file."));
 	
 	QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
@@ -421,7 +427,13 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 				elem->setData(0, Qt::UserRole, "config_file");		//type
 				elem->setData(0, Qt::UserRole + 1, fullPath);		//path
 				elem->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-				elem->setCheckState(0, Qt::Checked);
+				
+				//set check state of this file
+				if(excludedPaths.contains(fullPath))
+					elem->setCheckState(0, Qt::Unchecked);
+				else
+					elem->setCheckState(0, Qt::Checked);
+				
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 				elem->setToolTip(0, tr("Check to Save this file."));
 

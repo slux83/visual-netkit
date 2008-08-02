@@ -42,6 +42,7 @@ class LabOpener : public QObject
 private:
 	QString labPath;
 	QString errorString;
+	
 	bool validateLab();					//step 0
 	bool createLab();					//step 1
 	bool fetchMachines();				//step 2

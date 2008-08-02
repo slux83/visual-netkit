@@ -299,5 +299,19 @@ QDomDocument* XMLSaver::prepareDomDocument()
 		
 	}
 	
+	/* Save excluded paths */
+	QStringList excludedPaths = LabHandler::getInstance()->getExcludePaths();
+	QDomElement excludedNode = doc->createElement("excluded");
+	root.appendChild(excludedNode);
+	
+	//save paths as excluded's childs
+	foreach(QString path, excludedPaths)
+	{
+		QDomElement pathNode = doc->createElement("path");
+		QDomCDATASection pathString = doc->createCDATASection(path);
+		pathNode.appendChild(pathString);
+		excludedNode.appendChild(pathNode);
+	}
+	
 	return doc;
 }
