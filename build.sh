@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # VisualNetkit Builder script
 # Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
@@ -18,11 +18,7 @@
 
 QMAKE="qmake"
 GDB="gdb"
-VN_PLUGINS=(	"src/plugin_dev/test" \
-		"src/plugin_dev/ipv4" \
-		"src/plugin_dev/mac"  \
-		"src/plugin_dev/bashrc" \
-		"src/plugin_dev/zebra"  )
+VN_PLUGIN_DIR="src/plugin_dev"
 VN_HOME=`pwd`
 MAKE="make -j2"
 
@@ -35,10 +31,9 @@ usage()
 	echo " 	OPTIONS:"
 	echo "	-h		Display this help and exit"
 	echo "	-b		Build plugins and Visual Netkit"
-	echo "	-bg		Build all in Debug mode (using GDB)"
+	echo "	-bg		Build and run in Debug mode (using GDB)"
 	echo "	-c		Clear plugins and Visual Netkit"
 	echo "	-cb		Clear and Re-Build plugins and Visual Netkit"
-	echo "	-r		Build Visual Netkit for release (Stripped)"
 	echo	
 }
 
@@ -59,8 +54,9 @@ release()
 compile()
 {
 	#compile plugins first
-	for plugin in "${VN_PLUGINS[@]}"
+	for plugin in "$VN_PLUGIN_DIR"/*
 	do
+		[ `basename $plugin` == 'test' ] && continue
 		if [ -d $plugin ]
 		then
 
@@ -97,20 +93,20 @@ compile()
 		echo
 		$GDB ./bin/VisualNetkit
 	fi
-	if [ "$1" = "" ]; then
-		echo
-		echo ">>> STARTING ./bin/VisualNetkit <<<"
-		echo
-		cd bin
-		./visualnetkit.sh
-	fi
+#	if [ "$1" = "" ]; then
+#		echo
+#		echo ">>> STARTING ./bin/VisualNetkit <<<"
+#		echo
+#		cd bin
+#		./visualnetkit.sh
+#	fi
 	
 }
 
 clean()
 {
 	#clean plugins first
-	for plugin in "${VN_PLUGINS[@]}"
+	for plugin in "$VN_PLUGIN_DIR"/*
 	do
 		if [ -d $plugin ]
 		then
@@ -131,6 +127,8 @@ clean()
 			
 		fi
 	done
+
+	rm bin/plugins/*
 
 	echo
 	echo "##########################"
@@ -161,13 +159,10 @@ if [ "$#" != "0" ]; then
 			clean
 			compile
 		;;
-		-r)
-			release
-		;;
 		*)
 			usage
 		;;
 	esac
 else
-	compile
+	release
 fi

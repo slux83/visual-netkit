@@ -1,4 +1,4 @@
-VisualNetkit 1.0b
+VisualNetkit 1.0
 =================
 Alessio Di Fazio, Paolo Minasi
 
@@ -37,7 +37,10 @@ edited, so that the corresponding features are enabled on those elements.
 The choice to rely on plugins makes VisualNetkit easily extensible. For
 example, support for the configuration of a particular daemon or service can be
 introduced by developing an appropriate plugin. A skeleton of a `test' plugin
-is provided in the `src/plugin_dev/' subdirectory.
+is provided in the `src/plugin_dev/bashrc' subdirectory.
+
+Please, read the PluginHowTo to obtain more info:
+http://code.google.com/p/visual-netkit/wiki/PluginHowTo
 
 
 Enjoy!
