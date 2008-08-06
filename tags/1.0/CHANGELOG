@@ -1,0 +1,15 @@
+2008-08-06 [1.0] Slux <slux83@gmail.com>
+ * [Fixed] bug #3 ~ http://code.google.com/p/visual-netkit/issues/detail?id=3
+ * [Added] a checkbox on lab tree to exclude files from save action
+ * [Added] areas with text, resize and background color customable
+ * [Fixed] links selection problems; now the selection is more precise
+ * [Fixed] crash when property dock contain stuff of a base element nearly deleted
+ * [Added] an experimental Zebra plugin
+ * [Fixed] bug #4 ~ http://code.google.com/p/visual-netkit/issues/detail?id=4
+ * [Fixed] more than 10 minor bugs
+
+--------------------------------------------------------------------------------
+
+2008-07-03 [1.0beta] Slux <slux83@gmail.com>
+ * First beta release for 1.0 branch: 1.0beta
+ 

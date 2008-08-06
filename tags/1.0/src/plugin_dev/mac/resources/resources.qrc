@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/" >
+        <file alias="ifconfig_tpl">ifconfig.tpl</file>
+        <file alias="ini_mac">plugin.ini</file>
+    </qresource>
+</RCC>

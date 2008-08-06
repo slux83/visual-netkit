@@ -1,0 +1,12 @@
+###
+# This file is createb by Visual Netkit <VISUAL_NETKIT_VERSION> version
+# http://www.netkit.org ~ http://code.google.com/p/visual-netkit/
+#
+
+LAB_DESCRIPTION="<DESCRIPTION>"
+LAB_VERSION="<VERSION>"
+LAB_AUTHOR="<AUTHOR>"
+LAB_EMAIL="<EMAIL>"
+LAB_WEB="<WEB>"
+
+<TOPOLOGY><HOST>[<ETH_NUMBER>]="<COLLISION_DOMAIN_NAME>"</TOPOLOGY>
