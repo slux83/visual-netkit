@@ -36,7 +36,8 @@ class PluginLoaderFactory : public QLibrary
 private:
 	createPlugin_t* createPluginFactory;
 	destroyPlugin_t* destroyPluginFactory;
-	QString name, description, version, deps, author, type;
+	QString name, description, version, author, type;
+	QStringList deps;
 	QList<PluginProperty*> properties;	//a copy for a fast access (unused)
 	
 public:
@@ -52,7 +53,7 @@ public:
 	QString getName() { return name; };
 	QString getDescription() { return description; };
 	QString getVersion() { return version; };
-	QString getDeps() { return deps; };
+	QStringList getDeps() { return deps; };
 	QString getAuthor() { return author; };
 	
 };

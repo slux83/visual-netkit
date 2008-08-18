@@ -52,7 +52,7 @@ private:
 	QAction *restoreGroupAction;
 	QAction *deleteAction;
 	QAction *managePluginsAction;
-	ManagePluginsDialog *pluginsManager;
+	//ManagePluginsDialog *pluginsManager;
 	bool isJoin;
 	quint16 connectedlinks;
 	
@@ -83,7 +83,7 @@ public slots:
 	void ungroupActionCalled();
 	void deleteCdActionCalled();
 	void restoreGroupActionCalled();
-	void managePluginsActionCalled();
+	//void managePluginsActionCalled();
 	void setPluginLine(QString pluginName, QString content);
 	
 signals:

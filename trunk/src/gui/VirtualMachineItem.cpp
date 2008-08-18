@@ -51,7 +51,7 @@ VirtualMachineItem::VirtualMachineItem(QString label)
 	/* Context menu */
 	initContextMenu();
 	
-	pluginsManager = new ManagePluginsDialog(this);
+//	pluginsManager = new ManagePluginsDialog(this);
 }
 
 /**
@@ -59,7 +59,7 @@ VirtualMachineItem::VirtualMachineItem(QString label)
  */
 VirtualMachineItem::~VirtualMachineItem()
 {
-	delete pluginsManager;
+//	delete pluginsManager;
 	delete vmSvg;
 	delete vmNameLabel;
 	delete pluginsSharedArea;
@@ -229,11 +229,11 @@ void VirtualMachineItem::setLabelVmName(QString newLabel)
  * [SLOT]
  * Show the manage plugins dialog
  */
-void VirtualMachineItem::managePluginsActionCalled()
-{
-	pluginsManager->buildGui();
-	pluginsManager->show();
-}
+//void VirtualMachineItem::managePluginsActionCalled()
+//{
+//	pluginsManager->buildGui();
+//	pluginsManager->show();
+//}
 
 /**
  * [PRIVATE]

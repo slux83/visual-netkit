@@ -10,6 +10,9 @@ QMAKE_LFLAGS = -Wl,-rpath,$$[QT_INSTALL_LIBS] $$[QMAKE_LFLAGS_SHLIB]
 DEPENDPATH += .
 DESTDIR = ../../../bin/plugins
 
+#QtXml is used by property expert to parse plugin xml config file
+QT += xml
+
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
@@ -31,4 +34,5 @@ SOURCES += PluginTest.cpp \
     ../../core/HardwareInterface.cpp \
     ../../core/CollisionDomain.cpp \
     ../../plugin_framework/PluginProperty.cpp \
-    ../../plugin_framework/PluginRegistry.cpp
+    ../../plugin_framework/PluginRegistry.cpp \
+    ../../plugin_framework/PropertyExpert.cpp

@@ -26,6 +26,7 @@
 PluginProxy::PluginProxy(PluginRegistry *r) : QObject()
 {
 	registry = r;
+	pExpert = NULL;
 }
 
 /**
@@ -37,6 +38,9 @@ PluginProxy::~PluginProxy()
 	 * NOTE: do not destroy the plugin here!
 	 * It will be destroyed by loader factory
 	 */
+	
+	if(pExpert)
+		delete pExpert;
 }
 
 /**
@@ -101,14 +105,6 @@ QMap<QString, QString> PluginProxy::getTemplates()
 }
 
 /**
- * Return the settings for plugin 
- */
-QSettings* PluginProxy::getPluginSettings()
-{
-	return pluginInterface->getMySettings();
-}
-
-/**
  * Return the base element attached to the plugin
  */
 QObject* PluginProxy::getBaseElement()
@@ -145,3 +141,35 @@ bool PluginProxy::saveProperty(QString propName, QString propValue, QString *plu
 	return pluginInterface->saveProperty(propName, propValue, pluginAlertMsg);
 }
 
+/**
+ * [PRIVATE]
+ * Init the property expert
+ */
+void PluginProxy::initPropertyExpert()
+{
+	QString content = pluginInterface->getXMLResource();
+	pExpert = new PropertyExpert(content);
+}
+
+/**
+ * Validate the xml plugin conf file
+ */
+bool PluginProxy::validateXmlPluginConfFile()
+{
+	if(pExpert)
+		return pExpert->isXmlConfValid();
+	
+	qWarning() << "PluginProxy::validateXmlPluginConfFile()" << "property expert is NULL";
+	
+	return false;
+}
+
+/**
+ * Addo a new property
+ */
+QPair<PluginProperty*, QString> PluginProxy::addProperty(QString propertyIdToAdd,
+		QString parentPropertyId, quint16 parentPropertyCopy)
+{
+	return pluginInterface->addProperty(propertyIdToAdd,
+			parentPropertyId, parentPropertyCopy);
+}

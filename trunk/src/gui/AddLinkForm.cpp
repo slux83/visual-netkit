@@ -182,7 +182,7 @@ void AddLinkForm::showPluginInfos(QListWidgetItem *item)
 			/* Render infos */
 			pName->setText(factory->getName());
 			pDescription->setText(factory->getDescription());
-			pDeps->setText(factory->getDeps());
+			pDeps->setText(factory->getDeps().join(", "));
 			pAuthor->setText(factory->getAuthor());
 			pVersion->setText(factory->getVersion());
 			

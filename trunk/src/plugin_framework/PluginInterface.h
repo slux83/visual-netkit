@@ -40,13 +40,14 @@ public:
 	 * If the pluginAlertMsg doesn't passed (default as NULL) the property is
 	 * saved without any consistent check, and allways return TRUE.
 	 */
-	virtual bool saveProperty(QString propName, QString propValue,
+	virtual bool saveProperty(QString propId, QString propValue,
 			QString *pluginAlertMsg = NULL) = 0;
 	
 	/**
-	 * Get a QSettings* that contains the description of the plugin ini file
+	 * Get a QString that contains the resource name of XML plugin conf file
+	 * example: ":/pluginName/xml-config
 	 */
-	virtual QSettings* getMySettings() = 0;
+	virtual QString getXMLResource() = 0;
 	
 	/**
 	 * Get a map of templates: the KEY is the template path relative to the laboratory
@@ -55,7 +56,8 @@ public:
 	virtual QMap<QString, QString> getTemplates() = 0;
 	
 	/**
-	 * This function return a list of properties owned by this plugin
+	 * This function return a list of top level properties owned by this plugin
+	 * (properties are root levels of a tree-structure)
 	 */
 	virtual QList<PluginProperty*> getPluginProperties() = 0;
 	
@@ -103,10 +105,30 @@ public:
 	 */
 	virtual bool init(QString laboratoryPath) = 0;
 	
+	/**
+	 * This function is called by the system (through the proxy) when the user
+	 * want remove a property. The control of minimum occurrence is delegated by
+	 * plugin it self. Return an empty QString() if all is ok and the property
+	 * is correctlydeleted; an error string to show to the users as alert
+	 * otherwise.
+	 */ 
+	virtual QString deleteProperty(QString propertyId, quint16 propertyCopy) = 0;
+	
+	/**
+	 * This function is called by the system (through the proxy) when the user
+	 * want add a new property as child of anther one. The control of maximum
+	 * occurrence is delegated by plugin it self.
+	 * Return PluginProperty *  with the created property pointer, or NULL on
+	 * error. On error write the error string inside the second member of the
+	 * QPair, or return an empty string if all goes well.
+	 */
+	virtual QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId,
+			quint16 parentPropertyCopy) = 0;
+	
 };
 
 /**
- *  the types of factories
+ * The types of factories
  */
 typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);

@@ -105,22 +105,22 @@ void AreaController::deleteArea(AreaItem *aItem)
  */
 void AreaController::renderAreaProperties(AreaItem *area)
 {
-	LabHandler *labHandler = LabHandler::getInstance();
-	
-	/* Disconnect the old handler */
-	disconnect(labHandler->getMainWindow()->propertyTable, 
-			SIGNAL(cellChanged(int, int)), 0, 0);
-	
-	/* Clear the property editor */
-	labHandler->getMainWindow()->clearPropertyDock();
-	
-	/* Render properties */
-	currentArea = area;
-	renderProperties(labHandler->getMainWindow()->propertyTable);
-	
-	/* Connect the correct handler dinamically */
-	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-		this, SLOT(saveChangedProperty(int, int)));
+//	LabHandler *labHandler = LabHandler::getInstance();
+//	
+//	/* Disconnect the old handler */
+//	disconnect(labHandler->getMainWindow()->propertyTable, 
+//			SIGNAL(cellChanged(int, int)), 0, 0);
+//	
+//	/* Clear the property editor */
+//	labHandler->getMainWindow()->clearPropertyDock();
+//	
+//	/* Render properties */
+//	currentArea = area;
+//	renderProperties(labHandler->getMainWindow()->propertyTable);
+//	
+//	/* Connect the correct handler dinamically */
+//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+//		this, SLOT(saveChangedProperty(int, int)));
 }
 
 /**
@@ -129,14 +129,14 @@ void AreaController::renderAreaProperties(AreaItem *area)
  */
 void AreaController::saveChangedProperty(int row, int column)
 {
-	QTableWidget *tWidget = LabHandler::getInstance()->getMainWindow()->propertyTable;
-	QTableWidgetItem *tItem = tWidget->item(row, column);
-	
-	if(tItem->data(Qt::UserRole).toString() == AREA_TEXT)
-	{
-		currentArea->setLabel(tItem->data(Qt::DisplayRole).toString());
-		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Area property saved"));
-	}
+//	QTableWidget *tWidget = LabHandler::getInstance()->getMainWindow()->propertyTable;
+//	QTableWidgetItem *tItem = tWidget->item(row, column);
+//	
+//	if(tItem->data(Qt::UserRole).toString() == AREA_TEXT)
+//	{
+//		currentArea->setLabel(tItem->data(Qt::DisplayRole).toString());
+//		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Area property saved"));
+//	}
 }
 
 /**
@@ -148,23 +148,23 @@ void AreaController::saveChangedProperty(int row, int column)
  */
 void AreaController::renderProperties(QTableWidget *tableWidget)
 {
-	if(currentArea == NULL)
-		return;
-	
-	/* render infos inside the property editor */
-	tableWidget->setRowCount(1);
-
-	QTableWidgetItem *property = new QTableWidgetItem();
-	
-	//Area text
-	property->setData(Qt::DisplayRole, tr("Text"));
-	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-	tableWidget->setItem(0, 0, property);
-	
-	property = new QTableWidgetItem();
-	property->setData(Qt::DisplayRole, currentArea->getLabel());
-	property->setData(Qt::UserRole, AREA_TEXT);
-	tableWidget->setItem(0, 1, property);
+//	if(currentArea == NULL)
+//		return;
+//	
+//	/* render infos inside the property editor */
+//	tableWidget->setRowCount(1);
+//
+//	QTableWidgetItem *property = new QTableWidgetItem();
+//	
+//	//Area text
+//	property->setData(Qt::DisplayRole, tr("Text"));
+//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
+//	tableWidget->setItem(0, 0, property);
+//	
+//	property = new QTableWidgetItem();
+//	property->setData(Qt::DisplayRole, currentArea->getLabel());
+//	property->setData(Qt::UserRole, AREA_TEXT);
+//	tableWidget->setItem(0, 1, property);
 }
 
 /**

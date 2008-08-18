@@ -61,7 +61,7 @@ LinkItem::LinkItem(VirtualMachineItem* vmItem, CollisionDomainItem* cdItem, QStr
 	/* init the context menu */
 	initContextMenu();
 	
-	pluginsManager = new ManagePluginsDialog(this);
+	//pluginsManager = new ManagePluginsDialog(this);
 }
 
 /**
@@ -74,7 +74,7 @@ LinkItem::~LinkItem()
 	delete pluginsSharedArea;
 	delete deleteAction;
 	delete managePluginsAction;
-	delete pluginsManager;
+	//delete pluginsManager;
 
 }
 
@@ -214,11 +214,11 @@ void LinkItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
  * [SLOT]
  * Show the manage plugins dialog
  */
-void LinkItem::managePluginsActionCalled()
-{
-	pluginsManager->buildGui();
-	pluginsManager->show();
-}
+//void LinkItem::managePluginsActionCalled()
+//{
+//	pluginsManager->buildGui();
+//	pluginsManager->show();
+//}
 
 /**
  * [PRIVATE]

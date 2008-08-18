@@ -259,18 +259,18 @@ void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
  */
 void LabHandler::prepareRenderLabProperties()
 {
-	/* Clear the property editor */
-	mainWindow->clearPropertyDock();
-	
-	/* Disconnect the old handler */
-	disconnect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 0, 0);
-	
-	/* Render properties */
-	propertyController->renderLabProperties(mainWindow->propertyTable);
-	
-	/* Connect the correct handler dinamically */
-	connect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 
-		this, SLOT(saveChangedProperty(int, int)));
+//	/* Clear the property editor */
+//	mainWindow->clearPropertyDock();
+//	
+//	/* Disconnect the old handler */
+//	disconnect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 0, 0);
+//	
+//	/* Render properties */
+//	propertyController->renderLabProperties(mainWindow->propertyTable);
+//	
+//	/* Connect the correct handler dinamically */
+//	connect(mainWindow->propertyTable, SIGNAL(cellChanged(int, int)), 
+//		this, SLOT(saveChangedProperty(int, int)));
 }
 
 /**
@@ -312,8 +312,8 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
  */
 void LabHandler::saveChangedProperty(int row, int column)
 {
-	/* Foreward action */
-	propertyController->saveChangedProperty(mainWindow->propertyTable->item(row, column));
+//	/* Foreward action */
+//	propertyController->saveChangedProperty(mainWindow->propertyTable->item(row, column));
 }
 
 /**

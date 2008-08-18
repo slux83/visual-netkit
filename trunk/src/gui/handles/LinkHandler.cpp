@@ -112,7 +112,7 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	/* now check if the user want init manually the plugins properties */
 	if(manuallyInit && selectedPlugins.size() > 0)
 	{
-		pluginPropDialog->buildGui(linkPlugins);
+		//pluginPropDialog->buildGui(linkPlugins);
 		pluginPropDialog->setVisible(true);
 	}
 	
@@ -140,20 +140,20 @@ void LinkHandler::updateLinkName(HardwareInterface *hi, QString newName)
  */
 void LinkHandler::renderLinkProperties(LinkItem *linkItem)
 {
-	/* Disconnect the old handler */
-	disconnect(labHandler->getMainWindow()->propertyTable, 
-			SIGNAL(cellChanged(int, int)), 0, 0);
-	
-	/* Clear the property editor */
-	labHandler->getMainWindow()->clearPropertyDock();
-	
-	/* Render properties */
-	propertyController->setHi(LinkMapper::getInstance()->getHardwareIterface(linkItem));
-	propertyController->renderLinkProperties(labHandler->getMainWindow()->propertyTable);
-	
-	/* Connect the correct handler dinamically */
-	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-		this, SLOT(saveChangedProperty(int, int)));
+//	/* Disconnect the old handler */
+//	disconnect(labHandler->getMainWindow()->propertyTable, 
+//			SIGNAL(cellChanged(int, int)), 0, 0);
+//	
+//	/* Clear the property editor */
+//	labHandler->getMainWindow()->clearPropertyDock();
+//	
+//	/* Render properties */
+//	propertyController->setHi(LinkMapper::getInstance()->getHardwareIterface(linkItem));
+//	propertyController->renderLinkProperties(labHandler->getMainWindow()->propertyTable);
+//	
+//	/* Connect the correct handler dinamically */
+//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+//		this, SLOT(saveChangedProperty(int, int)));
 }
 
 /**
@@ -162,9 +162,9 @@ void LinkHandler::renderLinkProperties(LinkItem *linkItem)
  */
 void LinkHandler::saveChangedProperty(int row, int column)
 {
-	/* Foreward action */
-	propertyController->saveChangedProperty(
-			labHandler->getMainWindow()->propertyTable->item(row, column));
+//	/* Foreward action */
+//	propertyController->saveChangedProperty(
+//			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
 
 /**

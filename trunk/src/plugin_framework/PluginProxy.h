@@ -28,6 +28,7 @@
 #include "../core/VirtualMachine.h"
 #include "PluginProperty.h"
 #include "PluginInterface.h"
+#include "PropertyExpert.h"
 
 class PluginRegistry;
 class PluginInterface;
@@ -40,6 +41,8 @@ private:
 	PluginInterface *pluginInterface;
 	PluginRegistry *registry;
 	QString labPath;	//This is updated by the slot setLabPath()
+	PropertyExpert *pExpert;
+	void initPropertyExpert();
 
 public:
 	PluginProxy(PluginRegistry *r);
@@ -48,8 +51,7 @@ public:
 	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
 	QList<PluginProperty*> getPluginProperties();
 	QMap<QString, QString> getTemplates();
-	QSettings* getPluginSettings();
-	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; };
+	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; initPropertyExpert(); };
 	QObject* getBaseElement();
 	PluginInterface * getPlugin() { return pluginInterface; };
 	void setPluginGroupID(qint32 id);
@@ -57,6 +59,10 @@ public:
 	void changeGraphicsLabel(QString label);
 	void showDefaultGraphicsLabel();
 	bool initPlugin(QString path) { return pluginInterface->init(path); };
+	PropertyExpert* getPropertyExpert() { return pExpert; };
+	bool validateXmlPluginConfFile();
+	QString deleteProperty(QString propertyId, quint16 propertyCopy) { return pluginInterface->deleteProperty(propertyId, propertyCopy); };
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId, quint16 parentPropertyCopy);
 	
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);

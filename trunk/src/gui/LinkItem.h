@@ -55,7 +55,7 @@ private:
 	QMenu contextMenu;
 	QAction *deleteAction;
 	QAction *managePluginsAction;
-	ManagePluginsDialog *pluginsManager;
+	//ManagePluginsDialog *pluginsManager;
 	
 	void initContextMenu();
 	void refreshGroup();
@@ -80,7 +80,7 @@ protected:
 
 private slots:
 	void deleteLinkActionCalled();
-	void managePluginsActionCalled();
+	//void managePluginsActionCalled();
 	
 public slots:
 	void updateLinkPos();

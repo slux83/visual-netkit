@@ -21,7 +21,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QSettings>
 #include "PluginInterface.h"
 #include "PluginProxy.h"
 #include "PluginProperty.h"
@@ -33,28 +32,27 @@
 class PluginTest : public PluginInterface
 {
 	
-private:
+private:	
 	QList<PluginProperty*> properties;
-	QSettings *mySettings;
+	QMap<QString, QString> globalInfo;
 	PluginProxy *myProxy;
-	QString myName;
-
-	bool fetchProperties();
 	QString getTemplateLocation();
+	void printProperties(PluginProperty* current = NULL);	//TESTING
 	
 public:
 	PluginTest();
 	virtual ~PluginTest();
-	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	QSettings* getMySettings() { return mySettings; };
+	bool saveProperty(QString propId, QString propValue, QString *pluginAlertMsg = NULL);
 	QMap<QString, QString> getTemplates();
-	QString getName() { return myName; };
+	QString getName() { return globalInfo["plugin name"]; };
 	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
-	void setProxy(PluginProxy* p) { myProxy = p; };
-	
+	void setProxy(PluginProxy* p);
+	QString getXMLResource() { return ":/test/xml-conf"; };
 	QString getDefaultGraphisLabel() {return QString("test plugin"); };
-	
+	QString deleteProperty(QString propertyId, quint16 propertyCopy);
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId,
+				quint16 parentPropertyCopy);
 	bool init(QString laboratoryPath)
 		{ Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("test plugin"); return false; };
 };
