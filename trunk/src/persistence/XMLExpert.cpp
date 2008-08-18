@@ -71,7 +71,7 @@ bool XMLExpert::dumpDocument(QDomDocument *doc, QString labPath)
  */ 
 QDomDocument XMLExpert::readDocument(QString labPath, QString *error)
 {
-	//preparo il documento
+	//prepare document
 	QDomDocument doc;
 	QString errorMsg;
 	int errorLine, errorColumn;

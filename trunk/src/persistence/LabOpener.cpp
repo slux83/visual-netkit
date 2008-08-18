@@ -641,9 +641,8 @@ bool LabOpener::loadPlugins()
 			
 			if(proxy == NULL)	//unknown plugin name
 			{
-				errorString.append("Unknow plugin name (").append(plugin).append(").");
-				emit loadStepDone(6, false);
-				return false;
+				qWarning() << "WARNING: Plugin" << plugin << "not found!";
+				continue;
 			}
 			
 			/* Init the plugin */
@@ -681,9 +680,8 @@ bool LabOpener::loadPlugins()
 			
 			if(proxy == NULL)	//unknown plugin name
 			{
-				errorString.append("Unknow plugin name (").append(plugin).append(").");
-				emit loadStepDone(6, false);
-				return false;
+				qWarning() << "WARNING: Plugin" << plugin << "not found!";
+				continue;
 			}
 			
 			/* Init the plugin */
@@ -721,9 +719,8 @@ bool LabOpener::loadPlugins()
 			
 			if(proxy == NULL)	//unknown plugin name
 			{
-				errorString.append("Unknow plugin name (").append(plugin).append(").");
-				emit loadStepDone(6, false);
-				return false;
+				qWarning() << "WARNING: Plugin" << plugin << "not found!";
+				continue;
 			}
 			
 			/* Init the plugin */
