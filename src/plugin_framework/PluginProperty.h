@@ -1,5 +1,5 @@
 /**
- * A simple test plugin for Visual Netkit 
+ * VisualNetkit is an advanced graphical tool for NetKit <http://www.netkit.org> 
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -20,33 +20,51 @@
 #define PLUGINPROPERTY_H_
 
 #include <QString>
+#include <QList>
 
 class PluginProperty
 {
+
 private:
 	QString name;
 	QString defaultValue;
 	QString description;
 	QString value;
-	int order;
+	QString id;
+	quint16 min, max;	//min and max occurrences
+	quint16 copyNumber;
+	QList<PluginProperty*> childItems;
+	PluginProperty* parent;
 	
 public:
-	PluginProperty();
-	PluginProperty(QString pluginName, QString defValue, QString desc);
-	PluginProperty(QString pluginName, QString defValue, QString initValue, QString desc);
+	PluginProperty(QString propName, QString defValue, QString desc,
+			QString idVal, quint16 minOcc, quint16 maxOcc);
+	
 	virtual ~PluginProperty();
 	
 	QString getName() { return name; };
 	QString getDefaultValue() { return defaultValue; };
 	QString getDescription() { return description; };
 	QString getValue() { return value; };
-	int getOrder() { return order; };
+	QString getId() { return id; };
+	quint16 getMinOcc() { return min; };
+	quint16 getMaxOcc() { return max; };
+	QList<PluginProperty*> getChilds() { return childItems; };
+	PluginProperty * getParent() { return parent; };
+	quint16 getCopy() { return copyNumber; };
 	
 	void setName(QString &n) { name = n; };
 	void setDefaultValue(QString &d) { defaultValue = d; };
-	void setValue(QString &d) { value = d; };
+	void setValue(QString &v) { value = v; };
 	void setDescription(QString &d) { description = d; };
-	void setOrder(int ordNumber) { order = ordNumber; };
+	void setId(QString idVal) { id = idVal; };
+	void setCopy(quint16 copy) { copyNumber = copy; };
+	void setParent(PluginProperty* myParent) { parent = myParent; };
+	
+	void appendChild(PluginProperty* prop) { childItems.append(prop); };
+	void appendChilds(QList<PluginProperty*> props) { childItems << props; };
+	bool destroyChild(PluginProperty* child);
+	
 };
 
 #endif /*PLUGINPROPERTY_H_*/

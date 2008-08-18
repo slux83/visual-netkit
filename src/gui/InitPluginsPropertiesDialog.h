@@ -22,8 +22,11 @@
 #include <QDebug>
 #include <QWidget>
 #include <QMap>
+#include <QMenu>
+
 #include "ui_initPluginsProperties.h"
 #include "../plugin_framework/PluginLoaderFactory.h"
+#include "handles/AbstractPropertyHandler.h"
 
 /**
  * This gui is a dialog that initialize the plugins properties
@@ -35,20 +38,22 @@ class InitPluginsPropertiesDialog : public QDialog, public Ui::InitPluginsProper
 private:
 	QList<PluginLoaderFactory *> availablePlugins;
 	QList<PluginProxy *> pluginsToManage;
-	//property name, line edit
-	QMap<QString, QLineEdit*> propertiesAssoc;
+	AbstractPropertyHandler *handler;	//the current tree model owner
 	
-	//Clear the gui elements and assoc map
-	void clearAll();
+	QMenu *actionMenu;
+	
+	void clearTreeView(TreeModel *newModel);
 	
 private slots:
 	void handleUserConfirm();
+	void itemClicked(const QModelIndex& index);
+	void handleAction(QAction *action);
 	
 public:
 	InitPluginsPropertiesDialog(const QList<PluginLoaderFactory *> plugins, QWidget *parent = 0);
 	void updatePluginsToolBox(QStringList selectedPlugins);
 	virtual ~InitPluginsPropertiesDialog();
-	void buildGui(QList<PluginProxy*> plugins);
+	void buildGui(QList<PluginProxy*> plugins, AbstractPropertyHandler *newHandler);
 };
 
 #endif /*INITPLUGINSPROPERTIESDIALOG_H_*/

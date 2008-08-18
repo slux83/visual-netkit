@@ -109,7 +109,8 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
 	/* now check if the user want init manually the plugins properties */
 	if(manuallyInit && selectedPlugins.size() > 0)
 	{
-		pluginPropDialog->buildGui(vmPlugins);
+		propertyController->setVm(vm);
+		pluginPropDialog->buildGui(vmPlugins, propertyController);
 		pluginPropDialog->setVisible(true);
 	}
 	
@@ -120,20 +121,20 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
  */
 void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
 {
-	/* Disconnect the old handler */
-	disconnect(labHandler->getMainWindow()->propertyTable, 
-			SIGNAL(cellChanged(int, int)), 0, 0);
-	
-	/* Clear the property editor */
-	labHandler->getMainWindow()->clearPropertyDock();
-	
-	/* Render properties */
-	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
-	propertyController->renderVmProperties(labHandler->getMainWindow()->propertyTable);
-	
-	/* Connect the correct handler dinamically */
-	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-		this, SLOT(saveChangedProperty(int, int)));
+//	/* Disconnect the old handler */
+//	disconnect(labHandler->getMainWindow()->propertyTable, 
+//			SIGNAL(cellChanged(int, int)), 0, 0);
+//	
+//	/* Clear the property editor */
+//	labHandler->getMainWindow()->clearPropertyDock();
+//	
+//	/* Render properties */
+//	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
+//	propertyController->renderVmProperties(labHandler->getMainWindow()->propertyTable);
+//	
+//	/* Connect the correct handler dinamically */
+//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
+//		this, SLOT(saveChangedProperty(int, int)));
 }
 
 /**
@@ -142,9 +143,9 @@ void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
  */
 void VmHandler::saveChangedProperty(int row, int column)
 {
-	/* Foreward action */
-	propertyController->saveChangedProperty(
-			labHandler->getMainWindow()->propertyTable->item(row, column));
+//	/* Foreward action */
+//	propertyController->saveChangedProperty(
+//			labHandler->getMainWindow()->propertyTable->item(row, column));
 }
 
 void VmHandler::removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToRemove)

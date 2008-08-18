@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	/* Some settings */
 	createActionGroups();
-	propertyTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+	//propertyTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 	
 	//by default don't show the dock for logging
 	dockLog->setVisible(false);
@@ -440,10 +440,11 @@ void MainWindow::zoomNormal()
  */
 void MainWindow::clearPropertyDock()
 {	
-	/* Clear all table items and reset the view-size */
-	propertyTable->clearContents();		//just only this slot!
-	propertyTable->setRowCount(0);		//resize (reset) the view	
-
+	//Destroy tree model
+	QAbstractItemModel *model = propertiesTreeView->model();
+    
+	if(model)
+		delete model;
 }
 
 /**
@@ -677,7 +678,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	SettingsHandler::getInstance()->saveWindowSettings(saveState(), saveGeometry());
 	
 	if(!labHandler->isCurrentLab())
+	{
 		event->accept();	//close the application
+		QApplication::exit(0);
+	}
 	
 	bool abort = false;
 	labHandler->confirmCloseLab(&abort);
@@ -686,6 +690,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		event->ignore();
 	else
 		labHandler->closeLabForced();
+	
+	QApplication::exit(0);
 }
 
 /**

@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 	QStringList env = QProcess::systemEnvironment();
 	QRegExp envRegExp("VISUAL_NETKIT_PLUGINS=(.+)");
 	QStringList paths;	//all plugin paths
+//	paths << "/home/slux/sviluppo/cpp/visual-netkit/trunk/bin/plugins/";
 	
 	//search the env var
 	bool foundEnv = false;

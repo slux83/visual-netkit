@@ -57,7 +57,7 @@ CollisionDomainItem::CollisionDomainItem(QString label)
 	/* init the context menu */
 	initContextMenu();
 	
-	pluginsManager = new ManagePluginsDialog(this);
+	//pluginsManager = new ManagePluginsDialog(this);
 
 }
 
@@ -73,7 +73,7 @@ CollisionDomainItem::~CollisionDomainItem()
 	delete restoreGroupAction;
 	delete deleteAction;
 	delete managePluginsAction;
-	delete pluginsManager;
+	//delete pluginsManager;
 }
 
 /**
@@ -252,11 +252,11 @@ void CollisionDomainItem::setPluginLine(QString pluginName, QString content)
  * [SLOT]
  * Show the manage plugins dialog
  */
-void CollisionDomainItem::managePluginsActionCalled()
-{
-	pluginsManager->buildGui();
-	pluginsManager->show();
-}
+//void CollisionDomainItem::managePluginsActionCalled()
+//{
+//	pluginsManager->buildGui();
+//	pluginsManager->show();
+//}
 
 /**
  * [PRIVATE]

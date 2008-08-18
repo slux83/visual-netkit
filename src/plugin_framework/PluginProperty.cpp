@@ -1,5 +1,5 @@
 /**
- * A simple test plugin for Visual Netkit 
+ * VisualNetkit is an advanced graphical tool for NetKit <http://www.netkit.org> 
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -19,36 +19,19 @@
 #include "PluginProperty.h"
 
 /** 
- * Constructor [empty]
+ * Constructor
  */
-PluginProperty::PluginProperty()
+PluginProperty::PluginProperty(QString propName, QString defValue, QString desc,
+		QString idVal, quint16 minOcc, quint16 maxOcc)
 {
-}
-
-/** 
- * Constructor with some args
- */
-PluginProperty::PluginProperty(QString pluginName, QString defValue, QString desc)
-{
-	name = pluginName;
+	name = propName;
 	defaultValue = defValue;
-	value = defValue;
 	description = desc;
-	order = 0;
-}
-
-
-/** 
- * Constructor with full args
- */
-PluginProperty::PluginProperty(QString pluginName, QString defValue,
-		QString initValue, QString desc)
-{
-	name = pluginName;
-	defaultValue = defValue;
-	value = initValue;
-	description = desc;
-	order = 0;
+	id = idVal;
+	min = minOcc;
+	max = maxOcc;
+	copyNumber = 0;
+	parent = NULL;
 }
 
 /** 
@@ -56,4 +39,20 @@ PluginProperty::PluginProperty(QString pluginName, QString defValue,
  */
 PluginProperty::~PluginProperty()
 {
+	qDeleteAll(childItems);
+}
+
+/**
+ * Destroy a child in depth
+ */
+bool PluginProperty::destroyChild(PluginProperty* child)
+{
+	if(!childItems.contains(child))
+		return false;
+	
+	childItems.removeAll(child);
+	
+	delete child;
+	
+	return true;
 }

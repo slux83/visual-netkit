@@ -5,14 +5,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>365</height>
+    <width>488</width>
+    <height>388</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Set plugins properties - VisualNetkit</string>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout" >
    <item>
     <widget class="QLabel" name="label" >
      <property name="font" >
@@ -22,7 +22,7 @@
       </font>
      </property>
      <property name="text" >
-      <string>You have selected some plugins and now, if you want, you can change the default values for each of these</string>
+      <string>You have selected some plugins and now, if you want, you can change and/or add properties for each of these</string>
      </property>
      <property name="wordWrap" >
       <bool>true</bool>
@@ -30,46 +30,91 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolBox" name="pluginsToolBox" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <widget class="QTreeView" name="treeView" >
+     <property name="alternatingRowColors" >
+      <bool>true</bool>
      </property>
-     <property name="frameShape" >
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="currentIndex" >
-      <number>-1</number>
+     <property name="allColumnsShowFocus" >
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox" >
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons" >
-      <set>QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout" >
+     <item>
+      <widget class="QToolButton" name="actionsToolButton" >
+       <property name="text" >
+        <string>Actions</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../resources/VisualNetkit.qrc" >
+         <normaloff>:/menu/configure</normaloff>:/menu/configure</iconset>
+       </property>
+       <property name="shortcut" >
+        <string>Ctrl+A</string>
+       </property>
+       <property name="popupMode" >
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+       <property name="toolButtonStyle" >
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+       <property name="autoRaise" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox" >
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons" >
+        <set>QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
+  <action name="actionAddProperty" >
+   <property name="text" >
+    <string>AddDynamicProperty</string>
+   </property>
+  </action>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../resources/VisualNetkit.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>InitPluginsProperties</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>443</x>
+     <y>359</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>487</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

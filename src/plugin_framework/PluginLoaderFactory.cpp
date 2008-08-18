@@ -46,10 +46,12 @@ PluginLoaderFactory::~PluginLoaderFactory()
 PluginProxy * PluginLoaderFactory::createPlugin()
 {
 	PluginInterface *p = createPluginFactory();
+	if(!p)
+		qDebug() << "err";
 	PluginProxy *pProxy = new PluginProxy(PluginRegistry::getInstance());
 	
-	p->setProxy(pProxy);
 	pProxy->setPluginInterface(p);
+	p->setProxy(pProxy);
 	
 	/* Connect the proxy signals with some system components */
 	connect(p->getProxy(),
@@ -96,44 +98,24 @@ bool PluginLoaderFactory::initPluginLibrary()
 		return false;
 	}
 	
-	//init the instance, and get the QSetting
+	//init the instance, and see if all is valid
 	PluginProxy *tester = createPlugin();
-
-	QSettings* pluginSetting = tester->getPluginSettings();
-
-	/* Validate settings */
-	pluginSetting->beginGroup("global");
-	QStringList generalKeys = pluginSetting->childKeys();
 	
-	//validate keys (General)
-	if(retVal && (!generalKeys.contains("name") ||
-		!generalKeys.contains("type") ||
-		!generalKeys.contains("description") ||
-		!generalKeys.contains("version") ||
-		!generalKeys.contains("author") ||
-		!generalKeys.contains("dependencies")))
+	if(!tester->getPropertyExpert()->isXmlConfValid())
 	{
-		qWarning() << "Plugin" << fileName() << "have unvalid config file (global section)";
+		qWarning() << "Plugin" << fileName() << "have unvalid XML config file";
 		retVal = false;
 	}
+	
+	QMap<QString, QString> infos = tester->getPropertyExpert()->parseXmlGlobalInfo();
 	
 	/* save global infos */
-	name = pluginSetting->value("name").toString();
-	type = pluginSetting->value("type").toString();
-	description = pluginSetting->value("description").toString();
-	version = pluginSetting->value("version").toString();
-	author = pluginSetting->value("author").toString();
-	deps = pluginSetting->value("dependencies").toString();
-	
-	//type must be 'vm' or 'cd' or 'link'
-	QRegExp typeValidator("vm|cd|link");
-	if(retVal && !typeValidator.exactMatch(pluginSetting->value("type").toString()))
-	{
-		qWarning() << "Plugin" << fileName() << "have unvalid type (global section)";
-		retVal = false;
-	}
-	
-	pluginSetting->endGroup();
+	name = infos["plugin name"];
+	type = infos["type"];
+	description = infos["description"];
+	version = infos["version"];
+	author = infos["author"];
+	deps << infos.values("dep");
 	
 	/* copy all properties for fast info access */
 	properties = tester->getPluginProperties();

@@ -23,22 +23,31 @@
 #include <QTableWidget>
 #include <QDebug>
 #include "../../core/VirtualMachine.h"
+#include "AbstractPropertyHandler.h"
 
 /**
- * Class that map each property item (for a virtual machine item)
+ * Class that handle each property item (for a virtual machine item)
  * with the VM domain object
  */
-class VmPropertyController : public QObject
+class VmPropertyController : public AbstractPropertyHandler
 {
 
 private:
 	VirtualMachine *vm;
 	
+	void clonePropertyTree(PluginProxy *proxy, QList<PluginProperty*> properties,
+			TreeItem* parent, TreeItem *root);
+	
 public:
 	VmPropertyController();
 	virtual ~VmPropertyController();
-	bool saveChangedProperty(QTableWidgetItem *item);
-	void renderVmProperties(QTableWidget *tableWidget);
+	TreeModel* getComposedModel() {return new TreeModel(QStringList());};
+	TreeModel* getInitModel(QList<PluginProxy*> plugins);
+	bool saveChangedProperty(TreeItem *treeItem);
+	QString removePluginProperty(QString pluginName, QString propertyId, quint16 propertyCopy);
+	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
+				QString parentPropertyId, quint16 parentPropertyCopy);
+	PluginProxy* getPluginFromCurrentElement(QString pluginName);
 	
 	void setVm(VirtualMachine *selectedVm) { vm = selectedVm; };
 };
