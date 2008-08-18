@@ -63,6 +63,7 @@ TreeModel::TreeModel(const QStringList &headers, const QString &data,
 //! [1]
 TreeModel::~TreeModel()
 {
+	qDebug("Deleting model");
     delete rootItem;
 }
 //! [1]

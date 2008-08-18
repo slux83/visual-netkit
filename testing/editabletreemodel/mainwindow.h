@@ -69,6 +69,8 @@ private slots:
     void insertRow();
     bool removeColumn(const QModelIndex &parent = QModelIndex());
     void removeRow();
+    void clearTree();
+    void buildTree();
 };
 
 #endif
