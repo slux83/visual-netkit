@@ -1,3 +1,12 @@
+<!-- 
+NOTE:
+
+* Properties that have min >=1 are showed ever.
+* Property that can have childs is deleted if all these are deleted.
+* Each property must have an unique ID
+-->
+
+
 <plugin name="Zebra">
 	
 	<global type="vm" version="1.0" author="Alessio Di Fazio" dependencies="plugin1, plugin2, ...,">
@@ -5,28 +14,28 @@
 	</global>
 	
 	<properties>
-	
-		<!-- The first level of <property /> cantains ROOT properties showed on plugin init -->
-		<property name="property name" init_order="0" default_value="default value">
-			<![CDATA[A long property description]]>
-			
-			<property name="property name" default_value="default value" multiplicity="min-max">
-				<![CDATA[A long property description]]>
-				
-				<property name="property name" default_value="default value" multiplicity="min-*">
-					<![CDATA[A long property description]]>
-				</property>	
-				
-				<property name="property name" default_value="default value" multiplicity="min-*">
-					<![CDATA[A long property description]]>
-				</property>	
-			
-			</property>	
 		
+		<property id="zebra-0" name="property name" default_value="default value" min="1" max="2">
+			<![CDATA[A long property description]]>
+			<childs>
+				<property id="zebra-1" name="property name" default_value="default value" min="1" max="2">
+					<![CDATA[A long property description]]>
+					<childs>
+						<property id="zebra-2" name="property name" default_value="default value" min="0" max="2">
+							<![CDATA[A long property description]]>
+						</property>	
+						
+						<property id="zebra-3" name="property name" default_value="default value" min="0" max="2">
+							<![CDATA[A long property description]]>
+						</property>	
+					</childs>
+				</property>	
+			</childs>
 		</property>
 		
-		<property name="property name" init_order="2" default_value="default value">
+		<property id="zebra-4" name="property name" default_value="default value" min="0" max="2">
 			<![CDATA[A long property description]]>
+			<childs />
 		</property>
 		
 	</properties>
