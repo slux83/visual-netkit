@@ -76,7 +76,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(removeRowAction, SIGNAL(triggered()), this, SLOT(removeRow()));
     connect(removeColumnAction, SIGNAL(triggered()), this, SLOT(removeColumn()));
     connect(insertChildAction, SIGNAL(triggered()), this, SLOT(insertChild()));
-
+	connect(actionClearTree, SIGNAL(triggered()), this, SLOT(clearTree()));
+	connect(actionBuildTree, SIGNAL(triggered()), this, SLOT(buildTree()));
     updateActions();
 }
 
@@ -180,4 +181,26 @@ void MainWindow::updateActions()
         else
             statusBar()->showMessage(tr("Position: (%1,%2) in top level").arg(row).arg(column));
     }
+}
+
+void MainWindow::clearTree()
+{
+	QAbstractItemModel *model = view->model();
+	delete model;
+}
+
+void MainWindow::buildTree()
+{
+	clearTree();
+	QStringList headers;
+    headers << tr("Title") << tr("Description");
+
+    QFile file(":/default.txt");
+    file.open(QIODevice::ReadOnly);
+    TreeModel *model = new TreeModel(headers, file.readAll());
+    file.close();
+
+    view->setModel(model);
+    for (int column = 0; column < model->columnCount(); ++column)
+        view->resizeColumnToContents(column);
 }

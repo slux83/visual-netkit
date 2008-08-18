@@ -63,6 +63,7 @@ TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
 //! [1]
 TreeItem::~TreeItem()
 {
+	qDebug("Deleting childs");
     qDeleteAll(childItems);
 }
 //! [1]
