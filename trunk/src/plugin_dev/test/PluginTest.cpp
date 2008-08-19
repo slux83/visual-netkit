@@ -150,7 +150,7 @@ QString PluginTest::deleteProperty(QString propertyId, quint16 propertyCopy)
 		return QString("Property not found. Maybe it is a program BUG!\nID+" + propertyId + " COPY=" + propertyCopy);
 	}
 	
-	if(propToDelete->getMaxOcc() == 1)
+	if(propToDelete->getMinOcc() == 1)
 		return QString("Cannot deleted properties with MIN occurrence equals to 1.");
 	
 	if(!propToDelete->getParent())
@@ -207,7 +207,7 @@ QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd,
 	
 	if(childInfo.size() == 0)
 	{
-		retVal.second.append("ERROR: Cannot find property infos");
+		retVal.second.append("ERROR: Cannot find property infos inside XML plugin Test config file");
 		return retVal;
 	}
 	
@@ -252,7 +252,57 @@ QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd,
 	
 	retVal.first = newProp;
 	
+	addPropertyChildsDeeply(newProp);
+		
 	return retVal;
 }
 
-
+/**
+ * [PRIVATE]
+ * Add child properties reading these on XML conf file through property expert.
+ * Recursive.
+ */
+void PluginTest::addPropertyChildsDeeply(PluginProperty* prop)
+{
+	if(!prop)
+		return;
+	
+	// pair: <child name, child id>
+	QList< QPair<QString, QString> > childsInfo =
+		myProxy->getPropertyExpert()->getChildsByParentId(prop->getId());
+		
+	/* 
+	 * Foreach child that have minOcc = 1 i have to create a property child, and
+	 * recursively add childs of childs ...
+	 */
+	for(int i=0; i<childsInfo.size(); i++)
+	{
+		/* first, get node info from XML
+		 * QMap (
+		 * 		"name"			-> "name",
+		 * 		"id"			-> "xxx-01",
+		 * 		"default"		-> "default",
+		 * 		"min"			-> "1",
+		 * 		"max"			-> "3",
+		 * 		"description"	-> "mumble mumble mumble..."
+		 * 		)
+		 */
+		QMap<QString, QString> nodeInfo =
+			myProxy->getPropertyExpert()->getPropertyInfo(childsInfo.at(i).second);
+		
+		if(nodeInfo["min"].toInt() != 1)
+			continue;
+		
+		//make the new child
+		PluginProperty *childProp = myProxy->getPropertyExpert()->newProperty(
+			nodeInfo["name"], nodeInfo["default"], 
+			nodeInfo["description"], nodeInfo["id"], 
+			(quint16)nodeInfo["min"].toInt(), (quint16)nodeInfo["max"].toInt());
+		
+		//attach this child and recursively recall this function on this prop.
+		prop->appendChild(childProp);
+		childProp->setParent(prop);
+		
+		addPropertyChildsDeeply(childProp);
+	}
+}

@@ -153,7 +153,7 @@ bool TreeItem::removeColumns(int position, int columns)
 	for (int column = 0; column < columns; ++column)
 		itemData.remove(position);
 
-	foreach (TreeItem *child, childItems)
+	foreach(TreeItem *child, childItems)
 		child->removeColumns(position, columns);
 
 	return true;
@@ -176,9 +176,7 @@ bool TreeItem::setData(int column, const QVariant &value)
 		if(!myHandler->saveChangedProperty(this))
 			itemData[column] = oldValue;
 	}
-	
-	qDebug() << "column" << column << value << id;
-	
+		
 	return true;
 }
 

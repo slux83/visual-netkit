@@ -253,7 +253,7 @@ TreeModel* VmPropertyController::getInitModel(QList<PluginProxy*> plugins)
 		parent->setId(proxy->getPlugin()->getName() + SEPARATOR + SEPARATOR);
 		
 		parent->appendChildsDescription(proxy->getPropertyExpert()->getRootChilds());
-		
+				
 		clonePropertyTree(proxy, proxy->getPlugin()->getPluginProperties(), parent, root);
 	}
 	
@@ -288,6 +288,8 @@ void VmPropertyController::clonePropertyTree(PluginProxy *proxy, QList<PluginPro
 		last->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(prop->getId()));
 		
 		last->setPropertyHandler(this);
+		
+		last->setDescription(prop->getDescription());
 		
 		//recursive call
 		clonePropertyTree(proxy, prop->getChilds(), last, root);

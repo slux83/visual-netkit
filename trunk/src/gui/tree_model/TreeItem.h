@@ -53,6 +53,7 @@ private:
 	bool isProp;
 	bool isPluginHeader;
 	QString id;
+	QString description;
 	
 public:
 	TreeItem(const QVector<QVariant> &data, TreeItem *parent = 0);
@@ -79,6 +80,9 @@ public:
 	
 	void setId(QString newId) { id = newId; };
 	QString getId() { return id; };
+	
+	void setDescription(QString newDescr) { description = newDescr; };
+	QString getDescrioption() { return description; };
 	
 	void setPropertyHandler(AbstractPropertyHandler * newHandler) { myHandler = newHandler; };
 	

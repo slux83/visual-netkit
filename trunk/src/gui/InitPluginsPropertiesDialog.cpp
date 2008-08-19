@@ -59,78 +59,6 @@ InitPluginsPropertiesDialog::~InitPluginsPropertiesDialog()
 }
 
 /**
- * [PRIVATE-SLOT]
- * Handle the user form confirm
- * pre-operations on the input
- */
-void InitPluginsPropertiesDialog::handleUserConfirm()
-{
-//	QStringList keys = propertiesAssoc.keys();
-//	
-//	//for each plugin inside "pluginsToManage"
-//	for (int j=0; j < pluginsToManage.size(); j++) 
-//	{
-//		int yesToAll = 0;
-//		
-//		//scan properties
-//		for (int i=0; i < keys.size(); i++) 
-//		{
-//			QStringList l = keys.at(i).split(SEPARATOR);
-//			QString pluginName = l.first();
-//			QString propName = l.last();
-//			
-//			if (pluginsToManage.at(j)->getPlugin()->getName() == pluginName)
-//			{
-//				QString altMsg;
-//				bool allok = true;
-//				
-//				if (yesToAll==QMessageBox::YesToAll)
-//				{
-//					pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-//				}
-//				else
-//				{
-//					allok = pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text(), &altMsg);
-//				}
-//				
-//				// some warning or error returned by initProperty function
-//				if (!allok && (yesToAll!=QMessageBox::YesToAll))
-//				{	
-//					//Prepare the alert message
-//					QString question =
-//								tr("The plugin ") + pluginsToManage.at(j)->getPlugin()->getName() +
-//								tr(" have returned a warning:\n") +
-//								altMsg + ".\n\n" +
-//								tr("Ignore this warning?");
-//					
-//					yesToAll = QMessageBox::question(this, tr("VisualNetkit - Warning"),
-//						tr(question.toUtf8()),
-//						QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No,
-//						QMessageBox::Yes);
-//					
-//					if(yesToAll == QMessageBox::Yes)
-//					{
-//						pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-//					}
-//					else if(yesToAll == QMessageBox::YesToAll)
-//					{
-//						pluginsToManage.at(j)->saveProperty(propName, propertiesAssoc.value(keys.at(i))->text());
-//						yesToAll = QMessageBox::YesToAll;
-//					}
-//					else
-//					{
-//						propertiesAssoc.value(keys.at(i))->selectAll();
-//						return;
-//					}
-//				}
-//			}
-//		}
-//	}
-//
-//	close();
-}
-
-/**
  * Build the tree view based on plugins properties's structure
  * getting the tree model from newHandler
  */
@@ -146,57 +74,6 @@ void InitPluginsPropertiesDialog::buildGui(QList<PluginProxy*> plugins,
 	
 	for(int column=0; column < treeView->model()->columnCount(); ++column)
 		treeView->resizeColumnToContents(column);
-	
-	
-	
-//	pluginsToManage = plugins;
-//	
-//	QListIterator<PluginProxy *> it(plugins);
-//	
-//	/* foreach plugin */
-//	quint8 tabCount = 0;
-//	while(it.hasNext())
-//	{
-//		// gets the current plugin proxy
-//		PluginProxy *proxy = it.next();
-//		
-//		// if any property has to be set, build the UI
-//		if(proxy->getPluginProperties().size() > 0)
-//		{
-//			QWidget *w = new QWidget();	//the container
-//			QVBoxLayout *layout = new QVBoxLayout(w);
-//			layout->setMargin(3);
-//			layout->setSpacing(3);
-//			
-//			QListIterator<PluginProperty*> ii(proxy->getPluginProperties());
-//			
-//			/* foraech property */
-//			while(ii.hasNext())
-//			{
-//				PluginProperty *prop = ii.next();
-//				QLabel *label = new QLabel(prop->getName());
-//				QLineEdit *lineEdit = new QLineEdit(prop->getDefaultValue());
-//				lineEdit->setToolTip(prop->getDescription());
-//				layout->addWidget(label);
-//				layout->addWidget(lineEdit);
-//				
-//				// save mapping; the key is "PluginName|000n|PropertyName
-//				QString orderString = QString::number(prop->getOrder());
-//				orderString.prepend(QString().fill('0', 5 - orderString.size()));
-//								
-//				propertiesAssoc.insert(proxy->getPlugin()->getName() + 
-//										SEPARATOR + orderString + 
-//										SEPARATOR + prop->getName(),
-//										lineEdit);
-//			}
-//			/* The plugin have at most one property */
-//			QSpacerItem *spacerItem = 
-//				new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-//			layout->addItem(spacerItem);
-//			pluginsToolBox->insertItem(tabCount++, w, QIcon(QString::fromUtf8(":/small/plugin")),
-//				proxy->getPlugin()->getName());
-//		}
-//	}
 }
 
 /**
@@ -263,10 +140,9 @@ void InitPluginsPropertiesDialog::handleAction(QAction * action)
 	/* Get infos from action */
 	QStringList actionData = action->data().toStringList();
 	
-	QStringList splittedId = actionData[1].split(SEPARATOR);
 	//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
+	QStringList splittedId = actionData[1].split(SEPARATOR);
 
-	
 	if(actionData[0] == "delete")
 	{
 		QString response = handler->removePluginProperty(splittedId[0], splittedId[1], (quint16)splittedId[2].toInt());
@@ -306,19 +182,24 @@ void InitPluginsPropertiesDialog::handleAction(QAction * action)
 				//Set columns value
 				QModelIndex child0 = model->index(0, 0, index);
 				QModelIndex child1 = model->index(0, 1, index);
-				model->setData(child0, QVariant(p->getName()), Qt::EditRole);
-				model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole);
+				
+				//This is an hack to prevent a stupid Qt? bug.
+				while(!model->setData(child0, QVariant(p->getName()), Qt::EditRole)) {};
+				while(!model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole)) {};
 				
 				if(model->data(child0, Qt::EditRole).toString().isNull())
 				{
-					qDebug() << "BOOM";
+					qDebug() << "OMFG OBSCURE BUG!!!";
 				}
 				
 				//Expand and resize view
 				treeView->expandAll();
 				for(int column=0; column < treeView->model()->columnCount(); ++column)
 					treeView->resizeColumnToContents(column);
-
+				
+				//Tooltip
+				model->setData(child0, QVariant(p->getDescription()), Qt::ToolTipRole);
+				model->setData(child1, QVariant(p->getDescription()), Qt::ToolTipRole);
 				
 				//Init the low level model (tree item of child0/1)
 				TreeItem *ti = model->getItem(child0);
@@ -339,14 +220,71 @@ void InitPluginsPropertiesDialog::handleAction(QAction * action)
 				ti->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(p->getId()));
 				
 				ti->setPropertyHandler(handler);
+				
+				buildViewChildsDeeply(child0, p, proxy); //Recursive build
 			}
 			else
-				qWarning() << "unconsistance";
+				qWarning() << "Fail creating view row.";
 		}
 		else
 		{
 			//Show a warning
 			QMessageBox::warning(this, "Warning - VisualNetkit", response.second, QMessageBox::Ok);
 		}
+	}
+}
+
+/**
+ * [PRIVATE]
+ * Build view deeply starting from property childs
+ */
+void InitPluginsPropertiesDialog::buildViewChildsDeeply(
+		QModelIndex &child, PluginProperty *prop, PluginProxy *proxy)
+{
+	TreeModel *model = static_cast<TreeModel*>(treeView->model());
+	
+	foreach(PluginProperty *p, prop->getChilds())
+	{
+		/* Add a sub-child */
+		if(model->insertRows(0, 1, child))
+		{		
+			//Set columns value
+			QModelIndex child0 = model->index(0, 0, child);
+			QModelIndex child1 = model->index(0, 1, child);
+			
+			//This is an hack to prevent a stupid Qt? bug.
+			while(!model->setData(child0, QVariant(p->getName()), Qt::EditRole)) {};
+			while(!model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole)) {};
+			
+			if(model->data(child0, Qt::EditRole).toString().isNull())
+				qDebug() << "--> OMFG OBSCURE BUG!!!";
+			
+			//Tooltip
+			model->setData(child0, QVariant(p->getDescription()), Qt::ToolTipRole);
+			model->setData(child1, QVariant(p->getDescription()), Qt::ToolTipRole);
+			
+			//Expand and resize view
+			treeView->expandAll();
+			for(int column=0; column < treeView->model()->columnCount(); ++column)
+				treeView->resizeColumnToContents(column);
+		
+			
+			//Init the low level model (tree item of child0/1)
+			TreeItem *ti = model->getItem(child0);
+			ti->setProperty(true);
+			
+			//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
+			ti->setId(proxy->getPlugin()->getName() + SEPARATOR +
+					p->getId() + SEPARATOR +
+					QString::number(p->getCopy()));
+			
+			ti->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(p->getId()));
+			
+			ti->setPropertyHandler(handler);
+			
+			buildViewChildsDeeply(child0, p, proxy);
+		}
+		else
+			qWarning() << "Fail creating view row.";
 	}
 }

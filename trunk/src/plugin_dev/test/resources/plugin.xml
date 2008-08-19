@@ -9,16 +9,21 @@
 		<property id="test-0" name="p-1" default_value="" min="1" max="1000">
 			<![CDATA[Property 0]]>
 			<childs>
-				<property id="test-1" name="p-1-1" default_value="pippo-1-1" min="1" max="1">
+				<property id="test-1" name="p-1-1" default_value="pippo-1-1" min="1" max="2">
 					<![CDATA[A sub property]]>
 					<childs>
 						<property id="test-2" name="p-1-1-1" default_value="pippo-1-1-1" min="1" max="10">
 							<![CDATA[A sub property]]>
 							<childs>
-								<property id="test-3" name="p-1-1-1-1" default_value="pippo-1-1-1-1" min="0" max="1">
+								<property id="test-3" name="p-1-1-1-1" default_value="pippo-1-1-1-1" min="1" max="1">
 									<![CDATA[A sub property]]>
 									<childs />
 								</property>
+								<property id="test-8" name="p-1-1-1-2" default_value="pippo-1-1-1-2" min="0" max="3">
+									<![CDATA[A sub property]]>
+									<childs />
+								</property>
+
 							</childs>
 						</property>
 					</childs>
@@ -36,7 +41,12 @@
 				<childs>
 					<property id="test-6" name="p-3-1" default_value="" min="1" max="1">
 						<![CDATA[A sub property]]>
-						<childs />
+						<childs>
+							<property id="test-7" name="p-3-1-1" default_value="3-1-1" min="1" max="5">
+								<![CDATA[A sub property]]>
+								<childs />
+							</property>
+						</childs>
 					</property>
 				</childs>
 		</property>
