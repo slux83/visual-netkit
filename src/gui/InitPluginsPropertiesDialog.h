@@ -42,10 +42,10 @@ private:
 	
 	QMenu *actionMenu;
 	
+	void buildViewChildsDeeply(QModelIndex &child, PluginProperty *prop, PluginProxy *proxy);
 	void clearTreeView(TreeModel *newModel);
 	
 private slots:
-	void handleUserConfirm();
 	void itemClicked(const QModelIndex& index);
 	void handleAction(QAction *action);
 	

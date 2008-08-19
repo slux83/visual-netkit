@@ -37,6 +37,8 @@ private:
 	QMap<QString, QString> globalInfo;
 	PluginProxy *myProxy;
 	QString getTemplateLocation();
+	void addPropertyChildsDeeply(PluginProperty* prop);
+	
 	void printProperties(PluginProperty* current = NULL);	//TESTING
 	
 public:
