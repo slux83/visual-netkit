@@ -105,6 +105,9 @@ void InitPluginsPropertiesDialog::itemClicked(const QModelIndex& index)
 		return;
 	}
 	
+	//Change node description
+	propertyDescriptionLabel->setText(item->getDescrioption());
+	
 	//Enable if item is a property
 	actionsToolButton->setEnabled(item->isProperty());
 	
@@ -221,6 +224,8 @@ void InitPluginsPropertiesDialog::handleAction(QAction * action)
 				
 				ti->setPropertyHandler(handler);
 				
+				ti->setDescription(p->getDescription());
+				
 				buildViewChildsDeeply(child0, p, proxy); //Recursive build
 			}
 			else
@@ -259,10 +264,6 @@ void InitPluginsPropertiesDialog::buildViewChildsDeeply(
 			if(model->data(child0, Qt::EditRole).toString().isNull())
 				qDebug() << "--> OMFG OBSCURE BUG!!!";
 			
-			//Tooltip
-			model->setData(child0, QVariant(p->getDescription()), Qt::ToolTipRole);
-			model->setData(child1, QVariant(p->getDescription()), Qt::ToolTipRole);
-			
 			//Expand and resize view
 			treeView->expandAll();
 			for(int column=0; column < treeView->model()->columnCount(); ++column)
@@ -281,6 +282,8 @@ void InitPluginsPropertiesDialog::buildViewChildsDeeply(
 			ti->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(p->getId()));
 			
 			ti->setPropertyHandler(handler);
+			
+			ti->setDescription(p->getDescription());
 			
 			buildViewChildsDeeply(child0, p, proxy);
 		}

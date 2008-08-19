@@ -7,20 +7,20 @@
 	<properties>
 		
 		<property id="test-0" name="p-1" default_value="" min="1" max="1000">
-			<![CDATA[Property 0]]>
+			<![CDATA[Property 1]]>
 			<childs>
 				<property id="test-1" name="p-1-1" default_value="pippo-1-1" min="1" max="2">
-					<![CDATA[A sub property]]>
+					<![CDATA[A sub property (1-1)]]>
 					<childs>
 						<property id="test-2" name="p-1-1-1" default_value="pippo-1-1-1" min="1" max="10">
-							<![CDATA[A sub property]]>
+							<![CDATA[A sub property (1-1-1)]]>
 							<childs>
 								<property id="test-3" name="p-1-1-1-1" default_value="pippo-1-1-1-1" min="1" max="1">
-									<![CDATA[A sub property]]>
+									<![CDATA[A sub property (1-1-1-1)]]>
 									<childs />
 								</property>
 								<property id="test-8" name="p-1-1-1-2" default_value="pippo-1-1-1-2" min="0" max="3">
-									<![CDATA[A sub property]]>
+									<![CDATA[A sub property (1-1-1-2)]]>
 									<childs />
 								</property>
 
@@ -32,18 +32,18 @@
 		</property>
 		
 		<property id="test-4" name="p-2" default_value="default" min="0" max="3">
-			<![CDATA[A long property description]]>
+			<![CDATA[Property 2]]>
 			<childs />
 		</property>
 		
 		<property id="test-5" name="p-3" default_value="default" min="1" max="3">
-			<![CDATA[A long property description]]>
+			<![CDATA[Property 3 - mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble mumble]]>
 				<childs>
 					<property id="test-6" name="p-3-1" default_value="" min="1" max="1">
-						<![CDATA[A sub property]]>
+						<![CDATA[A sub property (3-1)]]>
 						<childs>
 							<property id="test-7" name="p-3-1-1" default_value="3-1-1" min="1" max="5">
-								<![CDATA[A sub property]]>
+								<![CDATA[A sub property (3-1-1)]]>
 								<childs />
 							</property>
 						</childs>
