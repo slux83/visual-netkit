@@ -26,6 +26,9 @@
 
 class VmHandler;
 class LabHandler;
+class PluginProxy;
+class PluginProperty;
+class AbstractPropertyHandler;
 
 #include <QWidget>
 #include <QTreeWidget>
@@ -70,6 +73,9 @@ private:
 	//The about dialog
 	AboutDialog *aboutDialog;
 	
+	//Property action menu
+	QMenu *actionMenu;
+	
 	void populateViewMenu();
 	void createConnections();
 	void createActionGroups();
@@ -78,6 +84,7 @@ private:
 	void updateMinuatureDock(int size);
 	void restoreWindow();
 	void updatePathDeph(QString oldName, QString newName, QTreeWidgetItem *startNode);
+	void buildViewChildsDeeply(QModelIndex &child, PluginProperty *prop, PluginProxy *proxy, AbstractPropertyHandler *handler);
 	
 private slots:
 	void zoomLabView(int value);
@@ -94,6 +101,8 @@ private slots:
 	void rebuildHistory();
 	void handleHistoryAction(QAction* action);
 	void showAbout();
+	void itemClicked(const QModelIndex& index);
+	void handlePropertyAction(QAction* action);
 	
 protected:
 	void closeEvent(QCloseEvent *event);

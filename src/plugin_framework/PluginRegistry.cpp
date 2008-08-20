@@ -64,7 +64,7 @@ PluginProxy* PluginRegistry::registerPlugin(QString pluginName, QObject* baseEle
 {	
 	if(!factories.contains(pluginName))
 	{
-		qWarning() << "Plugin:" << pluginName << "not found its Factory.";
+		qWarning() << "PluginRegistry::registerPlugin() plugin" << pluginName << "not found.";
 		return NULL;
 	}
 	

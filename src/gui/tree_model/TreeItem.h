@@ -90,6 +90,8 @@ public:
 	
 	void setPropertyHandler(AbstractPropertyHandler * newHandler) { myHandler = newHandler; };
 	
+	AbstractPropertyHandler * getCurrentPropertyHandler() { return myHandler; };
+	
 };
 
 #endif
