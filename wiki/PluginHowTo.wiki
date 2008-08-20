@@ -1,7 +1,11 @@
 #summary How to make a plugin for VisualNetkit
 #labels Featured,Phase-Implementation
 
-*>>> BEFORE READ THIS HOW-TO, PLEASE READ PluginArchitecture PAGE <<<*
+*NOTE: BEFORE READ THIS HOW-TO, PLEASE READ PluginArchitecture PAGE*
+
+==This how-to is only for VisualNetkit version 1.0 or less==
+
+----
 
 =Making a simple plugin for a Virtual Machine element=
 In this section we try to make a Plugin for a Virtual Machine. The plugin is very simple. It's just export the PS1 environment variable and some aliases.
