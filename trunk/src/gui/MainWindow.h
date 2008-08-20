@@ -22,6 +22,7 @@
 #include "ui_main.h"
 #include "OpenLabForm.h"
 #include "AboutDialog.h"
+#include "tree_model/TreeModel.h"
 
 class VmHandler;
 class LabHandler;
@@ -44,7 +45,7 @@ public:
 	void unlockSceneAndActions();
 	void lockSceneAndActions();
 	QGraphicsView* getGraphicsView() { return graphicsView; };
-	void clearPropertyDock();
+	void clearPropertyDock(TreeModel *newModel = NULL);
 	void changeTreeNodeName(QString oldName, QString newName);
 	LabScene *getLabScene() { return scene; };
 	void setSceneSize(QRectF &size);

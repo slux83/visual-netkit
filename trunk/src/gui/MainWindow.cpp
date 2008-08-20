@@ -72,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	
 	//status bar show a ready state
 	statusBar()->showMessage(tr("Ready"), 10000);
+	
+	clearPropertyDock();
 
 }
 
@@ -438,11 +440,26 @@ void MainWindow::zoomNormal()
 /**
  * Clear the content inside the property dock, and reset to 0 the rows count
  */
-void MainWindow::clearPropertyDock()
+void MainWindow::clearPropertyDock(TreeModel *newModel)
 {	
 	//Destroy tree model
 	QAbstractItemModel *model = propertiesTreeView->model();
-    
+	if(!newModel)
+	{
+		QStringList header;
+		header << tr("Property") << tr("Value");
+		TreeModel *model = new TreeModel(header);
+		propertiesTreeView->setModel(model);
+	}
+	else
+		propertiesTreeView->setModel(newModel);
+	
+	//Expand and resize columns
+	propertiesTreeView->expandAll();
+	for(int column=0; column < propertiesTreeView->model()->columnCount(); ++column)
+		propertiesTreeView->resizeColumnToContents(column);
+	
+	//Destroy old model
 	if(model)
 		delete model;
 }
