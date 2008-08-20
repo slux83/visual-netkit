@@ -88,7 +88,13 @@ QString PluginTest::getTemplateLocation()
 bool PluginTest::saveProperty(QString propId, QString propValue, QString *pluginAlertMsg)
 {
 	Q_UNUSED(propId)
-	Q_UNUSED(pluginAlertMsg)
+	
+	if(pluginAlertMsg)
+	{
+		pluginAlertMsg->append("Plugin test property error (testing). Please ignore!");
+		return false;
+	}
+	
 	myProxy->changeGraphicsLabel(propValue);
 	
 	qDebug() << "PluginTest: saving" << propId << propValue;

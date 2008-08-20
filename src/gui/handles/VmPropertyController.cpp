@@ -128,51 +128,46 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 	}
 	
 	QString itemValue = treeItem->data(1).toString();
-	//	/* This field is mine? */
-	//	if(item->data(Qt::UserRole).toString() == VM_NAME)
-	//	{
-	//		QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
-	//		int pos = 0;
-	//		
-	//		/* validate name */
-	//		if(ok && nameValidator.validate(itemValue, pos) != QValidator::Acceptable)
-	//		{
-	//			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	//	                   tr("The Virtual machine name must match ^[a-zA-Z0-9]+$"),
-	//	                   QMessageBox::Ok);
-	//			
-	//			//Restore the value, and alert the user
-	//			item->setData(Qt::DisplayRole, vm->getName());
-	//			ok = false;
-	//	        
-	//		}
-	//		
-	//		if(ok && VmHandler::getInstance()->vmNameExist(itemValue) && itemValue != vm->getName())
-	//		{
-	//			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
-	//	                   tr("The Virtual machine name must be unique!"),
-	//	                   QMessageBox::Ok);
-	//			
-	//			//Restore the value, and alert the user
-	//			item->setData(Qt::DisplayRole, vm->getName());
-	//			ok = false;
-	//		}
-	//		
-	//		/* save changes */
-	//		if(ok)
-	//		{
-	//			//change tree lab names (vm dir and .startup file name)
-	//			LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName(), itemValue);
-	//			LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName() + ".startup", itemValue + ".startup");
-	//			
-	//			//save on low level and scene level
-	//			LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
-	//			VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
-	//		}
-	//		
-	//	}
-	//	else
-	//	{
+	
+	/* This field is mine? */
+	if(treeItem->getId() == VM_NAME)
+	{
+		QString itemValue = treeItem->data(1).toString();
+		QRegExpValidator nameValidator(QRegExp("^[a-zA-Z0-9]+$"), this);
+		int pos = 0;
+		
+		/* validate name */
+		if(ok && nameValidator.validate(itemValue, pos) != QValidator::Acceptable)
+		{
+			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+	                   tr("The Virtual machine name must match ^[a-zA-Z0-9]+$"),
+	                   QMessageBox::Ok);
+			
+			return false;
+	        
+		}
+		
+		if(VmHandler::getInstance()->vmNameExist(itemValue)
+				&& itemValue != vm->getName())
+		{
+			QMessageBox::warning(NULL, tr("Visual Netkit - Warning"),
+	                   tr("The Virtual machine name must be unique!"),
+	                   QMessageBox::Ok);
+			
+			return false;
+		}
+		
+		/* save changes */
+		//change tree lab names (vm dir and .startup file name)
+		LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName(), itemValue);
+		LabHandler::getInstance()->getMainWindow()->changeTreeNodeName(vm->getName() + ".startup", itemValue + ".startup");
+		
+		//save on low level and scene level
+		LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
+		VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
+		
+		return true;
+	}
 	
 	QStringList itemDataSplitted = treeItem->getId().split(SEPARATOR);
 	if(itemDataSplitted.size() != 3)
@@ -232,6 +227,64 @@ TreeModel* VmPropertyController::getInitModel(QList<PluginProxy*> plugins)
 	TreeModel *model = new TreeModel(header);
 	
 	TreeItem *root = model->getRootItem();
+	
+	//now, for each plugin, map each property in a TreeItem.
+	foreach(PluginProxy *proxy, plugins)
+	{
+		QVector<QVariant> pluginHeader;
+		pluginHeader << "Plugin" << proxy->getPlugin()->getName();
+		
+		root->insertChildren(root->childCount(), 1, root->columnCount());
+		for (int column = 0; column < pluginHeader.size(); ++column)
+			root->child(root->childCount() - 1)->setData(column, pluginHeader.at(column));
+		
+		TreeItem* parent = root->child(root->childCount() - 1);
+		
+		parent->setProperty(true);	//Plugin node is a property root container; it could have actions.
+		parent->setIsPluginHeader(true);
+		
+		parent->setPropertyHandler(this);
+		
+		parent->setId(proxy->getPlugin()->getName() + SEPARATOR + SEPARATOR);
+		
+		parent->appendChildsDescription(proxy->getPropertyExpert()->getRootChilds());
+				
+		clonePropertyTree(proxy, proxy->getPlugin()->getPluginProperties(), parent, root);
+	}
+	
+	return model;
+}
+
+/**
+ * [IMPL]
+ * Build and return a tree model with also vm properties
+ */
+TreeModel* VmPropertyController::getComposedModel()
+{
+	QStringList header;
+	header << tr("Property") << tr("Value");
+	TreeModel *model = new TreeModel(header);
+	
+	if(!vm)
+	{
+		qWarning() << "VmPropertyController::getComposedModel() NULL vm";
+		return model;
+	}
+	
+	TreeItem *root = model->getRootItem();
+	
+	//vm properties
+	root->insertChildren(root->childCount(), 1, root->columnCount());
+	root->child(root->childCount() - 1)->setData(0, tr("Name"));
+	root->child(root->childCount() - 1)->setData(1, vm->getName());
+	TreeItem* last = root->child(root->childCount() - 1);
+	last->setIsElementProperty(true);
+	last->setId(VM_NAME);
+	last->setDescription(tr("The name of the Virtual Machine"));
+	last->setPropertyHandler(this);
+	
+	//Get vm plugins
+	QList<PluginProxy*> plugins = PluginRegistry::getInstance()->getVmProxies(vm);
 	
 	//now, for each plugin, map each property in a TreeItem.
 	foreach(PluginProxy *proxy, plugins)

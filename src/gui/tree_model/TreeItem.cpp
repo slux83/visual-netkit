@@ -32,6 +32,7 @@ TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
 	myHandler = NULL;
 	isProp = false;
 	isPluginHeader = false;
+	isElementProp = false;
 }
 
 /**
@@ -174,7 +175,7 @@ bool TreeItem::setData(int column, const QVariant &value)
 	if(myHandler && column == 1)
 	{
 		if(!myHandler->saveChangedProperty(this))
-			itemData[column] = oldValue;
+			itemData[column] = oldValue;	//restore value on error
 	}
 		
 	return true;

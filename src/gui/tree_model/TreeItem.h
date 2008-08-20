@@ -52,6 +52,7 @@ private:
 	AbstractPropertyHandler *myHandler;
 	bool isProp;
 	bool isPluginHeader;
+	bool isElementProp;
 	QString id;
 	QString description;
 	
@@ -77,6 +78,9 @@ public:
 	void setIsPluginHeader(bool val) { isPluginHeader = val; };
 	bool isPluginHeaderNode() { return isPluginHeader; };
 	QList<ChildDescription> getChildDescription() { return childPropertyDescription; };
+	
+	void setIsElementProperty(bool val) { isElementProp = val; };
+	bool isElementProperty() { return isElementProp; };
 	
 	void setId(QString newId) { id = newId; };
 	QString getId() { return id; };

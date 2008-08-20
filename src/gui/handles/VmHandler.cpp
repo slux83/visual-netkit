@@ -121,20 +121,11 @@ void VmHandler::createVm(QString vmNewName, QStringList selectedPlugins,
  */
 void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
 {
-//	/* Disconnect the old handler */
-//	disconnect(labHandler->getMainWindow()->propertyTable, 
-//			SIGNAL(cellChanged(int, int)), 0, 0);
-//	
-//	/* Clear the property editor */
-//	labHandler->getMainWindow()->clearPropertyDock();
-//	
-//	/* Render properties */
-//	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
-//	propertyController->renderVmProperties(labHandler->getMainWindow()->propertyTable);
-//	
-//	/* Connect the correct handler dinamically */
-//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-//		this, SLOT(saveChangedProperty(int, int)));
+	/* Render properties building a new tree model */
+	propertyController->setVm(VmMapper::getInstance()->getVm(vmItem));
+	
+	/* Clear the property editor */
+	labHandler->getMainWindow()->clearPropertyDock(propertyController->getComposedModel());
 }
 
 /**

@@ -41,7 +41,7 @@ private:
 public:
 	VmPropertyController();
 	virtual ~VmPropertyController();
-	TreeModel* getComposedModel() {return new TreeModel(QStringList());};
+	TreeModel* getComposedModel();
 	TreeModel* getInitModel(QList<PluginProxy*> plugins);
 	bool saveChangedProperty(TreeItem *treeItem);
 	QString removePluginProperty(QString pluginName, QString propertyId, quint16 propertyCopy);
