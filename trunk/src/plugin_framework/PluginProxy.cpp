@@ -136,9 +136,9 @@ qint32 PluginProxy::getPluginGroupID()
 /**
  * Init a property
  */
-bool PluginProxy::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginProxy::saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg)
 {
-	return pluginInterface->saveProperty(propName, propValue, pluginAlertMsg);
+	return pluginInterface->saveProperty(propUniqueId, propValue, pluginAlertMsg);
 }
 
 /**
@@ -167,9 +167,8 @@ bool PluginProxy::validateXmlPluginConfFile()
 /**
  * Addo a new property
  */
-QPair<PluginProperty*, QString> PluginProxy::addProperty(QString propertyIdToAdd,
-		QString parentPropertyId, quint16 parentPropertyCopy)
+QPair<PluginProperty*, QString> PluginProxy::addProperty(
+		QString propertyIdToAdd, QString parentPropertyUniqueId)
 {
-	return pluginInterface->addProperty(propertyIdToAdd,
-			parentPropertyId, parentPropertyCopy);
+	return pluginInterface->addProperty(propertyIdToAdd, parentPropertyUniqueId);
 }

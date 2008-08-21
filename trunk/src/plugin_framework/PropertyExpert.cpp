@@ -439,14 +439,13 @@ QList< QPair<QString, QString> > PropertyExpert::getRootChilds()
  * Usefull function to search fast a property by its id and copy number
  * Can return NULL if the property doesn't exists.
  */
-PluginProperty* PropertyExpert::searchProperty(
-		QList<PluginProperty*> properties, QString pId, quint16 pCopy)
+PluginProperty* PropertyExpert::searchProperty(QList<PluginProperty*> properties, QString pUid)
 {
 	PluginProperty *prop = NULL;
 	
 	foreach(PluginProperty* p, properties)
 	{
-		PluginProperty *ret = searchPropertyPrivate(p, pId, pCopy);
+		PluginProperty *ret = searchPropertyPrivate(p, pUid);
 		if(ret)
 		{
 			prop = ret;
@@ -461,15 +460,15 @@ PluginProperty* PropertyExpert::searchProperty(
  * [PRIVATE]
  * Recursive search
  */
-PluginProperty * PropertyExpert::searchPropertyPrivate(PluginProperty *parent, QString pId, quint16 pCopy)
+PluginProperty * PropertyExpert::searchPropertyPrivate(PluginProperty *parent, QString pUid)
 {
-	if(parent->getId() == pId && parent->getCopy() == pCopy)
+	if(parent->getUniqueId() == pUid)
 		return parent;
 	
 	PluginProperty *ret = NULL;
 	foreach(PluginProperty* p, parent->getChilds())
 	{
-		ret = searchPropertyPrivate(p, pId, pCopy);
+		ret = searchPropertyPrivate(p, pUid);
 		if(ret)
 			break;
 	}

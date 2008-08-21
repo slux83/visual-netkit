@@ -17,6 +17,9 @@
  */
 
 #include "PluginProperty.h"
+#include <QDebug>
+//for abs()
+#include <stdlib.h>
 
 /** 
  * Constructor
@@ -32,6 +35,8 @@ PluginProperty::PluginProperty(QString propName, QString defValue, QString desc,
 	max = maxOcc;
 	copyNumber = 0;
 	parent = NULL;
+	
+	calculateUniqueId();
 }
 
 /** 
@@ -55,4 +60,21 @@ bool PluginProperty::destroyChild(PluginProperty* child)
 	delete child;
 	
 	return true;
+}
+
+/**
+ * [PRIVATE]
+ * Init the unique random id
+ */
+void PluginProperty::calculateUniqueId()
+{
+	QDateTime currTime = QDateTime::currentDateTime();
+	
+	QString idPart = currTime.toString("ddHHmmsszzz");
+	
+	uint randomNumber = abs(qrand());
+	
+	idPart.append("_" + QString::number(randomNumber));
+	
+	uniqueId = idPart;
 }

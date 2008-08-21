@@ -36,11 +36,11 @@ public:
 	 * pluginAlertMsg is a pointer to QString to show to the user an alert
 	 * if the returned value is false.
 	 * If it is initialized, the function returns the result of consistency check.
-	 * If any check is failed, it returns false and an error string.
+	 * If some check fail, you have to returns false and an error string.
 	 * If the pluginAlertMsg doesn't passed (default as NULL) the property is
 	 * saved without any consistent check, and allways return TRUE.
 	 */
-	virtual bool saveProperty(QString propId, QString propValue,
+	virtual bool saveProperty(QString propUniqueId, QString propValue,
 			QString *pluginAlertMsg = NULL) = 0;
 	
 	/**
@@ -109,10 +109,10 @@ public:
 	 * This function is called by the system (through the proxy) when the user
 	 * want remove a property. The control of minimum occurrence is delegated by
 	 * plugin it self. Return an empty QString() if all is ok and the property
-	 * is correctlydeleted; an error string to show to the users as alert
+	 * is correctly deleted; an error string to show to the users as alert
 	 * otherwise.
 	 */ 
-	virtual QString deleteProperty(QString propertyId, quint16 propertyCopy) = 0;
+	virtual QString deleteProperty(QString propertyUniqueId) = 0;
 	
 	/**
 	 * This function is called by the system (through the proxy) when the user
@@ -122,8 +122,8 @@ public:
 	 * error. On error write the error string inside the second member of the
 	 * QPair, or return an empty string if all goes well.
 	 */
-	virtual QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId,
-			quint16 parentPropertyCopy) = 0;
+	virtual QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd,
+			QString parentPropertyUniqueId) = 0;
 	
 };
 

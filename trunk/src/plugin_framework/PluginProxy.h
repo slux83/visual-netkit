@@ -48,7 +48,7 @@ public:
 	PluginProxy(PluginRegistry *r);
 	virtual ~PluginProxy();
 
-	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
+	bool saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg = NULL);
 	QList<PluginProperty*> getPluginProperties();
 	QMap<QString, QString> getTemplates();
 	void setPluginInterface(PluginInterface *pi) { pluginInterface = pi; initPropertyExpert(); };
@@ -61,8 +61,8 @@ public:
 	bool initPlugin(QString path) { return pluginInterface->init(path); };
 	PropertyExpert* getPropertyExpert() { return pExpert; };
 	bool validateXmlPluginConfFile();
-	QString deleteProperty(QString propertyId, quint16 propertyCopy) { return pluginInterface->deleteProperty(propertyId, propertyCopy); };
-	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId, quint16 parentPropertyCopy);
+	QString deleteProperty(QString propertyUniqueId) { return pluginInterface->deleteProperty(propertyUniqueId); };
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyUniqueId);
 	
 signals:
 	void needLabelChangedVm(VirtualMachine *vm, QString pluginName, QString label);

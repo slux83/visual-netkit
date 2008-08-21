@@ -56,7 +56,7 @@ public:
 	/**
 	 * Remove a plugin property (consistance control by plugin)
 	 */
-	virtual QString removePluginProperty(QString pluginName, QString propertyId, quint16 propertyCopy) = 0;
+	virtual QString removePluginProperty(QString pluginName, QString propertyUniqueId) = 0;
 	
 	/**
 	 * Add a new property (with propertyIdToAdd) of a plugin as child of parentProperty(Id|Copy)
@@ -64,7 +64,7 @@ public:
 	 * the QPair.
 	 */
 	virtual QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
-			QString parentPropertyId, quint16 parentPropertyCopy) = 0;
+			QString parentPropertyUniqueId) = 0;
 };
 
 #endif /*ABSTRACTPROPERTYHANDLER_H_*/

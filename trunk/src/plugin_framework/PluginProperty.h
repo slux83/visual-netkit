@@ -21,7 +21,11 @@
 
 #include <QString>
 #include <QList>
+#include <QDateTime>
 
+/**
+ * A plugin property
+ */
 class PluginProperty
 {
 
@@ -31,10 +35,13 @@ private:
 	QString description;
 	QString value;
 	QString id;
+	QString uniqueId;
 	quint16 min, max;	//min and max occurrences
 	quint16 copyNumber;
 	QList<PluginProperty*> childItems;
 	PluginProperty* parent;
+	
+	void calculateUniqueId();
 	
 public:
 	PluginProperty(QString propName, QString defValue, QString desc,
@@ -52,12 +59,14 @@ public:
 	QList<PluginProperty*> getChilds() { return childItems; };
 	PluginProperty * getParent() { return parent; };
 	quint16 getCopy() { return copyNumber; };
+	QString getUniqueId() { return uniqueId; };
 	
 	void setName(QString &n) { name = n; };
 	void setDefaultValue(QString &d) { defaultValue = d; };
 	void setValue(QString &v) { value = v; };
 	void setDescription(QString &d) { description = d; };
 	void setId(QString idVal) { id = idVal; };
+	void setUniqueId(QString uId) { uniqueId = uId; };
 	void setCopy(quint16 copy) { copyNumber = copy; };
 	void setParent(PluginProperty* myParent) { parent = myParent; };
 	

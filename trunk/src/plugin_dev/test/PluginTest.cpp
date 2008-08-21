@@ -83,21 +83,24 @@ QString PluginTest::getTemplateLocation()
 }
 
 /**
- * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
+ * If pluginAlertMsg is empty, initializes the passed property UID to propValue. 
  */
-bool PluginTest::saveProperty(QString propId, QString propValue, QString *pluginAlertMsg)
+bool PluginTest::saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg)
 {
-	Q_UNUSED(propId)
-	
 	if(pluginAlertMsg)
 	{
-		pluginAlertMsg->append("Plugin test property error (testing). Please ignore!");
+		pluginAlertMsg->append("Plugin Test property error (allways showed... just for testing).");
+		return false;
+	}
+		
+	PluginProperty* p = myProxy->getPropertyExpert()->searchProperty(properties, propUniqueId);
+	if(!p)
+	{
+		pluginAlertMsg->append("Property not found :( [UID=" + propUniqueId + "]");
 		return false;
 	}
 	
-	myProxy->changeGraphicsLabel(propValue);
-	
-	qDebug() << "PluginTest: saving" << propId << propValue;
+	p->setValue(propValue);
 	
 	return true;
 }
@@ -144,20 +147,29 @@ void PluginTest::printProperties(PluginProperty* current)
 /**
  * Delete a proprety
  */
-QString PluginTest::deleteProperty(QString propertyId, quint16 propertyCopy)
+QString PluginTest::deleteProperty(QString propertyUniqueId)
 {
 	PluginProperty *propToDelete =
-		myProxy->getPropertyExpert()->searchProperty(properties, propertyId, propertyCopy);
+		myProxy->getPropertyExpert()->searchProperty(properties, propertyUniqueId);
 	
 	if(!propToDelete)
 	{
-		qWarning()	<< "PluginTest::deleteProperty" << "property not found: id ="
-					<< propertyId << "copy =" << propertyCopy; 
-		return QString("Property not found. Maybe it is a program BUG!\nID+" + propertyId + " COPY=" + propertyCopy);
+		qWarning()	<< "PluginTest::deleteProperty" << "property not found: uid ="
+					<< propertyUniqueId; 
+		return QString("Property not found. Maybe it is a program BUG!\nUID+" + propertyUniqueId);
 	}
 	
-	if(propToDelete->getMinOcc() == 1)
-		return QString("Cannot deleted properties with MIN occurrence equals to 1.");
+	/* Check min occurrence */
+	if(propToDelete->getParent())
+	{
+		quint16 idCount = 0;
+		
+		foreach(PluginProperty *pp, propToDelete->getParent()->getChilds())
+			if(pp->getId() == propToDelete->getId())	idCount++;
+		
+		if(propToDelete->getMinOcc() == 1 && idCount == 1)
+			return QString("Cannot deleted properties with MIN occurrence equals to 1.");
+	}
 	
 	if(!propToDelete->getParent())
 	{
@@ -178,8 +190,7 @@ QString PluginTest::deleteProperty(QString propertyId, quint16 propertyCopy)
 /**
  * Add a property
  */
-QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd, QString parentPropertyId,
-			quint16 parentPropertyCopy)
+QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd, QString parentPropertyUniqueId)
 {
 	QPair<PluginProperty*, QString> retVal;
 	retVal.first = NULL;
@@ -187,7 +198,7 @@ QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd,
 	/* Get the parent property */
 	PluginProperty *propParent = NULL;
 	
-	propParent = myProxy->getPropertyExpert()->searchProperty(properties, parentPropertyId, parentPropertyCopy);
+	propParent = myProxy->getPropertyExpert()->searchProperty(properties, parentPropertyUniqueId);
 	
 	/* Is a root property? Read the xml description*/
 	bool isRoot = false;
@@ -200,8 +211,7 @@ QPair<PluginProperty*, QString> PluginTest::addProperty(QString propertyIdToAdd,
 	if(!propParent && !isRoot)
 	{
 		qWarning()	<< "PluginTest::addProperty() property parent unknown."
-					<< "id =" << parentPropertyId
-					<< "copy =" << parentPropertyCopy;
+					<< "uid =" << parentPropertyUniqueId;
 		
 		retVal.second.append("ERROR: Unknown parent property");
 		

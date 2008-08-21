@@ -166,7 +166,10 @@ bool TreeItem::removeColumns(int position, int columns)
 bool TreeItem::setData(int column, const QVariant &value)
 {
 	if (column < 0 || column >= itemData.size())
+	{
+		qDebug() << "TreeItem::setData() column =" << column;
 		return false;
+	}
 
 	QVariant oldValue = itemData[column];
 	itemData[column] = value;

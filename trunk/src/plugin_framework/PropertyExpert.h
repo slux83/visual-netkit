@@ -43,7 +43,7 @@ private:
 	bool validateXml();
 	PluginProperty* buildPropertyDepth(QDomElement propNode, PluginProperty* parent = NULL,
 			PluginProperty* current = NULL);
-	PluginProperty * searchPropertyPrivate(PluginProperty *parent, QString pId, quint16 pCopy);
+	PluginProperty * searchPropertyPrivate(PluginProperty *parent, QString pUid);
 
 public:
 	PropertyExpert(QString &xmlRes);
@@ -51,7 +51,7 @@ public:
 	QList<PluginProperty*> buildBaseProperties();
 	QMap<QString, QString> parseXmlGlobalInfo();
 	bool isXmlConfValid() { return isXmlValid; };
-	PluginProperty * searchProperty(QList<PluginProperty*> properties, QString pId, quint16 pCopy);
+	PluginProperty * searchProperty(QList<PluginProperty*> properties, QString pUid);
 	QMap<QString, QString> getPropertyInfo(QString propertyId);
 	PluginProperty * newProperty(QString propName, QString defValue, QString desc,
 			QString idVal, quint16 minOcc, quint16 maxOcc);
