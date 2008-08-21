@@ -44,7 +44,7 @@ private:
 public:
 	PluginTest();
 	virtual ~PluginTest();
-	bool saveProperty(QString propId, QString propValue, QString *pluginAlertMsg = NULL);
+	bool saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg = NULL);
 	QMap<QString, QString> getTemplates();
 	QString getName() { return globalInfo["plugin name"]; };
 	QList<PluginProperty*> getPluginProperties() { return properties; };
@@ -52,9 +52,8 @@ public:
 	void setProxy(PluginProxy* p);
 	QString getXMLResource() { return ":/test/xml-conf"; };
 	QString getDefaultGraphisLabel() {return QString("test plugin"); };
-	QString deleteProperty(QString propertyId, quint16 propertyCopy);
-	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyId,
-				quint16 parentPropertyCopy);
+	QString deleteProperty(QString propertyUniqueId);
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyUniqueId);
 	bool init(QString laboratoryPath)
 		{ Q_UNUSED(laboratoryPath) myProxy->changeGraphicsLabel("test plugin"); return false; };
 };

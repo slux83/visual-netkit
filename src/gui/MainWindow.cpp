@@ -809,9 +809,17 @@ void MainWindow::itemClicked(const QModelIndex& index)
 	TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 
 	//invalid item
-	if(!item || item->isElementProperty())
+	if(!item)
 	{
 		actionsToolButton->setEnabled(false);
+		return;
+	}
+	
+	if(item->isElementProperty())
+	{
+		actionsToolButton->setEnabled(false);
+		//Change node description
+		descriptionLabel->setText(item->getDescrioption());
 		return;
 	}
 	
@@ -850,10 +858,13 @@ void MainWindow::itemClicked(const QModelIndex& index)
  */
 void MainWindow::handlePropertyAction(QAction * action)
 {
+	if(!action)
+		return;
+	
 	/* Get infos from action */
 	QStringList actionData = action->data().toStringList();
 	
-	//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
+	//PLUGIN_NAME{SEPARATOR}PROPERTY_UID
 	QStringList splittedId = actionData[1].split(SEPARATOR);
 
 	QModelIndex current = propertiesTreeView->currentIndex();
@@ -867,7 +878,7 @@ void MainWindow::handlePropertyAction(QAction * action)
 	//ACTION: delete property
 	if(actionData[0] == "delete")
 	{
-		QString response = handler->removePluginProperty(splittedId[0], splittedId[1], (quint16)splittedId[2].toInt());
+		QString response = handler->removePluginProperty(splittedId[0], splittedId[1]);
 		if(response.isEmpty())
 		{
 			//remove the tree item from tree view
@@ -888,8 +899,8 @@ void MainWindow::handlePropertyAction(QAction * action)
 	if(actionData[0] == "add")
 	{
 		QPair<PluginProperty*, QString> response = 
-			handler->addPluginProperty(splittedId[0], actionData[2], splittedId[1],
-					(quint16)splittedId[2].toInt());
+			handler->addPluginProperty(splittedId[0], actionData[2], splittedId[1]);
+		
 		if(response.second.isEmpty())
 		{
 			//add a new tree item
@@ -905,8 +916,8 @@ void MainWindow::handlePropertyAction(QAction * action)
 				QModelIndex child1 = model->index(0, 1, index);
 				
 				//This is an hack to prevent a stupid Qt? bug.
-				while(!model->setData(child0, QVariant(p->getName()), Qt::EditRole)) {};
-				while(!model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole)) {};
+				model->setData(child0, QVariant(p->getName()), Qt::EditRole);
+				model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole);
 				
 				if(model->data(child0, Qt::EditRole).toString().isNull())
 				{
@@ -918,18 +929,12 @@ void MainWindow::handlePropertyAction(QAction * action)
 				for(int column=0; column < propertiesTreeView->model()->columnCount(); ++column)
 					propertiesTreeView->resizeColumnToContents(column);
 				
-				//Tooltip
-				model->setData(child0, QVariant(p->getDescription()), Qt::ToolTipRole);
-				model->setData(child1, QVariant(p->getDescription()), Qt::ToolTipRole);
-				
 				//Init the low level model (tree item of child0/1)
 				TreeItem *ti = model->getItem(child0);
 				ti->setProperty(true);
 				
 				//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
-				ti->setId(splittedId[0] + SEPARATOR +
-						p->getId() + SEPARATOR +
-						QString::number(p->getCopy()));
+				ti->setId(splittedId[0] + SEPARATOR + p->getUniqueId());
 				
 				PluginProxy *proxy = handler->getPluginFromCurrentElement(splittedId[0]);
 				if(!proxy)
@@ -976,8 +981,8 @@ void MainWindow::buildViewChildsDeeply(
 			QModelIndex child1 = model->index(0, 1, child);
 			
 			//This is an hack to prevent a stupid Qt? bug.
-			while(!model->setData(child0, QVariant(p->getName()), Qt::EditRole)) {};
-			while(!model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole)) {};
+			model->setData(child0, QVariant(p->getName()), Qt::EditRole);
+			model->setData(child1, QVariant(p->getDefaultValue()), Qt::EditRole);
 			
 			if(model->data(child0, Qt::EditRole).toString().isNull())
 				qDebug() << "--> OMFG OBSCURE BUG!!!";
@@ -992,10 +997,8 @@ void MainWindow::buildViewChildsDeeply(
 			TreeItem *ti = model->getItem(child0);
 			ti->setProperty(true);
 			
-			//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
-			ti->setId(proxy->getPlugin()->getName() + SEPARATOR +
-					p->getId() + SEPARATOR +
-					QString::number(p->getCopy()));
+			//PLUGIN_NAME{SEPARATOR}PROPERTY_UID
+			ti->setId(proxy->getPlugin()->getName() + SEPARATOR + p->getUniqueId());
 			
 			ti->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(p->getId()));
 			

@@ -170,15 +170,14 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 	}
 	
 	QStringList itemDataSplitted = treeItem->getId().split(SEPARATOR);
-	if(itemDataSplitted.size() != 3)
+	if(itemDataSplitted.size() != 2)
 	{
 		qWarning() << "tree item id not standard:" << treeItem->getId();
 		return false;
 	}
 	
 	QString pluginName = itemDataSplitted[0];
-	QString propName = itemDataSplitted[1];
-	QString propCopy = itemDataSplitted[2];
+	QString propUid = itemDataSplitted[1];
 	
 	QListIterator<PluginProxy*> i(PluginRegistry::getInstance()->getVmProxies(vm));
 	
@@ -189,7 +188,7 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 		if(p->getPlugin()->getName() == pluginName)
 		{
 			QString alert;
-			if(!p->saveProperty(propName, itemValue, &alert))
+			if(!p->saveProperty(propUid, itemValue, &alert))
 			{
 				int userChoice;
 				
@@ -202,7 +201,7 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 				if(userChoice == QMessageBox::Yes)
 				{
 					//ok, store the value and shut up!
-					ok = p->saveProperty(propName, itemValue);
+					ok = p->saveProperty(propUid, itemValue);
 				}	
 			}
 			else
@@ -245,11 +244,11 @@ TreeModel* VmPropertyController::getInitModel(QList<PluginProxy*> plugins)
 		
 		parent->setPropertyHandler(this);
 		
-		parent->setId(proxy->getPlugin()->getName() + SEPARATOR + SEPARATOR);
+		parent->setId(proxy->getPlugin()->getName() + SEPARATOR);
 		
 		parent->appendChildsDescription(proxy->getPropertyExpert()->getRootChilds());
 				
-		clonePropertyTree(proxy, proxy->getPlugin()->getPluginProperties(), parent, root);
+		clonePropertyTree(proxy, proxy->getPlugin()->getPluginProperties(), parent, root, true);
 	}
 	
 	return model;
@@ -303,7 +302,7 @@ TreeModel* VmPropertyController::getComposedModel()
 		
 		parent->setPropertyHandler(this);
 		
-		parent->setId(proxy->getPlugin()->getName() + SEPARATOR + SEPARATOR);
+		parent->setId(proxy->getPlugin()->getName() + SEPARATOR);
 		
 		parent->appendChildsDescription(proxy->getPropertyExpert()->getRootChilds());
 				
@@ -318,12 +317,12 @@ TreeModel* VmPropertyController::getComposedModel()
  * Create a clone of preperties but using tree items
  */
 void VmPropertyController::clonePropertyTree(PluginProxy *proxy, QList<PluginProperty*> properties,
-		TreeItem* parent, TreeItem *root)
+		TreeItem* parent, TreeItem *root, bool init)
 {	
 	foreach(PluginProperty* prop, properties)
 	{
 		QVector<QVariant> propertyHeader;
-		propertyHeader << prop->getName() << prop->getDefaultValue();
+		propertyHeader << prop->getName() << ((init)? prop->getDefaultValue() : prop->getValue());
 		
 		parent->insertChildren(parent->childCount(), 1, root->columnCount());
 		
@@ -333,10 +332,8 @@ void VmPropertyController::clonePropertyTree(PluginProxy *proxy, QList<PluginPro
 		TreeItem *last = parent->child(parent->childCount() - 1);
 		last->setProperty(true);
 		
-		//PLUGIN_NAME{SEPARATOR}PROPERTY_ID{SEPARATOR}PROPERTY_COPY
-		last->setId(proxy->getPlugin()->getName() + SEPARATOR +
-				prop->getId() + SEPARATOR +
-				QString::number(prop->getCopy()));
+		//PLUGIN_NAME{SEPARATOR}PROPERTY_UID
+		last->setId(proxy->getPlugin()->getName() + SEPARATOR +	prop->getUniqueId());
 		
 		last->appendChildsDescription(proxy->getPropertyExpert()->getChildsByParentId(prop->getId()));
 		
@@ -345,7 +342,7 @@ void VmPropertyController::clonePropertyTree(PluginProxy *proxy, QList<PluginPro
 		last->setDescription(prop->getDescription());
 		
 		//recursive call
-		clonePropertyTree(proxy, prop->getChilds(), last, root);
+		clonePropertyTree(proxy, prop->getChilds(), last, root, init);
 	}
 }
 
@@ -353,8 +350,7 @@ void VmPropertyController::clonePropertyTree(PluginProxy *proxy, QList<PluginPro
  * [IMPL]
  * Search the plugin inside the vm and foreward the action
  */
-QString VmPropertyController::removePluginProperty(
-		QString pluginName, QString propertyId, quint16 propertyCopy)
+QString VmPropertyController::removePluginProperty(QString pluginName, QString propertyUniqueId)
 {
 	if(!vm)
 		return QString("ERROR: unknow base element");
@@ -366,7 +362,7 @@ QString VmPropertyController::removePluginProperty(
 	{
 		PluginProxy *p = i.next();
 		if(p->getPlugin()->getName() == pluginName)
-			return p->deleteProperty(propertyId, propertyCopy);
+			return p->deleteProperty(propertyUniqueId);
 	}
 	
 	qWarning() << "Plugin" << pluginName << "not found on vm" << vm->getName();
@@ -380,7 +376,7 @@ QString VmPropertyController::removePluginProperty(
  * Add a pugin property
  */
 QPair<PluginProperty*, QString> VmPropertyController::addPluginProperty(QString pluginName, QString propertyIdToAdd,
-				QString parentPropertyId, quint16 parentPropertyCopy)
+				QString parentPropertyUniqueId)
 {
 	if(!vm)
 		return QPair<PluginProperty*, QString>(NULL, QString("ERROR: PropertyHandler return a critical error"));
@@ -392,7 +388,7 @@ QPair<PluginProperty*, QString> VmPropertyController::addPluginProperty(QString 
 	{
 		PluginProxy *p = i.next();
 		if(p->getPlugin()->getName() == pluginName)
-			return p->addProperty(propertyIdToAdd, parentPropertyId, parentPropertyCopy);
+			return p->addProperty(propertyIdToAdd, parentPropertyUniqueId);
 	}
 	
 	qWarning() << "Plugin" << pluginName << "not found on vm" << vm->getName();

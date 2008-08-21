@@ -36,7 +36,7 @@ private:
 	VirtualMachine *vm;
 	
 	void clonePropertyTree(PluginProxy *proxy, QList<PluginProperty*> properties,
-			TreeItem* parent, TreeItem *root);
+			TreeItem* parent, TreeItem *root, bool init = false);
 	
 public:
 	VmPropertyController();
@@ -44,9 +44,9 @@ public:
 	TreeModel* getComposedModel();
 	TreeModel* getInitModel(QList<PluginProxy*> plugins);
 	bool saveChangedProperty(TreeItem *treeItem);
-	QString removePluginProperty(QString pluginName, QString propertyId, quint16 propertyCopy);
+	QString removePluginProperty(QString pluginName, QString propertyUniqueId);
 	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
-				QString parentPropertyId, quint16 parentPropertyCopy);
+				QString parentPropertyUniqueId);
 	PluginProxy* getPluginFromCurrentElement(QString pluginName);
 	
 	void setVm(VirtualMachine *selectedVm) { vm = selectedVm; };
