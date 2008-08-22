@@ -194,10 +194,6 @@ void MainWindow::createConnections()
 	//connect: action property menu
 	connect(actionMenu, SIGNAL(triggered(QAction*)),
 			this, SLOT(handlePropertyAction(QAction*)));
-	
-	//connect: prop tree view click item
-	connect(propertiesTreeView, SIGNAL(clicked(const QModelIndex&)),
-		this, SLOT(itemClicked(const QModelIndex&)));
 }
 
 /**
@@ -469,6 +465,11 @@ void MainWindow::clearPropertyDock(TreeModel *newModel)
 	propertiesTreeView->expandAll();
 	for(int column=0; column < propertiesTreeView->model()->columnCount(); ++column)
 		propertiesTreeView->resizeColumnToContents(column);
+	
+	//selection model has changed.. reconnect signal
+	connect(propertiesTreeView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+			this, SLOT(handleSelection(const QModelIndex&, const QModelIndex&)));
+		
 	
 	//Destroy old model
 	if(model)
@@ -804,9 +805,11 @@ void MainWindow::showAbout()
  * [PRIVATE-SLOT]
  * Build/active/deactive the menu action based on node selected and its childs
  */
-void MainWindow::itemClicked(const QModelIndex& index)
+void MainWindow::handleSelection(const QModelIndex &current, const QModelIndex &previous)
 {
-	TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
+	Q_UNUSED(previous);
+	
+	TreeItem *item = static_cast<TreeItem*>(current.internalPointer());
 
 	//invalid item
 	if(!item)

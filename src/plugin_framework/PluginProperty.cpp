@@ -29,6 +29,7 @@ PluginProperty::PluginProperty(QString propName, QString defValue, QString desc,
 {
 	name = propName;
 	defaultValue = defValue;
+	value = defValue;
 	description = desc;
 	id = idVal;
 	min = minOcc;

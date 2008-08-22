@@ -42,10 +42,7 @@ InitPluginsPropertiesDialog::InitPluginsPropertiesDialog(
 	actionMenu = new QMenu();
 	actionsToolButton->setMenu(actionMenu);
 	
-	/* Connects */
-	connect(treeView, SIGNAL(clicked(const QModelIndex&)),
-		this, SLOT(itemClicked(const QModelIndex&)));
-	
+	/* Connects */	
 	connect(actionMenu, SIGNAL(triggered(QAction*)),
 		this, SLOT(handleAction(QAction*)));
 		
@@ -86,6 +83,10 @@ void InitPluginsPropertiesDialog::clearTreeView(TreeModel *newModel)
 	
 	treeView->setModel(newModel);
 	
+	//selection model has changed.. reconnect signal
+	connect(treeView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+			this, SLOT(handleSelection(const QModelIndex&, const QModelIndex&)));
+	
 	if(oldModel)
 		delete oldModel;
 }
@@ -94,8 +95,12 @@ void InitPluginsPropertiesDialog::clearTreeView(TreeModel *newModel)
  * [PRIVATE-SLOT]
  * Build/active/deactive the menu action based on node selected and its childs
  */
-void InitPluginsPropertiesDialog::itemClicked(const QModelIndex& index)
+void InitPluginsPropertiesDialog::handleSelection(const QModelIndex &current, const QModelIndex &previous)
 {
+	Q_UNUSED(previous);
+	
+	QModelIndex index = current;
+	
 	TreeItem *item = static_cast<TreeItem*>(index.internalPointer());
 	
 	//invalid item

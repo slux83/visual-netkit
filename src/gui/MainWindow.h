@@ -101,7 +101,7 @@ private slots:
 	void rebuildHistory();
 	void handleHistoryAction(QAction* action);
 	void showAbout();
-	void itemClicked(const QModelIndex& index);
+	void handleSelection(const QModelIndex &current, const QModelIndex &previous);
 	void handlePropertyAction(QAction* action);
 	
 protected:

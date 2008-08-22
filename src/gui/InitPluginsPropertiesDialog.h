@@ -46,7 +46,7 @@ private:
 	void clearTreeView(TreeModel *newModel);
 	
 private slots:
-	void itemClicked(const QModelIndex& index);
+	void handleSelection(const QModelIndex &current, const QModelIndex &previous);
 	void handleAction(QAction *action);
 	
 public:
