@@ -13,6 +13,8 @@ DESTDIR = ../../../bin/plugins
 #QtXml is used by property expert to parse plugin xml config file
 QT += xml
 
+VERSION = 1.1
+
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
