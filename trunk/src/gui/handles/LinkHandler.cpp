@@ -112,7 +112,8 @@ void LinkHandler::createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cd
 	/* now check if the user want init manually the plugins properties */
 	if(manuallyInit && selectedPlugins.size() > 0)
 	{
-		//pluginPropDialog->buildGui(linkPlugins);
+		propertyController->setHi(interface);
+		pluginPropDialog->buildGui(linkPlugins, propertyController);
 		pluginPropDialog->setVisible(true);
 	}
 	

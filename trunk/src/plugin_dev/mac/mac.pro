@@ -10,12 +10,15 @@ QMAKE_LFLAGS = -Wl,-rpath,$$[QT_INSTALL_LIBS] $$[QMAKE_LFLAGS_SHLIB]
 DEPENDPATH += .
 DESTDIR = ../../../bin/plugins
 
+VERSION = 1.1
+
+#QtXml is used by property expert to parse plugin xml config file
+QT += xml
+
 MOC_DIR = build/moc
 RCC_DIR = build/rcc
 UI_DIR = build/ui
 OBJECTS_DIR = build/obj
-
-#QT += network
 
 INCLUDEPATH += . \
     ../../plugin_framework \
@@ -33,4 +36,5 @@ SOURCES += PluginMac.cpp \
     ../../core/HardwareInterface.cpp \
     ../../core/CollisionDomain.cpp \
     ../../plugin_framework/PluginProperty.cpp \
-    ../../plugin_framework/PluginRegistry.cpp
+    ../../plugin_framework/PluginRegistry.cpp \
+    ../../plugin_framework/PropertyExpert.cpp

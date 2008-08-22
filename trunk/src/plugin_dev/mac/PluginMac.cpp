@@ -1,5 +1,5 @@
 /**
- * A simple test plugin for Visual Netkit 
+ * A Media Access Control (MAC) plugin for Visual Netkit
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -28,15 +28,7 @@
  */
 PluginMac::PluginMac() : PluginInterface()
 {
-	mySettings = new QSettings(":/ini_mac", QSettings::NativeFormat);
-	
-	/* Save the name of this plugin for future uses */
-	mySettings->beginGroup("global");
-	myName = mySettings->value("name").toString();
-	mySettings->endGroup();
-	
 	myProxy = NULL;
-	fetchProperties();
 }
 
 /**
@@ -46,7 +38,6 @@ PluginMac::~PluginMac()
 {
 	//NOTE: The proxy is destroyed by the plugin framework
 	qDeleteAll(properties);
-	delete mySettings;
 }
 
 /**
@@ -57,8 +48,9 @@ QMap<QString, QString> PluginMac::getTemplates()
 {
 	QMap<QString, QString> templates;
 	QString templateContent;
+	PluginProperty *macProperty = properties.at(0);	//we have only one property
 	
-	QFile data(":/ifconfig_tpl");
+	QFile data(":/mac/ifconfig_tpl");
 	if (data.open(QFile::ReadOnly)) 
 	{
 		QTextStream in(&data);
@@ -67,7 +59,7 @@ QMap<QString, QString> PluginMac::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "");
 		
-		templateContent.replace("<MAC>", getPropertyByName("mac address")->getValue());
+		templateContent.replace("<MAC>", macProperty->getValue());
 
 		/* Append comment */
 		QString lineComment;
@@ -105,81 +97,48 @@ QString PluginMac::getTemplateLocation()
 }
 
 /**
- * Fetches plugin properties and stores them in the properties map.
- */
-bool PluginMac::fetchProperties()
-{
-	bool allok = true;
-	
-	mySettings->beginGroup("properties");
-	QStringList childgroups = mySettings->childGroups();
-
-	if (!childgroups.empty()) 
-	{
-		for (int i = 0; i < childgroups.size(); i++)
-		{
-			QString p_name = childgroups.at(i);
-			QString p_default_value = mySettings->value(childgroups.at(i) + "/p_default_value").toString();
-			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
-			
-			PluginProperty *pp = new PluginProperty(p_name, p_default_value, p_description);
-			properties.append(pp);
-		}
-	} else {
-		qWarning() << "No properties for plugin:" << myName;
-		allok = false;
-	}
-	mySettings->endGroup();
-	
-	return allok;
-}
-
-/**
  * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-bool PluginMac::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginMac::saveProperty(QString propertyUniqueId, QString propValue, QString *pluginAlertMsg)
 {
+	PluginProperty *macProperty = properties.at(0);
 	
 	/* Check if property exist */
-	if (getPropertyByName(propName) == NULL)
+	if (macProperty->getUniqueId() != propertyUniqueId)
 	{
-		qWarning() << "PluginMac::initProperty: properties doesn't contain property" + propName;
+		qWarning() << "PluginMac::initProperty: properties doesn't contain property" + propertyUniqueId;
 		return true;
 	}	
 	
 	/* Skip storage if the value is equals default */
-	if (propValue == getPropertyByName(propName)->getDefaultValue())
+	if (propValue == macProperty->getDefaultValue())
 		return true;
 	
 	/* Force property save? */
 	if (pluginAlertMsg == NULL)
 	{
-		PluginProperty *prop = getPropertyByName(propName);
-		prop->setValue(propValue);
+		macProperty->setValue(propValue);
 		refreshLabel();
 		
 		return true;
 	} 
 	else 
 	{
-		if (propName == "mac address") 
-		{			
-			/* Validate the MAC address */
-			if(!validateMacAddress(propValue))
-			{
-				/* set a warning message */
-				pluginAlertMsg->append("Invalid MAC address");
-			}
-			else 
-			{
-				PluginProperty *prop = getPropertyByName(propName);
-				prop->setValue(propValue);
-				refreshLabel();
-				return true;
-			}
+		/* Validate the MAC address */
+		if(!validateMacAddress(propValue))
+		{
+			/* set a warning message */
+			pluginAlertMsg->append("Invalid MAC address");
+		}
+		else 
+		{
+			macProperty->setValue(propValue);
+			refreshLabel();
+			return true;
 		}
 		
 	}
+	
 	return false;
 }
 
@@ -188,6 +147,8 @@ bool PluginMac::saveProperty(QString propName, QString propValue, QString *plugi
  */
 bool PluginMac::init(QString laboratoryPath)
 {
+	PluginProperty *macProperty = properties.at(0);
+
 	/* Get my buddy */
 	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 	if (hi == NULL)
@@ -228,7 +189,7 @@ bool PluginMac::init(QString laboratoryPath)
 			if(validateMacAddress(myMacAddress))
 			{
 				//ok, founded my mac address
-				getPropertyByName("mac address")->setValue(myMacAddress);
+				macProperty->setValue(myMacAddress);
 				myProxy->changeGraphicsLabel(myMacAddress);
 						
 				return true;
@@ -245,7 +206,7 @@ bool PluginMac::init(QString laboratoryPath)
  */
 void PluginMac::refreshLabel()
 {
-	myProxy->changeGraphicsLabel(getPropertyByName("mac address")->getValue());
+	myProxy->changeGraphicsLabel(properties.at(0)->getValue());
 }
 
 /**
@@ -264,14 +225,29 @@ bool PluginMac::validateMacAddress(QString &mac)
 }
 
 /**
- * [PRIVATE]
- * Get the property by name (or return null
+ * Set 'my' proxy and get my info/properties
  */
-PluginProperty* PluginMac::getPropertyByName(QString propName)
+void PluginMac::setProxy(PluginProxy* p)
 {
-	foreach(PluginProperty *p, properties)
-		if(p->getName() == propName)
-			return p;
+	myProxy = p;
 	
-	return NULL;
+	//Now we can get plugin infos and base properties from property expert
+	if(p->getPropertyExpert()->isXmlConfValid())
+	{
+		globalInfo = p->getPropertyExpert()->parseXmlGlobalInfo();
+		properties = p->getPropertyExpert()->buildBaseProperties();
+	}
 }
+
+/**
+ * UNUSED
+ */
+QPair<PluginProperty*, QString> PluginMac::addProperty(QString propertyIdToAdd,
+		QString parentPropertyUniqueId)
+{
+	Q_UNUSED(propertyIdToAdd);
+	Q_UNUSED(parentPropertyUniqueId);
+	
+	return qMakePair(properties.at(0), QObject::tr("You cannot add properties for this plugin"));	//Return never used junk
+}
+

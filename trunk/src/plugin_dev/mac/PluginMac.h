@@ -21,7 +21,7 @@
 
 #include <QObject>
 #include <QString>
-#include <QSettings>
+#include <QMap>
 
 #include "PluginInterface.h"
 #include "PluginProxy.h"
@@ -36,28 +36,33 @@ class PluginMac : public PluginInterface
 	
 private:
 	QList<PluginProperty*> properties;
-	QSettings *mySettings;
+	QMap<QString, QString> globalInfo;
 	PluginProxy *myProxy;
-	QString myName;
 
 	QString getTemplateLocation();
-	bool fetchProperties();
 	void refreshLabel();
 	bool validateMacAddress(QString &mac);
-	PluginProperty *getPropertyByName(QString propName);
 	
 public:
 	PluginMac();
 	virtual ~PluginMac();
-	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	QSettings* getMySettings() { return mySettings; };
+	bool saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg = NULL);
 	QMap<QString, QString> getTemplates();
-	QString getName() { return myName; };
+	QString getName() { return globalInfo["plugin name"]; };
 	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
-	void setProxy(PluginProxy* p) { myProxy = p; };
+	void setProxy(PluginProxy* p);
 	
-	QString getDefaultGraphisLabel() {return QString(); };
+	QString getDefaultGraphisLabel() {return QString("mac"); };
+	QString getXMLResource() { return ":/mac/xml-conf"; };
+	
+	//add and delete properties are unused for this plugin
+	QString deleteProperty(QString propertyUniqueId)
+	{
+		Q_UNUSED(propertyUniqueId);
+		return QObject::tr("You cannot delete properties for this plugin.");
+	};
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyUniqueId);
 	
 	bool init(QString laboratoryPath);
 };
