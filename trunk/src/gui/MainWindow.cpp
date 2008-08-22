@@ -470,6 +470,8 @@ void MainWindow::clearPropertyDock(TreeModel *newModel)
 	connect(propertiesTreeView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
 			this, SLOT(handleSelection(const QModelIndex&, const QModelIndex&)));
 		
+	//clear description property label
+	descriptionLabel->setText("");
 	
 	//Destroy old model
 	if(model)

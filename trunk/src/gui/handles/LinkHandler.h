@@ -56,7 +56,6 @@ public:
 	void deleteLink(LinkItem *link);
 
 public slots:
-	void saveChangedProperty(int row, int column);
 	void createLink(VirtualMachineItem *vmItem, CollisionDomainItem *cdItem,
 			QStringList selectedPlugins, bool manuallyInit, QString ethName, bool state);
 

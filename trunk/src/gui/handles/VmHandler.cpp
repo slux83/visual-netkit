@@ -128,17 +128,6 @@ void VmHandler::renderVmProperties(VirtualMachineItem *vmItem)
 	labHandler->getMainWindow()->clearPropertyDock(propertyController->getComposedModel());
 }
 
-/**
- * [SLOT]
- * Save a changed property for a virtual machine
- */
-void VmHandler::saveChangedProperty(int row, int column)
-{
-//	/* Foreward action */
-//	propertyController->saveChangedProperty(
-//			labHandler->getMainWindow()->propertyTable->item(row, column));
-}
-
 void VmHandler::removePlugins(VirtualMachineItem *vmItem, QStringList pluginsToRemove)
 {
 	VirtualMachine *vm = VmMapper::getInstance()->getVm(vmItem);

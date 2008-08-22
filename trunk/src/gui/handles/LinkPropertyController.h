@@ -23,22 +23,30 @@
 #include <QTableWidget>
 #include <QDebug>
 #include "../../core/HardwareInterface.h"
+#include "AbstractPropertyHandler.h"
 
 /**
  * Class that map each property item (for a link item)
  * with the hardware interface domain object
  */
-class LinkPropertyController : public QObject
+class LinkPropertyController : public AbstractPropertyHandler
 {
 private:
 	HardwareInterface *hi;
+	void clonePropertyTree(PluginProxy *proxy, QList<PluginProperty*> properties,
+				TreeItem* parent, TreeItem *root, bool init = false);
 	
 public:
 	LinkPropertyController();
 	virtual ~LinkPropertyController();	
-	bool saveChangedProperty(QTableWidgetItem *item);
-	void renderLinkProperties(QTableWidget *tableWidget);
-	
+	TreeModel* getComposedModel();
+	TreeModel* getInitModel(QList<PluginProxy*> plugins);
+	bool saveChangedProperty(TreeItem *treeItem);
+	QString removePluginProperty(QString pluginName, QString propertyUniqueId);
+	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
+				QString parentPropertyUniqueId);
+	PluginProxy* getPluginFromCurrentElement(QString pluginName);
+
 	void setHi(HardwareInterface *selectedHi) { hi = selectedHi; };
 };
 
