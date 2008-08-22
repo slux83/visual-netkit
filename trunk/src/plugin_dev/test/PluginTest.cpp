@@ -160,16 +160,20 @@ QString PluginTest::deleteProperty(QString propertyUniqueId)
 	}
 	
 	/* Check min occurrence */
+	quint16 idCount = 0;
 	if(propToDelete->getParent())
 	{
-		quint16 idCount = 0;
-		
 		foreach(PluginProperty *pp, propToDelete->getParent()->getChilds())
 			if(pp->getId() == propToDelete->getId())	idCount++;
-		
-		if(propToDelete->getMinOcc() == 1 && idCount == 1)
-			return QString("Cannot deleted properties with MIN occurrence equals to 1.");
 	}
+	else
+	{
+		foreach(PluginProperty *pp, properties)
+			if(pp->getId() == propToDelete->getId())	idCount++;
+	}
+	
+	if(propToDelete->getMinOcc() == 1 && idCount == 1)
+		return QString("Cannot deleted properties with MIN occurrence equals to 1.");
 	
 	if(!propToDelete->getParent())
 	{
