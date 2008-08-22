@@ -55,9 +55,6 @@ public:
 signals:
 	void logEvent(QString message);
 
-private slots:
-	void saveChangedProperty(int row, int column);
-	
 public slots:
 	void createVm(QString vmNewName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);
 };
