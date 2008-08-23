@@ -23,25 +23,22 @@
 #include <QDebug>
 #include <QTableWidget>
 
+#include "AbstractPropertyHandler.h"
+
 class AreaItem;
 
 /**
- * Singletone class to control all areas
+ * Singletone class to control all areas and used also as
+ * areas property controller
  */ 
-class AreaController : public QObject
+class AreaController : public AbstractPropertyHandler
 {
-	Q_OBJECT
 	
 private:
 	static AreaController* instance;
 	QList<AreaItem *> areas;
 	AreaItem* currentArea;
-	
-	void renderProperties(QTableWidget *tableWidget);
-
-public slots:
-	void saveChangedProperty(int row, int column);
-	
+		
 public:
 	AreaController();
 	virtual ~AreaController();
@@ -54,6 +51,15 @@ public:
 	void setChangedLabState();
 	void deleteArea(AreaItem *aItem);
 	void clear();
+	
+	//[IMPLEMENT] AbstractPropertyHandler
+	TreeModel* getComposedModel();
+	TreeModel* getInitModel(QList<PluginProxy*> plugins);
+	bool saveChangedProperty(TreeItem *treeItem);
+	QString removePluginProperty(QString pluginName, QString propertyUniqueId);
+	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
+				QString parentPropertyUniqueId);
+	PluginProxy* getPluginFromCurrentElement(QString pluginName);
 };
 
 #endif /*AREACONTROLLER_H_*/

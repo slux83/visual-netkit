@@ -83,6 +83,8 @@ bool LinkPropertyController::saveChangedProperty(TreeItem *treeItem)
 		LinkHandler::getInstance()->updateLinkName(hi, itemValue);
 		LinkMapper::getInstance()->getLink(hi)->setLinkLabel(itemValue);
 		
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Hardware Interface property saved"));
+
 		return true;
 		
 	}
@@ -103,6 +105,8 @@ bool LinkPropertyController::saveChangedProperty(TreeItem *treeItem)
 		/* save changes */
 		hi->setState((itemValue == "up"));
 		LinkMapper::getInstance()->getLink(hi)->updateLinkState();
+		
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Hardware Interface property saved"));
 		
 		return true;
 	}
@@ -148,6 +152,9 @@ bool LinkPropertyController::saveChangedProperty(TreeItem *treeItem)
 			break;
 		}
 	}
+	
+	if(ok)
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Hardware Interface property saved"));
 
 	return ok;
 }
