@@ -95,6 +95,8 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 		LabFacadeController::getInstance()->getCurrentLab()->updateVmKey(vm->getName(), itemValue, vm);
 		VmMapper::getInstance()->getVmItem(vm)->setLabelVmName(itemValue);
 		
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Virtual Machine property saved"));
+
 		return true;
 	}
 	
@@ -140,7 +142,9 @@ bool VmPropertyController::saveChangedProperty(TreeItem *treeItem)
 		}
 	}
 
-	
+	if(ok)
+		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Virtual Machine property saved"));
+
 	return ok;
 }
 

@@ -29,7 +29,7 @@ AreaController* AreaController::instance = NULL;
 /**
  * Constructor
  */
-AreaController::AreaController()
+AreaController::AreaController() : AbstractPropertyHandler()
 {
 	currentArea = NULL;
 }
@@ -105,66 +105,12 @@ void AreaController::deleteArea(AreaItem *aItem)
  */
 void AreaController::renderAreaProperties(AreaItem *area)
 {
-//	LabHandler *labHandler = LabHandler::getInstance();
-//	
-//	/* Disconnect the old handler */
-//	disconnect(labHandler->getMainWindow()->propertyTable, 
-//			SIGNAL(cellChanged(int, int)), 0, 0);
-//	
-//	/* Clear the property editor */
-//	labHandler->getMainWindow()->clearPropertyDock();
-//	
-//	/* Render properties */
-//	currentArea = area;
-//	renderProperties(labHandler->getMainWindow()->propertyTable);
-//	
-//	/* Connect the correct handler dinamically */
-//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-//		this, SLOT(saveChangedProperty(int, int)));
-}
-
-/**
- * [SLOT]
- * Save the property changed
- */
-void AreaController::saveChangedProperty(int row, int column)
-{
-//	QTableWidget *tWidget = LabHandler::getInstance()->getMainWindow()->propertyTable;
-//	QTableWidgetItem *tItem = tWidget->item(row, column);
-//	
-//	if(tItem->data(Qt::UserRole).toString() == AREA_TEXT)
-//	{
-//		currentArea->setLabel(tItem->data(Qt::DisplayRole).toString());
-//		LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Area property saved"));
-//	}
-}
-
-/**
- * [PRIVATE]
- * Render area properties inside the property dock
- */
-/**
- * Render lab properties inside property dock
- */
-void AreaController::renderProperties(QTableWidget *tableWidget)
-{
-//	if(currentArea == NULL)
-//		return;
-//	
-//	/* render infos inside the property editor */
-//	tableWidget->setRowCount(1);
-//
-//	QTableWidgetItem *property = new QTableWidgetItem();
-//	
-//	//Area text
-//	property->setData(Qt::DisplayRole, tr("Text"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(0, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, currentArea->getLabel());
-//	property->setData(Qt::UserRole, AREA_TEXT);
-//	tableWidget->setItem(0, 1, property);
+	currentArea = area;
+	
+	LabHandler *labHandler = LabHandler::getInstance();
+	
+	/* Clear the property editor and render properties */
+	labHandler->getMainWindow()->clearPropertyDock(getComposedModel());
 }
 
 /**
@@ -210,4 +156,104 @@ void AreaController::loadNewArea(QPointF pos, qreal width,
 	areas.append(area);
 	LabHandler::getInstance()->getMainWindow()->getLabScene()->addItem(area);
 	
+}
+
+/**
+ * Get the model to attach at view (gui) side on property dock
+ */
+TreeModel* AreaController::getComposedModel()
+{
+	QStringList header;
+	header << tr("Property") << tr("Value");
+	TreeModel *model = new TreeModel(header);
+	
+	if(!currentArea)
+	{
+		qWarning() << "AreaController::getComposedModel() NULL current area";
+		return model;
+	}
+	
+	TreeItem *root = model->getRootItem();
+	
+	/* lab properties */
+	TreeItem* last;
+	
+	//area text
+	root->insertChildren(root->childCount(), 1, root->columnCount());
+	root->child(root->childCount() - 1)->setData(0, tr("Text"));
+	root->child(root->childCount() - 1)->setData(1, currentArea->getLabel());
+	last = root->child(root->childCount() - 1);
+	last->setIsElementProperty(true);
+	last->setId(AREA_TEXT);
+	last->setDescription(tr("The Area text"));
+	last->setPropertyHandler(this);
+	
+	return model;
+}
+
+/**
+ * [UNUSED]
+ */
+TreeModel* AreaController::getInitModel(QList<PluginProxy*> plugins)
+{
+	Q_UNUSED(plugins);
+	
+	QStringList header;
+	header << tr("Property") << tr("Value");
+	return new TreeModel(header);
+}
+
+/**
+ * Save a property changed
+ */
+bool AreaController::saveChangedProperty(TreeItem *treeItem)
+{	
+	/* Is this property mapped with a Laboratory? */
+	if(currentArea == NULL)
+		return false;
+	
+	QString itemValue = treeItem->data(1).toString();
+	
+	/* Select the correct property to save inside the current area */
+	if(treeItem->getId() == AREA_TEXT)
+		currentArea->setLabel(itemValue);
+	
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Area property saved"));
+	
+	return true;
+}
+
+/**
+ * [UNUSED]
+ */
+QString AreaController::removePluginProperty(QString pluginName, QString propertyUniqueId)
+{
+	Q_UNUSED(pluginName);
+	Q_UNUSED(propertyUniqueId);
+	
+	return QObject::tr("You cannot remove properties for areas.");
+}
+
+/**
+ * [UNUSED]
+ */
+QPair<PluginProperty*, QString> AreaController::addPluginProperty(QString pluginName,
+		QString propertyIdToAdd, QString parentPropertyUniqueId)
+{
+	Q_UNUSED(pluginName);
+	Q_UNUSED(propertyIdToAdd);
+	Q_UNUSED(parentPropertyUniqueId);
+	PluginProperty *p = NULL;
+	
+	return qMakePair(p, QObject::tr("You cannot add properties for areas."));
+}
+
+/**
+ * [UNUSED]
+ */
+PluginProxy* AreaController::getPluginFromCurrentElement(QString pluginName)
+{
+	Q_UNUSED(pluginName);
+	
+	return NULL;
 }

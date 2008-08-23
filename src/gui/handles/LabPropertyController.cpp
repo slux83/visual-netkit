@@ -125,7 +125,7 @@ TreeModel* LabPropertyController::getInitModel(QList<PluginProxy*> plugins)
 }
 
 /**
- * 
+ * Save a labo property changed
  */
 bool LabPropertyController::saveChangedProperty(TreeItem *treeItem)
 {	
@@ -152,6 +152,7 @@ bool LabPropertyController::saveChangedProperty(TreeItem *treeItem)
 			lab->setWebsite(itemValue);
 	
 	LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Lab property saved"));
+	
 	return true;
 }
 
@@ -189,113 +190,4 @@ PluginProxy* LabPropertyController::getPluginFromCurrentElement(QString pluginNa
 	
 	return NULL;
 }
-
-/**
- * Save the property passed, if it's mine
- * Return true if the property is saved correctly
- */
-//bool LabPropertyController::saveChangedProperty(QTableWidgetItem * item)
-//{
-//	bool returnVal = false;
-//	
-//	/* Is this property mapped with a Laboratory? */
-//	if(lab == NULL)
-//		return false;
-//		
-//	/* Select the correct property to save inside the domain current lab */
-//	switch (item->data(Qt::UserRole).toInt())
-//	{
-//		case
-//			Version: lab->setVersion(item->data(Qt::DisplayRole).toString());
-//			returnVal = true;
-//			break;
-//
-//		case Description: lab->setDescription(item->data(Qt::DisplayRole).toString());
-//			break;
-//		
-//		case 
-//			Authors: lab->setAuthors(item->data(Qt::DisplayRole).toString());
-//			returnVal = true;
-//			break;
-//		
-//		case 
-//			Email: lab->setEmail(item->data(Qt::DisplayRole).toString());
-//			returnVal = true;
-//			break;
-//		
-//		case 
-//			Website: lab->setWebsite(item->data(Qt::DisplayRole).toString());
-//			returnVal = true;
-//			break;
-//	}
-//
-//	LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Lab property saved"));
-//	return returnVal;
-//}
-//
-///**
-// * Render lab properties inside property dock
-// */
-//void LabPropertyController::renderLabProperties(QTableWidget *tableWidget)
-//{
-//	/* render infos inside the property editor */
-//	tableWidget->setRowCount(5);
-//
-//	QTableWidgetItem *property = new QTableWidgetItem();
-//	
-//	//Lab version
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, tr("Version"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(0, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, lab->getVersion());
-//	property->setData(Qt::UserRole, Version);
-//	tableWidget->setItem(0, 1, property);
-//
-//	//Lab description
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, tr("Description"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(1, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, lab->getDescription());
-//	property->setData(Qt::UserRole, Description);
-//	tableWidget->setItem(1, 1, property);
-//	
-//	//Lab authors
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, tr("Authors"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(2, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, lab->getAuthors());
-//	property->setData(Qt::UserRole, Authors);
-//	tableWidget->setItem(2, 1, property);
-//	
-//	//Lab email
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, tr("E-Mail"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(3, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, lab->getEmail());
-//	property->setData(Qt::UserRole, Email);
-//	tableWidget->setItem(3, 1, property);
-//	
-//	//Lab Website
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, tr("Website"));
-//	property->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);	//not editable
-//	tableWidget->setItem(4, 0, property);
-//	
-//	property = new QTableWidgetItem();
-//	property->setData(Qt::DisplayRole, lab->getWebsite());
-//	property->setData(Qt::UserRole, Website);
-//	tableWidget->setItem(4, 1, property);
-//}
 
