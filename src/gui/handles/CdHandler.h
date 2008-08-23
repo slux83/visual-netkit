@@ -51,7 +51,6 @@ public:
 	
 public slots:
 	void handleAddNewCd(QString cdName, QStringList selectedPlugins, bool manuallyInit, QPointF pos);
-	void saveChangedProperty(int row, int column);
 
 	
 };

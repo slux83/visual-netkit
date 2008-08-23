@@ -107,7 +107,8 @@ void CdHandler::handleAddNewCd(QString cdName, QStringList selectedPlugins,
 	/* now check if the user want init manually the plugins properties */
 	if(manuallyInit && selectedPlugins.size() > 0)
 	{
-		//pluginPropDialog->buildGui(cdPlugins);
+		propertyController->setCd(cd);
+		pluginPropDialog->buildGui(cdPlugins, propertyController);
 		pluginPropDialog->setVisible(true);
 	}
 }
@@ -117,31 +118,14 @@ void CdHandler::handleAddNewCd(QString cdName, QStringList selectedPlugins,
  */
 void CdHandler::renderCdProperties(CollisionDomainItem *cdItem)
 {
-//	/* Disconnect the old handler */
-//	disconnect(labHandler->getMainWindow()->propertyTable, 
-//			SIGNAL(cellChanged(int, int)), 0, 0);
-//	
-//	/* Clear the property editor */
-//	labHandler->getMainWindow()->clearPropertyDock();
-//	
-//	/* Render properties */
-//	propertyController->setCd(CdMapper::getInstance()->getCD(cdItem));
-//	propertyController->renderCdProperties(labHandler->getMainWindow()->propertyTable);
-//	
-//	/* Connect the correct handler dinamically */
-//	connect(labHandler->getMainWindow()->propertyTable, SIGNAL(cellChanged(int, int)), 
-//		this, SLOT(saveChangedProperty(int, int)));
-}
-
-/**
- * [SLOT]
- * Save a changed property for a collision domain
- */
-void CdHandler::saveChangedProperty(int row, int column)
-{
-//	/* Foreward action */
-//	propertyController->saveChangedProperty(
-//			labHandler->getMainWindow()->propertyTable->item(row, column));
+	CollisionDomain *cd;
+	if(!(cd = CdMapper::getInstance()->getCD(cdItem)))
+		return;
+	
+	propertyController->setCd(cd);
+	
+	/* Clear the property editor and render properties */
+	labHandler->getMainWindow()->clearPropertyDock(propertyController->getComposedModel());
 }
 
 /**

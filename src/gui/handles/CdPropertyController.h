@@ -23,21 +23,28 @@
 #include <QTableWidget>
 #include <QDebug>
 #include "../../core/CollisionDomain.h"
+#include "AbstractPropertyHandler.h"
 
 /**
  * Class that map each property item (for a collision domain item)
  * with the CD domain object
  */
-class CdPropertyController : public QObject
+class CdPropertyController : public AbstractPropertyHandler
 {
 private:
 	CollisionDomain *cd;
-
+	void clonePropertyTree(PluginProxy *proxy, QList<PluginProperty*>properties,
+				TreeItem* parent, TreeItem *root, bool init = false);
 public:
 	CdPropertyController();
 	virtual ~CdPropertyController();
-	bool saveChangedProperty(QTableWidgetItem *item);
-	void renderCdProperties(QTableWidget *tableWidget);
+	TreeModel* getComposedModel();
+	TreeModel* getInitModel(QList<PluginProxy*> plugins);
+	bool saveChangedProperty(TreeItem *treeItem);
+	QString removePluginProperty(QString pluginName, QString propertyUniqueId);
+	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
+				QString parentPropertyUniqueId);
+	PluginProxy* getPluginFromCurrentElement(QString pluginName);
 	
 	void setCd(CollisionDomain *selectedCd) { cd = selectedCd; };
 };
