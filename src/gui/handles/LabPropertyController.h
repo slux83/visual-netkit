@@ -20,6 +20,7 @@
 #define LABPROPERTYCONTROLLER_H_
 
 #include "../../core/Laboratory.h"
+#include "AbstractPropertyHandler.h"
 
 #include <QTableWidgetItem>
 #include <QObject>
@@ -34,7 +35,7 @@ class LabHandler;
 /**
  * Class that map each property item (for lab) with the lab domain object
  */
-class LabPropertyController : public QObject
+class LabPropertyController : public AbstractPropertyHandler
 {
 	
 private:
@@ -43,8 +44,13 @@ private:
 public:
 	LabPropertyController();
 	virtual ~LabPropertyController();
-	bool saveChangedProperty(QTableWidgetItem *item);
-	void renderLabProperties(QTableWidget *tableWidget);
+	TreeModel* getComposedModel();
+	TreeModel* getInitModel(QList<PluginProxy*> plugins);
+	bool saveChangedProperty(TreeItem *treeItem);
+	QString removePluginProperty(QString pluginName, QString propertyUniqueId);
+	QPair<PluginProperty*, QString> addPluginProperty(QString pluginName, QString propertyIdToAdd,
+				QString parentPropertyUniqueId);
+	PluginProxy* getPluginFromCurrentElement(QString pluginName);
 	
 	//Setter functions
 	void setLab(Laboratory *l) { lab = l; };

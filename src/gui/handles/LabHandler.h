@@ -81,7 +81,6 @@ public slots:
 	void addCreatedLabOnTree(Laboratory *newLab);
 	void addCreatedVmOnTree(VirtualMachine *m);
 	void labTreeItemDoubleClicked(QTreeWidgetItem * item, int column);
-	void saveChangedProperty(int row, int column);
 	void addPathToTree(QString path);
 
 signals:

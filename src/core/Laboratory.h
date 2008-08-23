@@ -32,12 +32,12 @@
 enum PropertyKey
 {
 	Name = 0,
-	Version,
-	Date,
-	Description,
-	Authors,
-	Email,
-	Website
+	Version = 1,
+	Date = 2,
+	Description = 3,
+	Authors = 4,
+	Email = 5,
+	Website = 6
 };
 
 /**
