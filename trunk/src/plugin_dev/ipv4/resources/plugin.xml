@@ -1,0 +1,26 @@
+<plugin name="IPv4">
+	
+	<global type="link" version="1.1" author="Alessio Di Fazio, Paolo Minasi" dependencies="">
+		<![CDATA[The <a href="http://en.wikipedia.org/wiki/Ipv4" title="What is this?">IPv4</a> plugin]]>
+	</global>
+	
+	<properties>
+		
+		<property id="address" name="ip address" default_value="" min="1" max="1">
+			<![CDATA[IPv4 address. EXAMPLE: 192.168.1.1]]>
+			<childs />
+		</property>
+		
+		<property id="netmask" name="netmask" default_value="" min="1" max="1">
+			<![CDATA[The <a href="http://www.google.it">ipv4</a> netmask: it can be in CIDR notation (/24) or standard notation (255.255.255.0)]]>
+			<childs />
+		</property>
+		
+		<property id="broadcast" name="broadcast" default_value="" min="1" max="1">
+			<![CDATA[The ipv4 broadcast address]]>
+			<childs />
+		</property>
+		
+	</properties>
+	
+</plugin>

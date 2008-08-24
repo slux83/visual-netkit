@@ -149,8 +149,8 @@ void VirtualMachineItem::initContextMenu()
 			this, SLOT(deleteVmActionCalled()));
 	connect(restoreGroupAction, SIGNAL(triggered()),
 				this, SLOT(restoreGroupActionCalled()));
-	connect(managePluginsAction, SIGNAL(triggered()),
-				this, SLOT(managePluginsActionCalled()));
+//	connect(managePluginsAction, SIGNAL(triggered()),
+//				this, SLOT(managePluginsActionCalled()));
 	
 	//disabled because not finished
 	managePluginsAction->setVisible(false);

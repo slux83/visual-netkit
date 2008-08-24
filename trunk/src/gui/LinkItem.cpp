@@ -174,8 +174,8 @@ void LinkItem::initContextMenu()
 	/* Connects */
 	connect(deleteAction, SIGNAL(triggered()),
 			this, SLOT(deleteLinkActionCalled()));
-	connect(managePluginsAction, SIGNAL(triggered()),
-			this, SLOT(managePluginsActionCalled()));
+//	connect(managePluginsAction, SIGNAL(triggered()),
+//			this, SLOT(managePluginsActionCalled()));
 
 }
 
