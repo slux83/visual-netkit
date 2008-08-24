@@ -301,6 +301,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -337,6 +340,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -366,13 +372,10 @@
            </item>
            <item>
             <widget class="QLabel" name="pDescription" >
-             <property name="layoutDirection" >
-              <enum>Qt::LeftToRight</enum>
-             </property>
              <property name="text" >
               <string/>
              </property>
-             <property name="wordWrap" >
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -409,6 +412,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -445,6 +451,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>

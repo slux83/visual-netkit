@@ -1,5 +1,5 @@
 /**
- * A simple test plugin for Visual Netkit 
+ * The IPv4 plugin for Visual Netkit 
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -27,16 +27,8 @@
  * Constructor 
  */
 PluginIPv4::PluginIPv4() : PluginInterface()
-{
-	mySettings = new QSettings(":/iniipv4", QSettings::NativeFormat);
-	
-	/* Save the name of this plugin for future uses */
-	mySettings->beginGroup("global");
-	myName = mySettings->value("name").toString();
-	mySettings->endGroup();
-	
+{	
 	myProxy = NULL;
-	fetchProperties();
 }
 
 /**
@@ -46,20 +38,6 @@ PluginIPv4::~PluginIPv4()
 {
 	//NOTE: The proxy is destroyed by the plugin framework
 	qDeleteAll(properties);
-	delete mySettings;
-}
-
-/**
- * [PRIVATE]
- * Get the property by name (or return null)
- */
-PluginProperty* PluginIPv4::getPropertyByName(QString propName)
-{
-	foreach(PluginProperty *p, properties)
-		if(p->getName() == propName)
-			return p;
-	
-	return NULL;
 }
 
 /**
@@ -71,7 +49,7 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 	QMap<QString, QString> templates;
 	QString templateContent;
 	
-	QFile data(":/ipv4_basic_tpl");
+	QFile data(":/ipv4/basic_tpl");
 	if (data.open(QFile::ReadOnly)) 
 	{
 		QTextStream in(&data);
@@ -80,10 +58,30 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 		HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
 		(hi != NULL)? templateContent.replace("<HI>", hi->getName()) : templateContent.replace("<HI>", "ethUNKNOWN");
 		
-		PluginProperty *pp = getPropertyByName("address");
+		QList<PluginProperty*> sProp =
+			myProxy->getPropertyExpert()->searchPropertiesById(properties, "address");
+		
+		if(sProp.isEmpty())
+		{
+			qWarning() << "PluginIPv4::getTemplates() Address property not found.";
+			data.close();
+			return templates;
+		}
+		
+		PluginProperty *pp = sProp.at(0);
+		
 		templateContent.replace("<IP>", pp->getValue());
 		
-		pp = getPropertyByName("netmask");
+		sProp =	myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask");
+		
+		if(sProp.isEmpty())
+		{
+			qWarning() << "PluginIPv4::getTemplates() Netmask property not found.";
+			data.close();
+			return templates;
+		}
+		
+		pp = sProp.at(0);
 		
 		/* Check if netmask is in CIDR notation */
 		QString netmask = pp->getValue();
@@ -95,7 +93,17 @@ QMap<QString, QString> PluginIPv4::getTemplates()
 		else
 			templateContent.replace("<NETMASK>", netmask);
 		
-		pp = getPropertyByName("broadcast");
+		sProp =	myProxy->getPropertyExpert()->searchPropertiesById(properties, "broadcast");
+				
+		if(sProp.isEmpty())
+		{
+			qWarning() << "PluginIPv4::getTemplates() Broadcast property not found.";
+			data.close();
+			return templates;
+		}
+		
+		pp = sProp.at(0);
+		
 		templateContent.replace("<BROADCAST>", pp->getValue());
 		
 		/* Append comment */
@@ -130,74 +138,38 @@ QString PluginIPv4::getTemplateLocation()
 		return QString();
 	}
 	QString vm = hi->getMyVirtualMachine()->getName();
-	return QString(vm+".startup");
-}
-
-/**
- * Fetches plugin properties and stores them in the properties map.
- */
-bool PluginIPv4::fetchProperties()
-{
-	bool allok = true;
-	
-	mySettings->beginGroup("properties");
-	QStringList childgroups = mySettings->childGroups();
-	
-	if (!childgroups.empty()) 
-	{
-		for (int i = 0; i < childgroups.size(); i++)
-		{
-			QString p_name = childgroups.at(i);
-			QString p_default_value = mySettings->value(childgroups.at(i) + "/p_default_value").toString();
-			QString p_description = mySettings->value(childgroups.at(i) + "/p_description").toString();
-			
-			PluginProperty *pp = new PluginProperty(p_name, p_default_value, p_description);
-			pp->setOrder(mySettings->value(childgroups.at(i) + "/p_init_order").toInt());
-			
-			properties.append(pp);
-		}
-	} else {
-		qWarning() << "No properties for plugin:" << myName;
-		allok = false;
-	}
-	mySettings->endGroup();
-	
-	/* sort properties */
-	sortProperties(properties);
-	
-	return allok;
+	return QString(vm + ".startup");
 }
 
 /**
  * If pluginAlertMsg is empty, initializes the passed property propName to propValue. 
  */
-bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *pluginAlertMsg)
+bool PluginIPv4::saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg)
 {
-	//Check
-	if(getPropertyByName(propName) == NULL)
+	//Get the property
+	PluginProperty *prop = myProxy->getPropertyExpert()->searchProperty(properties, propUniqueId);
+	if(!prop)
 	{
-		qWarning() << "PluginIPv4::initProperty: properties doesn't contain property" + propName;
+		qWarning() << "PluginIPv4::initProperty: properties doesn't contain property UID = " << propUniqueId ;
 		return true;
 	}	
 	
-	// se il valore della property propName è uguale a quello di default
-	if (propValue == getPropertyByName(propName)->getDefaultValue())
+	/* Skip storage if the value is equals default */
+	if (propValue == prop->getDefaultValue())
 		return true;
 	
-	// se voglio forzare il salvataggio della property
+	/* Force property save? */
 	if (pluginAlertMsg == NULL)
 	{
-		PluginProperty *prop = getPropertyByName(propName);
 		prop->setValue(propValue);
 		refreshLabel();
 		
 		return true;
 	} 
-	// altrimenti, se voglio effettuare i controlli sui valori inseriti
 	else 
 	{
-		// controllo il valore relativo alla property address
-		if (propName == "address") 
+		/* Select property */
+		if(prop->getId() == "address") 
 		{
 			/* Check the network */
 			if(!NetworkAddress::validateIp(propValue))
@@ -207,14 +179,13 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 			}
 			else 
 			{
-				PluginProperty *prop = getPropertyByName(propName);
 				prop->setValue(propValue);
 				refreshLabel();
 				return true;
 			}
 		}
-		// controllo il valore relativo alla property netmask
-		else if (propName == "netmask") 
+		
+		if(prop->getId() == "netmask") 
 		{
 			quint8 cidrNetmask = 0;
 			
@@ -234,7 +205,6 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 				}
 				else //Netmask ok
 				{
-					PluginProperty *prop = getPropertyByName(propName);
 					prop->setValue(propValue);
 					refreshLabel();
 					return true;
@@ -250,32 +220,34 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 				}
 				else	//save the netmask
 				{
-					PluginProperty *prop = getPropertyByName(propName);
 					prop->setValue(propValue);
 					refreshLabel();
 					return true;
 				}	
 			}
 		} 
-		// controllo il valore relativo alla property broadcast
-		else if (propName == "broadcast") 
+		
+		if(prop->getId() == "broadcast") 
 		{
 			QHostAddress bcast;
 			
 			/* check if netmask is in cidr notation */
 			bool isCidr;
-			getPropertyByName("netmask")->getValue().toInt(&isCidr);
+			PluginProperty *netmaskProp = myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0);
+			PluginProperty *addressProp = myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0);
+			
+			netmaskProp->getValue().toInt(&isCidr);
 			if(isCidr)
 			{
 				bcast = NetworkAddress::generateBroadcast(
-						QHostAddress(getPropertyByName("address")->getValue()), 
-						QHostAddress(NetworkAddress::cidr2netmask(getPropertyByName("netmask")->getValue().toInt())));
+						QHostAddress(addressProp->getValue()), 
+						QHostAddress(NetworkAddress::cidr2netmask(netmaskProp->getValue().toInt())));
 			}
 			else
 			{
 				bcast = NetworkAddress::generateBroadcast(
-						QHostAddress(getPropertyByName("address")->getValue()), 
-						QHostAddress(getPropertyByName("netmask")->getValue()));
+						QHostAddress(addressProp->getValue()), 
+						QHostAddress(netmaskProp->getValue()));
 			}
 			
 			if (bcast != QHostAddress(propValue))
@@ -284,12 +256,26 @@ bool PluginIPv4::saveProperty(QString propName, QString propValue, QString *plug
 			}
 			else 
 			{
-				PluginProperty *prop = getPropertyByName(propName);
 				prop->setValue(propValue);
 				return true;
 			}
 		}
 		return false;
+	}
+}
+
+/**
+ * Set proxy
+ */
+void PluginIPv4::setProxy(PluginProxy* p)
+{
+	myProxy = p;
+	
+	//Now we can get plugin infos and base properties from property expert
+	if(p->getPropertyExpert()->isXmlConfValid())
+	{
+		globalInfo = p->getPropertyExpert()->parseXmlGlobalInfo();
+		properties = p->getPropertyExpert()->buildBaseProperties();
 	}
 }
 
@@ -342,9 +328,9 @@ bool PluginIPv4::init(QString laboratoryPath)
 			QString netmaskVal = capText[2].trimmed();
 			QString broadcastVal = capText[3].trimmed();
 			
-			getPropertyByName("address")->setValue(addressVal);
-			getPropertyByName("netmask")->setValue(netmaskVal);
-			getPropertyByName("broadcast")->setValue(broadcastVal);
+			myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0)->setValue(addressVal);
+			myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->setValue(netmaskVal);
+			myProxy->getPropertyExpert()->searchPropertiesById(properties, "broadcast").at(0)->setValue(broadcastVal);
 			parseOk = true;
 			break;
 		}
@@ -352,8 +338,9 @@ bool PluginIPv4::init(QString laboratoryPath)
 	
 	if(parseOk)
 	{
-		NetworkAddress addr(QHostAddress(getPropertyByName("address")->getValue()),
-			QHostAddress(getPropertyByName("netmask")->getValue()));
+		NetworkAddress addr(QHostAddress(
+			myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0)->getValue()),
+				QHostAddress(myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->getValue()));
 		
 		myProxy->changeGraphicsLabel(addr.toString(PRINT_CIDR_NETMASK));
 		
@@ -369,10 +356,10 @@ bool PluginIPv4::init(QString laboratoryPath)
  */
 void PluginIPv4::refreshLabel()
 {
-	NetworkAddress addr(QHostAddress(getPropertyByName("address")->getValue()),
-				QHostAddress(getPropertyByName("netmask")->getValue()));
+	NetworkAddress addr(QHostAddress(myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0)->getValue()),
+				QHostAddress(myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->getValue()));
 	
-	QString netmask = getPropertyByName("netmask")->getValue();
+	QString netmask = myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->getValue();
 	
 	bool isInt;
 	int cidrNetmask = netmask.toInt(&isInt);
@@ -386,19 +373,13 @@ void PluginIPv4::refreshLabel()
 }
 
 /**
- * [PRIVATE]
- * Sort the properties
+ * UNUSED
  */
-void PluginIPv4::sortProperties(QList<PluginProperty*> &props)
+QPair<PluginProperty*, QString> PluginIPv4::addProperty(QString propertyIdToAdd,
+		QString parentPropertyUniqueId)
 {
-	QMap<int, PluginProperty*> sortingMap;
-	foreach(PluginProperty *pp, props)
-		sortingMap.insertMulti(pp->getOrder(), pp);
+	Q_UNUSED(propertyIdToAdd);
+	Q_UNUSED(parentPropertyUniqueId);
 	
-	/* 
-	 * Ok, now the QMap have ordered my properties in O(n). We can overwrite the
-	 * old property list with the new last one sorted :D
-	 */
-	props.clear();
-	props << sortingMap.values();
+	return qMakePair(properties.at(0), QObject::tr("You cannot add properties for this plugin"));	//Return never used junk
 }

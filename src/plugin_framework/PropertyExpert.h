@@ -52,6 +52,7 @@ public:
 	QMap<QString, QString> parseXmlGlobalInfo();
 	bool isXmlConfValid() { return isXmlValid; };
 	PluginProperty * searchProperty(QList<PluginProperty*> properties, QString pUid);
+	QList<PluginProperty*> searchPropertiesById(QList<PluginProperty*> properties, QString pId);
 	QMap<QString, QString> getPropertyInfo(QString propertyId);
 	PluginProperty * newProperty(QString propName, QString defValue, QString desc,
 			QString idVal, quint16 minOcc, quint16 maxOcc);

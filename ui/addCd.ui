@@ -127,6 +127,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -163,6 +166,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -199,6 +205,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -235,6 +244,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>
@@ -271,6 +283,9 @@
               <string/>
              </property>
              <property name="wordWrap" >
+              <bool>false</bool>
+             </property>
+             <property name="openExternalLinks" >
               <bool>true</bool>
              </property>
             </widget>

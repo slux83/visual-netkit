@@ -15,7 +15,10 @@ RCC_DIR = build/rcc
 UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 
+VERSION = 1.1
+
 QT += network
+QT += xml
 
 INCLUDEPATH += . \
     ../../plugin_framework \
@@ -35,4 +38,5 @@ SOURCES += NetworkAddress.cpp \
     ../../core/HardwareInterface.cpp \
     ../../core/CollisionDomain.cpp \
     ../../plugin_framework/PluginProperty.cpp \
-    ../../plugin_framework/PluginRegistry.cpp
+    ../../plugin_framework/PluginRegistry.cpp \
+    ../../plugin_framework/PropertyExpert.cpp

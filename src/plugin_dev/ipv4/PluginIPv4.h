@@ -1,5 +1,5 @@
 /**
- * A simple test plugin for Visual Netkit 
+ * The IPv4 plugin for Visual Netkit 
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -40,28 +40,33 @@ class PluginIPv4 : public PluginInterface
 	
 private:
 	QList<PluginProperty*> properties;
-	QSettings *mySettings;
 	PluginProxy *myProxy;
-	QString myName;
+	QMap<QString, QString> globalInfo;
 
 	QString getTemplateLocation();
-	bool fetchProperties();
 	void refreshLabel();
-	PluginProperty *getPropertyByName(QString propName);
-	void sortProperties(QList<PluginProperty*> &props);
 	
 public:
 	PluginIPv4();
 	virtual ~PluginIPv4();
-	bool saveProperty(QString propName, QString propValue, QString *pluginAlertMsg = NULL);
-	QSettings* getMySettings() { return mySettings; };
+	bool saveProperty(QString propUniqueId, QString propValue, QString *pluginAlertMsg = NULL);
 	QMap<QString, QString> getTemplates();
-	QString getName() { return myName; };
+	QString getName() { return globalInfo["plugin name"]; };
 	QList<PluginProperty*> getPluginProperties() { return properties; };
 	PluginProxy* getProxy() { return myProxy; };
-	void setProxy(PluginProxy* p) { myProxy = p; };
+	void setProxy(PluginProxy* p);
 	
 	QString getDefaultGraphisLabel() {return QString("ipv4"); };
+	QString getXMLResource() { return ":/ipv4/xml-conf"; };
+	
+	//add and delete properties are unused for this plugin
+	QString deleteProperty(QString propertyUniqueId)
+	{
+		Q_UNUSED(propertyUniqueId);
+		return QObject::tr("You cannot delete properties for this plugin.");
+	};
+	QPair<PluginProperty*, QString> addProperty(QString propertyIdToAdd, QString parentPropertyUniqueId);
+	
 	bool init(QString laboratoryPath);
 };
 

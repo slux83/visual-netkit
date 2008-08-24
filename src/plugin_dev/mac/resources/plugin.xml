@@ -1,7 +1,7 @@
 <plugin name="Mac">
 	
 	<global type="link" version="1.2" author="Alessio Di Fazio" dependencies="">
-		<![CDATA[A Media Access Control address (IEEE 802 MAC address) plugin]]>
+		<![CDATA[The <a href="http://en.wikipedia.org/wiki/MAC_address" title="What is this?">IEEE 802 MAC</a> address plugin]]>
 	</global>
 	
 	<properties>
