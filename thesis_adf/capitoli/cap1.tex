@@ -55,107 +55,59 @@ Di seguito andremo a descrivere brevemente alcuni dei più rappresentativi in ma
 	\label{figura:marionnet_gui}
 \end{figure}
 
-\textit{Netkit}\cite{NETKIT}  e \textit{VNUML}\cite{VNUMLT} sono entrambi emulatori di medie dimensioni che utilizzano un kernel \emph{User Mode Linux} per eseguire diverse esperienze su reti emulate.
-\paragraph{Netkit}In \textit{Netkit} una rete viene modellata come la connessione di macchine virtuali. Per la creazione di un lab è necessario creare un file di configurazione per il lab stesso, in cui si descrive la topologia della rete, e alcuni file per ogni virtual machine che si vuole connettere alla rete (fig. \ref{figura:netkit_lab_files}). A seguire viene riportato un esempio di file di configurazione in riferimento allo schema di rete in figura \ref{figura:netkit_lab_schema}.\\
-L'interazione tra l'utente finale e le macchine virtuali è possibile per mezzo di una interfaccia a riga di comando (fig. \ref{figura:netkit_gui}). Poichè in Netkit la virtualizzazione è realizzata grazie all'uso di User-Mode Linux e poichè tale modalità richiede spesso di aver a che fare con comandi alquanto complessi, vengono forniti una vastità di script atti a semplificare l'interazione con il sistema e le macchine virtuali.
+\netkit{}\cite{NETKIT}  e \emph{VNUML}\cite{VNUMLT} sono entrambi emulatori di medie dimensioni che utilizzano un kernel \emph{User Mode Linux} e permettono di avere importanti esperienze in ambito di reti emulate anche complesse.
+
+\paragraph{Netkit}In \netkit{} una rete viene modellata come la connessione di macchine virtuali. Per la creazione di un lab è necessario creare un file di configurazione per il lab stesso, in cui si descrive la topologia della rete, e alcuni file e directory per ogni virtual machine che si vuole connettere alla rete. In figura \ref{figura:netkit_lab} viene riportato un esempio di struttura di un \netkit{} laboratory.
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=9cm]{images/netkit_lab.png}
-	\caption{Schema di rete di un semplice lab in Netkit.}
-	\label{figura:netkit_lab_schema}
+	\includegraphics[width=10cm]{images/netkit_lab.png}
+	\caption{Schema di rete di un semplice lab in \netkit{} con relativa configurazione.}
+	\label{figura:netkit_lab}
 \end{figure}
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=9cm]{images/netkit_lab_files.png}
-	\caption{Files di configurazione per il lab in figura \ref{figura:netkit_lab_schema}.}
-	\label{figura:netkit_lab_files}
-\end{figure}
+L'interazione tra l'utente finale e le macchine virtuali è possibile per mezzo di una interfaccia a riga di comando tramite terminali emulati (\linux{} shell) un po' come se si stesse davanti an usa sessione \emph{SSH}\footnote{SSH (Secure SHell, shell sicura) è un protocollo che permette di stabilire una sessione remota cifrata ad interfaccia a linea di comando con un altro host.}.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=9cm]{images/netkit_gui.png}
-	\caption{UI per la configurazione di macchine virtuali in Netkit.}
-	\label{figura:netkit_gui}
-\end{figure}
 
-\paragraph{Vnuml}\cite{VNUMLT} (Virtual Network User Mode Linux) è un ambiente di emulazione di reti che raccoglie una serie di script utilizzati per la descrizione di \testbed{} in XML, per il test di applicazioni di rete e servizi.\\
-VNUML consiste in un linguaggio basato su XML, con una specifica sintassi, e di un interprete che può essere utilizzato per descrivere ed eseguire una rete emulata di macchine virtuali UML.\\
-Dalla descrizione in XML degli scenari, VNUML istanzia le macchine virtuali UML e le configura. Nascondendo all'utente i dettagli avanzati e la configurazione virtuale delle macchine, questo ambiente risulta molto utile per testare scenari di rete anche complessi.\\Comunque, i progettisti devono descrivere il completo scenario di rete utilizzando il linguaggio XML che, a volte, richiede dettagli di rete molto specifici.\\
-Ad affiancare questo ambiente allo scopo di introdurre una rappresentazione grafica intuitiva è stato realizzato \textit{VNUMLGUI}\cite{VNUMLGUI}. VNUMLGUI è un'interfaccia grafica per VNUML.\\
-VNUMLGUI è soprattutto un editor di topologia con capacità grafiche. Permette di creare qualsiasi topologia di rete virtuale in VNUML senza dover editare manualmente il file XML ma con la sola immissione di router e interruttori.\\
-Così come VNUML nasconde la curva di apprendimento di UML, VNUMLGUI nasconde la curva di apprendimento di VNUML e XML.
+\paragraph{Vnuml}\cite{VNUMLT} (Virtual Network User Mode Linux) è un ambiente di emulazione di reti che raccoglie una serie di script utilizzati per la descrizione di \testbed{} in \xml{}, per il test di applicazioni di rete e servizi.
 
-Di seguito sono riportati a titolo di esempio uno schema di rete e la sua corrispettiva implementazione in VNUML ed una raffigurazione dell'interfaccia grafica di VNUMLGUI.
+VNUML consiste in un linguaggio basato su \xml{}, con una specifica sintassi, e di un interprete che può essere utilizzato per descrivere ed eseguire una rete emulata di macchine virtuali UML.
+Dalla descrizione in \xml{} degli scenari, VNUML istanzia le macchine virtuali UML e le configura nascondendo all'utente i dettagli avanzati e la configurazione virtuale delle macchine. Questo ambiente risulta molto utile per testare reti anche complesse. Comunque, i progettisti devono descrivere il completo scenario di rete utilizzando il linguaggio \xml{} che, a volte, richiede dettagli molto specifici.
+
+Ad affiancare questo ambiente allo scopo di introdurre una rappresentazione grafica intuitiva è stato realizzato \emph{VNUMLGUI}\cite{VNUMLGUI}. \emph{VNUMLGUI} è un'interfaccia grafica per VNUML.
+Esso è soprattutto un editor di topologia con capacità grafiche. Permette di creare qualsiasi topologia di rete virtuale in VNUML senza dover editare manualmente il file \xml{} ma con la sola immissione di router e interruttori.
+Così come VNUML nasconde la curva di apprendimento di UML, \emph{VNUMLGUI} nasconde la curva di apprendimento di VNUML e \xml{}.
+
+Di seguito sono riportati a titolo di esempio uno schema di rete e la sua corrispettiva implementazione in VNUML ed una raffigurazione dell'interfaccia grafica di \emph{VNUMLGUI}.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=9cm]{images/vnuml_01.png}
+	\caption{Schema di rete di un semplice scenario in VNUML con relativa configurazione.}
 	\label{figura:vnuml_gui}
 \end{figure}
 
-\begin{scriptsize}
-\begin{verbatim}
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE vnuml SYSTEM "/usr/share/xml/vnuml/vnuml.dtd">
-<vnuml>
-  <global>
-    <version>1.7</version>
-    <simulation_name>tutorial-lu</simulation_name>
-    <automac/>
-    <vm_mgmt type="none" />
-    <vm_defaults>
-       <filesystem type="cow">/usr/share/vnuml/filesystems/root_fs_tutorial</filesystem>
-       <kernel>/usr/share/vnuml/kernels/linux</kernel>
-       <console id="0">xterm</console>
-    </vm_defaults>
-  </global>
-  <net name="Net0" mode="uml_switch" />
-  <net name="Net1" mode="uml_switch" />
-  <net name="Net2" mode="uml_switch" />
-  <vm name="uml1">
-    <if id="1" net="Net0">
-      <ipv4>10.0.0.1</ipv4>
-    </if>
-    <route type="ipv4" gw="10.0.0.3">default</route>
-  </vm>
-  <vm name="uml2">
-    <if id="1" net="Net0">
-      <ipv4>10.0.0.2</ipv4>
-    </if>
-    <route type="ipv4" gw="10.0.0.3">default</route>
-  </vm>
-  <vm name="uml3">
-    <if id="1" net="Net0">
-      <ipv4>10.0.0.3</ipv4>
-    </if>
-    <if id="2" net="Net1">
-      <ipv4>10.0.1.1</ipv4>
-    </if>
-    <route type="ipv4" gw="10.0.1.2">10.0.2.0/24</route>
-    <forwarding type="ip" />
-  </vm>
-...
-</vnuml>
-\end{verbatim}
-\end{scriptsize}
+Sia \netkit{} che VNUML sono emulatori realizzati per offrire all'utente una rappresentazione ad alto livello della rete modellata. \emph{NETGUI} e \emph{VNUMLGUI} concretizzano tale scopo. Tutto ciò conferma l'intuizione che è dietro questo progetto e l'importanza di un supporto grafico facile da usare.
 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=9cm]{images/vnumlgui.png}
+	\caption{Schema di rete realizzato in \emph{VNUMLGUI}}
 	\label{figura:vnumlgui}
 \end{figure}
 
-Sia Netkit che VNUML sono emulatori realizzati per offrire all'utente una rappresentazione ad alto livello della rete modellata. NETGUI e VNUMLGUI concretizzano tale scopo. Tutto ciò conferma l'intuizione che è dietro questo progetto e l'importanza di un supporto grafico facile da usare.
+\paragraph{Qemu}\cite{QUATC05} è un emulatore e virtualizzatore di macchine che fa uso di una traduzione dinamica per ottenere una buona velocità di emulazione. QEMU offre due modalità operative: full system emulation ed user mode emulation, entrambe accessibili tramite interfaccia a riga di comando. Nella prima modalità QEMU emula un sistema completo (ad esempio un PC), tra cui uno o più processori e le varie periferiche. Nella seconda modalità QEMU può avviare processi compilati per una \emph{CPU} su un'altra \emph{CPU}.
 
-\paragraph{Qemu}\cite{QUATC05} è un emulatore e virtualizzatore di macchine che fa uso di una traduzione dinamica per ottenere una buona velocità di emulazione. QEMU offre due modalità operative: full system emulation ed user mode emulation, entrambe accessibili tramite interfaccia a riga di comando. Nella prima modalità, QEMU emula un sistema completo (ad esempio un PC), tra cui uno o più processori e le varie periferiche. Nella seconda modalità, QEMU può avviare processi compilati per una CPU su un'altra CPU.
-
-QEMU è capace di simulare diverse VLAN. Una VLAN può essere rappresentata da un collegamento virtuale tra diversi dispositivi di rete. Questi dispositivi possono essere ad esempio schede Ethernet virtuali QEMU o dispositivi Ethernet su host virtuali.
+QEMU è capace di simulare diverse VLAN\footnote{Il termine VLAN (Virtual LAN) Indica un insieme di tecnologie che permettono di segmentare il dominio di broadcast che si crea in una rete locale (tipicamente IEEE 802.3) basata su switch, in più reti non comunicanti tra loro.}. Una VLAN può essere rappresentata da un collegamento virtuale tra diversi dispositivi di rete quali ad esempio schede Ethernet virtuali QEMU o dispositivi Ethernet su host virtuali.
 
 \section{Ambienti di configurazioni a confronto}
+In questa sezione concentreremo gli sforsi sul paragonare le interfaccie grafiche (e quindi gli ``ambienti di configurazione'') che i vari sistemi di \emulazione{} descritti precedentemente mettono a disposizione. Quindi verranno messe a confronto le varie interfacce grafiche di: \emph{Imunes}, \emph{MarionNet}, \emph{VnUMLGUI} e la versione $1.0$ di \visualnetkit{}. In particolare si vuole dare al lettore una panoramica completa su come questi ambienti offrono flessibilità e configuarabilità davanti a configurazioni complesse di reti di calcolatori.
 
 \subsection{Creazione di configurazioni di reti complesse}
+Iniziamo con il parlare in \emph{Imunes} e di come sia possibile creare configurazioni complesse\footnote{Per configurazione ``complessa'' si intende una configurazione di un qualche servizio all'intnerno di una \virtualmachine come ad esempio un firewall, un DNS, un server HTTP, un servizio di Routing Interdomain, ecc\ldots}.
+Questo ambiente offre una GUI abbastanza semplice scritta in \emph{Tcl/Tk}\footnote{\emph{Tcl} (acronimo di Tool Command Language), è un linguaggio scripting creato da John Ousterhout generalmente considerato di facile apprendimento (rispetto ai linguaggi della sua generazione) ma allo stesso tempo potente. L'estensione \emph{Tk} è un insieme di strumenti per scrivere GUI (un toolkit di widget) implementato dallo stesso autore di \emph{Tcl}.} che offre la possibilità di disegnare una rete a livello topologico inserendo nodi virtuali come Hosts, Switchs e Routers. Tale interfaccia utente è considerata più un front-end verso l'interfaccia a riga di comando che ogni nodo possiede.
+
+Dai teste eseguiti, l'interfaccia grafica che \emph{Imunes} forsisce non offre un adeguato supporto alle configurazioni complesse; in particolare su ogni host occorre effettuare i vari settaggi senza alcun supporto grafico.
 
 \subsubsection{Sistemi a confronto}
 
