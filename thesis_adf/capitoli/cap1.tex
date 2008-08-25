@@ -109,6 +109,23 @@ Questo ambiente offre una GUI abbastanza semplice scritta in \emph{Tcl/Tk}\footn
 
 Dai teste eseguiti, l'interfaccia grafica che \emph{Imunes} forsisce non offre un adeguato supporto alle configurazioni complesse; in particolare su ogni host occorre effettuare i vari settaggi senza alcun supporto grafico.
 
+\emph{MarnionNet} utilizza un'interfaccia grafica ben più potente di \emph{Imunes}. Tramite essa l'utente può disegnare\cite{MVNL08} la topologia di rete desiderata inserendo:
+\begin{itemize}
+ \item Computers - per ognuno di questi è possibile configurare l'ammontare di memoria RAM e il numero di Ethernets/Serial ports con la possibilità (per le porte Ethernet) di settare indirizzi MAC, IPv4/6, MTU, e nome (figura \ref{figura:marionnet_interfaces});
+ \item Hubs e Switches - per ogni hub o switch l'utente può specificare il numero di porte, e (per gli switches) il supporto al protocollo \emph{STP}\footnote{Lo \emph{Spanning Tree Protocol} è un protocollo che previene cicli in una topologia di rete LAN switchata.};
+ \item Routers - è possibile inserire routers che usano \emph{Quagga}\footnote{\emph{Quagga} è un derivato del progetto \emph{Zebra} (www.zebra.org) che permette di utilizzare protocolli quali BGP, RIP, OSF e ISIS} come software per il routing statico e dinamico non offrendo però la possibilità di gestire graficamente le varie configurazioni dei servizi e dei protocolli utilizzati;
+ \item External Socket e Coulds - \emph{MarionNet} offre anche la possibilità di inserire ``nuvole'' (aggregatori di elementi) con esattamente due endpoints e connessioni verso il sistema Host.
+\end{itemize}
+
+Il tutto quindi risulta sviluppato staticamente all'interno del sistema grafico e di conseguenza comporta una rigidità troppo pronunciata per poter essere di effetivo supporto alle configurazioni avanzate dei vari elementi. Basti pensare che ogni servizio all'interno di ogni Host virtuale va configurato senza nessun supporto da parte di \emph{MarionNet}.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=8cm]{images/marionnet_interfaces.png}
+	\caption{Setting dei parametri delle interfaccie ethernet in \emph{MarionNet}.}
+	\label{figura:marionnet_interfaces}
+\end{figure}
+
 \subsubsection{Sistemi a confronto}
 
 \subsubsection{Interfacce grafiche di supporto}
