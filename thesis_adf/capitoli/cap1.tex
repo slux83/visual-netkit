@@ -47,7 +47,7 @@ Di seguito andremo a descrivere brevemente alcuni dei più rappresentativi in ma
 	\label{figura:imunes_gui}
 \end{figure}
 
-\paragraph{Marionnet}\cite{MVNL08} è anch'esso un ambiente di emulazione di reti virtuali. Permette all'utente di definire, configurare ed istanziare reti di computer anche complesse senza alcun bisogno di apparati fisici. Scritto in \textit{OCaml} ed appogginadosi su User Mode Linux e \textit{VDE}\footnote{VDE è un  rete virtuale compatibile con ethernet che può essere configurata su una rete di computer fisici su Internet. VDE fa parte del progetto \textit{VirtualSquare}.}, offre una interfaccia grafica molto intuitiva.
+\paragraph{Marionnet}\cite{MVNL08} è anch'esso un ambiente di emulazione di reti virtuali. Permette all'utente di definire, configurare ed istanziare reti di computer anche complesse senza alcun bisogno di apparati fisici. Scritto in \textit{OCaml} ed appogginadosi su \emph{User Mode Linux}\footnote{\emph{User Mode Linux} (UML) da la possibilità di avviare varie \virtualmachine{} con sistema \linux{} (sistema ``Guest'') per eseguire applicazioni come quello che accade con un normale sistema \linux{} (sistema ``Host''). Ogni sistema guest è una normale processo avviato in \emph{user space}.} e \textit{VDE}\footnote{VDE è un  rete virtuale compatibile con ethernet che può essere configurata su una rete di computer fisici su Internet. VDE fa parte del progetto \textit{VirtualSquare}.}, offre una interfaccia grafica molto intuitiva.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=9cm]{images/marionnet_gui.png}
@@ -55,7 +55,7 @@ Di seguito andremo a descrivere brevemente alcuni dei più rappresentativi in ma
 	\label{figura:marionnet_gui}
 \end{figure}
 
-\textit{Netkit}\cite{NETKIT}  e \textit{VNUML}\cite{VNUMLT} sono entrambi emulatori di medie dimensioni che utilizzano un kernel User Mode Linux per eseguire diverse esperienze su reti emulate.
+\textit{Netkit}\cite{NETKIT}  e \textit{VNUML}\cite{VNUMLT} sono entrambi emulatori di medie dimensioni che utilizzano un kernel \emph{User Mode Linux} per eseguire diverse esperienze su reti emulate.
 \paragraph{Netkit}In \textit{Netkit} una rete viene modellata come la connessione di macchine virtuali. Per la creazione di un lab è necessario creare un file di configurazione per il lab stesso, in cui si descrive la topologia della rete, e alcuni file per ogni virtual machine che si vuole connettere alla rete (fig. \ref{figura:netkit_lab_files}). A seguire viene riportato un esempio di file di configurazione in riferimento allo schema di rete in figura \ref{figura:netkit_lab_schema}.\\
 L'interazione tra l'utente finale e le macchine virtuali è possibile per mezzo di una interfaccia a riga di comando (fig. \ref{figura:netkit_gui}). Poichè in Netkit la virtualizzazione è realizzata grazie all'uso di User-Mode Linux e poichè tale modalità richiede spesso di aver a che fare con comandi alquanto complessi, vengono forniti una vastità di script atti a semplificare l'interazione con il sistema e le macchine virtuali.
 
@@ -149,8 +149,9 @@ Di seguito sono riportati a titolo di esempio uno schema di rete e la sua corris
 
 Sia Netkit che VNUML sono emulatori realizzati per offrire all'utente una rappresentazione ad alto livello della rete modellata. NETGUI e VNUMLGUI concretizzano tale scopo. Tutto ciò conferma l'intuizione che è dietro questo progetto e l'importanza di un supporto grafico facile da usare.
 
-\paragraph{Qemu}\cite{QUATC05} è un emulatore e virtualizzatore di macchine che fa uso di una traduzione dinamica per ottenere una buona velocità di emulazione. QEMU offre due modalità operative: full system emulation ed user mode emulation, entrambe accessibili tramite interfaccia a riga di comando. Nella prima modalità, QEMU emula un sistema completo (ad esempio un PC), tra cui uno o più processori e le varie periferiche. Nella seconda modalità, QEMU può avviare processi compilati per una CPU su un'altra CPU.\\
-QEMU è capace di simulare diverse VLAN. Una VLAN può essere rappresentata da un collegamento virtuale tra diversi dispositivi di rete. Questi dispositivi possono essere ad esempio schede Ethernet virtuali QEMU o dispositivi Ethernet su host virtuali.\\
+\paragraph{Qemu}\cite{QUATC05} è un emulatore e virtualizzatore di macchine che fa uso di una traduzione dinamica per ottenere una buona velocità di emulazione. QEMU offre due modalità operative: full system emulation ed user mode emulation, entrambe accessibili tramite interfaccia a riga di comando. Nella prima modalità, QEMU emula un sistema completo (ad esempio un PC), tra cui uno o più processori e le varie periferiche. Nella seconda modalità, QEMU può avviare processi compilati per una CPU su un'altra CPU.
+
+QEMU è capace di simulare diverse VLAN. Una VLAN può essere rappresentata da un collegamento virtuale tra diversi dispositivi di rete. Questi dispositivi possono essere ad esempio schede Ethernet virtuali QEMU o dispositivi Ethernet su host virtuali.
 
 \section{Ambienti di configurazioni a confronto}
 
