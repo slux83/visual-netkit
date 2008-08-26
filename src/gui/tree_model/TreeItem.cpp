@@ -172,6 +172,10 @@ bool TreeItem::setData(int column, const QVariant &value)
 	}
 
 	QVariant oldValue = itemData[column];
+	
+	if(oldValue == value)
+		return true;
+	
 	itemData[column] = value;
 	
 	//save the property changed
