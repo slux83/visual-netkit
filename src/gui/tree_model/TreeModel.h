@@ -24,6 +24,7 @@
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QColor>
 #include <QObject>
 
 class TreeItem;

@@ -21,6 +21,7 @@
 
 #include <QStringList>
 #include <QDebug>
+#include <QFont>
 
 /**
  * Constructor
@@ -60,11 +61,39 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
 {
 	if (!index.isValid())
 		return QVariant();
-
+	
+	TreeItem *item = getItem(index);
+	
+	/* Cell background color */
+	if(role == Qt::BackgroundRole)
+	{
+		QColor bgColor;
+		QVariant var;
+		
+		if(item->isPluginHeaderNode())
+		{
+			bgColor = QColor(255, 252, 158, 150);
+			var = bgColor;
+		}
+		return var;
+	}
+	
+	/* Cell font */
+	if(role == Qt::FontRole)
+	{
+		QVariant v;
+		QFont f;
+		if(item->isPluginHeaderNode())
+		{
+			f.setBold(true);
+			v = f;
+		}
+		
+		return f;
+	}
+	
 	if (role != Qt::DisplayRole && role != Qt::EditRole)
 		return QVariant();
-
-	TreeItem *item = getItem(index);
 
 	return item->data(index.column());
 }
