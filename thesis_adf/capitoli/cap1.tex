@@ -129,7 +129,44 @@ Il tutto quindi risulta sviluppato staticamente all'interno del sistema grafico 
 Per quanto riguarda \emph{VnUMLGUI} possiamo dire che tale interfaccia utente è la più semplice di quelle sperimentate. Questa offre solamente la possibilità di disegnare la topologia della rete e ricavarne un file \xml che utilizzerà in seguito VNUML per la simulaziene effettiva. Scritto in poche righe di \emph{Perl}, risulta tuttavia un ottimo strumento da affiancare a VNUML, poichè la scrittura della topologia tramite un file \xml è spesso una pratica onerosa e non banale.
 
 \subsubsection{La prima versione di \visualnetkit{}}
-TODO
+È arrivato il momento di parlare di un ambiente grafico per creazione di reti virtuali molto flessibile e innovativo: \visualnetkit{}. \visualnetkit{} è un tool grafico che permette di creare laboratori per \netkit{} disegnando la topologia della rete che si vuole emulare, e allo stesso tempo offre un buon supporto alla configurazione dei vari nodi e archi del grafo. Per nodi e archi in questo caso si intendono da una parte hosts virtuali e ``domini di collisione'', dall'altra links che connettono interfaccie ethernet dei singoli host con uno dei domini di collisione (figura \ref{figura:vn_graph_1}).
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=7cm]{images/visualnetkit_graph_1.png}
+	\caption{Una semplice rete virtuale in \visualnetkit{}.}
+	\label{figura:vn_graph_1}
+\end{figure}
+
+Questo tool a differenza degli altri visti precedentemente è stato creato attorno al concetto di flessibilità; infatti \visualnetkit è stato realizzato al di sopra di una struttura a \plugin{} i quali hanno il compito di arricchire la rete a livello di configurazioni e componenti attivi sui vari elementi che costituiscono la topologia del grafo. Questo ambiente (allo stato attuale) non consente di avviare direttamente i laboratory che produce in quanto si è voluto creare un sistema autonomo indipendente da \netkit{} stesso.
+
+Parlando più in dettaglio della sua stuttura modulare, possiamo dapprima osservare che \visualnetkit{} senza alcun \plugin{} attivo offre solamente la possibilità di costruire la topologia della rete virtuale che si vuole sperimentare; è quindi possibile inserire hosts, domini di collisione e links di connessione. Tutto ciò permette a \visualnetkit{} di creare un laboratorio funzionante in tutti i suoi aspetti, ma privo di configurazioni ulteriori.
+Per avere una visione più chiara, si osservi la figura \ref{figura:vn_graph_1}. Si può osservare che la topologia è composta da tre elementi base: un host, un dominio di collisione e un link. Soffermandoci su quest'ultimo possiamo notare che vi è un dettaglio che va oltre la semplice topologia di rete; su quel link è stato attivato un \plugin{} di tipo IPv4. Questo quindi permette al link di arricchire il proprio bagaglio informativo aggiungendo in questo caso la possibilità di settare ulteriori paramentri (propriamente contenuti all'interno dei plugins) quali \emph{address}, \emph{netmask} e \emph{broadcast}. Chiaramente queste informazioni aggiuntive dovranno essere salvate all'interno del laboratorio che si sta creando; in questo caso il sistema prevede che ogni \plugin{} possa fornire un numero arbitrario di ``contributi'', ossia porzioni di file di testo (e relativo percorso del file interessato) che costituiranno il file di configurazione per quel determinato plugin. In figura \ref{figura:vn_graph_2} è possibile osservare come il \plugin{} IPv4 attivo sul link sia il diretto responsabile del contenuto del file di configurazione della macchina ``Host''.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=9cm]{images/visualnetkit_graph_2.png}
+	\caption{Relativo file di configurazione della rete in figura \ref{figura:vn_graph_1}.}
+	\label{figura:vn_graph_2}
+\end{figure}
+
+Come detto ogni \plugin{} offre informazioni agguntive all'elemento base a cui è stato collegato; scendendo un po' nel dettaglio possiamo dire che i vari \plugin{} possono offrire un insieme di proprietà descritte da una lista di coppie chiave-valore. Nel nostro esempio, il plugin IPv4 offre una lista di tre ``property'':
+\begin{itemize}
+	\item \textbf{address} - l'indirizzo ipv4;
+	\item \textbf{netmask} - la netmask associata;
+	\item \textbf{broadcast} - l'indirizzo broadcast.
+\end{itemize}
+
+Queste proprietà sono comunque statiche all'interno dei vari \plugin{} e l'utente può solamente limitarsi a modificarle previo controllo di errori non vincolante. Abbiamo quindi trovato uno dei punti deboli che la priva versione di \visualnetkit{} possiede; anche se basata su una struttura modulare e flessibile, i plugin stessi limitano tale flessibilità rimanendo troppo rigidi per offrire un buon supporto in situazioni dove sono necessarie configurazioni avanzate.
+
+Abbiamo appena anticipato un problema che durante il seguente lavoro tratteremo più in dettaglio, mostrando come la nuova versione del tool grafico offra maggior flessibilità e risolva in gran parte il problema appena accennato. In figura \ref{figura:vn_main_1} viene mostrato l'ambiente grafico offerto da \visualnetkit{} versione $1.0$.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=12cm]{images/visualnetkit_main_1.png}
+	\caption{Un laboratorio creato con \visualnetkit{} versione $1.0$.}
+	\label{figura:vn_main_1}
+\end{figure}
 
 \subsubsection{Flessibilità delle interfaccie grafiche nei sistemi esistenti}
 TODO
