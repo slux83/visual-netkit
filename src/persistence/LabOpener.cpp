@@ -586,6 +586,7 @@ bool LabOpener::createGraphicElements()
 		 *	"position"	= QPointF,
 		 * 	"width"		= qreal,
 		 * 	"height"	= qreal,
+		 *  "z"			= qreal,
 		 * 	"color"		= QString,		// "R,G,B"
 		 * 	"label"		= QString 
 		 * }
@@ -596,6 +597,7 @@ bool LabOpener::createGraphicElements()
 		AreaController::getInstance()->loadNewArea(areaInfo["position"].toPointF(),
 				(qreal)areaInfo["width"].toDouble(),
 				(qreal)areaInfo["height"].toDouble(),
+				(qreal)areaInfo["z"].toDouble(),
 				areaInfo["color"].toString(),
 				areaInfo["label"].toString());
 	}

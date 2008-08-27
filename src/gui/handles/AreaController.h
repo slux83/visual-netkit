@@ -43,7 +43,7 @@ public:
 	AreaController();
 	virtual ~AreaController();
 	static AreaController* getInstance();
-	void loadNewArea(QPointF pos, qreal width, qreal height, QString color, QString text);
+	void loadNewArea(QPointF pos, qreal width, qreal height, qreal z, QString color, QString text);
 	
 	QList<AreaItem *> getAreas() { return areas; };
 	void renderAreaProperties(AreaItem* area);
@@ -51,7 +51,8 @@ public:
 	void setChangedLabState();
 	void deleteArea(AreaItem *aItem);
 	void clear();
-	
+	void writeLogLine(QString text);
+		
 	//[IMPLEMENT] AbstractPropertyHandler
 	TreeModel* getComposedModel();
 	TreeModel* getInitModel(QList<PluginProxy*> plugins);
