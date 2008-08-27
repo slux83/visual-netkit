@@ -285,6 +285,7 @@ QDomDocument* XMLSaver::prepareDomDocument()
 				areaNode.setAttribute("y", QString::number(area->scenePos().y()));
 				areaNode.setAttribute("width", QString::number(area->rect().width()));
 				areaNode.setAttribute("height", QString::number(area->rect().height()));
+				areaNode.setAttribute("z", QString::number(area->zValue()));
 				
 				//color in R,G,B syntax
 				areaNode.setAttribute("color",	QString::number(area->getCurrentColor().red()) + "," +

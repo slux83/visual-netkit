@@ -483,6 +483,7 @@ QStringList XMLParser::getCdPlugins(QString cdName, QString labPath, QString *er
  *				"position"	= QPointF,
  * 				"width"		= qreal,
  * 				"height"	= qreal,
+ * 				"z"			= qreal,
  * 				"color"		= QString,		// "R,G,B"
  * 				"label"		= QString 
  * 			}
@@ -504,7 +505,7 @@ QList< QMap<QString, QVariant> > XMLParser::getAreas(QString labPath, QString *e
 		if(!elemArea.hasAttribute("x") ||
 			!elemArea.hasAttribute("y") || 
 			!elemArea.hasAttribute("width") || 
-			!elemArea.hasAttribute("height") || 
+			!elemArea.hasAttribute("height") ||  
 			!elemArea.hasAttribute("color"))
 		{
 			if(error)
@@ -519,6 +520,10 @@ QList< QMap<QString, QVariant> > XMLParser::getAreas(QString labPath, QString *e
 		areaInfo.insert("position", QPointF(elemArea.attribute("x").toDouble(), elemArea.attribute("y").toDouble()));
 		areaInfo.insert("width", elemArea.attribute("width").toDouble());
 		areaInfo.insert("height", elemArea.attribute("height").toDouble());
+		if(elemArea.hasAttribute("z"))
+			areaInfo.insert("z", elemArea.attribute("z").toDouble());
+		else
+			areaInfo.insert("z", 10.0);
 		areaInfo.insert("color", elemArea.attribute("color").toAscii());
 		
 		//get the text inside the cdata element (it's in base64)

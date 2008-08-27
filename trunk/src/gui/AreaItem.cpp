@@ -204,6 +204,8 @@ void AreaItem::moveToBottomActionCalled()
 	qreal minZ = getMinimumZValue();
 	
 	setZValue(minZ - 1);
+	
+	aController->writeLogLine(tr("Area moved on Bottom"));
 }
 
 /**
@@ -216,6 +218,8 @@ void AreaItem::moveToTopActionCalled()
 	qreal maxZ = getMaximumZValue();
 	
 	setZValue(maxZ + 1);
+	
+	aController->writeLogLine(tr("Area moved on Top"));
 }
 
 /**

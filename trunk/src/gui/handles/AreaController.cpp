@@ -126,12 +126,13 @@ void AreaController::clear()
  * Load (create) a saved area
  */
 void AreaController::loadNewArea(QPointF pos, qreal width,
-		qreal height, QString color, QString text)
+		qreal height, qreal z, QString color, QString text)
 {
 	//make a new area
 	AreaItem *area = new AreaItem();
 	area->setPos(pos);
 	area->setRect(0, 0, width, height);
+	area->setZValue(z);
 	
 	//create the color
 	QStringList rgb = color.split(',');
@@ -221,6 +222,14 @@ bool AreaController::saveChangedProperty(TreeItem *treeItem)
 	LabHandler::getInstance()->getMainWindow()->writeLogMessage(tr("Area property saved"));
 	
 	return true;
+}
+
+/**
+ * Write a log line
+ */
+void AreaController::writeLogLine(QString text)
+{
+	LabHandler::getInstance()->getMainWindow()->writeLogMessage(text);
 }
 
 /**
