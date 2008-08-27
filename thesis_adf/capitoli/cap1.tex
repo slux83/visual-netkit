@@ -107,7 +107,7 @@ In questa sezione concentreremo gli sforsi sul paragonare le interfaccie grafich
 Iniziamo con il parlare in \emph{Imunes} e di come sia possibile creare configurazioni complesse\footnote{Per configurazione ``complessa'' si intende una configurazione di un qualche servizio all'intnerno di una \virtualmachine come ad esempio un firewall, un DNS, un server HTTP, un servizio di Routing Interdomain, ecc\ldots}.
 Questo ambiente offre una GUI abbastanza semplice scritta in \emph{Tcl/Tk}\footnote{\emph{Tcl} (acronimo di Tool Command Language), è un linguaggio scripting creato da John Ousterhout generalmente considerato di facile apprendimento (rispetto ai linguaggi della sua generazione) ma allo stesso tempo potente. L'estensione \emph{Tk} è un insieme di strumenti per scrivere GUI (un toolkit di widget) implementato dallo stesso autore di \emph{Tcl}.} che offre la possibilità di disegnare una rete a livello topologico inserendo nodi virtuali come Hosts, Switchs e Routers. Tale interfaccia utente è considerata più un front-end verso l'interfaccia a riga di comando che ogni nodo possiede.
 
-Dai teste eseguiti, l'interfaccia grafica che \emph{Imunes} forsisce non offre un adeguato supporto alle configurazioni complesse; in particolare su ogni host occorre effettuare i vari settaggi senza alcun supporto grafico.
+Da quanto visto\cite{IMUNESHOWTO}, l'interfaccia grafica che \emph{Imunes} forsisce non offre un adeguato supporto alle configurazioni complesse; in particolare su ogni host occorre effettuare i vari settaggi con il minimo supporto grafico. Viene offerta la possibilità di settare il tipo di Router (Statico o con software \emph{Quagga}) senza però poter settare le varie politiche di routing. Viene inoltre data la possibilità di settare indirizzi IPv4 nei links, rotte statiche nei vari nodi e negli switches è possibile settare parametri quali uso della cpu, politica e dimensione delle code (Queue), ecc\ldots
 
 \emph{MarnionNet} utilizza un'interfaccia grafica ben più potente di \emph{Imunes}. Tramite essa l'utente può disegnare\cite{MVNL08} la topologia di rete desiderata inserendo:
 \begin{itemize}
@@ -169,5 +169,28 @@ Abbiamo appena anticipato un problema che durante il seguente lavoro tratteremo 
 \end{figure}
 
 \subsubsection{Flessibilità delle interfaccie grafiche nei sistemi esistenti}
-TODO
+Abbiamo appena visto come l'avere un ambiente grafico di supporto sia altrettanto imporntante del supporto offerto dal sistema di \emulazione{} stesso. Avere infatti uno strumento potente per creare i nostri laboratori, ma che possegga specifiche di creaziene complicate e poco intuitive, può indurre l'utente ad evitare di addentrarsi in particolari configurazioni avanzate poiché vi è un forte rischio di dispendio di energie e di un elevato tempo di creazione.
+È in questo preciso istante che entrano in gioco i tools grafici pocanzi descritti.
+
+Riassumendo possiamo affermare che tra le interfaccie grafiche viste fin'ora, nessuna riesce ad offrire un supporto totale; ognuna infatti prevede una parte di configurazione manuale ossia, l'utente che vuole addentrarsi in configurazioni particolari, deve necessariamente agire direttamente sui vari file di configurazione dei vari nodi della rete, o in alcuni casi deve intervenire interattivamente tramite le interfaccie a riga di comando previste per ogni \virtualmachine. \\
+Di seguito (tabella \ref{tabella:gui_compare}) viene proposta una tabella riassuntiva che paragona i vari strumenti.
+
+\begin{table}[!htb]
+ \begin{center}
+	
+	\begin{tabular}{||r||*{5}{l|}|}
+	\hline
+		 		& \textbf{Componenti base} & \textbf{Configurazione base & \textbf{Configurazione avanzata} & \textbf{Linguaggio} & \textbf{Interfaccia (Shell) diretta con i nodi} \\
+	\hline
+	\hline
+	
+	\bfseries \visualnetkit		& a & a & a & a & a \\
+	\hline
+	\end{tabular}
+
+	\caption{Tabella comparativa delle interfacce grafiche analizzate.}
+	\label{tabella:gui_compare}
+ \end{center}
+
+\end{table}
 
