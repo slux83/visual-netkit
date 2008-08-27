@@ -235,7 +235,7 @@
    <widget class="QWidget" name="dockWidgetContents_4" >
     <layout class="QVBoxLayout" name="verticalLayout" >
      <item>
-      <widget class="QTreeView" name="propertiesTreeView" >
+      <widget class="TreeView" name="propertiesTreeView" >
        <property name="editTriggers" >
         <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
        </property>
@@ -949,6 +949,11 @@
    <extends>QTabWidget</extends>
    <header>gui/TabWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TreeView</class>
+   <extends>QTreeView</extends>
+   <header>gui/TreeView.h</header>
   </customwidget>
  </customwidgets>
  <resources>

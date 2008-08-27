@@ -5,8 +5,7 @@ DEPENDPATH += . \
 INCLUDEPATH += . \
     src
 FORMS += ui/about.ui \
-    ui/openLab.ui \
-#    ui/managePlugins.ui \
+    ui/openLab.ui \ # ui/managePlugins.ui \
     ui/addCd.ui \
     ui/addVm.ui \
     ui/addLink.ui \
@@ -25,8 +24,9 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/handles/AbstractPropertyHandler.h \
-	src/plugin_framework/PropertyExpert.h \
+HEADERS = src/gui/TreeView.h \
+    src/gui/handles/AbstractPropertyHandler.h \
+    src/plugin_framework/PropertyExpert.h \
     src/gui/tree_model/TreeModel.h \
     src/gui/tree_model/TreeItem.h \
     src/gui/handles/AreaController.h \
@@ -40,8 +40,7 @@ HEADERS = src/gui/handles/AbstractPropertyHandler.h \
     src/gui/handles/TabController.h \
     src/gui/FileEditor.h \
     src/gui/OpenLabForm.h \
-    src/persistence/LabOpener.h \
-#    src/gui/ManagePluginsDialog.h \
+    src/persistence/LabOpener.h \ # src/gui/ManagePluginsDialog.h \
     src/gui/handles/LinkPropertyController.h \
     src/gui/handles/VmPropertyController.h \
     src/gui/InitPluginsPropertiesDialog.h \
@@ -89,8 +88,9 @@ HEADERS = src/gui/handles/AbstractPropertyHandler.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/handles/AreaController.cpp \
-	src/plugin_framework/PropertyExpert.cpp \
+SOURCES = src/gui/TreeView.cpp \
+    src/gui/handles/AreaController.cpp \
+    src/plugin_framework/PropertyExpert.cpp \
     src/gui/tree_model/TreeItem.cpp \
     src/gui/tree_model/TreeModel.cpp \
     src/gui/AreaItem.cpp \
@@ -103,8 +103,7 @@ SOURCES = src/gui/handles/AreaController.cpp \
     src/gui/handles/TabController.cpp \
     src/gui/FileEditor.cpp \
     src/gui/OpenLabForm.cpp \
-    src/persistence/LabOpener.cpp \
-#    src/gui/ManagePluginsDialog.cpp \
+    src/persistence/LabOpener.cpp \ # src/gui/ManagePluginsDialog.cpp \
     src/gui/handles/LinkPropertyController.cpp \
     src/gui/handles/VmPropertyController.cpp \
     src/gui/InitPluginsPropertiesDialog.cpp \
