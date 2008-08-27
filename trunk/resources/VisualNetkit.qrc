@@ -35,6 +35,9 @@
         <file alias="configure" >menu_icons/configure.png</file>
         <file alias="list_add" >menu_icons/list-add.png</file>
         <file alias="list_remove" >menu_icons/list-remove.png</file>
+        <file alias="area_on_top" >menu_icons/area_on_top.png</file>
+        <file alias="area_on_bottom" >menu_icons/area_on_bottom.png</file>
+        
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>

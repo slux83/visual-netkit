@@ -55,6 +55,8 @@ AreaItem::AreaItem() : QGraphicsRectItem()
 AreaItem::~AreaItem()
 {
 	delete deleteAction;
+	delete moveTop;
+	delete moveBottom;
 	delete colourMenu;
 }
 
@@ -127,6 +129,7 @@ QPainterPath AreaItem::shape() const
 void AreaItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
 	Q_UNUSED(event);	
+	getCollidingAreas();
 	contextMenu.exec(QCursor::pos());
 }
 
@@ -136,6 +139,17 @@ void AreaItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
  */
 void AreaItem::initContextMenu()
 {
+	moveTop = new QAction(tr("Move to Top"), this);
+	moveTop->setIcon(QIcon(QString::fromUtf8(":/menu/area_on_top")));
+	
+	moveBottom = new QAction(tr("Move to Bottom"), this);
+	moveBottom->setIcon(QIcon(QString::fromUtf8(":/menu/area_on_bottom")));
+		
+	contextMenu.addAction(moveTop);
+	contextMenu.addAction(moveBottom);
+	
+	contextMenu.addSeparator();
+	
 	deleteAction = new QAction(tr("Delete Area"), this);
 	deleteAction->setIcon(QIcon(QString::fromUtf8(":/menu/delete")));
 	
@@ -146,6 +160,10 @@ void AreaItem::initContextMenu()
 	/* Connect */
 	connect(deleteAction, SIGNAL(triggered()),
 			this, SLOT(deleteAreaActionCalled()));
+	connect(moveTop, SIGNAL(triggered()),
+			this, SLOT(moveToTopActionCalled()));
+	connect(moveBottom, SIGNAL(triggered()),
+			this, SLOT(moveToBottomActionCalled()));
 	
 	/* Fill the colours sub-menu */
 	QMapIterator<QString, QColor> colourIt(backgroundColours);
@@ -174,6 +192,30 @@ void AreaItem::changeAreaColor(QAction *action)
 	
 	AreaController::getInstance()->setChangedLabState();
 
+}
+
+/**
+* [PRIVATE-SLOT]
+* Move this area on bottom of all colliding areas
+*/
+void AreaItem::moveToBottomActionCalled()
+{
+	//get minimun zvalue of colliding areas
+	qreal minZ = getMinimumZValue();
+	
+	setZValue(minZ - 1);
+}
+
+/**
+ * [PRIVATE-SLOT]
+ * Move this area on top of all colliding areas
+ */
+void AreaItem::moveToTopActionCalled()
+{
+	//get maximum zvalue of colliding areas
+	qreal maxZ = getMaximumZValue();
+	
+	setZValue(maxZ + 1);
 }
 
 /**
@@ -240,4 +282,50 @@ void AreaItem::setLabel(QString text)
 	label = text;
 	aController->setChangedLabState();
 	update(boundingRect());
+}
+
+/**
+ * [PRIVATE]
+ * Get other areas thet collithing with 'this' area
+ */
+QList<AreaItem*> AreaItem::getCollidingAreas()
+{
+	QList<AreaItem*> cAreas;	//return value
+	
+	//Filter colliding graphics items
+	foreach(QGraphicsItem* item, collidingItems())
+		if(item != this && item->type() == type())	//This is another area different to 'this'
+			cAreas << static_cast<AreaItem*>(item);
+
+	moveBottom->setDisabled(cAreas.isEmpty());
+	moveTop->setDisabled(cAreas.isEmpty());
+	return cAreas;
+}
+
+/**
+ * [PRIVATE]
+ * Get the minimum zvalue of colliding areas
+ */
+qreal AreaItem::getMinimumZValue()
+{
+	qreal minZ = zValue();
+	
+	foreach(AreaItem* area, getCollidingAreas())
+		if(area->zValue() < minZ) minZ = area->zValue();
+	
+	return minZ;
+}
+
+/**
+ * [PRIVATE]
+ * Get the maximum zvalue of colliding areas
+ */
+qreal AreaItem::getMaximumZValue()
+{
+	qreal maxZ = zValue();
+	
+	foreach(AreaItem* area, getCollidingAreas())
+		if(area->zValue() > maxZ) maxZ = area->zValue();
+	
+	return maxZ;
 }

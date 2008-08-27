@@ -46,14 +46,19 @@ private:
 	QMap<QString, QColor> backgroundColours;
 	QColor activeColor;
 	QMenu contextMenu, *colourMenu;
-	QAction *deleteAction;
+	QAction *deleteAction, *moveTop, *moveBottom;
 	AreaController *aController;
 	
 	void initContextMenu();
-
+	QList<AreaItem*> getCollidingAreas();
+	qreal getMaximumZValue();
+	qreal getMinimumZValue();
+	
 private slots:
 	void deleteAreaActionCalled();
 	void changeAreaColor(QAction *action);
+	void moveToBottomActionCalled();
+	void moveToTopActionCalled();
 	
 public:
 	AreaItem();
