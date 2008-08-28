@@ -31,8 +31,6 @@
 #include "LineItemPrivate.h"
 #include "../common/Types.h"
 #include "PluginsSharedArea.h"
-#include "ManagePluginsDialog.h"
-
 
 /* Pi-greco */
 static const double Pi = 3.14159;

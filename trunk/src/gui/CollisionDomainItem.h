@@ -32,7 +32,6 @@
 #include "LabelItemPrivate.h"
 #include "PluginsSharedArea.h"
 #include "../common/CommonConfigs.h"
-#include "ManagePluginsDialog.h"
 
 /**
  * This class is a graphic group element of type Collision Domain

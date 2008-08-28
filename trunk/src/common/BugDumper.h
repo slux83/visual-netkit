@@ -19,25 +19,29 @@
 #ifndef BUGDUMPER_H_
 #define BUGDUMPER_H_
 
+/* Qt4 headers */
+#include <QDebug>
+#include <QString>
+#include <QApplication>
+
 /* ISO headers */
+#ifdef Q_OS_LINUX
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <execinfo.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-/* Qt4 headers */
-#include <QDebug>
-#include <QString>
-#include <QApplication>
+#endif
 
 /**
  * This class is a trace dumper expert to dump a stack-trace when the 
  * program crash 
+ * <! ONLY FOR LINUX OS !>
  */
 class BugDumper
 {
+	
 private:
 	static void dumper(int code);
 	
