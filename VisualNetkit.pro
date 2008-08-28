@@ -5,7 +5,7 @@ DEPENDPATH += . \
 INCLUDEPATH += . \
     src
 FORMS += ui/about.ui \
-    ui/openLab.ui \ # ui/managePlugins.ui \
+    ui/openLab.ui \
     ui/addCd.ui \
     ui/addVm.ui \
     ui/addLink.ui \
@@ -40,7 +40,7 @@ HEADERS = src/gui/TreeView.h \
     src/gui/handles/TabController.h \
     src/gui/FileEditor.h \
     src/gui/OpenLabForm.h \
-    src/persistence/LabOpener.h \ # src/gui/ManagePluginsDialog.h \
+    src/persistence/LabOpener.h \
     src/gui/handles/LinkPropertyController.h \
     src/gui/handles/VmPropertyController.h \
     src/gui/InitPluginsPropertiesDialog.h \
@@ -103,7 +103,7 @@ SOURCES = src/gui/TreeView.cpp \
     src/gui/handles/TabController.cpp \
     src/gui/FileEditor.cpp \
     src/gui/OpenLabForm.cpp \
-    src/persistence/LabOpener.cpp \ # src/gui/ManagePluginsDialog.cpp \
+    src/persistence/LabOpener.cpp \
     src/gui/handles/LinkPropertyController.cpp \
     src/gui/handles/VmPropertyController.cpp \
     src/gui/InitPluginsPropertiesDialog.cpp \

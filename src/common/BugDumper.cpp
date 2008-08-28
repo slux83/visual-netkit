@@ -23,8 +23,10 @@
  */
 BugDumper::BugDumper()
 {
+#ifdef Q_OS_LINUX
 	//connect the sigsegv signal to the dumper
 	signal(SIGSEGV, dumper);
+#endif
 }
 
 /**
@@ -39,6 +41,11 @@ BugDumper::~BugDumper()
  */
 void BugDumper::dumper(int code)
 {
+#ifndef Q_OS_LINUX
+	Q_UNUSED(code);
+#endif
+
+#ifdef Q_OS_LINUX
 	QString backTrace;
 	/* Ignore other signals */
 	signal(code, SIG_IGN); 
@@ -66,5 +73,5 @@ void BugDumper::dumper(int code)
 	
 	qDebug() << "\n\n-------------- PROGRAM CRASH --------------";
 	qDebug() << backTrace;
-	
+#endif
 }

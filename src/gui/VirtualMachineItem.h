@@ -32,7 +32,6 @@
 #include "SvgItemPrivate.h"
 #include "LabelItemPrivate.h"
 #include "PluginsSharedArea.h"
-#include "ManagePluginsDialog.h"
 
 /**
  * This class is a graphic group element of type Virtual Machine

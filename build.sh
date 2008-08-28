@@ -124,7 +124,8 @@ clean()
 			echo
 			
 			cd "$plugin"
-			make clean || echo "### ERROR: Failed to clean the plugin $plugin"
+			$MAKE clean
+			$MAKE distclean
 			rm -fr Makefile*
 			
 			cd "$VN_HOME"
@@ -140,7 +141,8 @@ clean()
 	echo "##########################"
 	echo
 	
-	$MAKE clean || echo "### ERROR: Failed to clean Visual Netkit"
+	$MAKE clean
+	$MAKE distclean
 	rm -fr Makefile*
 }
 
