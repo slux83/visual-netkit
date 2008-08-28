@@ -44,6 +44,26 @@ Quindi, anche in questo caso è possibile raggruppare le varie definizioni dei `
 Quella appena mostrata non è che una delle tante possibili interpretazioni di un file di configurazione in una struttura gerarchica. Solitamente ogni file di configurazione (soprattutto nei sistemi \emph{Unix like}) possiede una struttura che è riconducibile ad una con caratteristiche gerarchiche. Proprio verso questa direzione l'evoluzione che \visualnetkit{} ha avuto si è mossa, in particolare tranformando il vecchio modello chiave-valore delle proprietà dei \plugin{}, in uno altamente dinamico (con la possibilità di inserire e/o eliminare proprietà) con struttura annidata.
 
 \subsection{Configurazione avanzata in OSPF}
+Ora tenteremo di applicare quanto detto pocanzi ad un altro scenario reale che coinvolge il protocollo OSPF ed il suo file di configurazione. Prendiamo dunque in esame il file di configurazione mostrato in figura \ref{figura:ospf_conf}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/ospf_conf_schema_tree.png}
+	\caption{Configurazione di OSPF e relativa vista gerarchica.}
+	\label{figura:ospf_conf}
+\end{figure}
+
+Anche in questo caso possiamo procedere nel cercar di trasformare il contenuto del file di configurazione proposto, in una stuttura descritta da un albero n-ario. Iniziamo quindi ad analizzare il testo soffermandoci nelle righe $6\mapsto10$; possimo subito notare come quasta porzione abbia una struttura abbastanza uniforme - come descritto nella documentazione\cite{ZEBRADOC} - che può essere mappata all'interno di una struttura più auto descrittiva e gerarchica (figura \ref{figura:ospf_conf}).
+
+Soffermiamoci ora sulle righe $15-16$ tralasciando le altre. In questo caso possiamo recavare una struttura ben precisa che nella documentazione di Zebra viene presentata nel seguente modo:
+\\
+\\
+\textbf{network} \textit{a.b.c.d/m} \textbf{area} \textit{a.b.c.d}
+\\
+\textbf{network} \textit{a.b.c.d/m} \textbf{area} <\textit{0-4294967295}>
+\\
+\\
+Naturalmente questi scenari sono soltanto alcuni dei tanti possibili contenuti che si possono trovare all'interno delle varie configurazioni, tuttavia abbiamo appena mostrato che qualunque siano le regole presenti nelle varie impostazioni dei servizi utilizzati, si riesce sempre a ricondurre questi ad una rappresentazione gerarchica talvolta anche complessa.
 
 \section{Formalizzazione dei nuovi requisiti}
 
