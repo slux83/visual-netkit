@@ -179,6 +179,11 @@ In figura \ref{figura:uc1} viene proposto il diagramma completo dei casi d'uso e
 	\label{figura:uc1}
 \end{figure}
 
+\subsubsection{L'impatto sul sistema}
+Analizziamo ora in dettaglio quale sarà l'impatto sul sistema che prevede property unicamente descritte da una lista di coppie chiave-valore. Stiamo di fatto introducendo un cambiamento abbastanza radicale che andrà a coinvolcege da una parte il core di \visualnetkit{} e dall'altra il framework che supporta l'architettura modulare. Scendendo nei particolari ci si dovrà muovere con una strategia \bu{} effettuando un restyle del \plugin{} framework introducendo nuove funzionalità. Queste ultime interaggiranno con i moduli per interrogare le loro proprietà\footnote{Si ricorda che le proprietà saranno contenute in strutture ad alberi n-ari, non facilmente gestibili.} e per validare ed interpellare il loro file di configurazione \xml{}.
+
+Fatto ciò, si salirà sulla scala gerarchica fino ad arrivare a rimodellare la GUI che sarà dotata di una nuova property dock. Anche il core stesso dell'applicazione dovrà essere rivisto; i vari handler che raccolgono le modifiche effettuate dall'utente all'intnerno delle proprietà, andranno migliorati e correlati tra loro. In tutto questo giocherà un ruolo fondamentale il potente framework \qt{}, basato pesantemente sul pattern architetturale \emph{MVC}\cite{QTDOCMVC}.
+
 \section{Analisi architetturale}
 
 \subsection{Definizione della nuova architettura per i \plugin{}}
