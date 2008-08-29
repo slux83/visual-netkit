@@ -1,6 +1,15 @@
 \chapter{Uno strumento orientato alla creaziene di configurazioni avanzate: l'evoluzione di \visualnetkit{}}\label{capitolo:evoluzione_visualnetkit}
 \markboth{Uno strumento orientato alla creaziene di configurazioni avanzate}{}
 
+\begin{flushright}
+\begin{footnotesize}
+Per ``abbracciare il cambiamento'', le strutture, il design, devono seguire le funzionalità di una applicazione in modo continuo. In un mondo in cui il cambiamento è un fattore primario e spesso violento, per seguire le funzionalità, le strutture devono essere continuamente messe in discussione e rimodellate.\\
+\end{footnotesize}
+\begin{footnotesize}
+\textit{Francesco Cirillo}.
+\end{footnotesize}
+\end{flushright}
+
 Come abbiamo introdotto nel capitolo \ref{capitolo:arte} \visualnetkit{} offre un ottima flessibilità a livello architetturale grazie alla sua struttura modulare che si appoggia su \plugin{}, ma allo stesso tempo questa malleabilità è limitata dal potere espressivo dei singoli \plugin{}. Infatti, questi possono offrire il loro contributo introducendo solamente parametri aggiuntivi espressi sotto forma di una lista di coppie chiave-valore rappresentanti le informazioni che il \plugin{} andrà ad inserire all'interno dei template\footnote{Ogni ``template'' rappresenta il contenuto testuale che andrà scritto sul file di configurazione indicato dal \plugin{} stesso; se più \plugin{} vogliono scrivere sul medesimo file di configurazione, il sistema non fa altro che accodare i vari templates.} che produrrà.
 
 In questo capitolo discuteremo di come \visualnetkit{} sia stato profondamente modificato per dare la possibilità ai vari \plugin{} di poter ``abbracciare'' praticamente la totalità delle tipologie dei file di configurazione dei vari servizi (Dns, HTTP, E-Mail, Zebra, SSH, ecc\ldots). Si discuterà d'apprima il problema analizzando alcune configurazioni avanzate di BGP e OSPF, e da questo si cercerà di estrapolare una struttura da poter descrivere all'interno dei vari \plugin{}. Successivamente si formalizzeranno i nuovi requisiti discutendo l'impatto di tali modifiche sul sistema attuale, ed in fine ci addentreremo in uno studio di ``Analisi Architetturale'' del nuovo sistema di gestione delle properties dei \plugin{}.
@@ -66,6 +75,72 @@ Soffermiamoci ora sulle righe $15-16$ tralasciando le altre. In questo caso poss
 Naturalmente questi scenari sono soltanto alcuni dei tanti possibili contenuti che si possono trovare all'interno delle varie configurazioni, tuttavia abbiamo appena mostrato che qualunque siano le regole presenti nelle varie impostazioni dei servizi utilizzati, si riesce sempre a ricondurre questi ad una rappresentazione gerarchica talvolta anche complessa.
 
 \section{Formalizzazione dei nuovi requisiti}
+Prima di focalizzare gli sforzi nel trasformare il sistema in modo da essere riadattato a quanto detto fin'ora, è preferibile formalizzare i nuovi requisiti - sia quelli funzionali, che non - per avere un quadro complessivo ma charo e non ambiguo su quello che il nuovo sistema dovrà offrire. 
+
+Si è cercato di individuare gli attori principali discutendo con gli \stakeholders{} per avere più punti vi vista. Gli attori individuati sono due:
+\begin{itemize}
+\item l'utente che utilizza \visualnetkit{}, in particolare uno dei suoi \plugin{};
+\item l'utente/sviluppatore che desidera realizzare un \plugin{} dalle caratteristiche avanzate.
+\end{itemize}
+Sono stati quindi definiti una serie di scenari principali di successo per ciascun caso d'uso semplificato. L'insieme degli scenari ritenuto più importante è presentato in seguito. Si denota con il termine ``end user'' l'utente che utilizza \visualnetkit{}, e con il termine ``plugin developer'' colui che vuole realizzare un \plugin{}.
+
+\begin{flushleft}
+\begin{boxedminipage}{\textwidth}
+
+\subsubsection*{Caso d'uso - Inizializzazione dei plugin desiderati}
+
+\textbf{Scopo:} applicazione \visualnetkit{} \\
+\textbf{Livello:} user goal \\
+\textbf{Attore Primario:} End user \\
+\textbf{Parti interessate e interessi:}
+\begin{itemize}
+\item End user: Desidera un interazione semplice, veloce ed intuitiva con il sistema per raggiungere i propri obiettivi con il minimo sforzo.
+\end{itemize}
+
+\textbf{Prerequisiti:} Il sistema deve essere avviato e l'utente deve aver creato un nuovo Lab. \\
+\textbf{Goal:} L'utente ha creato un elemento base (una virtual machine, un collision domain o un link) e aver scelto ed inizializzato i \plugin{} che ha selezionato. Il sistema mostra sulla scena grafica l'elemento creato. \\
+
+\textbf{Scenario di successo:}
+\begin{enumerate}
+\item l'utente seleziona dalla tool bar o dal menu la tipologia dell'elemento che intende aggiungere;
+\item l'utente clicca con il mouse - tasto sinistro - un punto della scena grafica e il sistema provvede a mostrare la form per l'inizializzazione dei parametri;
+\item l'utente completa la form attivando inoltre i \plugin{} che desidera siano caricati per quel determinato elemento;
+\item se l'utente vuole modificare i valori di default dei \plugin{} selezionati, il sistema mostra all'utente una successiva form che offre la possibilità di modificare i vari campi delle property, nonché la possibilità di modificare la struttura delle stesse tramite l'apposito bottone ``actions'';
+\item l'utente accetta e il sistema provvede a chiudere la form;
+\item il sistema inizializza e aggiorna il suo stato aggiungendo l'elemento selezionato mostrandolo all'utente.
+\end{enumerate}
+
+\end{boxedminipage}
+\end{flushleft}
+
+\begin{flushleft}
+\begin{boxedminipage}{\textwidth}
+
+\subsubsection*{Caso d'uso - Modifica delle proprietà di un elemento}
+
+\textbf{Scopo:} applicazione \visualnetkit{} \\
+\textbf{Livello:} user goal \\
+\textbf{Attore Primario:} End user \\
+\textbf{Parti interessate e interessi:}
+\begin{itemize}
+\item End user: Desidera un interazione semplice, veloce ed intuitiva con il sistema per raggiungere i propri obiettivi con il minimo sforzo.
+\end{itemize}
+
+\textbf{Prerequisiti:} Il sistema deve essere avviato e l'utente deve aver creato un nuovo Lab e deve essere presente almeno un elemento base. \\
+\textbf{Goal:} L'utente è riuscito con successo a modificare - contenuto o struttura - una delle proprietà di un elemento selezionato. Il sistema ha provveduto all'acquisizione dei cambiamenti modificando le proprie strutture interne.
+
+\textbf{Scenario di successo:}
+\begin{enumerate}
+\item l'utente clicca due volte con il mouse - tasto sinistro - un elemento presente nella scena grafica oppure clicca una sola volta un elemento mostrato nell'insieme degli oggetti presenti, selezionandolo;
+\item il sistema provvede mostrare le proprietà dell'elemento selezionato nella ``property dock'' catalogate e suddivise in base al loro ruolo: proprietà proprie dell'elemento base e proprietà offerte dai \plugin{} attivi;
+\item 
+\item 
+\item 
+\end{enumerate}
+
+\end{boxedminipage}
+\end{flushleft}
+
 
 \section{Analisi architetturale}
 
