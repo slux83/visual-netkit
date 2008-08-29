@@ -87,7 +87,7 @@ Sono stati quindi definiti una serie di scenari principali di successo per ciasc
 \begin{flushleft}
 \begin{boxedminipage}{\textwidth}
 
-\subsubsection*{Caso d'uso - Inizializzazione dei plugin desiderati}
+\subsubsection*{Caso d'uso - Inizializzazione dei plugin selezionati}
 
 \textbf{Scopo:} applicazione \visualnetkit{} \\
 \textbf{Livello:} user goal \\
@@ -133,14 +133,51 @@ Sono stati quindi definiti una serie di scenari principali di successo per ciasc
 \begin{enumerate}
 \item l'utente clicca due volte con il mouse - tasto sinistro - un elemento presente nella scena grafica oppure clicca una sola volta un elemento mostrato nell'insieme degli oggetti presenti, selezionandolo;
 \item il sistema provvede mostrare le proprietà dell'elemento selezionato nella ``property dock'' catalogate e suddivise in base al loro ruolo: proprietà proprie dell'elemento base e proprietà offerte dai \plugin{} attivi;
-\item 
-\item 
-\item 
+\item l'utente modifica il contenuto di una proprietà. Il sistema provvede a validare il valore inserito e a registrare i cambiamenti effettuari eventualmente aggiornando gli elementi grafici;
+\item l'utente vuole modificare la struttura delle proprietà di uno dei \plugin{} presenti:
+	\begin{enumerate}
+	\item l'utente vuole aggiungere una proprietà o sotto-proprietà dopo averne selezionata un'altra. Tramite l'apposito bottone ``actions'' l'utente può inserire altre sotto-proprietà che automaticamente il sistema propone come possibili candidate. Dopo che l'utente ha inserito una nuova proprietà, il sistema registra il cambiamento al suo interno;
+	\item l'utente vuole eliminare una proprietà dopo averla selezionata. Tramite il bottone ``actions'' l'utente seleziona ``elimina proprietà'' e il sistema (validando o meno l'operazione) provvede a modificare le proprie strutture interne.
+	\end{enumerate}
+\end{enumerate}
+
+\end{boxedminipage}
+\end{flushleft}
+Abbiamo visto i due principali scenari di successo che l'utente finale si dovrebbe aspettare, ora andremo ad analizzare altri scenari di successo che si occupano delle aspettative dell'utente (\plugin{} developer) che vuole creare un plugin offri la possibilità di impostare configurazioni avanzate per il servizio che descrive.
+
+\begin{flushleft}
+\begin{boxedminipage}{\textwidth}
+
+\subsubsection*{Caso d'uso - Creazione di \plugin{} avanzati}
+
+\textbf{Scopo:} \plugin{} per \visualnetkit{} \\
+\textbf{Livello:} subfunction \\
+\textbf{Attore Primario:} plugin developer \\
+\textbf{Parti interessate e interessi:}
+\begin{itemize}
+\item Plugin developer: Si aspetta di riuscir a creare il proprio \plugin{} che dovrà contenere una struttura flessibile da poter descrivere la maggior parte delle configurazioni avanzate di un certo servizio offerto dal \plugin{} stesso.
+\end{itemize}
+
+\textbf{Goal:} Lo sviluppatore realizza un \plugin{} per un determinato servizio che al suo interno possiede flessibilità e alta adattabilità in modo da offrire anche configurazioni complesse.
+
+\textbf{Scenario di successo:}
+\begin{enumerate}
+\item lo sviluppatore costruire il file di configurazione per il suo \plugin{} descrivendo in modo dettagliato la struttura delle proprietà;
+\item lo sviluppatore crea il proprio \plugin{} che offrirà agli utenti finali la possibilità di una particolare estensione dell'elemento base su cui si basa il \plugin{};
+\item il sistema provvederà a caricare il plugin durante l'avvio e ad offrire all'utente finale la possibilità di selezionarlo.
 \end{enumerate}
 
 \end{boxedminipage}
 \end{flushleft}
 
+In figura \ref{figura:uc1} viene proposto il diagramma completo dei casi d'uso e l'interazione tra essi.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/UseCaseModel.png}
+	\caption{Diagramma dei casi d'uso principali in \visualnetkit{}.}
+	\label{figura:uc1}
+\end{figure}
 
 \section{Analisi architetturale}
 
