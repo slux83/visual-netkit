@@ -185,6 +185,32 @@ Analizziamo ora in dettaglio quale sarà l'impatto sul sistema che prevede prope
 Fatto ciò, si salirà sulla scala gerarchica fino ad arrivare a rimodellare la GUI che sarà dotata di una nuova property dock. Anche il core stesso dell'applicazione dovrà essere rivisto; i vari handler che raccolgono le modifiche effettuate dall'utente all'intnerno delle proprietà, andranno migliorati e correlati tra loro. In tutto questo giocherà un ruolo fondamentale il potente framework \qt{}, basato pesantemente sul pattern architetturale \emph{MVC}\cite{QTDOCMVC}.
 
 \section{Analisi architetturale}
+In questa sezione raccoglieremo tutti i requisiti descritti precedentemente e, rispettando la tassonomia dell'attuale sistema, cercheremo di formalizzare le modifiche che si dovranno poi riflettere su \visualnetkit{}. Una prima fase di analisi è stata spesa per carpire adeguatamente il tipo di supporto offerto da \qt{}, in particolare i concetti che stanno dietro il sistema \emph{Model/View}.
+
+\subsubsection*{L'architettura Model/View in \qt{}}
+Model-View-Controller (MVC) è un pattern originario da \emph{Smaltalk} che è spesso usato quando si ha a che fare con incerfacce utente. \qt{} separa le varie classi all'interno di tre gruppi: models, views e delegates. Ognuno di questi componenti sono definiti da una classe astratta comune che offre implementazioni di default di uso generico.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=6cm]{images/modelview-overview.png}
+	\caption{MVC all'interno di \qt{}$4$.}
+	\label{figura:qt_mvc}
+\end{figure}
+
+Tutti i modelli sono basati sulla classe \emph{QAbstractItemModel}. Questa definisce un interfaccia che viene usata dalla vista (View) attraverso il delegato, per accedere ai dati. I dati stessi non sono presenti nel modello, ma vengono immagazzinati in strutture separate che possono essere classi, files, database o altri tipi di componenti.
+
+Le viste invece implentano la parte visiva dei dati, presentata all'utente finale. \qt{} offre tre tipologie di viste utilizzate a seconda dei casi: Tabelle, Liste o Alberi. In particolare ogni vista renderizza le informazieni (tramite il delegato) presenti nelle strutture dati gestite dal modello, e questo offre la possibilità che ogni modello possa essere visualizzato all'interno di viste differenti\footnote{Si pensi a dati anagrafici che devono essere mostrati in più tipologie di grafici; grafici a torta, a barre, istogrammi, ecc\ldots}.
+
+I delegati sono elementi di estrema importanza all'interno del framework. Questi fungono da livello di indirezione tra la vista e il modello ed offrono supporto alla renderizzazione dei dati. È infatti possibile reimplementare la classe astratta che descrive tutti i delegati (\emph{QAbstractItemDelegate}) per poter ad esempio inserire diversi widget di input nei campi mostrati in una tabella, come mostrato in figura \ref{figura:qt_delegate}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=6cm]{images/spinboxdelegate-example.png}
+	\caption{Un esempio di ``delegate'' in \qt{}$4$.}
+	\label{figura:qt_delegate}
+\end{figure}
+
+\subsubsection*{Utilizzo di MVC nel nuovo property system}
 
 \subsection{Definizione della nuova architettura per i \plugin{}}
 
