@@ -247,11 +247,23 @@ Arriviamo quindi ad avere un forte incremento di flessibilità ed estensibilità
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=10cm]{images/properties_uml1.png}
+	\includegraphics[width=12cm]{images/property_editors_paragone.png}
 	\caption{Paragone tra il vecchio ed il nuovo property editor.}
 	\label{figura:property_editor_paragone}
 \end{figure}
 
 
 \subsection{Metodologie di sviluppo adottate}
+Al fine di rendere la progettazione più corretta e la fase di implementazione meno rischiosa si è cercato di cogliere gli aspetti qualificanti di metodologie di sviluppo quali \textit{XP}, \textit{FDD} e le più note metodologie di sviluppo iterativo come \textit{UP} (\emph{Unified Process}).\\
+Seguendo le linee guida dettate da \textit{UP}, si è optato per la definizione di cicli di sviluppo scanditi dal rilascio di prototipi funzionanti del progetto e dalla loro presentazione e discussione, così da avere una valutazione dell'avanzamento del progetto e una buona gestione dei fattori di rischio. Ogni ciclo è stato suddiviso in tre fasi: \textit{inception phase}, \textit{elaboration phase} e \textit{construction phase}.
+Scopo principale della fase iniziale è stato quello di delineare, nel modo più accurato possibile, il caso di interesse e identificare gli elementi importanti affinché esso conduca al completamento delle funzionalità desiderate.
 
+Nel primo ciclo di analisi e progettazione, questa fase è stata supportata da strumenti quali un modello dei casi d'uso sufficientemente dettagliato da definire i principali obiettivi del progetto, una pianificazione del progetto e delle prime fasi evolutive, una valutazione dei rischi ed una definizione primaria dei requisiti.
+La fase di elaborazione ha contribuito a definire la struttura complessiva del sistema. Questa fase ha compreso l'analisi di dominio ed un prima fase di progettazione dell'architettura a cui si è affiancato lo studio per la rappresentazione del modello logico.
+
+Al termine di queste due è seguita una fase conclusiva di implementazione e rilascio di un prototipo e sottoversioni dell'architettura, capaci di mostrare il completamento dei casi d'uso principali e delle funzionalità introdotte nelle fasi precedenti.
+
+A dispetto delle linee guida proposte dalla metodologia UP, le quali prevedono una quarta \textit{fase di transizione} in cui vengono condotte le attività di training e il \textit{beta testing}\footnote{Il beta testing (o beta-verifica) è una fase di prova e collaudo di un software non ancora pubblicato, con lo scopo di trovare eventuali errori (bug). Questa operazione può essere svolta da professionisti pagati, oppure, molto spesso, da semplici amatori (chiamati beta-testers).} del sistema a scopo di verifica e validazione, ogni fase è stata arricchita da piccole iterazioni di analisi e test, limitando considerevolmente l'overhead complessivo.
+
+La metodologia XP è stata abbracciata in particolare nella verifica continua del progetto, la frequente reingegnerizzazione del software e la libertà di seguire o meno le fasi di sviluppo prefissate, il tutto a beneficio del progetto. Nelle fasi finali di sviluppo, per il raffinamento e perfezionamento delle funzionalità accessorie, si è optato per un tipo di sviluppo orientato verso FDD.
+\textit{FDD} o \textit{Feature Driven Development}, anch'essa parte dell'\textit{Agile Manifesto}, cerca di spingere XP verso un'estrema flessibilità, eliminando interamente la fase classica di progettazione, volgendo il pieno interesse verso le fasi di \textit{definizione di una lista di funzionalità} e di uno \textit{sviluppo per funzionalità}, impostate in maniera tale da ottenere una frammentazione (una granularità) dall'alto verso il basso in modo da essere prodotte in brevi iterazioni.
