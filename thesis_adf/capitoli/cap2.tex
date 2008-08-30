@@ -1,5 +1,5 @@
-\chapter{Uno strumento orientato alla creaziene di configurazioni avanzate: l'evoluzione di \visualnetkit{}}\label{capitolo:evoluzione_visualnetkit}
-\markboth{Uno strumento orientato alla creaziene di configurazioni avanzate}{}
+\chapter{Uno strumento orientato alla creazione di configurazioni avanzate: l'evoluzione di \visualnetkit{}}\label{capitolo:evoluzione_visualnetkit}
+\markboth{Uno strumento orientato alla creazione di configurazioni avanzate}{}
 
 \begin{flushright}
 \begin{footnotesize}
@@ -211,8 +211,47 @@ I delegati sono elementi di estrema importanza all'interno del framework. Questi
 \end{figure}
 
 \subsubsection*{Utilizzo di MVC nel nuovo property system}
+Quanto appena descritto ha giocato un ruolo fondamentale nel comprendere il metodo di effettuare le modifiche alle proprietà nel miglior modo, utilizzando al meglio gli strumenti offerti da \qt{}. Come primo test si è partiti con un prototipo di property editor sul quale effettuare i vari esperimenti, cercando di mantenere il codice pulito per il riuso.
+Questa fase si affronta solitamente per andare in contro ai problemi, affrontarli e risolverli al meglio. Il modello di MVC che \qt{} propone è stato sfruttato in tutti i suoi dettagli tranne che per i delegati in quanto, per gli scopi prefissati, non erano previste tipizzazioni nei campi valori delle proprietà.
+
+Si è quindi partiti nel creare una struttura ad albero n-ario, passando alla creazione del modello, ed in fine gli sforzi si sono concerntrati sulla vista e sull'interazione tra essa e il modello stesso, ponendo particolare attenzione all'accoppiamento e alla coesione degli oggetti.
+
+Durante la modellazione è stato deciso di accentrare il controllo su di un entità astratta che fosse stata in stretto contatto con i dati e che raccogliesse le richieste di cambiamento. Il problema si è presentato perchè il property editor è utilizzato non solo dagli elementi base di \visualnetkit{}, ma anche ad altri componenti quali Aree grafiche e proprietà stesse del laboratorio. Da qui la necessità di generalizzare il concetto di ``property handler'' che potesse essere abbastanza generale da essere esteso dai vari controllers concreti. Di questo ci occuperemo più in dettaglio nella successiva sezione.
 
 \subsection{Definizione della nuova architettura per i \plugin{}}
+In questa parte ci occuperemo ad analizzare quanto detto pocanzi. Osserviamo quindi la figura \ref{figura:properties_uml1}.
 
-\subsection{Il processo di sviluppo adottato}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=10cm]{images/properties_uml1.png}
+	\caption{Diagramma delle classi del nuovo sistema.}
+	\label{figura:properties_uml1}
+\end{figure}
+
+Notiamo subito la presenza di una generalizzazione per quanto riguarda il property handler, come accennato precedentemente. Tale interfaccia (in \cpp{} è chiamata una ``pure abstract class'') offre le seguenti funzioni:
+\begin{description}
+\item[getComposedModel()]questa funzione indica che ogni classe che la estende deve necessariamente fornire un model appropriamente costruito che verrà poi collegato alla vista. Il model viene creato ricavando le informazioni dall'elemento base e dalle properties offerte dai vari plugins che aggrega. Ogni ``tree item'' possiede quindi il riferimento al suo creatore che è anche l'oggetto che riceve le richieste di cambiamento;
+
+\item[getInitMolel()]questa funzione viene usata dalle sotto classi che adempiono il ruolo di property controllers per gli elementi base\footnote{Ricordiamo che per ``elemento base'' in \visualnetkit{} si intendono Virtual Machines, Collision Domains e Links.}, fornendo un modello simile al precedente ma che contiene solamente i dati dei plugins selezionati;
+
+\item[saveChangedProperty()]viene utilizzata per il salvataggio dei cambiamenti effettuati in una determinata proprerty.
+
+\item[getPluginFromCurrentElement()]questa funzione è puramente di convenienza e viene usata di rado;
+
+\item[removePluginProperty()]viene utilizzata per inoltrare la richiesta di eliminazione di una property di un plugin. Il controllo di consistenza viene effettuato dal plugin stesso;
+
+\item[addPluginProperty()]come sopra, ma utilizzata per inserire una property (o sotto property) in un plugin.
+\end{description}
+
+Arriviamo quindi ad avere un forte incremento di flessibilità ed estensibilità grazie all'aggunta di properties dei plugins non più statiche, ma dinamiche con struttura anche annidata (figura \ref{figura:property_editor_paragone}).
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=10cm]{images/properties_uml1.png}
+	\caption{Paragone tra il vecchio ed il nuovo property editor.}
+	\label{figura:property_editor_paragone}
+\end{figure}
+
+
+\subsection{Metodologie di sviluppo adottate}
 
