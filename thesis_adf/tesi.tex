@@ -11,9 +11,34 @@
 \usepackage{amssymb} %<--pacchetto piu' ampio per simboli matematici
 \usepackage[pdftex,bookmarks=true]{hyperref} % per gli hyperlinks
 \usepackage{boxedminipage} % for boxed paragraphs
+\usepackage[usenames,dvipsnames]{color}
 
 % PACCHETTO MOLTO CONSIGLIATO! Serve ad impostare i margini in modo professionale!
 %\usepackage{layaureo}	% Il layout della tesi (richiede il pacchetto aggiuntivo LayAureo)
+
+%pacchetto per inclusione di porzioni di codice con formattazine automatica (evita problemi sul bordo della pagina)
+\usepackage{listings} 
+\lstloadlanguages{C++}	%sintassi per linguaggio C++
+%\lstset{frame=ltrb, framesep=5pt, , basicstyle=\scriptsize\ttfamily}
+\lstset{
+language=C++,
+basicstyle=\footnotesize,
+stringstyle=\color{Green}\ttfamily,
+keywordstyle=\color{MidnightBlue}\bfseries,
+morekeywords=[1]{QString, NULL, QMap, QList, QPair, qint32},
+showstringspaces=true,
+identifierstyle=\ttfamily\bfseries, 
+commentstyle=\color{RedOrange},
+captionpos=t,
+columns=flexible,
+aboveskip=10pt,
+%backgroundcolor=\color{gray},
+frame=tb,
+framerule=0.2pt,
+tabsize=4,
+numbers=left,	%numeri di riga
+numberstyle=\footnotesize	%stile dei numeri
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,10 +74,10 @@
 	\newcommand{\qt}{\emph{Qt}}
 	\newcommand{\cpp}{\emph{C++}}
 	\newcommand{\fs}{\emph{File System}}
-
+	\newcommand{\proxy}{\emph{Proxy}}
 
 	% alcune parole: sillabazione
-	\hyphenation{up-load} 
+	\hyphenation{up-load}
 	
 	% Ridefinisco localmente lo stile plain (ovvero lo stile che usa la prima
 	% pagina di ogni capitolo), per nascondere il numero della

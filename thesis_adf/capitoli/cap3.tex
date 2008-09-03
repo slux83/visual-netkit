@@ -41,12 +41,119 @@ Andiamo ora a descrivere in dettaglio la struttura del sotto sistema che permett
 	\label{figura:uml_plugin_framework}
 \end{figure}
 
+Com'è facile osservare, tutto ruota intorno alla classe singletone ``PluginRegistry''. Questo controller viene invocato dal sistema nel caso d'uso d'avviamento per fetchare i \plugin{} esistenti, validarli e creare per ognuno di questi il proprio loader factory. Il PluginRegistry offre un servizio di directory, ossia è quel componente che mantiene traccia delle associazioni tra un \plugin{} e un elemento base.
 
+In realtà il sistema non conosce l'instanza di un determinato modulo direttamente, ma conosce il suo \proxy{} che introduce un livello di indirezione tra il sistema e il \plugin{} stesso. La scelta di applicare il pattern \proxy{} assicura un buon controllo d'accesso all'oggetto reale di cui è responsabile e permette inoltre un accesso trasparente verso il sistema. Analizziamo ora la classe astratta pura PluginInterface:
+\begin{lstlisting}
+/**
+ * PluginInterface.h
+ */
+class PluginInterface
+{
+public:
+	virtual ~PluginInterface() {};
+
+	virtual bool saveProperty(QString propUniqueId, QString propValue,
+			QString *pluginAlertMsg = NULL) = 0;
+
+	virtual QString getXMLResource() = 0;
+
+	virtual QMap<QString, QString> getTemplates() = 0;
+	
+	virtual QList<PluginProperty*> getPluginProperties() = 0;
+
+	virtual PluginProxy* getProxy() = 0;
+
+	virtual void setProxy(PluginProxy* p) = 0;
+
+	virtual void setGroupID(qint32 id) { Q_UNUSED(id) };
+	virtual qint32 getGroupID() { return -1; };
+
+	virtual QString getDefaultGraphisLabel() = 0;
+
+	virtual QString getName() = 0;
+
+	virtual bool init(QString laboratoryPath) = 0;
+	
+	virtual QString deleteProperty(QString propertyUniqueId) = 0;
+	
+	virtual QPair<PluginProperty*, QString> addProperty(
+		QString propertyIdToAdd, QString parentPropertyUniqueId) = 0;
+	
+};
+
+typedef PluginInterface* createPlugin_t();
+typedef void destroyPlugin_t(PluginInterface*);
+\end{lstlisting}
+
+Le più importanti righe di codice di questa classe sono gli ultimi due ``typedef''. Ogni implementazione di un \plugin{} deve necessariamente avere al suo interno definite le factory di creazione e discruzione definite come \emph{extern ``C''}. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo. Un tipico esempio nell'uso di queste due funzioni è riportato qui di seguito:
+
+\begin{lstlisting}
+/* Factory (creator) */
+extern "C" PluginInterface* createPlugin()
+{
+	return new YourContretePluginClass();
+}
+
+/* Factory (destroyer) */
+extern "C" void destroyPlugin(PluginInterface* p)
+{
+	delete p;
+}
+\end{lstlisting}
+Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'appendice A.
+
+Ogni modulo è descritto da un proprio file di configurazione scritto in \xml{} che deve necessariamente essere inserito all'interno del \emph{Qt Resource System}\footnote{Il sistema di risolse di \qt{} consiste in un metodo (platform-indipendent) per la memorizzazione di file binari all'interno dell'applicazione stessa. Questa è una tecnica molto utile se l'applicazione ha sempre bisogno di determinati files e non si vuole correre il rischio di non possederli a runtime.}. All'interno di questo file vi sono descritte le credenziali del \plugin{} come il nome, descrizione, autori, dipendenze ecc\ldots, ma anche un'accurata descrizione delle proprietà offerte all'elemento a cui verrà attivato.
+
+Per facilitare tutto questo ogni \proxy{} è equipaggiato di una classe expert che si occupa della validazione e interrogazione del file \xml{} pocanzi citato, nonché della manipolazione delle properties (poste all'interno di una struttura ad alberi n-ari).
+
+Il sotto sistema appena descritto offre la possibilità di estendere le funzionalità di \visualnetkit{}. I vari \plugin{} sono elementi passivi che vengono invocati dal sistema quando necessario: l'utente agisce su una property, l'utente inizializza un \plugin{}, ecc\ldots Tuttavia un modulo può anche interagire con il sistema stesso ma solamente dopo che è stato invocato; in particolare durante la fase di inizializzazione il sistema chiama le funzioni di ``getXmlResource()'' e ``getDefaultGraphisLabel()'' per validare e scrivere una label nella vista del grafo della rete.
+
+Si è voluti iniziare latrattazione dei componneti dell'architettura di \visualnetkit{} proprio dal sistema modulare su cui si basa, poiché si ritiene che questa parte è la più innovativa e non è presente in nessuno degli ambienti grafici sperimentati.
 
 \section{Elementi architetturali}
+Accurato il funzionamento e la logica che risiede dietro il framework dei \plugin{}, possiamo iniziare a introdurre gli altri elementi architetturali che di fatto supportano e interagiscono l'un l'altro per soddisfare tutti i requisiti (funzionali e non) che il sistema possiede.
+
+Si inizierà ad analizzare gli elementi in figura \ref{figura:vn_componenti} con strategia \textbf{top-down} per quanto riguarda gli elementi a struttura orizzontale, poi si analizzeranno ai mappers ed in fine gli sforzi verranno convogliati nella descrizione del nuovo sitema che offre ai \plugin{} la possibilità di possedere un alta dinamicità nelle proprietà che essi offrono.
 
 \subsection{L'interfaccia utente}
+Uno degli obiettivi principali di questo progetto è la realizzazione di un ambiente di configurazione di reti virtuali che offra un'interfaccia grafica capace di fornire una vista intuitiva della rete virtuale  e permette di interagire in modo semplice con lo strato di emulazione offerto da \netkit{}.
+Tale interfaccia, oltre a garantire un alto livello di ergonomia e usabilità, deve garantire buone capacità di adattamento al variare dei requisiti.
 
+Sebbene la realizzazione di una interfaccia grafica possa dare l'impressione di essere un'attività semplice, durante tale periodo si incontrano svariate difficoltà in quanto l'ambiente in esame si avvicina molto alla definizione di ``IDE''\footnote{Un \textit{integrated development environment} (IDE), in italiano ambiente integrato di sviluppo, è un software che aiuta i programmatori nello sviluppo del software.} orientato - nel nostro caso - allo sviluppo di reti virtuali.
+
+La realizzazione dell'attuale interfaccia ha richisto diversi cicli di sviluppo e raffinamento per ottenere un risultato apprezzabile e intuitivo. Questa è composta da varie \emph{docks} che al loro interno contengono vari sotto elementi come properties, zoom e miniatura del grafo, elementi attivi, struttura de lab e un elemento centrale che rappresenta la scena, ossia l'ambiente per disegnare la topologia di rete desiderata. L'ampio uso di grafica SVG fa si che all'utente arrivi subito un feedback positivo che incentiva lo stesso a sperimentare le caratteristiche offerte dall'ambiente che ha davanti.
+
+Il grafo non è altro che l'elemento vista della struttura del modello di dominio; per ogni elemento grafico (Hosts, Collision Domains, Links) esiste un elemento di basso livello associato che incapsula le informazioni. Gli elementi grafici sono sostanzialmente degli oggetti che riflettono queste informazioni all'utente e gli consentono di interagire con gli elementi stessi.
+
+L'esistenza del \emph{Graphics View Framework} offerto da \qt{}, ha reso minimi gli sforsi implementativi in quanto questo è fortemente basato sul pattern MVC che consente di collegare uno stesso modello (la scena) a più viste come avviene per la scena e la dock della miniatura - figura \ref{figura:vnetkit_graphics_view_1}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/visualnetkit_graphics_view_1.png}
+	\caption{Scena del grafo inserita in due viste differenti.}
+	\label{figura:vnetkit_graphics_view_1}
+\end{figure}
+
+\subsubsection*{Dettagli implementativi}
+La parte che riguarda l'interazione con l'utente è stata implementata seguendo i principi dell'\emph{event driven programming}, che rappresenta la base della programmazione delle interfacce grafiche. La programmazione guidata dagli eventi non considera i meccanismi standard di input (ad esempio la CLI - \emph{Command Line Interface}) ma basa il suo funzionamento sulla gestione degli eventi generati dall'utente, coma la pressione di un bottone, di un click del mouse. 
+
+L'insieme degli eventi considerati interessati, vengono ricevuti da handlers che effettuano una prima validazione e inoltrano lo stesso evento agli strati di competenza posti solitamente a strati più bassi.
+
+\subsubsection*{Signals e Slots in \qt{}}
+In \qt{} slot e segnali sono usati per la comunicazione asincrona tra oggetti.
+Si vuole che oggetti di un certo tipo vengano avvertiti e siano in grado di comunicare con altri oggetti quando su di un oggetto si scatena un determinato evento. Per esempio quando un utente clicka un bottone \textbf{Close}, probabilmente vorremmo che il widget si chiuda chiamando la sua funzione ``close''.
+
+Un segnale viene emesso quando un particolare evento accade; uno slot invece è una funzione che se invocata è responsabile di gestire un particolare segnale ma può anche essere invocata in maniera sincrona da un qualche oggetto.
+
+Tale meccanismo nasconde in realtà un sistema già noto con il nome di pattern Observer; l'unica differenza risiede nelle chiamate asincrone che i signal effettuano allo slot di loro competenza, senza aspettare una risposta. Infatti, ogni slot è definito con un tipo di ritorno ``void'' e l'unico che uno slot ha di effettuare modifiche è tramite effetti collaterali sull'elemento passato come puntatore. In figura \ref{figura:qt_signals_slots} è mostrato un esempio d'uso di Signals e Slots.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=8cm]{images/signals_slots.png}
+	\caption{Schema d'uso di Signals e Slots.}
+	\label{figura:qt_signals_slots}
+\end{figure}
 
 \subsection{Gli handlers}
 
