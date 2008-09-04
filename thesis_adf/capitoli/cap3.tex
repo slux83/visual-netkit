@@ -155,13 +155,66 @@ Tale meccanismo nasconde in realtà un sistema già noto con il nome di pattern 
 	\label{figura:qt_signals_slots}
 \end{figure}
 
+\subsection{Elementi del dominio}
+Il kernel di questo progetto è il primo componente che è stato sviluppato ed anche il più importante. In esso sono contenute tutte le classi elementari su cui si appoggia la topologia di rete che l'utente vuol creare. Le classi rappreseno elementi della realtà di interesse come le virtual machine, i collision domain, le hardware interface e anche l'intero laboratorio.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/uml_package_core.png}
+	\caption{Diagramma delle classi del package Core.}
+	\label{figura:uml_package_core}
+\end{figure}
+
+Come si nota in figura \ref{figura:uml_package_core}, questo package ha una struttura molto semplice ma allo stesso tempo riesce a descrivere qualsiasi topologia di rete virtuale. Infatti, un laboratorio contiene un insieme di oggetti VirtualMachine e CollisionDomain contenuti all'interno di due Mappe ordinate per nome degli stessi. La giunzione tra questi ultimi due elementi è occupata dalla classe HardwareInterface che funge da collante di riferimento tra l'host virtuale, ed i vari domini di collisione a cui è collegato.
+Grazie a questa semplice struttura \visualnetkit{} nasce da una parte come ambiente per la creazione di reti virtuali da emulare con \netkit{}, ma è potenzialmente in grado di essere riadattato in modo da poter produrre configurazioni per altri sistemi di emulazione.
+
+Come vedremo più avanti, gli oggetti di tipo HardwareInterface saranno rappresentati da dei Links grafici all'interno della scena grafica.
+
 \subsection{La gestione degli eventi}
+Come in tutte le applicazioni software, ogni oggetto ha bisogno di essere ``gestito'' nel contesto dell'applicazione stessa.\\
+La funzione di amministrazione e controllo del singolo oggetto, in applicazioni realizzate a regola d'arte, viene demandata ad altri oggetti tipicamente più leggeri ma non per questo meno complessi, detti \emph{handler}.
+
+Le funzioni di controller sono state realizzate seguendo le linee guida del pattern \emph{Controller}\cite{AUPL04} ed assegnando le responsabilità responsabilità del controllo e della realizzazione di funzioni e compiti dell'oggetto interessato. In \visualnetkit{} esistono vari tipi di \emph{handlers}:
+\begin{itemize}
+\item \emph{Facade Controllers};
+\item \emph{Use Case Controllers};
+\item \emph{Mappers} - ossia macro elementi che disaccoppiano vista e dominio (introdotti più avanti in questo capitolo);
+\item \emph{Property Controllers} - descritti più avanti in questo capitolo.
+\end{itemize}
+
+I \emph{Facade Controllers} vengono utilizzati per raccogliere le richeste che provengono dai livelli più alti - in particolare dagli \emph{Use Case Controllers} - quando c'è bisogno di una cecesso a basso livello che comporta un qualche tipo di cambiamento a livello di Dominio.
+
+Gli \emph{Use Case Controllers}\footnote{Nella figura \ref{figura:vn_componenti} sono indicati come \emph{Handlers} generici.} sono posti in strati medio-alti dell'architettura e sono i primi oggetti che ricevono i segnali provenienti dall'interfaccia grafica. Questi effettuano una prima validazione dell'azione svolta e se non vi sono errori inoltrano la richiesta agli oggetti più bassi, in particolare ai \emph{Facade Controllers} e in qualche caso anche agli oggetti \emph{Mappers}.
+
 
 \subsection{Interazione tra Utente e Proprietà degli Elementi}
+Ogni elemento del dominio incapsula come di norma alcune proprietà di base. Queste, oltre a caratterizzare i vari oggetti, servono anche per descrivere una certa realtà di interesse espressa dall'utente; ciò significa che è proprio l'utente finale che vuole avere la possibilità di cambiare questi attributi.
+
+Nel nostro caso abbiamo che oltre alle proprietà offerde dagli oggetti del dominio (ad esempio il nome di una \virtualmachine{}), per la natura modulare del sistema, è possibile che per un oggetto base vi siano collegati alcuni \plugin{} che offrono proprietà aggiuntive.\\
+La gestione di queste è demandata ad oggetti (di tipo \emph{Use Case Controller}) che sono responsabili di renderizzare i dati, e ricevere le modifiche che l'utente desidera (si veda la figura \ref{figura:properties_uml1}). Come già descritto, questi oggetti vengono dinamicamente inseriti come handlers degli oggetti che rappresentano i dati delle properties, poichè la natura degli elementi che l'utente può selezionare è eterogenea; ogni tipologia di elemento possiede il suo \emph{Property Controller}.
 
 \subsection{Gestione degli annullamenti: l'Undo Framework}
+Per l'implementazione delle funzionalità di undo e di redo delle azioni svolte, è stato utilizzato un potente framework offerto da \qt{}. Questo sistema ha permesso, in fase realizzativa, di tralasciare molte dei dettagli implementativi e dirigere l'attenzione verso problematiche come la consistenza dei dati. Infatti, seppur le operazioni di undo o redo siano atomiche, esse interagiscono con lo strato dei \emph{Facade Controllers} e quindi indirettamente anche con gli oggetti del Dominio.
 
-\subsection{Elementi del dominio}
+\subsubsection*{L'Undo Framework in \qt{}}
+Il \emph{Qt Undo Framework} è un'implementazione del pattern \emph{Command}\cite{AUPL04}, per l'attuazione di funzionalità di undo/redo nelle applicazioni.\\
+Il pattern \emph{Command} è basato sul concetto che tutte le funzioni di editing in un'applicazione siano realizzate con la creazione di istanze di oggetti command. Facendo il caso di un editor di testo, gli oggetti command applicano le modifiche al documento e sono memorizzati in uno stack dei comandi. Un \emph{QUndoCommand} rappresenta una singola azione di editing dello stato del documento; ad esempio, l'inserimento o l'eliminazione di blocchi di testo. Un comando può apportare cambiamenti al documento con azioni di \emph{redo()} o di \emph{undo()}.
+
+Inoltre, ogni comando sa come annullare i cambiamenti da lui apportati e come riportare il documento allo stato precedente. Finché l'applicazione utilizza solo oggetti command per cambiare lo stato del documento, è possibile annullare una sequenza di comandi attraversando lo stack verso il basso e disfacendo ciascun comando. È anche possibile ripetere una sequenza di comandi percorrendo la pila all'inverso.
+
+La flessibilità offerta da questo strumento è tale da poterla applicare ad ogni tipo di situazione. Analizziamo ora un esempio un po' più realistico e complesso.
+
+Nel framework ogni azione che l'utente vuole poter annullare, è implementata in una classe che estende \emph{QUndoCommand}. Per ogni azione effettuata viene creato un apposito command che andrà inserito nel \emph{QUndoStack} di riferimento. Appena l'oggetto prende posto all'interno dello stack, la sua funzione di redo viene invocata per completare e/o effettuare l'azione richesta.
+
+Il nostro esempio implementa un semplice diagramma grafico. È pertanto possibile eliminare e aggiungere elementi e muoverli tramite \emph{drag\&{}drop}. Ognuna di queste azioni possiede il corrispondente undo command che permette all'utente eventualmente di tornare sui suoi passi.
+In figuara \ref{figura:qt_undo} è mostrato come un \emph{QUndoStack} può essere mostrato graficamente all'interno di un \emph{QUndoView}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=10cm]{images/undoframeworkexample.png}
+	\caption{Un esempio avanzato dell'Undo Framework offerdo da \qt{}.}
+	\label{figura:qt_undo}
+\end{figure}
 
 \subsection{L'accesso al \fs{}}
 
