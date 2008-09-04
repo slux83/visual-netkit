@@ -217,6 +217,75 @@ In figuara \ref{figura:qt_undo} è mostrato come un \emph{QUndoStack} può esser
 \end{figure}
 
 \subsection{L'accesso al \fs{}}
+Lo strato di persistenza dei dati nel complesso di ogni applicazione software, gioca un ruolo fondamentale. Generalmente posto nello strato più basso del sistema, questo elemento architetturale ha il duplice scopo di interagire con il \fs{} per salvare i dati inerenti alle varie configurazioni dell'applicazione e dei laboratory creati, nonché esportare questi ultimi in un formato accettato e riconosciuto dall'ambiente di emulazione desiderato.\\
+Uno dei problemi riscontrati in fase di progettazione era come strutturare le informazioni che dovevano essere salvate. Da una parte occorreva salvare lo stato del laboratorio creato - in particolare lo stato del grafo della rete - mentre dall'altra parte occorreva trovare un buon sistema per poter esportare il laboratorio in modo da essere poi eseguito correttamente dal sistema di emulazione su cui quest'ambiente si basa\footnote{Ribadiamo il concetto che \visualnetkit{} nasce come ambiente per creazione di lab per \netkit{}, ma questo non vincola il tool ad un eventuale adattamento in favore di un qualsiasi altro sistema di emulazione.}.
+
+Ad esempio, se un utente desidera salvare un lab per poi riaprirlo dev'essere possibile memorizzare metadati sugli elementi presenti nella scena grafica, quali potrebbero essere le posizioni degli oggetti stessi, delle etichette e informazioni inerenti ai \plugin{}.
+
+Si è deciso di procedere, quindi, con la registrazione delle metainformazioni su di un file in formato \xml{}, nominato \emph{lab.xml} posto nella root directory del laboratorio.\\
+Il fatto di salvare i metadati in un file separato rende il lab prodotto standard e auto descritto da un singolo file di configurazione esterno.
+Un tag principale ``scene'' rappresenta alcune informazioni sulla scena grafica come ad esempio la dimensione. Internamente a questa vi sono tags di gruppo che descrivono i vari componenti grafici come links, aree, virtual machines e collision domains; ad ognuno sono associate informazioni extra che descrivono metadati aggiuntivi, quando previsto.
+
+La vera e propria parte che esporta la struttura del laboratorio su \fs{} è stata divisa in quattro fasi:
+\begin{description}
+\item[Fase 1] questa fase iniziale è adibita alla creazione della struttura base delle directories, in particolare per ogni virtual machine presente nel lab creato, viene cerata una directory con il nome dell'host virtuale;
+\item[Fase 2] è il momento della creazione del file \emph{lab.conf} che contiene la struttura fondamentale della rete a livello topologico, riconoscuta da \netkit{};
+\item[Fase 3] questa fase è riservata al salvataggio dei file di ``sturtup'' delle macchine prenti\footnote{In \netkit{} ogni host virtuale che viene avviato può operare azioni di post-start grazie all'esecuzione del file \emph{.startup} inerente ad una precisa macchina virtuale.};
+\item[Fase 4] l'ultimo step fa in modo che ogni plugin attivo possa offrire porzioni (o la totalità) di file di configurazioni che descrivono i propri settaggi.
+\end{description}
+
+\subsubsection*{Template Engine in \visualnetkit{}}
+Nelle fasi due tre e quattro si è parlato della creazione dei file di configurazione; sia i \plugin{} che l'applicazione stessa utilizzano un sistema di \emph{mark-up} per la creaziene dei vari templates che andranno poi scritti dallo strato di persistenza all'interno dei files. Questi templates possiedono una struttura interna che prevede la sostituzione localizzata di alcune parti. Prendiamo in esame il templete che verrà utilizzato per creare il file ``lab.conf'':
+
+\begin{figure}[!htb]
+\begin{lstlisting}[language=csh]
+###
+# This file is createb by Visual Netkit <VISUAL_NETKIT_VERSION> version
+# http://www.netkit.org ~ http://code.google.com/p/visual-netkit/
+#
+
+LAB_DESCRIPTION="<DESCRIPTION>"
+LAB_VERSION="<VERSION>"
+LAB_AUTHOR="<AUTHOR>"
+LAB_EMAIL="<EMAIL>"
+LAB_WEB="<WEB>"
+
+<TOPOLOGY><HOST>[<ETH_NUMBER>]="<COLLISION_DOMAIN_NAME>"</TOPOLOGY>
+\end{lstlisting}
+\end{figure}
+Il Template Engine interno all'applicazione viene invocato passando il riferimento (basato sul resource system di \qt{}) ad un template file. Questo viene prima caricato in memoria e successivamente vengono effettuare alcune sostituzioni di base come la sostituzione del \emph{mark-up}\\
+``<VISUAL\_{}NETKIT\_{}VERSION>'' che viene sostituito dalla corrente versione del tool.
+L'elemento che invoca il caricamento di un template riceve quindi il contenuto del file desiderato; successivamente vengono effettuate le altre sostituzioni tramite l'ausilio di espressioni regorali.\\
+Osserviamo la riga $12$; l'oggetto incaricato di salvare il file ``lab.conf'' è incaricato di completare la struttura del file di configurazione inserendo la descrizione, la versione, l'autore, l'indirizzo email e il sito web del lab corrente, e successivamente costruirà la topologia dell'intera rete iterando tra i \emph{tag} ``<TOPOLOGY></TOPOLOGY>''.
+
+In questo modo si riesce a creare un file di configurazione corretto e ben formattato come quello proposto qui sotto:
+
+\begin{lstlisting}[language=csh]
+###
+# This file is createb by Visual Netkit 1.1 version
+# http://www.netkit.org ~ http://code.google.com/p/visual-netkit/
+#
+
+LAB_DESCRIPTION="A simple laboratory"
+LAB_VERSION="1.0"
+LAB_AUTHOR="Alessio Di Fazio"
+LAB_EMAIL="slux83@gmail.com"
+LAB_WEB="http://code.google.com/p/visual-netkit/"
+
+host1[0]="a"
+host1[1]="b"
+
+host2[0]="b"
+host2[1]="c"
+
+host3[0]="c"
+host3[1]="d"
+\end{lstlisting}
+che descrive la topologia di rete presente in figura \ref{figura:vnetkit_graphics_view_1}.
+
+È importante notare che il template dell'esempio appena citato risulti totalmetne indipendente dal motore di emulazione utilizzato, ed è dunque facilmente rimodellizzabile per essere adoperato con emulatori differenti.
+
+Nel caso in cui un emulatore richiedesse una sintazzi particolare per le varie macchine virtuali, come ad esempio VNUML, basterebbe creare un semplice plugin che offra uno specifico template, ed aggungere questo plugin ai vari host virtuali presenti nella topologia di rete.
 
 \subsection{Controllers tra Dominio e Vista}
 
