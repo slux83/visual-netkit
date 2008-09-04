@@ -1,5 +1,5 @@
-\chapter{Uno strumento orientato alla creazione di configurazioni avanzate: l'evoluzione di \visualnetkit{}}\label{capitolo:evoluzione_visualnetkit}
-\markboth{Uno strumento orientato alla creazione di configurazioni avanzate}{}
+\chapter{Configurazione Avanzata di Reti Virtuali}\label{capitolo:evoluzione_visualnetkit}
+\markboth{Configurazione Avanzata di Reti Virtuali}{}
 
 \begin{flushright}
 \begin{footnotesize}
@@ -14,7 +14,7 @@ Come abbiamo introdotto nel capitolo \ref{capitolo:arte} \visualnetkit{} offre u
 
 In questo capitolo discuteremo di come \visualnetkit{} sia stato profondamente modificato per dare la possibilità ai vari \plugin{} di poter ``abbracciare'' praticamente la totalità delle tipologie dei file di configurazione dei vari servizi (Dns, HTTP, E-Mail, Zebra, SSH, ecc\ldots). Si discuterà d'apprima il problema analizzando alcune configurazioni avanzate di BGP e OSPF, e da questo si cercerà di estrapolare una struttura da poter descrivere all'interno dei vari \plugin{}. Successivamente si formalizzeranno i nuovi requisiti discutendo l'impatto di tali modifiche sul sistema attuale, ed in fine ci addentreremo in uno studio di ``Analisi Architetturale'' del nuovo sistema di gestione delle properties dei \plugin{}.
 
-\section{Il problema delle configurazioni complesse}
+\section{Scenari che Richiedono Configurazioni Avanzate}
 Quando si ha a che fare con servizi complessi come Zebra\footnote{GNU Zebra è un software opensource che gestisce i protocolli di routing basati su TCP/IP. Supporta il protocollo BGP-4 come descritto nell'RFC-1771, come anche RIPv1, RIPv2 e OSPFv2.}, quasi sempre si ha a che fare anche con file di configurazione dall'alto potere espressivo e quindi potenzialmente complessi.
 
 Andremo ora ad analizzare da vicino due esempi di configurazioni complesse in Zebra, in particolare nei protocolli BGP\footnote{Il \emph{Border Gateway Protocol} (BGP) è un protocollo di rete usato per connettere tra loro più router che appartengono a sistemi autonomi distinti e che vengono chiamati gateway.} e OSPF\footnote{Il protocollo \emph{Open Shortest Path First} (OSPF) è uno dei protocolli di instradamento più diffusi, che gestisce le tabelle di instradamento di una rete IP con il metodo del Link State.}, e cercheremo di trovare una possibile struttura comune che possa racchiuderli.
@@ -74,7 +74,7 @@ Soffermiamoci ora sulle righe $15-16$ tralasciando le altre. In questo caso poss
 \\
 Naturalmente questi scenari sono soltanto alcuni dei tanti possibili contenuti che si possono trovare all'interno delle varie configurazioni, tuttavia abbiamo appena mostrato che qualunque siano le regole presenti nelle varie impostazioni dei servizi utilizzati, si riesce sempre a ricondurre questi ad una rappresentazione gerarchica talvolta anche complessa.
 
-\section{Formalizzazione dei nuovi requisiti}
+\section{Requisiti per un Ambiente di Configurazione Avanzata}
 Prima di focalizzare gli sforzi nel trasformare il sistema in modo da essere riadattato a quanto detto fin'ora, è preferibile formalizzare i nuovi requisiti - sia quelli funzionali, che non - per avere un quadro complessivo ma charo e non ambiguo su quello che il nuovo sistema dovrà offrire. 
 
 Si è cercato di individuare gli attori principali discutendo con gli \stakeholders{} per avere più punti vi vista. Gli attori individuati sono due:
@@ -184,7 +184,7 @@ Analizziamo ora in dettaglio quale sarà l'impatto sul sistema che prevede prope
 
 Fatto ciò, si salirà sulla scala gerarchica fino ad arrivare a rimodellare la GUI che sarà dotata di una nuova property dock. Anche il core stesso dell'applicazione dovrà essere rivisto; i vari handler che raccolgono le modifiche effettuate dall'utente all'intnerno delle proprietà, andranno migliorati e correlati tra loro. In tutto questo giocherà un ruolo fondamentale il potente framework \qt{}, basato pesantemente sul pattern architetturale \emph{MVC}\cite{QTDOCMVC}.
 
-\section{Analisi architetturale}
+\section{Analisi Architetturale}
 In questa sezione raccoglieremo tutti i requisiti descritti precedentemente e, rispettando la tassonomia dell'attuale sistema, cercheremo di formalizzare le modifiche che si dovranno poi riflettere su \visualnetkit{}. Una prima fase di analisi è stata spesa per carpire adeguatamente il tipo di supporto offerto da \qt{}, in particolare i concetti che stanno dietro il sistema \emph{Model/View}.
 
 \subsubsection*{L'architettura Model/View in \qt{}}
@@ -218,8 +218,8 @@ Si è quindi partiti nel creare una struttura ad albero n-ario, passando alla cr
 
 Durante la modellazione è stato deciso di accentrare il controllo su di un entità astratta che fosse stata in stretto contatto con i dati e che raccogliesse le richieste di cambiamento. Il problema si è presentato perchè il property editor è utilizzato non solo dagli elementi base di \visualnetkit{}, ma anche ad altri componenti quali Aree grafiche e proprietà stesse del laboratorio. Da qui la necessità di generalizzare il concetto di ``property handler'' che potesse essere abbastanza generale da essere esteso dai vari controllers concreti. Di questo ci occuperemo più in dettaglio nella successiva sezione.
 
-\subsection{Definizione della nuova architettura per i \plugin{}}
-In questa parte ci occuperemo ad analizzare quanto detto pocanzi. Osserviamo quindi la figura \ref{figura:properties_uml1}.
+\subsection{\plugin{} per la Configurazione Avanzata}
+In questa parte ci occuperemo ad analizzare quanto detto poc'anzi. Osserviamo quindi la figura \ref{figura:properties_uml1}.
 
 \begin{figure}[!htb]
 	\centering

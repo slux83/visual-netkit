@@ -100,10 +100,10 @@ Sia \netkit{} che VNUML sono emulatori realizzati per offrire all'utente una rap
 
 QEMU è capace di simulare diverse VLAN\footnote{Il termine VLAN (Virtual LAN) Indica un insieme di tecnologie che permettono di segmentare il dominio di broadcast che si crea in una rete locale (tipicamente IEEE 802.3) basata su switch, in più reti non comunicanti tra loro.}. Una VLAN può essere rappresentata da un collegamento virtuale tra diversi dispositivi di rete quali ad esempio schede Ethernet virtuali QEMU o dispositivi Ethernet su host virtuali.
 
-\section{Ambienti di configurazioni a confronto}
+\section{Ambienti per la configurazione di Reti Virtuali}
 In questa sezione concentreremo gli sforsi sul paragonare le interfaccie grafiche (e quindi gli ``ambienti di configurazione'') che i vari sistemi di \emulazione{} descritti precedentemente mettono a disposizione. Quindi verranno messe a confronto le varie interfacce grafiche di: \emph{Imunes}, \emph{MarionNet}, \emph{VnUMLGUI} e la versione $1.0$ di \visualnetkit{}. In particolare si vuole dare al lettore una panoramica completa su come questi ambienti offrono flessibilità e configuarabilità davanti a configurazioni complesse di reti di calcolatori.
 
-\subsection{Creazione di configurazioni di reti complesse}\label{subsection:ccrc}
+\subsection{Configurazioni di Reti Complesse}\label{subsection:ccrc}
 Iniziamo con il parlare in \emph{Imunes} e di come sia possibile creare configurazioni complesse\footnote{Per configurazione ``complessa'' si intende una configurazione di un qualche servizio all'intnerno di una \virtualmachine come ad esempio un firewall, un DNS, un server HTTP, un servizio di Routing Interdomain, ecc\ldots}.
 Questo ambiente offre una GUI abbastanza semplice scritta in \emph{Tcl/Tk}\footnote{\emph{Tcl} (acronimo di Tool Command Language), è un linguaggio scripting creato da John Ousterhout generalmente considerato di facile apprendimento (rispetto ai linguaggi della sua generazione) ma allo stesso tempo potente. L'estensione \emph{Tk} è un insieme di strumenti per scrivere GUI (un toolkit di widget) implementato dallo stesso autore di \emph{Tcl}.} che offre la possibilità di disegnare una rete a livello topologico inserendo nodi virtuali come Hosts, Switchs e Routers. Tale interfaccia utente è considerata più un front-end verso l'interfaccia a riga di comando che ogni nodo possiede.
 
