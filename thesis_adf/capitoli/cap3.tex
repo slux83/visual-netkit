@@ -111,6 +111,54 @@ Il sotto sistema appena descritto offre la possibilità di estendere le funziona
 
 Si è voluti iniziare latrattazione dei componneti dell'architettura di \visualnetkit{} proprio dal sistema modulare su cui si basa, poiché si ritiene che questa parte è la più innovativa e non è presente in nessuno degli ambienti grafici sperimentati.
 
+\subsection{La gestione avanzata delle properties dei \plugin{}}
+La creazione di \plugin{} in \visualnetkit{} è un'operazione che richiede uno stadio pre-implementativo che consiste nel creare il file di configurazione in \xml{}. Questo, oltre a descrivere i meta dati - come ad esempio il nome del modulo -, assolve il compito di descrittore strutturale delle properties che il \plugin{} offre.
+Si osservi l'esempio riportato qui sotto:
+\begin{lstlisting}[language=xml]
+<plugin name="Test">
+ 
+ <global type="vm" version="1.0" author="Alessio Di Fazio" dependencies="">
+  <![CDATA[This is a test plugin.]]>
+ </global>
+ 
+ <properties>
+  
+  <property id="uniqueID-0" name="1" default_value="" min="1" max="1000">
+   <![CDATA[Property 1]]>
+   <childs>
+    <property id="uniqueID-1" name="1-1" default_value="" min="1" max="2">
+     <![CDATA[A sub property (1-1)]]>
+     <childs>
+      <property id="uniqueID-2" name="1-1-1"
+                      default_value="" min="1" max="5">
+       <![CDATA[A sub property (1-1-1)]]>
+       <childs>
+        <property id="uniqueID-3" name="1-1-1-1"
+                      default_value="" min="0" max="3">
+         <![CDATA[A sub property (1-1-1-1)]]>
+         <childs />
+       </childs>
+      </property>
+     </childs>
+    </property> 
+   </childs>
+  </property>
+  
+  <property id="uniqueID-4" name="p-2" default_value="" min="0" max="3">
+   <![CDATA[Property 2]]>
+   <childs />
+  </property>
+  
+ </properties>
+ 
+</plugin>
+\end{lstlisting}
+è possibile osservare una prima parte che descrive alcune caratteristiche del modulo come: il tipo di elemento a cui questo può essere applicato, il numero di versione, l'autore, il nome del \plugin{} e le dipendenze.
+
+Il tag ``properties'' è il più importante e contiene tutte le possibili proprietà offerte, nonché una descrizione a livello gerarchico di quest'ultime. La rappresentazione di una property deve contenere un ID univoco, un nome, un valore di default qualora necessario, un valore di minimo e massimo che rappresentano la cardinalità e una descrizione libera\footnote{La descrizione di una property può contenere anche codice HTML per la formattazione del testo.}. I valori ``min'' e ``max'' rappresentano gli attributi più importanti. Il valore di minimo può assumere valori pari a $0$ o $1$, mentre il massimo può assumere qualsiasi valore compreso tra $0$ e $65536$. Impostando un valore minimo pari a $1$ la property in questione viene creata insieme all'instanza del \plugin{} e insieme alla property ``padre'' se quest'ultima viene in futuro aggiunta dall'utente.
+
+Il controllo durante le azioni di inserimento e cancellazione delle properties è a carico del modulo che è tenuto a verificare il valore della cardinalità attuale di una property prima di eliminarla. Come è facilmente intuibile un \plugin{} non può autorizzare l'eleminazione di una proprietà - priva di altre copie - quando la cardinalità minima di quest'ultima è pari a $1$. Lo stesso discorso può essere applicato all'attributo ``max'' di una property.
+
 \section{Elementi architetturali}
 Accurato il funzionamento e la logica che risiede dietro il framework dei \plugin{}, possiamo iniziare a introdurre gli altri elementi architetturali che di fatto supportano e interagiscono l'un l'altro per soddisfare tutti i requisiti (funzionali e non) che il sistema possiede.
 
@@ -259,7 +307,6 @@ L'elemento che invoca il caricamento di un template riceve quindi il contenuto d
 Osserviamo la riga $12$; l'oggetto incaricato di salvare il file ``lab.conf'' è incaricato di completare la struttura del file di configurazione inserendo la descrizione, la versione, l'autore, l'indirizzo email e il sito web del lab corrente, e successivamente costruirà la topologia dell'intera rete iterando tra i \emph{tag} ``<TOPOLOGY></TOPOLOGY>''.
 
 In questo modo si riesce a creare un file di configurazione corretto e ben formattato come quello proposto qui sotto:
-
 \begin{lstlisting}[language=csh]
 ###
 # This file is createb by Visual Netkit 1.1 version
@@ -288,11 +335,140 @@ che descrive la topologia di rete presente in figura \ref{figura:vnetkit_graphic
 Nel caso in cui un emulatore richiedesse una sintazzi particolare per le varie macchine virtuali, come ad esempio VNUML, basterebbe creare un semplice plugin che offra uno specifico template, ed aggungere questo plugin ai vari host virtuali presenti nella topologia di rete.
 
 \subsection{Controllers tra Dominio e Vista}
+Un ulteriore elemento architetturale che spicca nella figura \ref{figura:vn_componenti} è il componente \emph{Mapper}. Questo package è composto da varie classi \emph{singletone} predisposte al ruolo di mappare gli oggetti della vista in quelli del dominio, e viceversa. Da questo deriva la verticalità che assume all'interno del diagramma questo componente.
 
-\section{La gestione avanzata delle properties}
-\subsection{Properties di base}
-\subsection{Properties dei \plugin{}}
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=4cm]{images/visualnetkit_tree_elements.png}
+	\caption{Almero degli elementi presenti sulla scena.}
+	\label{figura:scene_elements}
+\end{figure}
+
+Ogni tipologia di oggetti del dominio possiede un suo mapper di riferimento. Ad esempio, una \virtualmachine{}, deve essere associata al corrispettivo elemento grafico e questo è reso possibile grazie al mapper per le macchine virtuali. Questi ``controllers'' inoltre, hanno il compito di disaccoppiare gli oggetti della vista con quelli del dominio inserendo un ulteriore livello di indirezione. Tale soluzione è stata studiata per ovviare al noto problema che il pattern MVC introduce, ossia il forte accoppiamento tra la vista e il modello.
+
+In questo contenitore possiamo individuare diversi tipi di mappers. Oltre a quelli utilizzati come controllers per gli oggetti del dominio, vi sono elementi - \emph{ad esempio SceneTreeMapper} - che si occupano principalmente di mantenere allineato lo stato degli elementi del dominio con una determinata porzione dell'interfaccia utente, nel nostro caso l'albero degli elementi grafici (figura \ref{figura:scene_elements}).
 
 \section{Strumenti di supporto allo sviluppo}
+Durante tutto il lavoro sono stati utilizzati molteplici strumenti che hanno contribuito alla realizzazione dell'prodotto.
+
 \subsection{Il framework \qt{}}
+\qt{} è un \emph{framework applicativo multi-piattaforma} - figura \ref{figura:qtframework} - per lo sviluppo di software desktop ed \emph{embedded}, sviluppato da \emph{Nokia-Trolltech} e distribuito in versioni per uso commerciale e open source. Esso include una documentazione (\textbf{A}pplication \textbf{P}rogram \textbf{I}nterface) molto intuitiva ed un ricco insieme di classi \cpp{}, strumenti integrati per lo sviluppo e l'internazionalizzazione delle GUI, e il supporto per lo sviluppo in Java e C++. Sono inoltre presenti svariati sistemi di binding per altri linguaggi di scripting quali QtPerl, QtPython, ecc\ldots
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[width=12cm]{images/qtframework.png}
+	\caption{Panoramica degli elementi presenti nel framework \qt{}.}
+	\label{figura:qtframework}
+\end{figure}
+
+La modularità delle librerie \qt{} fornisce un ricco insieme di blocchi per la costruzione di applicazioni, integrando tutte le funzionalità necessarie per la realizzazione di software avanzati e multipiattaforma.
+
+Il framework fornisce inoltre, strumenti di sviluppo integrato per la realizzazione assistita GUI, traduzione e internazionalizzazione, documentazione e realizzazioni multipiattaforma, quali \emph{Designer}, \emph{QtLinguistic}, \emph{Assistant} e \emph{QMake}.
+
+\subsubsection{Qt Designer}
+\emph{Qt Designer} è un potente strumento per la costruzione di GUI e form con layout nativo e multipiattaforma. Esso consente la rapida progettazione e realizzazione di ``widgets'' e finestre di dialogo utilizzando le stesse tecniche di programmazione mantenendo il tutto disaccoppiato dall'implementazione dal sistema. Le form create con \emph{Qt Designer} godono di piena funzionalità e possono essere viste in una preview in modo da garantire che il loro impatto visivo rifletta esattamente le aspettative del programmatore.
+
+Una volta creato il widget con l'ausilio del tool in questione, viene prodotto un file con estensione ``.ui'' che al suo interno contiene una struttura basata su \xml{}. All'interno dell'applicazione la form dovrà essere implementata collegando questo file (\textbf{U}ser \textbf{I}nterface) all'oggetto che vogliamo utilizzare nel sistema che stiamo creando.
+
+Esistono vari metodi per collegare un file UI ad una classe della nostra applicazione. Quello utilizzato durante questo lavoro prende il nome di ``Multiple Inheritance Approach'' che consiste nell'inserire la form creata tramite \emph{Qt Designer} all'interno del file di progetto del nostro sistema. Il pre-compilatore (uic - User Interface Compiler) si preoccuperà di trasformare il file \xml{} in un header \cpp{} da poter utilizzare nella classe concreta del widget. Si osservi l'esempio riportato qui di seguito:
+\begin{lstlisting}
+#include "ui_calculatorform.h"
+class CalculatorForm : public QWidget, private Ui::CalculatorForm
+{
+    Q_OBJECT
+public:
+    CalculatorForm(QWidget *parent = 0);
+
+private slots:
+    void on_inputSpinBox1_valueChanged(int value);
+    void on_inputSpinBox2_valueChanged(int value);
+};
+\end{lstlisting}
+La classe concreta \emph{CalculatorForm} deve estendere \emph{Ui::CalculatorForm} privatamente per assicurare che l'oggetto sia un rappresentante del widget creato con \emph{Qt Designer}.
+
+A differenza di altri strumenti per la creazione di interfacce grafiche, \emph{Qt Designer} mette a disposizione dell'utente una quantità di strumenti (figura \ref{figura:qtdesigner}) che permettono di muovere e scalare gli elementi nell'interfaccia in modo automatico in fase di esecuzione, tenendo conto della dimensione dei caratteri ed il supporto multi-lingua utilizzati. Ne consegue che le interfacce sono sia funzionali che native e si adattano comodamente all'ambiente operativo ed alle preferenze dell'utente.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/qtdesigner.png}
+	\caption{Un esempio di utilizzo di \emph{Qt Designer}.}
+	\label{figura:qtdesigner}
+\end{figure}
+
+
+\subsubsection{Qt Linguistic}
+\emph{Qt Linguistic} fornisce una serie di strumenti che velocizzano la traduzione e l'internazionalizzazione - \emph{i18n} - delle applicazioni. \qt{} offre anche il supporto simultaneo a più lingue e sistemi di scrittura, il tutto con un solo albero dei sorgenti ed un solo codice binario.
+
+\emph{Qt Linguistic} fornisce un'interfaccia che riduce di tempi del processo di traduzione della GUI. Questo tool raccoglie tutto il testo delle UI che verrà mostrato all'utente finale e lo presenta in una finestra per facilitarne la traduzione. Quando il testo è tradotto, il programma procede automaticamente alla prossima UI, fino a quando saranno completate tutte. Questo consente una più veloce e più accurata traduzione.
+
+\subsubsection{Qt Assistant}
+La maggior parte delle applicazioni ha bisogno di documentazione on-line o di un file di aiuto. \emph{Qt Assistant} è un lettore di documentazioni (figura \ref{figura:qtassistant}) configurabile che può essere facilmente personalizzato e ridistribuito con le singole applicazioni create.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/qtassistant.png}
+	\caption{\emph{Qt Assistant}.}
+	\label{figura:qtassistant}
+\end{figure}
+
+\emph{Qt Assistant} funziona in modo simile ad un browser web presentando la documentazione come una raccolta di pagine e collegamenti ipertestuali. Questo riconosce pagine con segnalibri e presenta i pulsanti standard ``precedente'' e ``successivo'' nella barra degli strumenti per la navigazione tra le pagine visitate. \emph{Qt Assistant} utilizza il supporto offerto dalle librerie \qt{} ai formati \emph{rich text} e HTML per la visualizzazione delle pagine. Ciò significa che i redattori e tecnici non hanno bisogno di software ad-hoc ma possono utilizzare gli strumenti come \emph{Doxygen} per scrivere la documentazione direttamente nei sorgenti.
+
+Il tool fornisce anche un veloce strumento di ricerca per accedere rapidamente all'argomento di interesse. I documenti rinvenuti nel corso di un'indagine sull'intero testo sono riportati in ordine di rilevanza ed ogni occorrenza della parola chiave all'interno della documentazione viene evidenziata.
+
+\subsubsection{QMake}
+\emph{QMake} è uno strumento multipiattaforma che semplifica il processo di costruzione dei progetti \qt{} su diversi sistemi. A seconda del sistema operativo in cui ci troviamo, \emph{QMake} genera i vari  \emph{Makefiles} in modo che siano compatibili con la piattaforma utilizzata.
+
+\emph{QMake} genera un Makefile sulla base delle informazioni presenti all'interno del file di progetto. Questi ultimi vengono creati dallo sviluppatore e sono tipicamente molto semplici; un tipico esempio è riportato qui sotto:
+
+\begin{lstlisting}[language=csh]
+#############################################
+#
+# Example of .pro file
+#
+#############################################
+
+TEMPLATE  = app
+TARGET    = test
+LANGUAGE  = C++
+CONFIG   += console debug
+
+QT += core \
+      gui
+
+HEADERS   = stable.h \
+            mydialog.h \
+            myobject.h
+SOURCES   = main.cpp \
+            mydialog.cpp \
+            myobject.cpp \
+            util.cpp
+FORMS     = mydialog.ui
+\end{lstlisting}
+
 \subsection{Altri strumenti secondari}
+
+\subsubsection{Plugin Qt per Eclipse}
+L'integrazione di \qt{} in \emph{Eclipse} consente ai programmatori di creare le applicazioni in modo veloce. I punti di forza di questo potente \plugin{} sono: l'integrazione con i principali strumenti \qt{} precedentemente descritti, il notevole supporto nella creazione dei file di progetto, il completamento automatico durante la digitazione, e molti altri. Il potente debugger e l'ambiente che l'IDE offre in generale, rendono questo strumento uno dei migliori editor per lo sviluppo di applicazioni \qt{}.
+Per gli sviluppatori \emph{Java} e \cpp{} questo modulo - che estende le funzionalità dei \plugin{} base di \emph{Eclipse} - al momento attuale risulta la soluzione migliore tra tutte quelle testate.
+
+\subsubsection{Umbrello UML Modeller}
+\textit{Umbrello UML Modeller} - figura \ref{figura:umbrello_example} - è uno strumento per la realizzazione di diagrammi UML che si è rivelato essere di grande aiuto nel processo di sviluppo del software. Specialmente durante le fasi di analisi e progettazione, in cui la creazione di \textit{diagrammi delle classi}, \textit{dei casi d'uso} e \textit{d'interazione} era spesso indispensabile, Umbrello ha contribuito a rendere il progetto chiaro soprattutto per quanto riguarda la documentazione delle scelte progettuali tra le parti interessate.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=10cm]{images/umbrello.png}
+	\caption{Un esempio d'uso del tool \emph{Umbrello}.}
+	\label{figura:umbrello_example}
+\end{figure}
+
+\subsubsection{SVN e Google Code}
+A supporto dell'intero sviluppo si sono utilizzati gli strumenti per la gestione del codice \textit{SVN} e \textit{Google Code}.
+In particolare, SVN è stato usato come strumento principale per gestire la continua evoluzione dei documenti relativi al progetto, come il codice sorgente del software, i disegni tecnici ed i diagrammi, la documentazione testuale e altre informazioni importanti su cui si è lavorato.
+
+Nella maggior parte dei progetti di sviluppo software, più sviluppatori lavorano in parallelo sullo stesso codice. Se due sviluppatori tentano di modificare lo stesso file contemporaneamente, in assenza di un metodo di gestione degli accessi, essi possono facilmente sovrascrivere o perdere le modifiche effettuate contestualmente.
+La maggior parte dei sistemi di controllo versione possono risolvere questo problema in due diversi modi. Alcuni di questi prevengono i problemi dovuti ad accessi simultanei, semplicemente bloccando (\textit{lock}) i file, cosicché solamente uno sviluppatore per volta riceve un accesso in scrittura alla copia di quel file contenuta nel \textit{repository} centrale. Altri, come CVS, permettono a più sviluppatori di modificare lo stesso file nello stesso tempo, e forniscono degli strumenti per combinare le modifiche in seguito tramite operazioni di \emph{merge}.
+
+\emph{Subversion} (noto anche come SVN) è un sistema di controllo versione progettato da \textit{CollabNet Inc.} con lo scopo di essere il naturale successore di CVS, oramai considerato superato.
+
+\textit{Google Code}, ed in particolare la sezione \textit{Project Hosting}, non è stato per questo progetto solo il repository dedicato all'SVN ma è stato anche qualcosa di più. Questo infatti, mette a disposizione dei programmatori una serie di strumenti, tra cui un \textit{wiki} ed una sezione \textit{issues} - o comunemente chiamato \emph{Bug Tracker} -, molto utili come luogo di discussione e informazione per tutti coloro interessati al progetto.
+
