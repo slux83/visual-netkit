@@ -1,6 +1,6 @@
 \chapter{Progettazione e Realizzazione di un Ambiente per la Configurazione Avanzata}\label{capitolo:progettazione_realizzazione}
 \markboth{Progettazione e Realizzazione}{}
-Questo capitolo è dedicato alla comprensione e descrizione delle fasi di progettazione e realizzazione di \visualnetkit{}. Si mostretà in maniera dettagliata la nuova struttura dei \plugin{} accennata nel precedente capitolo, e successivamente verrà mostrato il resto del sistema analizzando i singoli moduli che lo compongono.
+Questo capitolo è dedicato alla comprensione e descrizione delle fasi di progettazione e realizzazione di \visualnetkit{}. Si mostrerà in maniera dettagliata la nuova struttura dei \plugin{} accennata nel precedente capitolo, e successivamente verrà mostrato il resto del sistema analizzando i singoli moduli che lo compongono.
 
 \begin{figure}[!htb]
 	\centering
@@ -12,14 +12,14 @@ Questo capitolo è dedicato alla comprensione e descrizione delle fasi di proget
 In questa introduzione vogliamo subito dare al lettore un quadro generale (figura \ref{figura:vn_componenti}) della composizione architetturale nello stato attuale di \visualnetkit{}, in modo da rendere più facile la localizzazione degli elementi durante la loro trattazione.
 
 \section{Architettura modulare basata su \plugin{}}
-Come primo argomento vogliamo concentrarci sulla trattazione della struttura modulare di \visualnetkit{}, che rappresenta anche il suo punto di forza in ambito di flessibilità ed estendibilità. 
+Come primo argomento vogliamo concentrarci sulla trattazione della struttura modulare di \visualnetkit{}, che rappresenta anche il suo punto di forza in ambito di flessibilità ed estensibilità. 
 
-Può essere auspicabile che un software pur uso in ambito scientifico sia in possesso di funzionalità opzionali, vale a dire funzionalità che possono essere aggiunte o rimosse nel corso di una simulazione senza grossi ostacoli. Per esempio, si pensi a quanto può essere utile ad un progettista osservare il comportamento di una rete con o senza un tederminato servizio (ad esempio \emph{IPv6}) sulle macchine di cui è composta, o per uno studente quanto risulti comprensibile studiare una topologia di rete malleabile che si presta a tutti i possibili test che egli vuol effettuare.
+Può essere auspicabile che un software pur uso in ambito scientifico sia in possesso di funzionalità opzionali, vale a dire funzionalità che possono essere aggiunte o rimosse nel corso di una simulazione senza grossi ostacoli. Per esempio, si pensi a quanto può essere utile ad un progettista osservare il comportamento di una rete con o senza un determinato servizio (ad esempio \emph{IPv6}) sulle macchine di cui è composta, o per uno studente quanto risulti comprensibile studiare una topologia di rete malleabile che si presta a tutti i possibili test che egli vuol effettuare.
 
 L'utilizzo di un'architettura basata su \plugin{} dona grande flessibilità all'intero sistema ed in particolare agli utenti finali.
 
 \subsubsection{Perché un sistema basato su \plugin{}?}
-Durante le prime iterazioni e le prime fasi di testing emersero alcuni fattori di alto rischio; l'architettura era stata concepita e realizzata basandosi fortemente sul concetto che tutti i requisitivi dovevano essere assemblati staticamente nell'applicazione (come accade nei vari ambienti di configurazioni descritti nella sezione \ref{subsection:ccrc}).
+Durante le prime iterazioni e le prime fasi di testing emersero alcuni fattori di alto rischio; l'architettura era stata concepita e realizzata basandosi fortemente sul concetto che tutti i requisiti dovevano essere assemblati staticamente nell'applicazione (come accade nei vari ambienti di configurazioni descritti nella sezione \ref{subsection:ccrc}).
 
 Questa scelta prevedeva una lunghissima fase di sviluppo ed una continua ricerca e specifica dei requisiti e dei casi d'uso che avrebbero potuto destabilizzare l'intero sistema. Inoltre adottando questa tecnica non si sarebbe mai riusciti ad offrire una totale elasticità, ma piuttosto si sarebbe dovuto scendere a compromessi su cosa implementare e cosa no.
 
@@ -28,11 +28,11 @@ Analizzando meglio gli obiettivi si è giusti alla conclusione che l'unica strad
 Questa nuova tecnica avrebbe da un lato offerto una sicura controllabilità dei fattori di rischio, restringendoli alla re-ingegnerizzazione del sistema per renderlo modulare, dall'altro avrebbe reso \visualnetkit{} estremamente scalabile e flessibile e gli avrebbe conferito una connotazione del tutto unica nel suo genere.
 
 \subsection{Interazione tra sistema e \plugin{}}
-Quando si sviluppa un'applicazione che si basa fortemente su \plugin{} la cosa più importante è definire i confini dell'uno e dell'altro sistema. In poche parole ambiente e moduli devono essere ben descritti per non imbattersi in fenomei di sovrapposizione; questi due mondi devono cooperare, ma non devono intralciarsi né tantomeno svolgere le stesse mansioni.
+Quando si sviluppa un'applicazione che si basa fortemente su \plugin{} la cosa più importante è definire i confini dell'uno e dell'altro sistema. In poche parole ambiente e moduli devono essere ben descritti per non imbattersi in fenomeni di sovrapposizione; questi due mondi devono cooperare, ma non devono intralciarsi né tanto meno svolgere le stesse mansioni.
 
 Dopo un'attenta ed accurata fase di studio si è arrivati a definire la linea di demarcazione tra il sistema e le estensioni. I vari \plugin{} possono essere attivati sugli elementi di base del sistema offrendo una sorta di caratterizzazione più specifica. Su di un elemento possono essere attivi contemporaneamente più \plugin{} che di fatto donano una definizione ben precisa all'elemento. Se per esempio su un host noi attiviamo \plugin{} quali DNS e HTTP, balza subito all'occhio il tipo di quell'oggetto; abbiamo semplicemente di fronte una macchina virtuale che offre un servizio di DNS e che allo stesso tempo è un server Web di qualche tipo.
 
-Andiamo ora a descrivere in dettaglio la struttura del sotto sistema che permette ai moduli di colloquiare con il core dell'applicazione e la definizione delle varie interfaccie - figura \ref{figura:uml_plugin_framework}.
+Andiamo ora a descrivere in dettaglio la struttura del sotto sistema che permette ai moduli di colloquiare con il core dell'applicazione e la definizione delle varie interfacce - figura \ref{figura:uml_plugin_framework}.
 
 \begin{figure}[!htb]
 	\centering
@@ -41,7 +41,7 @@ Andiamo ora a descrivere in dettaglio la struttura del sotto sistema che permett
 	\label{figura:uml_plugin_framework}
 \end{figure}
 
-Com'è facile osservare, tutto ruota intorno alla classe singletone ``PluginRegistry''. Questo controller viene invocato dal sistema nel caso d'uso d'avviamento per fetchare i \plugin{} esistenti, validarli e creare per ognuno di questi il proprio loader factory. Il PluginRegistry offre un servizio di directory, ossia è quel componente che mantiene traccia delle associazioni tra un \plugin{} e un elemento base.
+Com'è facile osservare, tutto ruota intorno alla classe singleton ``PluginRegistry''. Questo controller viene invocato dal sistema nel caso d'uso d'avviamento per fetchare i \plugin{} esistenti, validarli e creare per ognuno di questi il proprio loader factory. Il PluginRegistry offre un servizio di directory, ossia è quel componente che mantiene traccia delle associazioni tra un \plugin{} e un elemento base.
 
 In realtà il sistema non conosce l'instanza di un determinato modulo direttamente, ma conosce il suo \proxy{} che introduce un livello di indirezione tra il sistema e il \plugin{} stesso. La scelta di applicare il pattern \proxy{} assicura un buon controllo d'accesso all'oggetto reale di cui è responsabile e permette inoltre un accesso trasparente verso il sistema. Analizziamo ora la classe astratta pura PluginInterface:
 \begin{lstlisting}
@@ -86,7 +86,7 @@ typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);
 \end{lstlisting}
 
-Le più importanti righe di codice di questa classe sono gli ultimi due ``typedef''. Ogni implementazione di un \plugin{} deve necessariamente avere al suo interno definite le factory di creazione e discruzione definite come \emph{extern ``C''}. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo. Un tipico esempio nell'uso di queste due funzioni è riportato qui di seguito:
+Le più importanti righe di codice di questa classe sono gli ultimi due ``typedef''. Ogni implementazione di un \plugin{} deve necessariamente avere al suo interno definite le factory di creazione e distruzione definite come \emph{extern ``C''}. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo. Un tipico esempio nell'uso di queste due funzioni è riportato qui di seguito:
 
 \begin{lstlisting}
 /* Factory (creator) */
@@ -105,11 +105,11 @@ Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'append
 
 Ogni modulo è descritto da un proprio file di configurazione scritto in \xml{} che deve necessariamente essere inserito all'interno del \emph{Qt Resource System}\footnote{Il sistema di risolse di \qt{} consiste in un metodo (platform-indipendent) per la memorizzazione di file binari all'interno dell'applicazione stessa. Questa è una tecnica molto utile se l'applicazione ha sempre bisogno di determinati files e non si vuole correre il rischio di non possederli a runtime.}. All'interno di questo file vi sono descritte le credenziali del \plugin{} come il nome, descrizione, autori, dipendenze ecc\ldots, ma anche un'accurata descrizione delle proprietà offerte all'elemento a cui verrà attivato.
 
-Per facilitare tutto questo ogni \proxy{} è equipaggiato di una classe expert che si occupa della validazione e interrogazione del file \xml{} pocanzi citato, nonché della manipolazione delle properties (poste all'interno di una struttura ad alberi n-ari).
+Per facilitare tutto questo ogni \proxy{} è equipaggiato di una classe expert che si occupa della validazione e interrogazione del file \xml{} poc'anzi citato, nonché della manipolazione delle properties (poste all'interno di una struttura ad alberi n-ari).
 
 Il sotto sistema appena descritto offre la possibilità di estendere le funzionalità di \visualnetkit{}. I vari \plugin{} sono elementi passivi che vengono invocati dal sistema quando necessario: l'utente agisce su una property, l'utente inizializza un \plugin{}, ecc\ldots Tuttavia un modulo può anche interagire con il sistema stesso ma solamente dopo che è stato invocato; in particolare durante la fase di inizializzazione il sistema chiama le funzioni di ``getXmlResource()'' e ``getDefaultGraphisLabel()'' per validare e scrivere una label nella vista del grafo della rete.
 
-Si è voluti iniziare latrattazione dei componneti dell'architettura di \visualnetkit{} proprio dal sistema modulare su cui si basa, poiché si ritiene che questa parte è la più innovativa e non è presente in nessuno degli ambienti grafici sperimentati.
+Si è voluti iniziare la trattazione dei componenti dell'architettura di \visualnetkit{} proprio dal sistema modulare su cui si basa, poiché si ritiene che questa parte è la più innovativa e non è presente in nessuno degli ambienti grafici sperimentati.
 
 \subsection{La gestione avanzata delle properties dei \plugin{}}
 La creazione di \plugin{} in \visualnetkit{} è un'operazione che richiede uno stadio pre-implementativo che consiste nel creare il file di configurazione in \xml{}. Questo, oltre a descrivere i meta dati - come ad esempio il nome del modulo -, assolve il compito di descrittore strutturale delle properties che il \plugin{} offre.
@@ -155,14 +155,14 @@ Si osservi l'esempio riportato qui sotto:
 \end{lstlisting}
 è possibile osservare una prima parte che descrive alcune caratteristiche del modulo come: il tipo di elemento a cui questo può essere applicato, il numero di versione, l'autore, il nome del \plugin{} e le dipendenze.
 
-Il tag ``properties'' è il più importante e contiene tutte le possibili proprietà offerte, nonché una descrizione a livello gerarchico di quest'ultime. La rappresentazione di una property deve contenere un ID univoco, un nome, un valore di default qualora necessario, un valore di minimo e massimo che rappresentano la cardinalità e una descrizione libera\footnote{La descrizione di una property può contenere anche codice HTML per la formattazione del testo.}. I valori ``min'' e ``max'' rappresentano gli attributi più importanti. Il valore di minimo può assumere valori pari a $0$ o $1$, mentre il massimo può assumere qualsiasi valore compreso tra $0$ e $65536$. Impostando un valore minimo pari a $1$ la property in questione viene creata insieme all'instanza del \plugin{} e insieme alla property ``padre'' se quest'ultima viene in futuro aggiunta dall'utente.
+Il tag ``properties'' è il più importante e contiene tutte le possibili proprietà offerte, nonché una descrizione a livello gerarchico di queste ultime. La rappresentazione di una property deve contenere un ID univoco, un nome, un valore di default qualora necessario, un valore di minimo e massimo che rappresentano la cardinalità e una descrizione libera\footnote{La descrizione di una property può contenere anche codice HTML per la formattazione del testo.}. I valori ``min'' e ``max'' rappresentano gli attributi più importanti. Il valore di minimo può assumere valori pari a $0$ o $1$, mentre il massimo può assumere qualsiasi valore compreso tra $0$ e $65536$. Impostando un valore minimo pari a $1$ la property in questione viene creata insieme all'instanza del \plugin{} e insieme alla property ``padre'' se quest'ultima viene in futuro aggiunta dall'utente.
 
-Il controllo durante le azioni di inserimento e cancellazione delle properties è a carico del modulo che è tenuto a verificare il valore della cardinalità attuale di una property prima di eliminarla. Come è facilmente intuibile un \plugin{} non può autorizzare l'eleminazione di una proprietà - priva di altre copie - quando la cardinalità minima di quest'ultima è pari a $1$. Lo stesso discorso può essere applicato all'attributo ``max'' di una property.
+Il controllo durante le azioni di inserimento e cancellazione delle properties è a carico del modulo che è tenuto a verificare il valore della cardinalità attuale di una property prima di eliminarla. Come è facilmente intuibile un \plugin{} non può autorizzare l'eliminazione di una proprietà - priva di altre copie - quando la cardinalità minima di quest'ultima è pari a $1$. Lo stesso discorso può essere applicato all'attributo ``max'' di una property.
 
 \section{Elementi architetturali}
 Accurato il funzionamento e la logica che risiede dietro il framework dei \plugin{}, possiamo iniziare a introdurre gli altri elementi architetturali che di fatto supportano e interagiscono l'un l'altro per soddisfare tutti i requisiti (funzionali e non) che il sistema possiede.
 
-Si inizierà ad analizzare gli elementi in figura \ref{figura:vn_componenti} con strategia \textbf{top-down} per quanto riguarda gli elementi a struttura orizzontale, poi si analizzeranno ai mappers ed in fine gli sforzi verranno convogliati nella descrizione del nuovo sitema che offre ai \plugin{} la possibilità di possedere un alta dinamicità nelle proprietà che essi offrono.
+Si inizierà ad analizzare gli elementi in figura \ref{figura:vn_componenti} con strategia \textbf{top-down} per quanto riguarda gli elementi a struttura orizzontale, poi si analizzeranno ai mappers ed in fine gli sforzi verranno convogliati nella descrizione del nuovo sistema che offre ai \plugin{} la possibilità di possedere un alta dinamicità nelle proprietà che essi offrono.
 
 \subsection{L'interfaccia utente}
 Uno degli obiettivi principali di questo progetto è la realizzazione di un ambiente di configurazione di reti virtuali che offra un'interfaccia grafica capace di fornire una vista intuitiva della rete virtuale  e permette di interagire in modo semplice con lo strato di emulazione offerto da \netkit{}.
@@ -170,11 +170,11 @@ Tale interfaccia, oltre a garantire un alto livello di ergonomia e usabilità, d
 
 Sebbene la realizzazione di una interfaccia grafica possa dare l'impressione di essere un'attività semplice, durante tale periodo si incontrano svariate difficoltà in quanto l'ambiente in esame si avvicina molto alla definizione di ``IDE''\footnote{Un \textit{integrated development environment} (IDE), in italiano ambiente integrato di sviluppo, è un software che aiuta i programmatori nello sviluppo del software.} orientato - nel nostro caso - allo sviluppo di reti virtuali.
 
-La realizzazione dell'attuale interfaccia ha richisto diversi cicli di sviluppo e raffinamento per ottenere un risultato apprezzabile e intuitivo. Questa è composta da varie \emph{docks} che al loro interno contengono vari sotto elementi come properties, zoom e miniatura del grafo, elementi attivi, struttura de lab e un elemento centrale che rappresenta la scena, ossia l'ambiente per disegnare la topologia di rete desiderata. L'ampio uso di grafica SVG fa si che all'utente arrivi subito un feedback positivo che incentiva lo stesso a sperimentare le caratteristiche offerte dall'ambiente che ha davanti.
+La realizzazione dell'attuale interfaccia ha richiesto diversi cicli di sviluppo e raffinamento per ottenere un risultato apprezzabile e intuitivo. Questa è composta da varie \emph{docks} che al loro interno contengono vari sotto elementi come properties, zoom e miniatura del grafo, elementi attivi, struttura de Lab e un elemento centrale che rappresenta la scena, ossia l'ambiente per disegnare la topologia di rete desiderata. L'ampio uso di grafica SVG fa si che all'utente arrivi subito un feedback positivo che incentiva lo stesso a sperimentare le caratteristiche offerte dall'ambiente che ha davanti.
 
 Il grafo non è altro che l'elemento vista della struttura del modello di dominio; per ogni elemento grafico (Hosts, Collision Domains, Links) esiste un elemento di basso livello associato che incapsula le informazioni. Gli elementi grafici sono sostanzialmente degli oggetti che riflettono queste informazioni all'utente e gli consentono di interagire con gli elementi stessi.
 
-L'esistenza del \emph{Graphics View Framework} offerto da \qt{}, ha reso minimi gli sforsi implementativi in quanto questo è fortemente basato sul pattern MVC che consente di collegare uno stesso modello (la scena) a più viste come avviene per la scena e la dock della miniatura - figura \ref{figura:vnetkit_graphics_view_1}.
+L'esistenza del \emph{Graphics View Framework} offerto da \qt{}, ha reso minimi gli sforzi implementativi in quanto questo è fortemente basato sul pattern MVC che consente di collegare uno stesso modello (la scena) a più viste come avviene per la scena e la dock della miniatura - figura \ref{figura:vnetkit_graphics_view_1}.
 
 \begin{figure}[!htb]
 	\centering
@@ -190,7 +190,7 @@ L'insieme degli eventi considerati interessati, vengono ricevuti da handlers che
 
 \subsubsection*{Signals e Slots in \qt{}}
 In \qt{} slot e segnali sono usati per la comunicazione asincrona tra oggetti.
-Si vuole che oggetti di un certo tipo vengano avvertiti e siano in grado di comunicare con altri oggetti quando su di un oggetto si scatena un determinato evento. Per esempio quando un utente clicka un bottone \textbf{Close}, probabilmente vorremmo che il widget si chiuda chiamando la sua funzione ``close''.
+Si vuole che oggetti di un certo tipo vengano avvertiti e siano in grado di comunicare con altri oggetti quando su di un oggetto si scatena un determinato evento. Per esempio quando un utente clicca un bottone \textbf{Close}, probabilmente vorremmo che il widget si chiuda chiamando la sua funzione ``close''.
 
 Un segnale viene emesso quando un particolare evento accade; uno slot invece è una funzione che se invocata è responsabile di gestire un particolare segnale ma può anche essere invocata in maniera sincrona da un qualche oggetto.
 
@@ -204,7 +204,7 @@ Tale meccanismo nasconde in realtà un sistema già noto con il nome di pattern 
 \end{figure}
 
 \subsection{Elementi del dominio}
-Il kernel di questo progetto è il primo componente che è stato sviluppato ed anche il più importante. In esso sono contenute tutte le classi elementari su cui si appoggia la topologia di rete che l'utente vuol creare. Le classi rappreseno elementi della realtà di interesse come le virtual machine, i collision domain, le hardware interface e anche l'intero laboratorio.
+Il kernel di questo progetto è il primo componente che è stato sviluppato ed anche il più importante. In esso sono contenute tutte le classi elementari su cui si appoggia la topologia di rete che l'utente vuol creare. Le classi rappresentano elementi della realtà di interesse come le virtual machine, i collision domain, le hardware interface e anche l'intero laboratorio.
 
 \begin{figure}[!htb]
 	\centering
@@ -230,16 +230,16 @@ Le funzioni di controller sono state realizzate seguendo le linee guida del patt
 \item \emph{Property Controllers} - descritti più avanti in questo capitolo.
 \end{itemize}
 
-I \emph{Facade Controllers} vengono utilizzati per raccogliere le richeste che provengono dai livelli più alti - in particolare dagli \emph{Use Case Controllers} - quando c'è bisogno di una cecesso a basso livello che comporta un qualche tipo di cambiamento a livello di Dominio.
+I \emph{Facade Controllers} vengono utilizzati per raccogliere le richieste che provengono dai livelli più alti - in particolare dagli \emph{Use Case Controllers} - quando c'è bisogno di un accecesso a basso livello che comporta un qualche tipo di cambiamento a livello di Dominio.
 
-Gli \emph{Use Case Controllers}\footnote{Nella figura \ref{figura:vn_componenti} sono indicati come \emph{Handlers} generici.} sono posti in strati medio-alti dell'architettura e sono i primi oggetti che ricevono i segnali provenienti dall'interfaccia grafica. Questi effettuano una prima validazione dell'azione svolta e se non vi sono errori inoltrano la richiesta agli oggetti più bassi, in particolare ai \emph{Facade Controllers} e in qualche caso anche agli oggetti \emph{Mappers}.
+Gli \emph{Use Case Controller}\footnote{Nella figura \ref{figura:vn_componenti} sono indicati come \emph{Handlers} generici.} sono posti in strati medio-alti dell'architettura e sono i primi oggetti che ricevono i segnali provenienti dall'interfaccia grafica. Questi effettuano una prima validazione dell'azione svolta e se non vi sono errori inoltrano la richiesta agli oggetti più bassi, in particolare ai \emph{Facade Controllers} e in qualche caso anche agli oggetti \emph{Mappers}.
 
 
 \subsection{Interazione tra Utente e Proprietà degli Elementi}
 Ogni elemento del dominio incapsula come di norma alcune proprietà di base. Queste, oltre a caratterizzare i vari oggetti, servono anche per descrivere una certa realtà di interesse espressa dall'utente; ciò significa che è proprio l'utente finale che vuole avere la possibilità di cambiare questi attributi.
 
-Nel nostro caso abbiamo che oltre alle proprietà offerde dagli oggetti del dominio (ad esempio il nome di una \virtualmachine{}), per la natura modulare del sistema, è possibile che per un oggetto base vi siano collegati alcuni \plugin{} che offrono proprietà aggiuntive.\\
-La gestione di queste è demandata ad oggetti (di tipo \emph{Use Case Controller}) che sono responsabili di renderizzare i dati, e ricevere le modifiche che l'utente desidera (si veda la figura \ref{figura:properties_uml1}). Come già descritto, questi oggetti vengono dinamicamente inseriti come handlers degli oggetti che rappresentano i dati delle properties, poichè la natura degli elementi che l'utente può selezionare è eterogenea; ogni tipologia di elemento possiede il suo \emph{Property Controller}.
+Nel nostro caso abbiamo che oltre alle proprietà offerte dagli oggetti del dominio (ad esempio il nome di una \virtualmachine{}), per la natura modulare del sistema, è possibile che per un oggetto base vi siano collegati alcuni \plugin{} che offrono proprietà aggiuntive.\\
+La gestione di queste è demandata ad oggetti (di tipo \emph{Use Case Controller}) che sono responsabili di renderizzare i dati, e ricevere le modifiche che l'utente desidera (si veda la figura \ref{figura:properties_uml1}). Come già descritto, questi oggetti vengono dinamicamente inseriti come handlers degli oggetti che rappresentano i dati delle properties, poiché la natura degli elementi che l'utente può selezionare è eterogenea; ogni tipologia di elemento possiede il suo \emph{Property Controller}.
 
 \subsection{Gestione degli annullamenti: l'Undo Framework}
 Per l'implementazione delle funzionalità di undo e di redo delle azioni svolte, è stato utilizzato un potente framework offerto da \qt{}. Questo sistema ha permesso, in fase realizzativa, di tralasciare molte dei dettagli implementativi e dirigere l'attenzione verso problematiche come la consistenza dei dati. Infatti, seppur le operazioni di undo o redo siano atomiche, esse interagiscono con lo strato dei \emph{Facade Controllers} e quindi indirettamente anche con gli oggetti del Dominio.
@@ -252,38 +252,38 @@ Inoltre, ogni comando sa come annullare i cambiamenti da lui apportati e come ri
 
 La flessibilità offerta da questo strumento è tale da poterla applicare ad ogni tipo di situazione. Analizziamo ora un esempio un po' più realistico e complesso.
 
-Nel framework ogni azione che l'utente vuole poter annullare, è implementata in una classe che estende \emph{QUndoCommand}. Per ogni azione effettuata viene creato un apposito command che andrà inserito nel \emph{QUndoStack} di riferimento. Appena l'oggetto prende posto all'interno dello stack, la sua funzione di redo viene invocata per completare e/o effettuare l'azione richesta.
+Nel framework ogni azione che l'utente vuole poter annullare, è implementata in una classe che estende \emph{QUndoCommand}. Per ogni azione effettuata viene creato un apposito command che andrà inserito nel \emph{QUndoStack} di riferimento. Appena l'oggetto prende posto all'interno dello stack, la sua funzione di redo viene invocata per completare e/o effettuare l'azione richiesta.
 
 Il nostro esempio implementa un semplice diagramma grafico. È pertanto possibile eliminare e aggiungere elementi e muoverli tramite \emph{drag\&{}drop}. Ognuna di queste azioni possiede il corrispondente undo command che permette all'utente eventualmente di tornare sui suoi passi.
-In figuara \ref{figura:qt_undo} è mostrato come un \emph{QUndoStack} può essere mostrato graficamente all'interno di un \emph{QUndoView}.
+In figura \ref{figura:qt_undo} è mostrato come un \emph{QUndoStack} può essere mostrato graficamente all'interno di un \emph{QUndoView}.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=10cm]{images/undoframeworkexample.png}
-	\caption{Un esempio avanzato dell'Undo Framework offerdo da \qt{}.}
+	\caption{Un esempio avanzato dell'Undo Framework offerto da \qt{}.}
 	\label{figura:qt_undo}
 \end{figure}
 
 \subsection{L'accesso al \fs{}}
-Lo strato di persistenza dei dati nel complesso di ogni applicazione software, gioca un ruolo fondamentale. Generalmente posto nello strato più basso del sistema, questo elemento architetturale ha il duplice scopo di interagire con il \fs{} per salvare i dati inerenti alle varie configurazioni dell'applicazione e dei laboratory creati, nonché esportare questi ultimi in un formato accettato e riconosciuto dall'ambiente di emulazione desiderato.\\
+Lo strato di persistenza dei dati nel complesso di ogni applicazione software, gioca un ruolo fondamentale. Generalmente posto nello strato più basso del sistema, questo elemento architetturale ha il duplice scopo di interagire con il \fs{} per salvare i dati inerenti alle varie configurazioni dell'applicazione e dei laboratori creati, nonché esportare questi ultimi in un formato accettato e riconosciuto dall'ambiente di emulazione desiderato.\\
 Uno dei problemi riscontrati in fase di progettazione era come strutturare le informazioni che dovevano essere salvate. Da una parte occorreva salvare lo stato del laboratorio creato - in particolare lo stato del grafo della rete - mentre dall'altra parte occorreva trovare un buon sistema per poter esportare il laboratorio in modo da essere poi eseguito correttamente dal sistema di emulazione su cui quest'ambiente si basa\footnote{Ribadiamo il concetto che \visualnetkit{} nasce come ambiente per creazione di lab per \netkit{}, ma questo non vincola il tool ad un eventuale adattamento in favore di un qualsiasi altro sistema di emulazione.}.
 
-Ad esempio, se un utente desidera salvare un lab per poi riaprirlo dev'essere possibile memorizzare metadati sugli elementi presenti nella scena grafica, quali potrebbero essere le posizioni degli oggetti stessi, delle etichette e informazioni inerenti ai \plugin{}.
+Ad esempio, se un utente desidera salvare un lab per poi riaprirlo dev'essere possibile memorizzare meta-dati sugli elementi presenti nella scena grafica, quali potrebbero essere le posizioni degli oggetti stessi, delle etichette e informazioni inerenti ai \plugin{}.
 
-Si è deciso di procedere, quindi, con la registrazione delle metainformazioni su di un file in formato \xml{}, nominato \emph{lab.xml} posto nella root directory del laboratorio.\\
-Il fatto di salvare i metadati in un file separato rende il lab prodotto standard e auto descritto da un singolo file di configurazione esterno.
-Un tag principale ``scene'' rappresenta alcune informazioni sulla scena grafica come ad esempio la dimensione. Internamente a questa vi sono tags di gruppo che descrivono i vari componenti grafici come links, aree, virtual machines e collision domains; ad ognuno sono associate informazioni extra che descrivono metadati aggiuntivi, quando previsto.
+Si è deciso di procedere, quindi, con la registrazione delle meta-informazioni su di un file in formato \xml{}, nominato \emph{lab.xml} posto nella root directory del laboratorio.\\
+Il fatto di salvare i meta-dati in un file separato rende il lab prodotto standard e auto descritto da un singolo file di configurazione esterno.
+Un tag principale ``scene'' rappresenta alcune informazioni sulla scena grafica come ad esempio la dimensione. Internamente a questa vi sono tags di gruppo che descrivono i vari componenti grafici come links, aree, virtual machines e collision domains; ad ognuno sono associate informazioni extra che descrivono meta-dati aggiuntivi, quando previsto.
 
 La vera e propria parte che esporta la struttura del laboratorio su \fs{} è stata divisa in quattro fasi:
 \begin{description}
 \item[Fase 1] questa fase iniziale è adibita alla creazione della struttura base delle directories, in particolare per ogni virtual machine presente nel lab creato, viene cerata una directory con il nome dell'host virtuale;
-\item[Fase 2] è il momento della creazione del file \emph{lab.conf} che contiene la struttura fondamentale della rete a livello topologico, riconoscuta da \netkit{};
-\item[Fase 3] questa fase è riservata al salvataggio dei file di ``sturtup'' delle macchine prenti\footnote{In \netkit{} ogni host virtuale che viene avviato può operare azioni di post-start grazie all'esecuzione del file \emph{.startup} inerente ad una precisa macchina virtuale.};
+\item[Fase 2] è il momento della creazione del file \emph{lab.conf} che contiene la struttura fondamentale della rete a livello topologico, riconosciuta da \netkit{};
+\item[Fase 3] questa fase è riservata al salvataggio dei file di ``sturtup'' delle macchine presenti\footnote{In \netkit{} ogni host virtuale che viene avviato può operare azioni di post-start grazie all'esecuzione del file \emph{.startup} inerente ad una precisa macchina virtuale.};
 \item[Fase 4] l'ultimo step fa in modo che ogni plugin attivo possa offrire porzioni (o la totalità) di file di configurazioni che descrivono i propri settaggi.
 \end{description}
 
 \subsubsection*{Template Engine in \visualnetkit{}}
-Nelle fasi due tre e quattro si è parlato della creazione dei file di configurazione; sia i \plugin{} che l'applicazione stessa utilizzano un sistema di \emph{mark-up} per la creaziene dei vari templates che andranno poi scritti dallo strato di persistenza all'interno dei files. Questi templates possiedono una struttura interna che prevede la sostituzione localizzata di alcune parti. Prendiamo in esame il templete che verrà utilizzato per creare il file ``lab.conf'':
+Nelle fasi due tre e quattro si è parlato della creazione dei file di configurazione; sia i \plugin{} che l'applicazione stessa utilizzano un sistema di \emph{mark-up} per la creazione dei vari templates che andranno poi scritti dallo strato di persistenza all'interno dei files. Questi templates possiedono una struttura interna che prevede la sostituzione localizzata di alcune parti. Prendiamo in esame il templete che verrà utilizzato per creare il file ``lab.conf'':
 
 \begin{figure}[!htb]
 \begin{lstlisting}[language=csh]
@@ -303,7 +303,7 @@ LAB_WEB="<WEB>"
 \end{figure}
 Il Template Engine interno all'applicazione viene invocato passando il riferimento (basato sul resource system di \qt{}) ad un template file. Questo viene prima caricato in memoria e successivamente vengono effettuare alcune sostituzioni di base come la sostituzione del \emph{mark-up}\\
 ``<VISUAL\_{}NETKIT\_{}VERSION>'' che viene sostituito dalla corrente versione del tool.
-L'elemento che invoca il caricamento di un template riceve quindi il contenuto del file desiderato; successivamente vengono effettuate le altre sostituzioni tramite l'ausilio di espressioni regorali.\\
+L'elemento che invoca il caricamento di un template riceve quindi il contenuto del file desiderato; successivamente vengono effettuate le altre sostituzioni tramite l'ausilio di espressioni regolari.\\
 Osserviamo la riga $12$; l'oggetto incaricato di salvare il file ``lab.conf'' è incaricato di completare la struttura del file di configurazione inserendo la descrizione, la versione, l'autore, l'indirizzo email e il sito web del lab corrente, e successivamente costruirà la topologia dell'intera rete iterando tra i \emph{tag} ``<TOPOLOGY></TOPOLOGY>''.
 
 In questo modo si riesce a creare un file di configurazione corretto e ben formattato come quello proposto qui sotto:
@@ -330,17 +330,17 @@ host3[1]="d"
 \end{lstlisting}
 che descrive la topologia di rete presente in figura \ref{figura:vnetkit_graphics_view_1}.
 
-È importante notare che il template dell'esempio appena citato risulti totalmetne indipendente dal motore di emulazione utilizzato, ed è dunque facilmente rimodellizzabile per essere adoperato con emulatori differenti.
+È importante notare che il template dell'esempio appena citato risulti totalmente indipendente dal motore di emulazione utilizzato, ed è dunque facilmente rimodellizzabile per essere adoperato con emulatori differenti.
 
-Nel caso in cui un emulatore richiedesse una sintazzi particolare per le varie macchine virtuali, come ad esempio VNUML, basterebbe creare un semplice plugin che offra uno specifico template, ed aggungere questo plugin ai vari host virtuali presenti nella topologia di rete.
+Nel caso in cui un emulatore richiedesse una sintassi particolare per le varie macchine virtuali, come ad esempio VNUML, basterebbe creare un semplice plugin che offra uno specifico template, ed aggiungere questo plugin ai vari host virtuali presenti nella topologia di rete.
 
 \subsection{Controllers tra Dominio e Vista}
-Un ulteriore elemento architetturale che spicca nella figura \ref{figura:vn_componenti} è il componente \emph{Mapper}. Questo package è composto da varie classi \emph{singletone} predisposte al ruolo di mappare gli oggetti della vista in quelli del dominio, e viceversa. Da questo deriva la verticalità che assume all'interno del diagramma questo componente.
+Un ulteriore elemento architetturale che spicca nella figura \ref{figura:vn_componenti} è il componente \emph{Mapper}. Questo package è composto da varie classi \emph{singleton} predisposte al ruolo di mappare gli oggetti della vista in quelli del dominio, e viceversa. Da questo deriva la verticalità che assume all'interno del diagramma questo componente.
 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=4cm]{images/visualnetkit_tree_elements.png}
-	\caption{Almero degli elementi presenti sulla scena.}
+	\caption{Albero degli elementi presenti sulla scena.}
 	\label{figura:scene_elements}
 \end{figure}
 
@@ -349,7 +349,7 @@ Ogni tipologia di oggetti del dominio possiede un suo mapper di riferimento. Ad 
 In questo contenitore possiamo individuare diversi tipi di mappers. Oltre a quelli utilizzati come controllers per gli oggetti del dominio, vi sono elementi - \emph{ad esempio SceneTreeMapper} - che si occupano principalmente di mantenere allineato lo stato degli elementi del dominio con una determinata porzione dell'interfaccia utente, nel nostro caso l'albero degli elementi grafici (figura \ref{figura:scene_elements}).
 
 \section{Strumenti di supporto allo sviluppo}
-Durante tutto il lavoro sono stati utilizzati molteplici strumenti che hanno contribuito alla realizzazione dell'prodotto.
+Durante tutto il lavoro sono stati utilizzati molteplici strumenti che hanno contribuito alla realizzazione del prodotto.
 
 \subsection{Il framework \qt{}}
 \qt{} è un \emph{framework applicativo multi-piattaforma} - figura \ref{figura:qtframework} - per lo sviluppo di software desktop ed \emph{embedded}, sviluppato da \emph{Nokia-Trolltech} e distribuito in versioni per uso commerciale e open source. Esso include una documentazione (\textbf{A}pplication \textbf{P}rogram \textbf{I}nterface) molto intuitiva ed un ricco insieme di classi \cpp{}, strumenti integrati per lo sviluppo e l'internazionalizzazione delle GUI, e il supporto per lo sviluppo in Java e C++. Sono inoltre presenti svariati sistemi di binding per altri linguaggi di scripting quali QtPerl, QtPython, ecc\ldots
@@ -361,12 +361,12 @@ Durante tutto il lavoro sono stati utilizzati molteplici strumenti che hanno con
 	\label{figura:qtframework}
 \end{figure}
 
-La modularità delle librerie \qt{} fornisce un ricco insieme di blocchi per la costruzione di applicazioni, integrando tutte le funzionalità necessarie per la realizzazione di software avanzati e multipiattaforma.
+La modularità delle librerie \qt{} fornisce un ricco insieme di blocchi per la costruzione di applicazioni, integrando tutte le funzionalità necessarie per la realizzazione di software avanzati e multi-piattaforma.
 
-Il framework fornisce inoltre, strumenti di sviluppo integrato per la realizzazione assistita GUI, traduzione e internazionalizzazione, documentazione e realizzazioni multipiattaforma, quali \emph{Designer}, \emph{QtLinguistic}, \emph{Assistant} e \emph{QMake}.
+Il framework fornisce inoltre, strumenti di sviluppo integrato per la realizzazione assistita GUI, traduzione e internazionalizzazione, documentazione e realizzazioni multi-piattaforma, quali \emph{Designer}, \emph{QtLinguistic}, \emph{Assistant} e \emph{QMake}.
 
 \subsubsection{Qt Designer}
-\emph{Qt Designer} è un potente strumento per la costruzione di GUI e form con layout nativo e multipiattaforma. Esso consente la rapida progettazione e realizzazione di ``widgets'' e finestre di dialogo utilizzando le stesse tecniche di programmazione mantenendo il tutto disaccoppiato dall'implementazione dal sistema. Le form create con \emph{Qt Designer} godono di piena funzionalità e possono essere viste in una preview in modo da garantire che il loro impatto visivo rifletta esattamente le aspettative del programmatore.
+\emph{Qt Designer} è un potente strumento per la costruzione di GUI e form con layout nativo e multi-piattaforma. Esso consente la rapida progettazione e realizzazione di ``widgets'' e finestre di dialogo utilizzando le stesse tecniche di programmazione mantenendo il tutto disaccoppiato dall'implementazione dal sistema. Le form create con \emph{Qt Designer} godono di piena funzionalità e possono essere viste in una preview in modo da garantire che il loro impatto visivo rifletta esattamente le aspettative del programmatore.
 
 Una volta creato il widget con l'ausilio del tool in questione, viene prodotto un file con estensione ``.ui'' che al suo interno contiene una struttura basata su \xml{}. All'interno dell'applicazione la form dovrà essere implementata collegando questo file (\textbf{U}ser \textbf{I}nterface) all'oggetto che vogliamo utilizzare nel sistema che stiamo creando.
 
@@ -416,7 +416,7 @@ La maggior parte delle applicazioni ha bisogno di documentazione on-line o di un
 Il tool fornisce anche un veloce strumento di ricerca per accedere rapidamente all'argomento di interesse. I documenti rinvenuti nel corso di un'indagine sull'intero testo sono riportati in ordine di rilevanza ed ogni occorrenza della parola chiave all'interno della documentazione viene evidenziata.
 
 \subsubsection{QMake}
-\emph{QMake} è uno strumento multipiattaforma che semplifica il processo di costruzione dei progetti \qt{} su diversi sistemi. A seconda del sistema operativo in cui ci troviamo, \emph{QMake} genera i vari  \emph{Makefiles} in modo che siano compatibili con la piattaforma utilizzata.
+\emph{QMake} è uno strumento multi-piattaforma che semplifica il processo di costruzione dei progetti \qt{} su diversi sistemi. A seconda del sistema operativo in cui ci troviamo, \emph{QMake} genera i vari  \emph{Makefiles} in modo che siano compatibili con la piattaforma utilizzata.
 
 \emph{QMake} genera un Makefile sulla base delle informazioni presenti all'interno del file di progetto. Questi ultimi vengono creati dallo sviluppatore e sono tipicamente molto semplici; un tipico esempio è riportato qui sotto:
 
