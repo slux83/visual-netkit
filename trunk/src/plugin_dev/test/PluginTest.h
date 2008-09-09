@@ -39,7 +39,7 @@ private:
 	QString getTemplateLocation();
 	void addPropertyChildsDeeply(PluginProperty* prop);
 	
-	void printProperties(PluginProperty* current = NULL);	//TESTING
+	void printProperties(QString *dump, PluginProperty* current = NULL);	//TESTING
 	
 public:
 	PluginTest();
