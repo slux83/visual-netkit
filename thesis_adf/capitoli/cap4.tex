@@ -1,0 +1,62 @@
+\chapter{Scenari per la configurazione avanzata di reti virtuali}\label{capitolo:esempi}
+\markboth{Scenari per la configurazione avanzate di reti virtuali}{}
+
+I precedenti capitoli hanno descritto il lavoro svolto durante l'attività di tesi. In questo capitolo si vuole illustrare il funzionamento dell'ambiente sviluppato, suddividendo l'esposizione in tre casi di studio principali.
+
+Il primo di questi relaziona i passi da effettuare per la costruzione di un semplice laboratorio composto da alcune reti LAN.
+
+Lo scenario successivo descrive le fasi da eseguire sul laboratorio precedentemente cerato per riuscire a configurare i nodi presenti, secondo le esigenze dell'utente. In questo vengono quindi mostrate le potenzialità del nuovo \plugin{} framework, sottolineando come questi possano essere dettagliatamente configurati. In mancanza di moduli che si prestano alle configurazioni avanzate, è stato utilizzato un \plugin{} di test che possiede una struttura delle properties estesa e altamente dinamica, priva di un significato logico.
+
+L'ultimo caso di studio espone alcuni test di funzionamento sulla rete precedentemente realizzata, tramite l'ausilio dell'ambiente di configurazione offerto da \netkit{}.
+
+\section{Caso di studio 1: realizzazione di un laboratorio}
+L'obiettivo di questo caso di studio di apertura è la realizzazione di una topologia di rete semplice composta da quattro \virtualmachine{} connesse a stella ad un unico dominio di collisione.
+
+Per prima cosa occorre creare un nuovo laboratorio scegliendo dal menu \emph{File} la voce \emph{New Lab}, oppure tramite l'uso della shortcut \textbf{Ctrl+N}. Da questo momento fino alla chiusura del Lab, \visualnetkit{} è pronto per la creazione della rete. In figura \ref{figura:vn_ex_dock} è discritta la struttura delle docks che compongono l'interfaccia utente.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12.5cm]{images/vnetkit_example1.png}
+	\caption{Docks in \visualnetkit{}}
+	\label{figura:vn_ex_dock}
+\end{figure}
+
+Le docks - che comprendono anche le tool-bar - presenti sono tutte configurabili. L'utente può comodamente disporle a suo piacimento, nonché nascondere quelle che ritiene superflue.
+
+Successivamente è possibile iniziare a costruire la topologia della rete in esame: utilizzando le apposite azioni presenti nel menu \emph{Graph}, l'utente può inserire nella scena grafica elementi quali: Virtual Machines, Links, Collision Domain e Aree. Dapprima inseriamo le quattro \virtualmachine{} nella scena, attivando per l'host ``PC1'' anche il \plugin{} \emph{Test} che verrà configurato in un secondo momento.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=12cm]{images/vnetkit_example3.png}
+	\caption{Inserimento dei links.}
+	\label{figura:vn_ex_links}
+\end{figure}
+
+Al termine dell'operazione è possibile inserire il dominio di collisione posto a ``centro stella'', che andrà a collegare tutti gli host virtuali precedentemente creati. In fine, il lavoro sarà completato dall'inserimento dei links in cui verranno attivati i \plugin{} \emph{IPv4} e \emph{MAC}. Figura \ref{figura:vn_ex_links}.
+
+Una volta realizzata la topologia di rete desiderata, il tool permette l'aggiunta di aree che possono essere utilizzate come etichette, oppure come aggregatori di elementi.
+
+\section{Caso di studio 2: configurazione avanzata di una rete}
+Terminata la fase di creazione della topologia di rete desiderata, l'utente spesso ha la necessità di configurare i servizi presenti all'interno degli host virtuali. \visualnetkit{} offre questa possibilità mediante l'uso della dock delle proprietà.
+Quando si seleziona un elemento della scena grafica - doppio click -, il sistema provvede a renderizzare le informazioni dell'oggetto all'interno della property dock. Possiamo quindi trovare tutte le propietà presenti all'interno dei \plugin{} attivi per l'entità selezionata.
+
+Alcuni moduli più complessi (nel caso dell'esempio il \plugin{} \emph{Test}) prevedono la possibilità di poter manipolare la struttura delle properties, in particolare inserendo o eliminando sotto-attributi (figura \ref{figura:vn_ex_pp}).
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=13cm]{images/vnetkit_property_evolution.png}
+	\caption{Modifica della struttura delle properties di un \plugin{}.}
+	\label{figura:vn_ex_pp}
+\end{figure}
+Si vuole quindi modificare la struttura del modulo \emph{Test} attivo sulla macchina virtuale ``PC1''. Come mostrato, viene prima inserata una sotto-proprietà dell'attributo ``property-1'', successivamente si tenta di inserire tre copie della proprietà ``property-2'' che il modulo prevede.
+Al tentativo di inserimento della quarta copia di quest'ultima, il \plugin{} restituisce un errore in quanto non sono previste più di tre duplicati per la proprietà in esame.
+
+Quindi, tramite l'apposito bottone ``Actions'' è possibile, per ogni proprietà di un modulo eliminare o aggiungere le sotto-property quando consentito. Quest'ultimo controllo - come quello inerente al controllo di cardinalità di una property poc'anzi citato - è interamente affidato al \plugin{}.
+
+Il modulo utilizzato nell'esempio è puramente utilizzato per il testing. Tuttavia si può facilmente immaginare che un \plugin{} che offra un servizio complesso (come Zebra o Quagga) possa avere una struttura simile a quella mostrata, ossia che contenga molteplici attributi con una struttura gerarchica complessa.
+
+\section{Caso di studio 3: sperimentazioni sul laboratorio creato}
+Lo stadio finale della costruzione di un laboratorio mediante l'utilizzo di \visualnetkit{} si conclude con il salvataggio dello stesso sul \fs{}. Mediante la voce \emph{Save As\ldots} presente nel menu \emph{File} è possibile selezionare la directory dove il Lab creato verrà memorizzato.
+
+Effettata questa operazione si può provvedere anche alla chiusura di \visualnetkit{}. Da questo momento in poi viene utilizzato \netkit{}\footnote{La spiegazione di come avviare un laboratorio con \netkit{} va oltre gli obiettivi di questo lavoro.} per avviare la rete virtuale, dove è possibile effettuare tutti i test che si desiderano.
+
