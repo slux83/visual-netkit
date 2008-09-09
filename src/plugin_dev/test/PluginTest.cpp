@@ -61,7 +61,14 @@ QMap<QString, QString> PluginTest::getTemplates()
 		qWarning() << "The plugin getTemplate() failed:" << data.errorString();
 	}
 	
+	/* Dump all properties inside the template */
+	QString *propertiesDump = new QString();
+	printProperties(propertiesDump);
+	templateContent.append(*propertiesDump);
+	
 	templates.insert(getTemplateLocation(), templateContent);
+	
+	delete propertiesDump;
 	
 	return templates;
 }
@@ -79,7 +86,7 @@ QString PluginTest::getTemplateLocation()
 		return QString();
 	}
 	
-	return QString(vm->getName() + "/etc/basic.conf");
+	return QString(vm->getName() + "/etc/visualnetkit/test-plugin.conf");
 }
 
 /**
@@ -125,21 +132,25 @@ void PluginTest::setProxy(PluginProxy* p)
  * [PRIVATE]
  * A private function just for testing properties Tree structure
  */
-void PluginTest::printProperties(PluginProperty* current)
+void PluginTest::printProperties(QString *dump, PluginProperty* current)
 {
 	if(!current)
 	{
 		foreach(PluginProperty* prop, properties)
 		{
-			printProperties(prop);
+			printProperties(dump, prop);
 		}
 	}
 	else
 	{
 		qDebug() << current->getName() << "id =" << current->getId() << "copy =" << current->getCopy() << current << "childs:" << current->getChilds();
+		dump->append(	"Property name:  " + current->getName() + "\n" + 
+						"Property ID:    " + current->getId() + "\n" + 
+						"Property value: " + current->getValue() + "\n\n");
+		
 		foreach(PluginProperty* prop, current->getChilds())
 		{
-			printProperties(prop);
+			printProperties(dump, prop);
 		}
 	}
 }
