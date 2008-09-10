@@ -1,5 +1,5 @@
 #summary The plugin architecture of VisualNetkit
-#labels Featured,Phase-Design,Phase-Implementation
+#labels Deprecated,Phase-Design,Phase-Implementation
 
 =UML class diagram=
 [http://www.capponcino.it/alessio/files/universita/tesi-visual-netkit/uml/vn_plugin_framework-1.0beta.jpg]
