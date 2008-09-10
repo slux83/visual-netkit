@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/test" >
+        <file alias="basic-template">basic.tpl</file>
+        <file alias="xml-conf">plugin.xml</file>
+    </qresource>
+</RCC>

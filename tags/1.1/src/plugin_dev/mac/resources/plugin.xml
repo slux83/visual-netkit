@@ -1,0 +1,16 @@
+<plugin name="Mac">
+	
+	<global type="link" version="1.2" author="Alessio Di Fazio" dependencies="">
+		<![CDATA[The <a href="http://en.wikipedia.org/wiki/MAC_address" title="What is this?">IEEE 802 MAC</a> address plugin]]>
+	</global>
+	
+	<properties>
+		
+		<property id="0" name="mac address" default_value="00:00:00:00:00:00" min="1" max="1">
+			<![CDATA[The MAC address]]>
+			<childs/>
+		</property>
+		
+	</properties>
+	
+</plugin>

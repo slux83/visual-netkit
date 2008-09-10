@@ -1,0 +1,44 @@
+VisualNetkit 1.1
+=================
+Alessio Di Fazio, Paolo Minasi
+
+PREREQUISITES
+=============
+
+The tool should compile successfully if you have a standard Linux build
+environment.  The only requirement is to have a version of the Qt development
+files that is at least as recent as 4.4. Debian distributions provide the
+required files and utilities inside the libqt4-dev package.
+
+HOW TO COMPILE
+==============
+
+To compile the application, enter the package root directory and run the script
+`build.sh'. All the necessary steps should be automatically performed and a
+binary executable should be placed inside the `bin/' subdirectory.  In order to
+view all the available compilation options, run `build.sh -h'.
+
+HOW TO RUN
+==========
+
+In order to launch VisualNetkit, run the script `bin/visualnetkit.sh'. This
+automatically sets the environment variable VISUAL_NETKIT_PLUGINS to properly
+locate plugins provided with the package.
+
+PLUGINS
+=======
+
+VisualNetkit is based on a plugin architecture, where configuration settings
+for specific aspects and services of a network are set up and managed by
+separate pieces of code. Plugins can be dinamically associated to elements
+(virtual machines, collision domains, links/interfaces) of the network being
+edited, so that the corresponding features are enabled on those elements.
+
+The choice to rely on plugins makes VisualNetkit easily extensible. For
+example, support for the configuration of a particular daemon or service can be
+introduced by developing an appropriate plugin. A skeleton of a `test' plugin
+is provided in the `src/plugin_dev/' subdirectory.
+
+
+Enjoy!
+
