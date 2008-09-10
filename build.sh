@@ -20,7 +20,7 @@ QMAKE="qmake"
 GDB="gdb"
 VN_PLUGINS=(	"src/plugin_dev/test"
 		"src/plugin_dev/ipv4" \
-		"src/plugin_dev/mac"  \
+		"src/plugin_dev/mac" \
 #		"src/plugin_dev/bashrc" \
 #		"src/plugin_dev/zebra" \
 )
@@ -99,13 +99,13 @@ compile()
 		echo
 		$GDB ./bin/VisualNetkit
 	fi
-	if [ "$1" = "" ]; then
-		echo
-		echo ">>> STARTING ./bin/VisualNetkit <<<"
-		echo
-		cd bin
-		./visualnetkit.sh
-	fi
+#	if [ "$1" = "" ]; then
+#		echo
+#		echo ">>> STARTING ./bin/VisualNetkit <<<"
+#		echo
+#		cd bin
+#		./visualnetkit.sh
+#	fi
 	
 }
 
@@ -173,5 +173,5 @@ if [ "$#" != "0" ]; then
 		;;
 	esac
 else
-	compile
+	release
 fi

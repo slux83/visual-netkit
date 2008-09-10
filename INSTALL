@@ -3,8 +3,8 @@ To compile this program, you have to install Qt >= 4.4 inside your Linux Box
 When you are inside the application root directory, run the script `build.sh -r`
 to compile the binary and plugins in release mode.
 
-All binary stuffs are located inside bin/. You must run Visual Netkib by
-bin/visualnetkit.sh because you have export VISUAL_NETKIT_PLUGINS environment
-variable that contains plugins paths.
+All binary stuff is located inside bin/. You must run Visual Netkit by
+launching bin/visualnetkit.sh, because you need to export the
+VISUAL_NETKIT_PLUGINS environment variable that contains plugin paths.
 
 Enjoy!

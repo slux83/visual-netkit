@@ -1,4 +1,4 @@
-2008-xx-xx [1.1] Slux <slux83@gmail.com>
+2008-09-10 [1.1] Slux <slux83@gmail.com>
  * [Added]   areas Z-value and move to Top/Bottom actions on context menu
  * [Changed] plugin interface, now plugins can have hierarchy properties
              structure and these can be added and removed according to XML
