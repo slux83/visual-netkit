@@ -1,5 +1,5 @@
 #summary How to make a plugin for VisualNetkit
-#labels Featured,Phase-Implementation
+#labels Deprecated,Phase-Implementation
 
 *NOTE: BEFORE READ THIS HOW-TO, PLEASE READ PluginArchitecture PAGE*
 
