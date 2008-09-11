@@ -1,5 +1,16 @@
-\chapter*{Conclusioni}
+\chapter*{Conclusioni e sviluppi futuri}
 % Inserisce la voce di questo capitolo nell'indice
-\addcontentsline{toc}{chapter}{Conclusioni}
+\addcontentsline{toc}{chapter}{Conclusioni e sviluppi futuri}
 
-TODO
+Nel presente lavoro sono state descritte le fasi di analisi, progettazione e realizzazione di un ambiente per la configurazione avanzata di reti virtuali emulate. Particolare attenzione è stata concessa allo studio dei sistemi esistenti al fine di coglierne i pregi e difetti.
+
+In tutto il documento si è cercato di far comprendere i limiti dei vari ambienti di configurazione esistenti - che comprende anche la prima release di \visualnetkit{} -, mostrando un modello altamente flessibile e dinamico che andasse ad incrementare la configurabilità delle reti create tramite \visualnetkit{}.
+
+Basando le successive fasi sul modello logico descritto, l'attività di tesi è proseguita con la progettazione e realizzazione di nuovi requisiti. Questi ultimi hanno portato il tool ad una maturità tale da poter affermare che allo stato attuale è possibile descrivere la quasi totalità dei servizi residenti in un host, mediante la creazione di \plugin{} ad-hoc. Proprio questa struttura altamente modulare fa si che \visualnetkit{} sia uno strumento che, seppur ``giovane'', è unico nel suo genere.
+
+Grazie alle scelte metodologiche, progettuali e realizzative adottate come \emph{Unified Process} e \emph{eXtreme Programming}, il sistema si presta molto bene ad ulteriori raffinamenti, offrendo al programmatore un ambiente ben organizzato e coeso. Potenzialmente un lavoro di questo tipo può evolvere senza trovare mai un punto estremo. Uno dei prossimi sviluppi sarà la possibilità da parte del tool di importare un laboratorio creato dall'utente senza l'ausilio di alcuno strumento.
+Un importante ostacolo in questo requisito è la composizione grafica della rete. La posizione dei nodi, e degli archi dovrà essere disegnata dal tool in modo intelligente adottando quindi alcuni algoritmi di \emph{Graph Drawing}.
+
+Un laboratorio creato da un utente contiene svariate regole e servizi. Durante la fase di importing sarà quindi opportuno che \visualnetkit{} disponga di un elevato numero di moduli, potenzialmente attivabili, al fine di effettuare un'importazione del Lab più accurata possibile. Saranno infatti i vari \plugin{} a decidere di rimanere attivi o meno sulla base delle informazioni \emph{parsate} dai files di configurazione presenti nel laboratorio in esame.
+
+Affrontare un'esperienza di questo tipo fa sì che lo sviluppatore acquisisca ulteriori competenze per quello che concerne lo sviluppo di medie e grandi applicazioni.

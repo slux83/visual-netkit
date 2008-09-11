@@ -70,3 +70,7 @@ Lo stadio finale della costruzione di un laboratorio mediante l'utilizzo di \vis
 Effettata questa operazione si può provvedere anche alla chiusura di \visualnetkit{}. Da questo momento in poi viene utilizzato \netkit{}\footnote{La spiegazione di come avviare un laboratorio con \netkit{} va oltre gli obiettivi di questo lavoro.} per avviare la rete virtuale, dove è possibile effettuare tutti i test che si desiderano.
 
 Studiando il comportamento della rete poc'anzi creata è possibile osservare che il laboratorio esportato è completo in ogni dettaglio. Tutte gli host virtuali, connessi ad un unico dominio di collisione, riescono a colloquiare correttamente, come mostrato in figura \ref{figura:ex_netkit}. Inoltre si può constatare che i \plugin{} attivati sui links e sull'host ``PC1'' hatto tutti contribuito a caratterizzare la parte della rete di propria competenza.
+
+Ancora è possibile immaginare un'estensione dell'architettura al fine di prevedere la possibilità di avviare un laboratorio direttamente da \visualnetkit{}, avendo la possibilità di avere una rappresentazione grafica dei terminali degli host virtuali.
+
+In ultima instanza, potrebbe risultare necessaria ed innovativa la realizzazione di un meccanisco che permetta ai vari moduli di comunicare e cooperare tra di loro, ad esempio si pensi allo scenario in cui un modulo (attivo su una \virtualmachine) volesse conoscere tutti gli indirizzi IPv4 attivi sulle interfacce hardware presenti sull'host.
