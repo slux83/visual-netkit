@@ -88,22 +88,9 @@ typedef PluginInterface* createPlugin_t();
 typedef void destroyPlugin_t(PluginInterface*);
 \end{lstlisting}
 
-Le righe di codice più importanti di questa classe sono gli ultimi due ``typedef''. Ogni implementazione di un \plugin{} deve necessariamente avere al suo interno definite le factory di creazione e distruzione, definite come \emph{extern ``C''}. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo. Un tipico esempio nell'implementazione di queste due funzioni è riportato qui di seguito:
+Trimite questa interfaccia un plugin può interagire con il sistema centrale. Ogni implementazione di un \plugin{} deve quindi riscrivere le funzioni descritte. Il modulo deve inoltre definire le factory di creazione e distruzione - righe $38$ e $39$. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo.
 
-\begin{lstlisting}
-/* Factory (creator) */
-extern "C" PluginInterface* createPlugin()
-{
-	return new YourContretePluginClass();
-}
-
-/* Factory (destroyer) */
-extern "C" void destroyPlugin(PluginInterface* p)
-{
-	delete p;
-}
-\end{lstlisting}
-Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'appendice A.
+%Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'appendice A.
 
 Ogni modulo è descritto da un proprio file di configurazione scritto in \xml{} che deve necessariamente essere inserito all'interno del \emph{Qt Resource System}\footnote{Il sistema di risorse offerto da \qt{} consiste in un metodo (platform-indipendent) per la memorizzazione di file binari all'interno dell'applicazione stessa. Questa è una tecnica molto utile se l'applicazione ha sempre bisogno di determinati files e non si vuole correre il rischio di non possederli a runtime.}. All'interno di questo file vi sono descritte le credenziali del \plugin{} come: il nome, la descrizione, gli autori, le dipendenze dagli altri \plugin{} ecc\ldots, ma anche un'accurata rappresentazione delle proprietà offerte all'elemento su cui verrà attivato il modulo.
 
@@ -220,6 +207,11 @@ Per questo motivo \visualnetkit{} include al suo interno un editor di testo pote
 \subsection{Elementi del dominio}
 Il kernel di questo progetto è il primo componente che è stato sviluppato ed anche il più importante. In esso sono contenuti tutti gli oggetti elementari su cui si appoggia la topologia di rete che l'utente vuol creare. Le classi rappresentano elementi della realtà di interesse come le virtual machine, i collision domain, le hardware interface e anche l'intero laboratorio.
 
+Come si nota dal diagramma delle classi presente in figura \ref{figura:uml_package_core}, questo package ha una struttura molto semplice ma allo stesso tempo riesce a descrivere qualsiasi topologia di rete virtuale. Infatti, un laboratorio contiene un insieme di oggetti VirtualMachine e CollisionDomain contenuti all'interno di due Mappe ordinate per nome.
+
+La giunzione tra questi ultimi due elementi è occupata dalla classe HardwareInterface che funge da collante di riferimento tra l'host virtuale, ed i vari domini di collisione a cui è collegato.
+Grazie a questa semplice struttura \visualnetkit{} nasce da una parte come ambiente per la creazione di reti virtuali da emulare con \netkit{}, ma è potenzialmente in grado di essere riadattato in modo da poter produrre configurazioni per altri sistemi di emulazione.
+
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=12cm]{images/uml_package_core.png}
@@ -227,10 +219,6 @@ Il kernel di questo progetto è il primo componente che è stato sviluppato ed a
 	\label{figura:uml_package_core}
 \end{figure}
 
-Come si nota dal diagramma delle classi presente in figura \ref{figura:uml_package_core}, questo package ha una struttura molto semplice ma allo stesso tempo riesce a descrivere qualsiasi topologia di rete virtuale. Infatti, un laboratorio contiene un insieme di oggetti VirtualMachine e CollisionDomain contenuti all'interno di due Mappe ordinate per nome.
-
-La giunzione tra questi ultimi due elementi è occupata dalla classe HardwareInterface che funge da collante di riferimento tra l'host virtuale, ed i vari domini di collisione a cui è collegato.
-Grazie a questa semplice struttura \visualnetkit{} nasce da una parte come ambiente per la creazione di reti virtuali da emulare con \netkit{}, ma è potenzialmente in grado di essere riadattato in modo da poter produrre configurazioni per altri sistemi di emulazione.
 
 Come vedremo più avanti, gli oggetti di tipo HardwareInterface saranno rappresentati da dei Links grafici all'interno della scena grafica.
 
