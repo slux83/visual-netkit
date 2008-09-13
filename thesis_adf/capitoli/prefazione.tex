@@ -1,4 +1,42 @@
 \chapter*{Introduzione}
 % Inserisce la voce di questo capitolo nell'indice
 \addcontentsline{toc}{chapter}{Introduzione}
-TODO
+
+Una \emph{rete di calcolatori} può essere definita come un sistema che permette la condivisione di informazioni e risorse tra un insieme di calcolatori e di apparati di rete collegati, tramite un mezzo trasmissivo.
+Negli ultimi decenni si è assistito ad un eccezionale sviluppo di quella che può essere considerata la ``rete delle reti'', ovvero \emph{Internet}.
+\emph{Internet} non è altro che un enorme agglomerato di sottoreti eterogenee che sono collegate con le più svariate tecnologie e che insieme costituiscono una trama capace di collegare quasi ogni luogo del pianeta. Il concetto di ``rete'' evolve ogni giorno e sta cambiando profondamente il mondo in cui viviamo. Si pensi alle nuove tecnologie del campo \emph{Mobile}: tutto ci conduce in una realtà dove ogni individuo ha la possibilità di essere collegato ad \emph{Internet} ovunque si trovi.
+
+In parallelo sono cresciuti il numero di aziende, professionisti e persone che sfruttano la Net per la loro attività principali. Questi, oltre che migliorare, integrare e fornire servizi sempre più evoluti, trasformano \emph{Internet} in un sistema attivo in continua espansione.
+È per questo motivo che, fino ad oggi, molti sforzi sono stati volti alla creazione di strumenti capaci di studiare ed analizzare tutti gli aspetti che comportano la realizzazione e l'utilizzo di una rete.
+Uno di questi, utilizzato per lo studio delle funzionalità di una rete di calcolatori, è l'\emph{emulatore di reti}. Questi ultimi possono essere definiti come \emph{strumenti software} che riproducono in maniera esatta il funzionamento ed il comportamento dei loro equivalenti hardware. Essi permettono di fare a meno di costose apparecchiature escludendo, quindi, tutti i rischi di danneggiamento che potrebbero correre i sistemi reali durante il loro tuning, minimizzando così l'impatto economico.
+Per questi motivi tali strumenti vengono spesso utilizzati quando esiste la necessità di progettare una rete \emph{ex-novo} o di studiare le funzionalità, analizzare le architetture e testare il funzionamento di protocolli e delle configurazioni esistenti su reti reali.
+
+La gran parte degli ambienti di emulazione esistenti soffrono però di gravi debolezze che ne limitano l'utilizzo ad alcune particolari realtà. Prima tra queste l'intrinseca fragilità del modello logico su cui si basano.
+Questi sistemi infatti, concentrano i loro sforzi nella sempre più perfetta emulazione degli elementi coinvolti, senza curarsi della definizione di un modello formale per la rete.
+Tipicamente, il modello utilizzato ricalca e forse rappresenta un'astrazione dell'emulatore su cui poggiano. Ciò comporta l'inevitabile perdita di flessibilità dell'ambiente di emulazione e l'impossibilità di definire uno schema comune per le reti emulate.
+
+Questo lavoro offre una soluzione a tale debolezza, proponendo un modello formale per le reti vituali emulate.
+In prima istanza, è stato necessario realizzare uno studio puntuale dei vincoli introdotti dalla mancanza di uno schema adeguato. Successivamente si è proceduto alla definizione di un modello formale che fosse in grado di rappresentare le diverse reatà di interesse di una rete, mantenendo intatte le doti di generalità, coerenza ed astrattezza consone ad un modello logico.
+
+Un'altra grave carenza di cui soffrono tali sistemi è la scarsa flessibilità che dimostrano. Ogni ambiente, infatti, dispone di una base architetturale compasta da un motore di emulazione studiato \emph{ad-hoc}, e resta ad esso irrevocabilmente vincolato.
+
+L'ambiente realizzato nell'ambito di questo progetto supera tale vincolo grazie al modello logico su cui si centra ed alla provata certezza che un simile strumento debba collocarsi ad un livello d'astrazione superiore a quello dei sistemi di emulazione.
+Per conseguire tale obiettivo è stato necessario sciogliere lo stretto legame presente tra il modello della rete e l'emulatore, astraendo e creando uno schema logico adatto alla rappresentazione di ogni rete virtuale.
+
+Scopo primario di quest'attività di tesi è stato la realizzazione un ambiente grafico per la configurazione avanzata di reti virtuali emulate.
+Tale strumento si basa su un modello comune per la realizzazione e la configurazione di reti virtuali, garantendo all'utente un'estrema usabilità e configurabilità.
+Molte sono state le problematiche affrontate nel realizzare uno strumento che risultasse nel contempo estremamente flessibile ed usabile.
+
+Il punto di forza che dona al tool caratteristiche univoche è l'adozione di dirigere l'ambiente verso un'\emph{architettura a Plug-In}. Tale modularità ha permesso infatti, l'estensione delle funzionalità del sistema in modo assai più veloce e meno dispendioso, incrementando notevolmente caratteristiche quali flessibilità ed estensibilità.
+Tuttavia, questa tipologia architetturale seppur altamente flessibile, presentava una forte limitazione per quanto concerne l'espressività dei singoli \plugin{}. 
+
+In questo lavoro si è analizzato il problema sopra citatao, trovando una soluzione che estendesse la capacità espressiva dei moduli.
+
+
+Nella prima sezione si trattano i sistemi di emulazione offrendo una panoramica degli ambienti esistenti e delle specifiche funzionalità. Successivamente vengono paragonati gli ambienti di configurazione messi a disposizione dai sistemi di emulazione, enfatizzando pregi e difetti dei singoli strumenti.
+
+Nel secondo capitolo si effettua uno studio approfondito atto a estrarre un modello che accomuni le varie configurazioni avanzate dei potenziali servizi attivi su una \virtualmachine{}. Si affontano quindi due scenari reali di configurazioni avanzate: i servizi BGP e OSPF. Lo schema risultante viene adottato mostrando la reingegnerizzazione affrontata che ha portato alla definizione del nuovo \emph{plugin framework} adottato da \visualnetkit{}.
+
+Nella terza sezione si descrivono le fasi di progettazione e sviluppo di questo progetto, le metodologie utilizzate, le scelte realizzative e gli strumenti di supporto alle singole fasi. Si illustra in dettaglio la composizione dell'architettura, le difficoltà riscontrate e le motivazioni per le scelte effettuate.
+
+Infine, viene proposto uno scenario reale che descrive le fasi che l'utente deve eseguire per costruire una configurazine avanzata di una rete virtuale, con l'ausilio dell'ambiente qui discusso.
