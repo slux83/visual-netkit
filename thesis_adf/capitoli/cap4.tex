@@ -1,15 +1,15 @@
 \chapter{Scenari per la configurazione avanzata di reti virtuali}\label{capitolo:esempi}
 \markboth{Scenari per la configurazione avanzate di reti virtuali}{}
 
-I precedenti capitoli hanno descritto il lavoro svolto durante l'attività di tesi. In questo capitolo si vuole illustrare il funzionamento dell'ambiente sviluppato, suddividendo l'esposizione in tre fasi.
+I precedenti capitoli hanno descritto il lavoro svolto durante l'attività di tesi. In questo capitolo si vuole illustrare il funzionamento dell'ambiente sviluppato, suddividendo l'esposizione in uno scenario reale descritto in tre fasi.
 
 
 \section{Caso di studio: realizzazione e configurazione di un Lab tramite \visualnetkit{}}
-Il primo di questi relaziona i passi da effettuare per la costruzione di un semplice laboratorio composto da alcune reti LAN.
+Il primo di questi relaziona i passi da effettuare per la costruzione di un semplice laboratorio composto da una rete LAN.
 
-Lo step successivo descrive le mansioni da eseguire sul laboratorio precedentemente cerato per riuscire a configurare i nodi presenti, secondo le esigenze dell'utente. In questo vengono quindi mostrate le potenzialità del nuovo \plugin{} framework, sottolineando come è possibile applicare dettagliatamente le configurazioni. In mancanza di moduli complessi - come \emph{Zebra} o \emph{Quagga} -, è stato utilizzato un \plugin{} di test che possiede una struttura delle properties estesa e altamente dinamica, priva di un significato logico.
+Lo step successivo descrive le mansioni da eseguire sul laboratorio precedentemente cerato per riuscire a configurare i nodi presenti, secondo le esigenze dell'utente. In questo vengono quindi mostrate le potenzialità del nuovo \plugin{} framework, sottolineando com'è possibile applicare dettagliatamente le configurazioni. In mancanza di moduli complessi - come \emph{Zebra} o \emph{Quagga} -, è stato utilizzato un \plugin{} di test che possiede una struttura delle properties estesa e altamente dinamica, priva di un significato logico.
 
-L'ultima parte espone alcuni test di funzionamento sulla rete precedentemente realizzata, tramite l'ausilio dell'ambiente di configurazione offerto da \netkit{}.
+L'ultima parte espone alcuni test di funzionamento sulla rete precedentemente realizzata, tramite l'ausilio dell'ambiente di emulazione offerto da \netkit{}.
 
 \subsection{Realizzazione di un laboratorio}
 L'obiettivo di questa fase di apertura è la realizzazione di una topologia di rete semplice composta da quattro \virtualmachine{} connesse a stella ad un unico dominio di collisione.
@@ -23,9 +23,9 @@ Per prima cosa occorre creare un nuovo laboratorio scegliendo dal menu \emph{Fil
 	\label{figura:vn_ex_dock}
 \end{figure}
 
-Le docks - che comprendono anche le tool-bar - presenti sono tutte configurabili. L'utente può comodamente disporle a suo piacimento, nonché nascondere quelle che ritiene superflue.
+Le docks presenti - che comprendono anche le tool-bars -, sono tutte configurabili. L'utente può comodamente disporle a suo piacimento, nonché nascondere quelle che ritiene superflue.
 
-Successivamente è possibile iniziare a costruire la topologia della rete in esame: utilizzando le apposite azioni presenti nel menu \emph{Graph}, l'utente può inserire nella scena grafica elementi quali: Virtual Machines, Links, Collision Domain e Aree. Dapprima inseriamo le quattro \virtualmachine{} nella scena, attivando per l'host ``PC1'' anche il \plugin{} \emph{Test} che verrà configurato in un secondo momento.
+Successivamente è possibile iniziare a costruire la topologia della rete in esame: utilizzando le apposite azioni presenti nel menu \emph{Graph}, l'utente può inserire nella scena grafica elementi quali Virtual Machines, Links, Collision Domain e Aree. Dapprima inseriamo le quattro \virtualmachine{} nella scena, attivando per l'host ``PC1'' anche il \plugin{} \emph{Test} che verrà configurato in un secondo momento.
 
 \begin{figure}[!htb]
 	\centering
@@ -39,10 +39,10 @@ Al termine dell'operazione è possibile inserire il dominio di collisione posto 
 Una volta realizzata la topologia di rete desiderata, il tool permette l'aggiunta di aree che possono essere utilizzate come etichette, oppure come aggregatori di elementi.
 
 \subsection{Configurazione avanzata del laboratorio}
-L'utente spesso ha la necessità di configurare i servizi presenti all'interno degli host virtuali per garantire un corretto funzionamento delle macchine ed effettuare con successo i test desiderati. \visualnetkit{} offre questa possibilità mediante l'uso della dock delle proprietà.
+L'utente spesso ha la necessità di configurare i servizi presenti all'interno degli host virtuali per garantire un corretto funzionamento delle macchine, per effettuare con successo i test desiderati. \visualnetkit{} offre questa possibilità mediante l'uso della dock delle proprietà.
 Quando si seleziona un elemento della scena grafica - doppio click -, il sistema provvede a renderizzare le informazioni dell'oggetto all'interno della property dock. Possiamo quindi trovare tutte le propietà presenti all'interno dei \plugin{} attivi per l'entità selezionata.
 
-Alcuni moduli più complessi (nel caso dell'esempio il \plugin{} \emph{Test}) prevedono la possibilità di poter manipolare la struttura delle properties, in particolare inserendo o eliminando sotto-attributi (figura \ref{figura:vn_ex_pp}).
+Alcuni moduli più complessi (nel caso dell'esempio il \plugin{} \emph{Test}) prevedono la possibilità di poter manipolare la struttura delle properties, in particolare questo avviene inserendo o eliminando sotto-attributi (figura \ref{figura:vn_ex_pp}).
 
 \begin{figure}[!htb]
 	\centering
@@ -53,9 +53,9 @@ Alcuni moduli più complessi (nel caso dell'esempio il \plugin{} \emph{Test}) pr
 Si vuole quindi modificare la struttura del modulo \emph{Test} attivo sulla macchina virtuale ``PC1''. Come mostrato, viene prima inserata una sotto-proprietà dell'attributo ``property-1'', successivamente si tenta di inserire tre copie della proprietà ``property-2'' che il modulo prevede.
 Al tentativo di inserimento della quarta copia di quest'ultima, il \plugin{} restituisce un errore in quanto non sono previste più di tre duplicati per la proprietà in esame.
 
-Quindi, tramite l'apposito bottone ``Actions'' è possibile, per ogni proprietà di un modulo eliminare o aggiungere le sotto-property quando consentito. Quest'ultimo controllo - come quello inerente al controllo di cardinalità di una property poc'anzi citato - è interamente affidato al \plugin{}.
+Tramite l'apposito bottone ``Actions'' è possibile, per ogni proprietà di un modulo, eliminare o aggiungere le sotto-property quando consentito. Quest'ultimo controllo - come quello inerente al controllo di cardinalità di una property poc'anzi citato -, è interamente affidato al \plugin{}.
 
-Il modulo utilizzato nell'esempio è puramente utilizzato per il testing. Tuttavia si può facilmente immaginare che un \plugin{} che offra un servizio complesso (come Zebra o Quagga) possa avere una struttura simile a quella mostrata, ossia che contenga molteplici attributi con una struttura gerarchica complessa.
+Il modulo analizzato nell'esempio è puramente utilizzato per il testing. Tuttavia si può facilmente immaginare che un \plugin{} complesso, come \emph{Zebra} o \emph{Quagga}, possa avere una struttura simile a quella mostrata che contiene molteplici attributi e sotto-attributi.
 
 \subsection{Sperimentazioni sul laboratorio esportato}
 Lo stadio finale della costruzione di un laboratorio mediante l'utilizzo di \visualnetkit{} si conclude con il salvataggio dello stesso sul \fs{}. Mediante la voce \emph{Save As\ldots} presente nel menu \emph{File} è possibile selezionare la directory dove il Lab creato verrà esportato.
@@ -69,8 +69,8 @@ Lo stadio finale della costruzione di un laboratorio mediante l'utilizzo di \vis
 
 Effettata questa operazione si può provvedere anche alla chiusura di \visualnetkit{}. Da questo momento in poi viene utilizzato \netkit{}\footnote{La spiegazione di come avviare un laboratorio con \netkit{} va oltre gli obiettivi di questo lavoro.} per avviare la rete virtuale, dove è possibile effettuare tutti i test che si desiderano.
 
-Studiando il comportamento della rete poc'anzi creata è possibile osservare che il laboratorio esportato è completo in ogni dettaglio. Tutte gli host virtuali, connessi ad un unico dominio di collisione, riescono a colloquiare correttamente, come mostrato in figura \ref{figura:ex_netkit}. Inoltre si può constatare che i \plugin{} attivati sui links e sull'host ``PC1'' hatto tutti contribuito a caratterizzare la parte della rete di propria competenza.
+Studiando il comportamento della rete precedentemente creata, è possibile osservare che il laboratorio esportato è completo in ogni dettaglio. Tutte gli host virtuali, connessi ad un unico dominio di collisione, riescono a colloquiare correttamente, come mostrato in figura \ref{figura:ex_netkit}. Inoltre si può constatare che i \plugin{} attivati sui links e sull'host ``PC1'' hatto tutti contribuito a caratterizzare la parte della rete di propria competenza.
 
-Ancora è possibile immaginare un'estensione dell'architettura al fine di prevedere la possibilità di avviare un laboratorio direttamente da \visualnetkit{}, avendo la possibilità di avere una rappresentazione grafica dei terminali degli host virtuali.
+Ancora, è possibile immaginare un'estensione dell'architettura al fine di prevedere la possibilità di avviare un laboratorio direttamente da \visualnetkit{} avendo la possibilità di mostrare all'utente una rappresentazione grafica dei terminali virtuali.
 
-In ultima instanza, potrebbe risultare necessaria ed innovativa la realizzazione di un meccanisco che permetta ai vari moduli di comunicare e cooperare tra di loro, ad esempio si pensi allo scenario in cui un modulo (attivo su una \virtualmachine) volesse conoscere tutti gli indirizzi IPv4 attivi sulle interfacce hardware presenti sull'host.
+In ultima instanza, potrebbe risultare necessaria ed innovativa la realizzazione di un meccanisco che permetta ai vari moduli di comunicare e cooperare tra di loro. Si pensi ad esempio, allo scenario in cui un modulo (attivo su una \virtualmachine) volesse conoscere tutti gli indirizzi IPv4 attivi sulle interfacce hardware presenti sull'host.
