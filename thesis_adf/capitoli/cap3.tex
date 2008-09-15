@@ -90,7 +90,7 @@ typedef void destroyPlugin_t(PluginInterface*);
 
 Trimite questa interfaccia un plugin può interagire con il sistema centrale. Ogni implementazione di un \plugin{} deve quindi riscrivere le funzioni descritte. Il modulo deve inoltre definire le factory di creazione e distruzione - righe $38$ e $39$. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo.
 
-%Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'appendice A.
+Per avere informazioni aggiuntive su come creare un \plugin{}, si legga l'appendice A (pagina \pageref{appendice_a}).
 
 Ogni modulo è descritto da un proprio file di configurazione scritto in \xml{} che deve necessariamente essere inserito all'interno del \emph{Qt Resource System}\footnote{Il sistema di risorse offerto da \qt{} consiste in un metodo (platform-indipendent) per la memorizzazione di file binari all'interno dell'applicazione stessa. Questa è una tecnica molto utile se l'applicazione ha sempre bisogno di determinati files e non si vuole correre il rischio di non possederli a runtime.}. All'interno di questo file vi sono descritte le credenziali del \plugin{} come: il nome, la descrizione, gli autori, le dipendenze dagli altri \plugin{} ecc\ldots, ma anche un'accurata rappresentazione delle proprietà offerte all'elemento su cui verrà attivato il modulo.
 
