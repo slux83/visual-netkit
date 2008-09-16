@@ -4,4 +4,146 @@
 % Inserisce la voce di questo capitolo nell'indice
 \addcontentsline{toc}{chapter}{APPENDICE A}
 
-TODO
+Questa parte del lavoro è indicata a coloro che sono interessati alla creazione di un \plugin{} per \visualnetkit{}. Viene quindi fornita una descrizione dettagliata sull'interfaccia dei moduli e sulle singole funzioni da implementare, e viene mostrato il supporto di alcune classi che possono essere utilizzate all'interno del \plugin{} per semplificare la manipolazione delle proprietà.
+
+\section*{Plugin Interface}
+\addcontentsline{toc}{section}{Plugin Interface}
+A partire dalla versione $1.1$ l'interfaccia dei moduli è stata modificata per consentire l'estensione del sistema che gestisce le properties, come descritto precedentemente. Qui sotto è riproposta la classe astratta pura che descrive l'interfaccia di un \plugin{}:
+
+\begin{lstlisting}
+/**
+ * PluginInterface.h
+ */
+class PluginInterface
+{
+public:
+	virtual ~PluginInterface() {};
+
+	virtual bool saveProperty(QString propUniqueId, QString propValue,
+			QString *pluginAlertMsg = NULL) = 0;
+
+	virtual QString getXMLResource() = 0;
+
+	virtual QMap<QString, QString> getTemplates() = 0;
+	
+	virtual QList<PluginProperty*> getPluginProperties() = 0;
+
+	virtual PluginProxy* getProxy() = 0;
+
+	virtual void setProxy(PluginProxy* p) = 0;
+
+	virtual void setGroupID(qint32 id) { Q_UNUSED(id) };
+	virtual qint32 getGroupID() { return -1; };
+
+	virtual QString getDefaultGraphisLabel() = 0;
+
+	virtual QString getName() = 0;
+
+	virtual bool init(QString laboratoryPath) = 0;
+	
+	virtual QString deleteProperty(QString propertyUniqueId) = 0;
+	
+	virtual QPair<PluginProperty*, QString> addProperty(
+		QString propertyIdToAdd, QString parentPropertyUniqueId) = 0;
+	
+};
+
+typedef PluginInterface* createPlugin_t();
+typedef void destroyPlugin_t(PluginInterface*);
+\end{lstlisting}
+Le righe di codice più importanti di questa classe sono gli ultimi due ``typedef''. Ogni implementazione di un \plugin{} deve necessariamente avere al suo interno l'implementazione le factory di creazione e distruzione, definite come \emph{extern ``C''}. Queste due funzioni sono usate dalla classe LoaderFactory (che risolve i due simboli \textbf{createPlugin} e \textbf{destroyPlugin}) che permettono di creare nuove instanze di un determinato modulo. Un tipico esempio nell'implementazione di queste due funzioni è riportato qui di seguito:
+
+\begin{lstlisting}
+/* Factory (creator) */
+extern "C" PluginInterface* createPlugin()
+{
+	return new YourContretePluginClass();
+}
+
+/* Factory (destroyer) */
+extern "C" void destroyPlugin(PluginInterface* p)
+{
+	delete p;
+}
+\end{lstlisting}
+
+Il resto delle funzioni da implementare e le loro mansioni, sono qui elencate:
+\begin{description}
+\item[saveProperty()] questa funzione viene invocata dal sistema centrale quando una particolare proprietà viene modificata. La property è indicizzata dal proprio ID univoco ed inoltre viene passato un puntatore ad un \emph{QString} che in caso di errore deve essere riempito da un messaggio di errore che verrà mostrato all'utente. Se tale stringa è un NULL, la property deve essere salvata senza effettuare alcun tipo di controllo ritornado sempre ``true'';
+
+\item[getXMLResource()] ritorna una stringa che contiene il \emph{Qt Resource} entry del file di configurazione del plugin. \\
+Esempio \texttt{:/pluginName/xml-config};
+
+\item[getTemplates()] questa funzione ritorna una \emph{QMap<QString, QString>} che contiene come chiave il path del file di configurazione a partire dalla root del laboratorio e come valore, contiene il testo del file di configurazione o porzione dello stesso;
+
+\item[getPluginProperties()] ritorna la lista contenente le root properties del \plugin{};
+
+\item[setProxy()] dopo la creazione del modulo, il sistema passa il proxy al \plugin{}: in questo momento è possibile effettuare post-operazioni quali validazione del file \xml{} di configurazione e salvataggio delle properties di base; 
+
+\item[setGroupID() e getGroupID()] non sono utilizzate allo stato attuale;
+
+\item[getDefaultGraphisLabel()] ritorna la label da mostrare all'interno della scena grafica accanto all'elemento base di propria competenza, quando il modulo viene creato;
+
+\item[getName()] ritorna il nome del \plugin{};
+
+\item[init()] questa funzione è invocata quando un laboratorio viene caricato. Normalmente l'implementazione di questa parte prevede un azione di \emph{parsing} delle informazioni celate all'interno dei vari files di configurazione, per ricostruire la struttura delle proprietà. Il valore booleano di ritorno attualmente non è utilizzato, ma verrà impiegato durante l'importing di un laboratorio: il plugin ritornerà ``true'' se esistono i files di sua competenza e quindi deve rimanere attivo per quel determinato elemento;
+
+\item[deleteProperty()] la rimozione di una property viene effettuata passando l'id univoco. Il \plugin{} è tenuto a controllare se il parent della property passata possiede un numero di occorrenze minimo accettabile. In caso di errore la funizone ritorna una \emph{QString} contenente una stringa di errore, altrimenti ritorna una \emph{QString} vuota;
+
+\item[addProperty()] l'inserimento di una property prevede il passaggio di due parametri: l'id univoco del parent, e l'id (del file \xml{}) che descrive la nuova property. Se non vi sono errori la funzione ritorna una coppia ``pair'' che contiene come primo elemento il puntatore alla nuova \emph{PluginProperty} appena creata, e una \emph{QString} vuota come secondo elemento. In caso di fallimento (come ad esempio un controllo di occorrenza violato), la funzione ritorna una \emph{QPair} che contiene NULL come primo elemento e la stringa che descrive l'errore come secondo elemento.
+\end{description}
+
+\section*{File di configurazione di un \plugin{}}
+\addcontentsline{toc}{section}{File di configurazione di un \plugin{}}
+Un elemento importante che risiede all'interno del resource file di un modulo, è il proprio file di configurazione.
+\begin{lstlisting}[language=xml]
+<plugin name="Plugin Name">
+  <global type="vm|cd|link" version="1.0" author="" dependencies="">
+    <![CDATA[This is a plugin.]]>
+  </global>
+  <properties>
+    <property id="" name="" default_value="" min="0|1" max="">
+      <![CDATA[description (anche codice HTML)]]>
+      <childs>
+        <property id="" name="" default_value="" min="0|1" max="">
+          <![CDATA[description]]></childs>
+        </property>
+      </childs>
+    </property> 
+  </properties>
+</plugin>
+\end{lstlisting}
+
+La sezione ``global'' descrive i meta-dati del plugin quali is nome, il tipo di elemento a cui può essere attivato, autori, dipendenze e descrizione estesa. Le proprietà sono descritte come si vede nell'esempio riportato: ogni property deve essere identificata da un ID univoco, deve possedere un nome e un attributo di minima occorrenza pari a $1$ o $0$. Se si ricade nel primo caso (per l'attributo ``min''), il property expert crea la property al momento di inizializzazione, altrimenti la property viene ignorata e può essere inserita in un secondo momento dall'utente. L'attributo di massimo può assumere valiri nel range $1$ - $65536$, ed indica il numero massimo di occorrenze di una property.
+
+Questa struttura può essere modellata senza limiti particolari. L'utente può inserire un numero arbitrario di properties e sub-properties, in base alle proprie esigenze.
+
+\section*{Plugin Proxy e Property Expert}
+\addcontentsline{toc}{section}{Plugin Proxy e Property Expert}
+Durante lo sviluppo di un \plugin{} è molto importante conoscere le classi che sono accoppiate con il modulo stesso. Il \emph{Plugin Proxy} è un intermediario tra l'estensione e il sistema centrale. Alcune funzioni utili sono riportate qui sotto:
+\begin{description}
+\item[getBaseElement()] ritorna il puntatore al \emph{QObject} che rappresenta l'elemento su cui è stato attivato il modulo. in caso di errore ritorna un NULL pointer;
+
+\item[getPropertyExpert()] ritorna il riferimento al property expert;
+
+\item[changeGraphicsLabel()] questa funzione è invocata quando il \plugin{} desidera cambiare la label grafica a lui assegnata. 
+\end{description}
+
+\subsection*{Property Expert}
+Un elemento importante che collabora alla gestione della struttura delle proprietà di un plugin, è la classe \emph{PropertyExpert}. Questa offre le seguenti funzioni:
+\begin{description}
+\item[buildBaseProperties()] legge le informazioni dal file di configurazione del modulo e ritorna un albero n-ario delle properties descritto da una lista di root-properties;
+
+\item[parseXmlGlobalInfo()] parsa e restituisce le informazioni (meta-dati) di un \plugin{};
+
+\item[isXmlConfValid()] valida il file di configurazione di un modulo;
+
+\item[searchProperty()] ritorna il puntatore ad una property, identificata tramite l'id univoco; può ritornare NULL;
+
+\item[searchPropertiesById()] effettua una ricerca delle properties che posseggono l'id (descritto come attributo ``id'' nel file \xml{}) passato come argomento;
+
+\item[getPropertyInfo()] ritorna le informazioni di una property leggendo il file \xml{};
+
+\item[newProperty()] factory di costruzione di una property.
+
+\end{description}
