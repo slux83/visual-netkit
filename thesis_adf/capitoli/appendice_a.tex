@@ -8,11 +8,11 @@
 % Inserisce la voce di questo capitolo nell'indice
 \addcontentsline{toc}{chapter}{APPENDICE: Operazioni per la Creazione di un Nuovo Plugin}
 
-Questa parte del lavoro è indicata a coloro che sono interessati alla creazione di un \plugin{} per \visualnetkit{}. Viene fornita una descrizione dettagliata sull'interfaccia dei moduli e sulle singole funzioni da implementare, viene inoltre mostrato il supporto di alcune classi che possono essere utilizzate all'interno del \plugin{} per semplificare alcune azioni particolarmente complesse.
+Questa parte del lavoro è dedicata a coloro che sono interessati alla creazione di un \plugin{} per \visualnetkit{}. Viene fornita una descrizione dettagliata sull'interfaccia dei moduli e sulle singole funzioni da implementare e viene inoltre mostrato il supporto di alcune classi che possono essere utilizzate all'interno del \plugin{} per semplificare alcune azioni particolarmente complesse.
 
 \section*{Plugin Interface}
 \addcontentsline{toc}{section}{Plugin Interface}
-A partire dalla versione $1.1$ l'interfaccia dei moduli è stata modificata per consentire l'estensione del sistema che gestisce le properties, come precedentemente descritto. Qui sotto è riportata la classe astratta pura che descrive l'interfaccia di un \plugin{}:
+A partire dalla versione $1.1$, l'interfaccia dei moduli è stata modificata per consentire l'estensione del sistema che gestisce le properties, come precedentemente descritto. Qui di seguito è riportata la classe astratta pura che descrive l'interfaccia di un \plugin{}:
 
 \begin{lstlisting}
 /**
@@ -79,21 +79,21 @@ Esempio \texttt{:/pluginName/xml-config};
 
 \item[getTemplates()] questa funzione ritorna una \emph{QMap<QString, QString>} che contiene come chiave il path del file di configurazione a partire dalla root del laboratorio e, come valore, contiene il testo da scrivere all'interno del file indicato dalla chiave della mappa;
 
-\item[getPluginProperties()] ritorna la lista contenente le root properties del \plugin{};
+\item[getPluginProperties()] restituisce la lista contenente le root properties del \plugin{};
 
 \item[setProxy()] dopo la creazione del modulo, il sistema passa il proxy al \plugin{}: in questo momento è possibile effettuare post-operazioni quali validazione del file \xml{} di configurazione e il salvataggio delle properties di base offerte dal property expert; 
 
 \item[setGroupID() e getGroupID()] non sono utilizzate allo stato attuale;
 
-\item[getDefaultGraphisLabel()] ritorna la label da mostrare all'interno della scena grafica accanto all'elemento base di propria competenza, quando il modulo viene creato;
+\item[getDefaultGraphisLabel()] fornisce la label da mostrare all'interno della scena grafica accanto all'elemento base di propria competenza, quando il modulo viene creato;
 
 \item[getName()] ritorna il nome del \plugin{};
 
-\item[init()] questa funzione è invocata quando un laboratorio viene caricato. Normalmente l'implementazione di questa parte prevede un azione di \emph{parsing} delle informazioni celate all'interno dei vari files di configurazione, per ricostruire la struttura delle proprietà. Il valore booleano di ritorno attualmente non è utilizzato, ma verrà impiegato durante l'importing di un laboratorio: il plugin ritornerà ``true'' se esistono i files di sua competenza e quindi deve rimanere attivo per quel determinato elemento;
+\item[init()] questa funzione è invocata quando un laboratorio viene caricato. Normalmente l'implementazione di questa parte prevede un azione di \emph{parsing} delle informazioni celate all'interno dei vari files di configurazione, per ricostruire la struttura delle proprietà. Il valore booleano di ritorno attualmente non è utilizzato, ma verrà impiegato durante l'importing di un laboratorio: il plugin restituirà ``true'' se esistono i files di sua competenza e quindi deve rimanere attivo per quel determinato elemento;
 
 \item[deleteProperty()] la rimozione di una property viene effettuata passando l'id univoco. Il \plugin{} è tenuto a controllare se il parent della property passata possiede un numero di occorrenze minimo accettabile. In caso di errore la funizone ritorna un \emph{QString} contenente una stringa di errore, altrimenti ritorna un \emph{QString} vuota;
 
-\item[addProperty()] l'inserimento di una property prevede il passaggio di due parametri: l'id univoco del parent, e l'id (del file \xml{}) che descrive la nuova property. Se non vi sono errori la funzione ritorna una coppia ``pair'' che contiene come primo elemento il puntatore alla nuova \emph{PluginProperty} appena creata, e una \emph{QString} vuota come secondo elemento. In caso di fallimento (come ad esempio un controllo di occorrenza violato), la funzione ritorna una \emph{QPair} che contiene NULL come primo elemento e la stringa che descrive l'errore come secondo elemento.
+\item[addProperty()] l'inserimento di una property prevede il passaggio di due parametri: l'id univoco del parent, e l'id (del file \xml{}) che descrive la nuova property. Se non vi sono errori la funzione restituisce una coppia ``pair'' che contiene come primo elemento il puntatore alla nuova \emph{PluginProperty} appena creata, e una \emph{QString} vuota come secondo elemento. In caso di fallimento (come ad esempio un controllo di occorrenza violato), la funzione ritorna una \emph{QPair} che contiene NULL come primo elemento e la stringa che descrive l'errore come secondo elemento.
 \end{description}
 
 \section*{File di configurazione di un \plugin{}}
@@ -143,11 +143,11 @@ Un elemento importante che collabora alla gestione della struttura delle proprie
 
 \item[isXmlConfValid()] valida il file di configurazione di un modulo;
 
-\item[searchProperty()] ritorna il puntatore ad una property identificata tramite l'id univoco; ritorna un NULL pointer in caso di errore;
+\item[searchProperty()] restituisce il puntatore ad una property identificata tramite l'id univoco; ritorna un NULL pointer in caso di errore;
 
 \item[searchPropertiesById()] effettua una ricerca delle properties che posseggono l'id (descritto come attributo ``id'' nel file \xml{}) passato come argomento;
 
-\item[getPropertyInfo()] ritorna le informazioni di una property leggendo il file \xml{} dell'elemento che possiede l'id passato come argomento;
+\item[getPropertyInfo()] fornisce le informazioni di una property leggendo il file \xml{} dell'elemento che possiede l'id passato come argomento;
 
 \item[newProperty()] factory di costruzione di una nuova property.
 
