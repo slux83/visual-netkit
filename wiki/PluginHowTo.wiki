@@ -3,7 +3,7 @@
 
 *NOTE: BEFORE READ THIS HOW-TO, PLEASE READ PluginArchitecture PAGE*
 
-==This how-to is only for VisualNetkit version 1.0 or less==
+==This how-to is only for VisualNetkit (version 1.0 or less) ==
 
 ----
 
