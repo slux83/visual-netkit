@@ -1,4 +1,4 @@
-#summary The plugin architecture of VisualNetkit
+#summary The plugin architecture of VisualNetkit (version <= 1.0)
 #labels Deprecated,Phase-Design,Phase-Implementation
 
 =UML class diagram=
