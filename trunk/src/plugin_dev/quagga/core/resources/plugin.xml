@@ -1,0 +1,57 @@
+<plugin name="quagga-core">
+	
+	<global type="vm" version="1.0" author="Alessio Di Fazio" dependencies="">
+		<![CDATA[The <a href="http://www.quagga.net/" title="What is this?">Quagga</a> (core) plugin for NetKit ]]>
+	</global>
+	
+	<properties>
+		
+		<property id="daemons" name="daemons" default_value="" min="1" max="1">
+			<![CDATA[The daemon file tells the Quagga suite which daemons to start.<br />Possible values are: 'yes', 'no', 'priority_number']]>
+			<childs>
+				<property id="daemons-zebra" name="daemons-zebra" default_value="yes" min="1" max="1">
+				<![CDATA[Zebra daemon]]>
+				<childs/>
+				
+				<property id="daemons-bgpd" name="daemons-bgpd" default_value="no" min="1" max="1">
+				<![CDATA[Bgp daemon]]>
+				<childs/>
+				
+				<property id="daemons-ospfd" name="daemons-ospfd" default_value="no" min="1" max="1">
+				<![CDATA[Ospf daemon]]>
+				<childs/>
+				
+				<property id="daemons-ospf6d" name="daemons-ospf6d" default_value="no" min="1" max="1">
+				<![CDATA[Ospf ipv6 daemon]]>
+				<childs/>
+				
+				<property id="daemons-ripd" name="daemons-ripd" default_value="no" min="1" max="1">
+				<![CDATA[Rip daemon]]>
+				<childs/>
+				
+				<property id="daemons-ripngd" name="daemons-ripngd" default_value="no" min="1" max="1">
+				<![CDATA[Ripng daemon]]>
+				<childs/>
+				
+				<property id="daemons-isisd" name="daemons-isisd" default_value="no" min="1" max="1">
+				<![CDATA[Isis daemon]]>
+				<childs/>
+				
+				<property id="daemons-ldpd" name="daemons-ldpd" default_value="no" min="1" max="1">
+				<![CDATA[Ldp daemon]]>
+				<childs/>
+				
+			</childs>
+		</property>
+		
+		<property id="zebra.conf" name="zebra.conf" default_value="" min="1" max="1">
+			<![CDATA[The zebra.conf file]]>
+			<childs>
+				<property id="zebra-password" name="zebra-password" default_value="zebra" min="1" max="1">
+				<![CDATA[Zebra password]]>
+				<childs/>
+			</childs>
+		</property>
+	</properties>
+	
+</plugin>
