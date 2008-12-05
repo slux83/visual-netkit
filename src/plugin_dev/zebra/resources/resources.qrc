@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/zebra" >
-        <file alias="ini">plugin.ini</file>
-        <file alias="daemons">daemons</file>
-        <file alias="zebra.conf">zebra.conf</file>
-    </qresource>
-</RCC>
