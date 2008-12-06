@@ -17,6 +17,7 @@
  */
 
 #include "LabHandler.h"
+#include "FsManager.h"
 #include "../../common/CommonConfigs.h"
 #include "VmMapper.h"
 #include "CdMapper.h"
@@ -112,6 +113,11 @@ void LabHandler::openLab(QString labPath)
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
 	
 	mainWindow->actionCloseLab->setDisabled(false);
+	
+	mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+	mainWindow->fsTree->setRootIndex(
+			FsManager::getInstance()->changePath(
+					currLab->getLabPath().absolutePath()));
 }
 
 /**
