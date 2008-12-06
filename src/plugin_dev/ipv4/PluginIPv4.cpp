@@ -150,7 +150,7 @@ bool PluginIPv4::saveProperty(QString propUniqueId, QString propValue, QString *
 	PluginProperty *prop = myProxy->getPropertyExpert()->searchProperty(properties, propUniqueId);
 	if(!prop)
 	{
-		qWarning() << "PluginIPv4::initProperty: properties doesn't contain property UID = " << propUniqueId ;
+		qWarning() << "PluginIPv4::saveProperty: properties doesn't contain property UID = " << propUniqueId ;
 		return true;
 	}	
 	
