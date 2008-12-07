@@ -172,61 +172,38 @@ bool PluginQuaggaCore::init(QString laboratoryPath)
 		return false;
 	}
 
-	//QRegExp lineRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+\\.[0-9]{1,3})");
-//	
-//	/* Parse my startup file and get the mac address if any */
-//	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
-//	startupPath.replace("//", "/");		//normalize path
-//	
-//	QFile startupFile(startupPath);
-//	if(!startupFile.exists())
-//	{
-//		qWarning() << "PluginIPv4::init(): startup" << startupPath << " file don't exist";
-//		return false;
-//	}
-//	
-//	if(!startupFile.open(QFile::ReadOnly))
-//	{
-//		qWarning() << "PluginIPv4::init(): cannot open" << startupPath << "file in read only mode.";
-//		return false;
-//	}
-//	
-//	QStringList startupContent = QString(startupFile.readAll()).split("\n", QString::SkipEmptyParts);
-//	startupFile.close();
-//	
-//	bool parseOk = false;
-//	
-//	foreach(QString line, startupContent)
-//	{
-//		ipRegExp.indexIn(line);
-//		QStringList capText = ipRegExp.capturedTexts();
-//		
-//		//It's my rule
-//		if(capText[0].contains(hi->getName()))
-//		{
-//			QString addressVal = capText[1].trimmed();
-//			QString netmaskVal = capText[2].trimmed();
-//			QString broadcastVal = capText[3].trimmed();
-//			
-//			myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0)->setValue(addressVal);
-//			myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->setValue(netmaskVal);
-//			myProxy->getPropertyExpert()->searchPropertiesById(properties, "broadcast").at(0)->setValue(broadcastVal);
-//			parseOk = true;
-//			break;
-//		}
-//	}
-//	
-//	if(parseOk)
-//	{
-//		NetworkAddress addr(QHostAddress(
-//			myProxy->getPropertyExpert()->searchPropertiesById(properties, "address").at(0)->getValue()),
-//				QHostAddress(myProxy->getPropertyExpert()->searchPropertiesById(properties, "netmask").at(0)->getValue()));
-//		
-//		myProxy->changeGraphicsLabel(addr.toString(PRINT_CIDR_NETMASK));
-//		
-//		return true;
-//	}
-//	
+	QRegExp daemonsRegExp("(.+)=(yes|no|[0-9]|10)");
+	QString daemonsFilePath = laboratoryPath + "/" + vm->getName() + "/etc/quagga/daemons";
+	QStringList listMatch;
+
+	/* Parse daemons file and get the daemons status */
+	QString daemonFileContent = file2string(daemonsFilePath);
+
+	if(daemonFileContent.isNull())
+	{
+		qWarning() << "PluginQuaggaCore::init()" << "daemon file reading error";
+		return false;
+	}
+
+	foreach(QString line, daemonFileContent.split("\n", QString::SkipEmptyParts))
+	{
+		daemonsRegExp.indexIn(line);
+		listMatch = daemonsRegExp.capturedTexts();
+
+		if(listMatch[0] == "")
+			continue;	//skip unmatched line
+
+		//save the appropriate property entry
+		QList<PluginProperty *> pList =
+				myProxy->getPropertyExpert()->searchPropertiesById(properties, "daemons-" + listMatch[1]);
+
+		if(!pList.isEmpty())
+			pList.first()->setValue(listMatch[2]);
+		else
+			qWarning() << "PluginQuaggaCore::init()" << "daemon property not found:" << listMatch;
+	}
+
+	//set the graphics label
 	myProxy->changeGraphicsLabel(getDefaultGraphisLabel());
 
 	return true;
