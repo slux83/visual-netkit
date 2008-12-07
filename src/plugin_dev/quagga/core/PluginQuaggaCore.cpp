@@ -41,6 +41,27 @@ PluginQuaggaCore::~PluginQuaggaCore()
 }
 
 /**
+ * [PRIVATE]
+ * Replace the daemons values inside the passed file template
+ */
+void PluginQuaggaCore::replaceDaemons(QString *templateFile)
+{
+	//get daemon properties
+	QList<PluginProperty*> dPropertyList =
+		myProxy->getPropertyExpert()->searchPropertiesById(properties, "daemons");
+	
+	if(dPropertyList.size() != 1)
+	{
+		qWarning() << "PluginQuaggaCore::replaceDaemons() daemons property not found";
+		return;
+	}
+	
+	//replace all
+	foreach(PluginProperty *daemon, dPropertyList.first()->getChilds())
+		templateFile->replace(daemon->getId(), daemon->getValue());
+}
+
+/**
  * Returns the plugin template if resource file exists,
  * otherwise returns an empty QString.
  */
@@ -50,8 +71,8 @@ QMap<QString, QString> PluginQuaggaCore::getTemplates()
 	QString templateContent;
 	
 	//damenos file
-	//TODO: replace tags inside the file
 	templateContent = file2string(":/quagga-core/daemons");
+	replaceDaemons(&templateContent);	
 	templates.insert(getTemplateLocation()+"daemons", templateContent);
 	
 	//zebra.conf file
@@ -142,15 +163,16 @@ void PluginQuaggaCore::setProxy(PluginProxy* p)
  */
 bool PluginQuaggaCore::init(QString laboratoryPath)
 {
-//	/* Get my buddy */
-//	HardwareInterface *hi = static_cast<HardwareInterface*>(myProxy->getBaseElement());
-//	if (hi == NULL)
-//	{
-//		qWarning() << "PluginIPv4::init(): null hardware interface.";
-//		return false;
-//	}
-//	
-//	QRegExp ipRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+\\.[0-9]{1,3})");
+	
+	/* Get my buddy */
+	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
+	if (vm == NULL)
+	{
+		qWarning() << "PluginQuaggaCore::init(): null VM";
+		return false;
+	}
+
+	//QRegExp lineRegExp(".+\\b" + hi->getName() + "\\b(.+)\\bnetmask\\b(.+)\\bbroadcast\\b(.+\\.[0-9]{1,3})");
 //	
 //	/* Parse my startup file and get the mac address if any */
 //	QString startupPath = laboratoryPath + "/" + hi->getMyVirtualMachine()->getName() + ".startup";
@@ -205,6 +227,8 @@ bool PluginQuaggaCore::init(QString laboratoryPath)
 //		return true;
 //	}
 //	
+	myProxy->changeGraphicsLabel(getDefaultGraphisLabel());
+
 	return true;
 }
 

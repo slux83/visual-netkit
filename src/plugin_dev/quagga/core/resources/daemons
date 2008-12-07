@@ -21,12 +21,12 @@
 # When using "vtysh" such a config file is also needed. It should be owned by
 # group "quaggavty" and set to ug=rw,o= though. Check /etc/pam.d/quagga, too.
 #
-zebra=<daemons-zebra>
-bgpd=<daemons-bgpd>
-ospfd=<daemons-ospfd>
-ospf6d=<daemons-ospf6d>
-ripd=<daemons-ripd>
-ripngd=<daemons-ripngd>
-isisd=<daemons-isisd>
-ldpd=<daemons-ldpd>
+zebra=daemons-zebra
+bgpd=daemons-bgpd
+ospfd=daemons-ospfd
+ospf6d=daemons-ospf6d
+ripd=daemons-ripd
+ripngd=daemons-ripngd
+isisd=daemons-isisd
+ldpd=daemons-ldpd
 
