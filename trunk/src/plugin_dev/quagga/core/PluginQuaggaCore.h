@@ -41,6 +41,7 @@ private:
 
 	QString getTemplateLocation(bool getBase = false);
 	QString file2string(const QString &filePath, bool *ok = NULL);
+	void replaceDaemons(QString *templateFile);
 	
 public:
 	PluginQuaggaCore();
