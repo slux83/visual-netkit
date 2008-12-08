@@ -1,4 +1,14 @@
-2008-xx-xx [1.1] Slux <slux83@gmail.com>
+200x-xx-xx [1.2] Slux <slux83@gmail.com>
+ * [Added]   plugin Quagga-core (zebra daemon)
+ * [Added]   some Tab editor improovments
+ * [Added]   TODO: file editor changes whatcher
+ * [Fixed]   startup files content sequence error. Now the ethernet setup appear
+             as first
+ * [Added]   a simple file-system manager of the current Lab directory.
+
+--------------------------------------------------------------------------------
+
+2008-09-10 [1.1] Slux <slux83@gmail.com>
  * [Added]   areas Z-value and move to Top/Bottom actions on context menu
  * [Changed] plugin interface, now plugins can have hierarchy properties
              structure and these can be added and removed according to XML
