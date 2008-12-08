@@ -31,6 +31,9 @@ TabController::TabController() : QObject()
 	//Get the tab widget from main gui
 	tabWidget = LabHandler::getInstance()->getMainWindow()->centralTabWidget;
 	connect(this, SIGNAL(tabsHasChanged()), tabWidget, SLOT(updateTabList()));
+
+	//watcher
+	fileWatcher = new QFileSystemWatcher();
 }
 
 /**
@@ -62,6 +65,7 @@ bool TabController::openTab(QString path)
 	if(activeTabs.contains(path))
 	{
 		tabWidget->setCurrentWidget(activeTabs.value(path));
+
 		return true;
 	}
 	else
@@ -92,11 +96,51 @@ bool TabController::openTab(QString path)
 
 		tabWidget->setCurrentWidget(fileEditor);
 		tabWidget->setTabToolTip(addedTab, path);
+
+		/* add the path to the watcher */
+		fileWatcher->addPath(path);
+		connect(fileWatcher, SIGNAL(fileChanged(const QString &)),
+				this, SLOT(notifyFileChanged(const QString &)));
 	}
 
 	emit tabsHasChanged();	//emit signal
 
 	return true;
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Notify a changed path to the file editor widget
+ */
+void TabController::notifyFileChanged(const QString &path)
+{
+	if(!activeTabs.contains(path))
+	{
+		qWarning() << "TabController::notifyFileChanged() path" << path << "not opened";
+		return;
+	}
+
+	/* Read the file content */
+	QFile file(path);
+
+	if(!file.exists())
+	{
+		qWarning() << "TabController::notifyFileChanged() path" << path << "not exists";
+		activeTabs.value(path)->setFileContentChanged(QString());
+		return;
+	}
+
+	if(!file.open(QFile::ReadOnly))
+	{
+		qWarning()	<< "TabController::notifyFileChanged() path"
+					<< path << "cannot be opened in read only mode";
+		return;
+	}
+
+	QString fileContent = file.readAll();
+	file.close();
+
+	activeTabs.value(path)->setFileContentChanged(fileContent);
 }
 
 /**
@@ -106,6 +150,7 @@ void TabController::removeTab(FileEditor* fileEditor)
 {
 	QString key = activeTabs.key(fileEditor);
 	activeTabs.remove(key);
+	fileWatcher->removePath(key);	//remove path from watcher
 
 	delete fileEditor;
 
@@ -148,10 +193,6 @@ bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 		if(!QFile::copy(path, pathBkp))
 		{
 			qWarning()	<< "TabController::saveFile() Cannot create the backup copy for file" << path;
-			if(error != NULL)
-				error->append(tr("Cannot create the backup copy for file ").append(path));
-
-			return false;
 		}
 	}
 
@@ -187,6 +228,8 @@ void TabController::closeAllTabs()
 		tabWidget->setCurrentWidget(fe);
 		tabWidget->closeTab();
 	}
+	delete fileWatcher;
+	fileWatcher = new QFileSystemWatcher();
 }
 
 /**
