@@ -1,17 +1,17 @@
 /**
  * VisualNetkit is an advanced graphical tool for NetKit <http://www.netkit.org>
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -68,33 +68,34 @@ bool TabController::openTab(QString path)
 	{
 		/* Read the file content */
 		QFile file(path);
-		
+
 		if(!file.exists())
 			return false;
-		
+
 		if(!file.open(QFile::ReadOnly))
 			return false;
-		
+
 		QString fileContent = file.readAll();
 		file.close();
-		
+
 		/* get the file name */
 		QStringList splittedPath = path.split("/", QString::SkipEmptyParts);
-		
+
 		if(splittedPath.size() == 0)
 			return false;
-		
+
 		/* Create a new file editor and focus it */
 		FileEditor *fileEditor = new FileEditor(fileContent);
-		
-		tabWidget->addTab(fileEditor, splittedPath.last());
+
+		int addedTab = tabWidget->addTab(fileEditor, splittedPath.last());
 		activeTabs.insert(path, fileEditor);
-		
+
 		tabWidget->setCurrentWidget(fileEditor);
+		tabWidget->setTabToolTip(addedTab, path);
 	}
-	
+
 	emit tabsHasChanged();	//emit signal
-	
+
 	return true;
 }
 
@@ -105,9 +106,9 @@ void TabController::removeTab(FileEditor* fileEditor)
 {
 	QString key = activeTabs.key(fileEditor);
 	activeTabs.remove(key);
-	
+
 	delete fileEditor;
-	
+
 	emit tabsHasChanged();	//emit signal
 }
 
@@ -119,7 +120,7 @@ void TabController::removeTab(FileEditor* fileEditor)
 bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 {
 	//Check consistance
-	QString path = activeTabs.key(fileEditor); 
+	QString path = activeTabs.key(fileEditor);
 	QString pathBkp = path + "~";
 	if(path == "")
 	{
@@ -128,9 +129,9 @@ bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 			error->append(tr("Hey this is a BUG: file editor unmapped!"));
 		return false;
 	}
-	
+
 	QFile fileToSave(path);
-	
+
 	/* We need to save a backup? */
 	if(fileEditor->needBackup())
 	{
@@ -140,20 +141,20 @@ bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 			qWarning()	<< "TabController::saveFile() Cannot remove the old backup" << pathBkp;
 			if(error != NULL)
 				error->append(tr("Cannot remove the old backup file ").append(pathBkp));
-			
+
 			return false;
 		}
-		
+
 		if(!QFile::copy(path, pathBkp))
 		{
 			qWarning()	<< "TabController::saveFile() Cannot create the backup copy for file" << path;
 			if(error != NULL)
 				error->append(tr("Cannot create the backup copy for file ").append(path));
-			
+
 			return false;
 		}
 	}
-	
+
 	/* Ok, we can save the document */
 	if(!fileToSave.open(QFile::WriteOnly | QFile::Text))
 	{
@@ -161,17 +162,17 @@ bool TabController::saveFile(FileEditor* fileEditor, QString *error)
 					<< fileToSave.errorString();
 		if(error != NULL)
 			error->append(fileToSave.errorString());
-		
+
 		return false;
 	}
 	QTextStream out(&fileToSave);
 	QApplication::setOverrideCursor(Qt::WaitCursor);
 	out << fileEditor->fileTextEdit->toPlainText().toUtf8();
 	QApplication::restoreOverrideCursor();
-	
+
 	fileToSave.close();
 
-	
+
 	return true;
 }
 
@@ -185,7 +186,7 @@ void TabController::closeAllTabs()
 	{
 		tabWidget->setCurrentWidget(fe);
 		tabWidget->closeTab();
-	}	
+	}
 }
 
 /**
@@ -195,10 +196,10 @@ void TabController::closeAllTabs()
 void TabController::markTabAsModified(FileEditor* fe, bool isModified)
 {
 	int index = tabWidget->indexOf(fe);
-	
+
 	if(index == -1)
 		return;
-	
+
 	if(isModified)
 		tabWidget->setTabIcon(index, QIcon(":/menu/save_icon"));
 	else
