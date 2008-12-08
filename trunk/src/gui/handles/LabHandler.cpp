@@ -1,17 +1,17 @@
 /**
  * VisualNetkit is an advanced graphical tool for NetKit <http://www.netkit.org>
  * Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -81,12 +81,12 @@ LabHandler* LabHandler::getInstance()
 void LabHandler::newLab()
 {
 	closeLab();
-	
+
 	LabFacadeController::getInstance()->newLaboratory();
-	
+
 	//set the current lab inside the property controller
 	propertyController->setLab(LabFacadeController::getInstance()->getCurrentLab());
-	
+
 	mainWindow->actionCloseLab->setDisabled(false);
 	mainWindow->unlockSceneAndActions();
 	QRectF sceneSize(0,0,1000,1000);
@@ -98,26 +98,47 @@ void LabHandler::newLab()
  * Opens an existent lab
  */
 void LabHandler::openLab(QString labPath)
-{	
-	
+{
+
 	closeLab();
-	
+
 	LabFacadeController::getInstance()->newLaboratory();
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
-	
+
 	propertyController->setLab(currLab);
-	
+
 	currLab->setLabPath(labPath);
-	
+
 	mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
 	mainWindow->writeLogMessage(tr("Lab opened: ") + currLab->getLabPath().absolutePath());
-	
+
 	mainWindow->actionCloseLab->setDisabled(false);
-	
+
 	mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+	updateFsDir();
+}
+
+/**
+ * [PRIVATE]
+ * Change lab fs view
+ */
+void LabHandler::updateFsDir()
+{
+	if(!mainWindow->fsTree->model())
+		mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+
 	mainWindow->fsTree->setRootIndex(
-			FsManager::getInstance()->changePath(
-					currLab->getLabPath().absolutePath()));
+		FsManager::getInstance()->changePath(
+			LabFacadeController::getInstance()->getCurrentLab()->getLabPath().absolutePath()));
+}
+
+/**
+ * [PRIVATE]
+ * Clear lab fs view
+ */
+void LabHandler::clearFsDir()
+{
+	mainWindow->fsTree->setModel(NULL);
 }
 
 /**
@@ -129,12 +150,13 @@ void LabHandler::saveLabAs(const QStringList &selectedFiles)
 	if(LabFacadeController::getInstance()->saveLab(selectedFiles.first()))
 	{
 		//ok, lab saved! save state and refresh window header text
-		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
+		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab();
 		currLab->setLabPath(selectedFiles.first());
 		currLab->setSavedState(true);
 		currLab->setChangedState(false);
 		setMainWindowTitle();
 		mainWindow->writeLogMessage(tr("Lab saved as: ") + currLab->getLabPath().absolutePath());
+		updateFsDir();
 	}
 	else
 	{
@@ -154,12 +176,13 @@ void LabHandler::saveLab()
 	if(LabFacadeController::getInstance()->saveChandegLab())
 	{
 		//ok, lab saved! save state and refresh window header text
-		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab(); 
+		Laboratory *currLab = LabFacadeController::getInstance()->getCurrentLab();
 		currLab->setSavedState(true);
 		currLab->setChangedState(false);
 		setMainWindowTitle();
 		mainWindow->writeLogMessage(tr("Lab saved"));
-		
+		updateFsDir();
+
 	}
 	else
 	{
@@ -168,7 +191,7 @@ void LabHandler::saveLab()
 				tr("There was a problem saving the laboratory data.\nPlease check your access rights on the directory that you have choosed."),
 				QMessageBox::Ok);
 	}
-	
+
 	setMainWindowTitle();
 }
 
@@ -179,39 +202,39 @@ void LabHandler::saveLab()
 void LabHandler::addCreatedLabOnTree(Laboratory *l)
 {
 	Q_UNUSED(l)
-	
+
 	qDebug() << "new lab ready to render";
-	
+
 	QTreeWidgetItem *root = new QTreeWidgetItem();
 	QTreeWidgetItem *labConf = new QTreeWidgetItem();
-	
+
 	//type of element
 	root->setData(0, Qt::UserRole, "lab_element");
 	root->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_root")));
-	
+
 	labConf->setData(0, Qt::DisplayRole, LAB_CONF);
-	
+
 	//type of element
 	labConf->setData(0, Qt::UserRole, "config_file");
-	
+
 	//if config_file, this role show the relative path for the config file
 	labConf->setData(0, Qt::UserRole + 1, LAB_CONF);
 	labConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	labConf->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	labConf->setCheckState(0, Qt::Checked);
 	labConf->setToolTip(0, tr("Check to Save this file."));
-	
+
 	root->addChild(labConf);
-	
+
 	/* fill the tree view */
 	mainWindow->labTree->addTopLevelItem(root);
 	mainWindow->labTree->expandItem(root);
-	
+
 	emit logEvent(tr("Created a new Lab."));
-	
+
 	//unlock scene and actions
 	mainWindow->unlockSceneAndActions();
-	
+
 	/* Add on scene tree */
 	SceneTreeMapper::getInstance()->createRootElement();
 }
@@ -223,40 +246,40 @@ void LabHandler::addCreatedLabOnTree(Laboratory *l)
 void LabHandler::addCreatedVmOnTree(VirtualMachine *m)
 {
 	qDebug() << "new VM ready to render!";
-	
+
 	QTreeWidgetItem *elem = new QTreeWidgetItem();
 	QTreeWidgetItem *startupConf = new QTreeWidgetItem();
-	
+
 	//Properties
 	elem->setData(0, Qt::DisplayRole, m->getName());
 	elem->setData(0, Qt::UserRole, "vm_element");	//don't touch this value!
 	elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
-	
+
 	startupConf->setData(0, Qt::DisplayRole, QString(m->getName() + ".startup"));
 	startupConf->setData(0, Qt::UserRole, "config_file");		//type (don't change this value)
 	startupConf->setData(0, Qt::UserRole + 1, QString(m->getName() + ".startup"));	//path
 	startupConf->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 	startupConf->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	
+
 	//set check state of this file
 	if(excludedPaths.contains(QString(m->getName() + ".startup")))
 		startupConf->setCheckState(0, Qt::Unchecked);
 	else
 		startupConf->setCheckState(0, Qt::Checked);
-	
+
 	startupConf->setToolTip(0, tr("Check to Save this file."));
-	
+
 	QTreeWidgetItem *root = mainWindow->labTree->topLevelItem(0);
-	
+
 	if(root == NULL)
 	{
 		qWarning() << "lab tree top element not found!";
 		return;
 	}
-	
+
 	root->addChild(elem);
 	root->addChild(startupConf);
-	
+
 	emit logEvent(tr("Created a new virtual machine: ") + m->getName());
 }
 
@@ -276,11 +299,11 @@ void LabHandler::prepareRenderLabProperties()
 void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 {
 	Q_UNUSED(column);
-	
+
 	Laboratory *lab = LabFacadeController::getInstance()->getCurrentLab();
-	
+
 	if(item->data(0, Qt::UserRole) == "config_file")
-	{	
+	{
 		/* the lab is saved? */
 		if(!lab->getSaveState())
 		{
@@ -292,7 +315,7 @@ void LabHandler::labTreeItemDoubleClicked(QTreeWidgetItem * item, int column)
 		else
 		{
 			QString pathToOpen = lab->getLabPath().absolutePath().append("/").append(item->data(0, Qt::UserRole + 1).toString());
-			
+
 			if(!TabController::getInstance()->openTab(pathToOpen))
 				QMessageBox::warning(mainWindow,
 					"Visual Netkit - Error",
@@ -309,7 +332,7 @@ bool LabHandler::getLabState()
 {
 	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
 		return false;
-	
+
 	return LabFacadeController::getInstance()->getCurrentLab()->getSaveState();
 }
 
@@ -320,7 +343,7 @@ bool LabHandler::getLabChangedState()
 {
 	if(LabFacadeController::getInstance()->getCurrentLab() == NULL)
 		return false;
-	
+
 	return LabFacadeController::getInstance()->getCurrentLab()->getChangedState();
 
 }
@@ -334,38 +357,38 @@ void LabHandler::removePathFromTree(QString &path, bool removeVm)
 	QTreeWidgetItem *currentNode = mainWindow->labTree->topLevelItem(0);
 	QTreeWidgetItem *rootToDelete = NULL;
 	QStringList splittedPath = path.split("/");
-		
+
 	/* Search the root of the path (no vm dir) to delete */
 	foreach(QString piece, splittedPath)
 	{
 		if(rootToDelete != NULL)
 			break;
-				
+
 		mainWindow->labTree->setCurrentItem(currentNode, 0);	//update current node to searc in deep
-		
+
 		QMap<QString, QTreeWidgetItem*> childs = findItems(piece, mainWindow->labTree);
-		
+
 		QMapIterator<QString, QTreeWidgetItem*> childsIterator(childs);
 		while(childsIterator.hasNext())
 		{
 			childsIterator.next();
-			
+
 			/* this node is a virtual machine dir? remove? */
 			if(!removeVm && childsIterator.value()->data(0, Qt::UserRole).toString() == "vm_element")
-			{				
+			{
 				currentNode = childsIterator.value();	//update current
 				break;	//do not delete the vm element
 			}
 			else
 			{
 				QTreeWidgetItem *toDelete = childsIterator.value();
-								
+
 				rootToDelete = toDelete;
 				break;
 			}
 		}
 	}
-	
+
 	/* delete from last current node */
 	if(rootToDelete != NULL)
 	{
@@ -376,7 +399,7 @@ void LabHandler::removePathFromTree(QString &path, bool removeVm)
 /**
  * [SLOT]
  * Adds path to the tree.
- * If a node in the path is in the tree, it is not replaced but the rest of the path is 
+ * If a node in the path is in the tree, it is not replaced but the rest of the path is
  * appended as a child.
  */
 void LabHandler::addPathToTree(QString path)
@@ -399,27 +422,27 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 	if (path.size()>0 && node!=NULL)
 	{
 		mainWindow->labTree->setCurrentItem(node, 0);
-		
+
 		// if the node is among the children of current node
 		QMap<QString, QTreeWidgetItem*> childs = findItems(path.first(), mainWindow->labTree);
 		if (childs.size() <= 0)
 		{
 			QTreeWidgetItem *elem = new QTreeWidgetItem();
-			
+
 			// if the path has only one node
-			if (path.size()==1) 
+			if (path.size()==1)
 			{
 				elem->setData(0, Qt::DisplayRole, path.first());
 				elem->setData(0, Qt::UserRole, "config_file");		//type
 				elem->setData(0, Qt::UserRole + 1, fullPath);		//path
 				elem->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-				
+
 				//set check state of this file
 				if(excludedPaths.contains(fullPath))
 					elem->setCheckState(0, Qt::Unchecked);
 				else
 					elem->setCheckState(0, Qt::Checked);
-				
+
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/file_conf")));
 				elem->setToolTip(0, tr("Check to Save this file."));
 
@@ -430,17 +453,17 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 			}
 			// else
 			else
-			{	
+			{
 				elem->setData(0, Qt::DisplayRole, path.first());
 				elem->setData(0, Qt::UserRole, "generic_element");
 				elem->setIcon(0, QIcon(QString::fromUtf8(":/small/folder_vm")));
-				
+
 				// apply recursion to the path (without first element)
 				path.removeFirst();
-				
+
 				// adds the new node to the current node
 				node->addChild(elem);
-				
+
 				if (!path.isEmpty())
 					addPathToNode(path, elem, fullPath);
 			}
@@ -454,7 +477,7 @@ void LabHandler::addPathToNode(QStringList path, QTreeWidgetItem *node, QString 
 			if (!path.isEmpty())
 				addPathToNode(path, childs.value(currNode), fullPath);
 		}
-		else 
+		else
 		{
 			qWarning() << "LabHandler::addPathToNode: replicated node inside labTree (" << path.first() << ")";
 		}
@@ -468,9 +491,9 @@ QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWid
 {
 	QMap<QString, QTreeWidgetItem*> map;
 	QTreeWidgetItem *curr = tree->currentItem();
-	
+
 	// visit all children for the passed node
-	for (int i=0; i<curr->childCount(); i++) 
+	for (int i=0; i<curr->childCount(); i++)
 	{
 		// if a child has the same name as the tester node "nodeName
 		if (nodeName == curr->child(i)->text(0))
@@ -485,64 +508,64 @@ QMap<QString, QTreeWidgetItem*> LabHandler::findItems(QString nodeName, QTreeWid
 /**
  * Confirm the lab close
  * if abort is passed, the function set abort to TRUE if the user choosed a
- * abort response (Cancel or No during "close lab" question) 
+ * abort response (Cancel or No during "close lab" question)
  */
 bool LabHandler::confirmCloseLab(bool *abort)
 {
 	if(!isCurrentLab())		//there's none lab active
 			return true;
-		
+
 	/* Check if another lab exist and need to be saved */
 	//qDebug() << "changestate:" << getLabChangedState() << "savestate:" << getLabState();
 	if(!getLabState() || getLabChangedState())
 	{
 		qDebug() << "lab exist and need to be saved";
-		
+
 		int resp = QMessageBox::question(mainWindow,
 				"Visual Netkit - Question",
 				tr("The lab is changed or not saved.\nDo you want save it?"),
 				QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
-		
+
 		if(resp == QMessageBox::Yes)
 		{
-			/* Save or save as? */			
+			/* Save or save as? */
 			if(!getLabState())	//save as
 			{
 				mainWindow->showSaveFileDialog();
 				return false;
 			}
-			
+
 			if(getLabChangedState())	//save changes
 			{
 				saveLab();
 			}
 		}
-		
+
 		if(resp == QMessageBox::Cancel)
 		{
 			if(abort != NULL)
 				*abort = true;
 			return false;
 		}
-		
+
 		return true;	//close the lab anyway
 	}
-	
+
 	/* Close the current lab if any */
 	int resp = QMessageBox::question(mainWindow,
 			"Visual Netkit - Question",
 			tr("The lab is allready saved. Do you want close it?"),
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-	
+
 	if(resp == QMessageBox::No)
 	{
 		if(abort != NULL)
 			*abort = true;
 		return false;
 	}
-	
+
 	return true;
-	
+
 }
 
 /**
@@ -553,35 +576,37 @@ void LabHandler::closeLab()
 {
 	if(!confirmCloseLab())
 		return;
-	
+
 	/* Close all tabs */
 	TabController::getInstance()->closeAllTabs();
-	
+
 	//Destroy mappings
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();
 	LinkMapper::getInstance()->clear();
 	AreaController::getInstance()->clear();
-	
+
 	//Destroy all items
 	mainWindow->getLabScene()->clearScene();
-	
+
 	//reset tree views
 	mainWindow->labTree->clear();
 	SceneTreeMapper::getInstance()->clear();
-	
+
 	//other gui stuffs
 	mainWindow->clearPropertyDock();
 	mainWindow->setWindowTitle("VisualNetkit");
 	mainWindow->lockSceneAndActions();
-	
+
 	//Destroy low level stuff
 	LabFacadeController::getInstance()->closeLowLevelLab();
-	
+
 	mainWindow->writeLogMessage("Lab Closed");
-	
+
 	mainWindow->actionCloseLab->setDisabled(true);
-	
+
+	clearFsDir();
+
 	/* Destroy undo stack */
 	undoStack->clear();
 }
@@ -593,31 +618,33 @@ void LabHandler::closeLabForced()
 {
 	/* Close all tabs */
 	TabController::getInstance()->closeAllTabs();
-	
+
 	//Destroy mappings
 	VmMapper::getInstance()->clear();
 	CdMapper::getInstance()->clear();
 	LinkMapper::getInstance()->clear();
-	
+
 	//Destroy all items
 	mainWindow->getLabScene()->clearScene();
-	
+
 	//reset tree views
 	mainWindow->labTree->clear();
 	SceneTreeMapper::getInstance()->clear();
-	
+
 	//other gui stuffs
 	mainWindow->clearPropertyDock();
 	mainWindow->setWindowTitle("VisualNetkit");
 	mainWindow->lockSceneAndActions();
-	
+
 	//Destroy low level stuff
 	LabFacadeController::getInstance()->closeLowLevelLab();
-	
+
 	mainWindow->writeLogMessage("Lab Closed");
-	
+
 	mainWindow->actionCloseLab->setDisabled(true);
-	
+
+	clearFsDir();
+
 	/* Destroy undo stack */
 	undoStack->clear();
 }
@@ -645,10 +672,10 @@ void LabHandler::setSaveLabState(bool state)
 void LabHandler::setChangedLabState(bool state)
 {
 	Laboratory* l = LabFacadeController::getInstance()->getCurrentLab();
-	
+
 	if(l == NULL)
 		return;
-	
+
 	if(l->getSaveState() && state && !l->getChangedState())
 	{
 		l->setChangedState(state);
@@ -671,7 +698,7 @@ bool LabHandler::isCurrentLab()
 void LabHandler::setMainWindowTitle()
 {
 	Laboratory* currLab = LabFacadeController::getInstance()->getCurrentLab();
-	
+
 	if(isCurrentLab())
 	{
 		mainWindow->setWindowTitle(currLab->getLabPath().absolutePath() + " - VisualNetkit");
@@ -694,16 +721,16 @@ QStringList LabHandler::getExcludePaths(QTreeWidgetItem *currNode)
 {
 	QStringList paths;
 	QTreeWidget *tree = mainWindow->labTree;
-	
+
 	if(!currNode)
 		tree->setCurrentItem(tree->topLevelItem(0), 0);
 	else
 		tree->setCurrentItem(currNode, 0);
-	
+
 	QTreeWidgetItem *curr = tree->currentItem();
-	
+
 	// visit all children for the passed node
-	for(int i=0; i<curr->childCount(); i++) 
+	for(int i=0; i<curr->childCount(); i++)
 	{
 		//it's a selected leaf?
 		if(curr->child(i)->data(0, Qt::UserRole).toString() == "config_file" &&
@@ -711,14 +738,14 @@ QStringList LabHandler::getExcludePaths(QTreeWidgetItem *currNode)
 		{
 			paths << curr->child(i)->data(0, Qt::UserRole + 1).toString();
 		}
-		
+
 		//it's a folder?
-		if(curr->child(i)->data(0, Qt::UserRole).toString() == "vm_element" || 
+		if(curr->child(i)->data(0, Qt::UserRole).toString() == "vm_element" ||
 			curr->child(i)->data(0, Qt::UserRole).toString() == "generic_element")
 		{
 			paths << getExcludePaths(curr->child(i));
 		}
 	}
-	
+
 	return paths;
 }
