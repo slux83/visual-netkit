@@ -1,7 +1,8 @@
 200x-xx-xx [1.2] Slux <slux83@gmail.com>
  * [Added]   plugin Quagga-core (zebra daemon)
  * [Added]   some Tab editor improovments
- * [Added]   TODO: file editor changes whatcher
+ * [Added]   file editor changes watcher (watch if the file content is changed
+             by an external application)
  * [Fixed]   startup files content sequence error. Now the ethernet setup appear
              as first
  * [Added]   a simple file-system manager of the current Lab directory.
