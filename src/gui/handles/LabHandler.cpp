@@ -115,6 +115,12 @@ void LabHandler::openLab(QString labPath)
 	mainWindow->actionCloseLab->setDisabled(false);
 
 	mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+
+	//hide extra columns
+	mainWindow->fsTree->setColumnHidden (1, true);
+	mainWindow->fsTree->setColumnHidden (2, true);
+	mainWindow->fsTree->setColumnHidden (3, true);
+
 	updateFsDir();
 }
 
@@ -125,7 +131,14 @@ void LabHandler::openLab(QString labPath)
 void LabHandler::updateFsDir()
 {
 	if(!mainWindow->fsTree->model())
+	{
 		mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+
+		//hide extra columns
+		mainWindow->fsTree->setColumnHidden (1, true);
+		mainWindow->fsTree->setColumnHidden (2, true);
+		mainWindow->fsTree->setColumnHidden (3, true);
+	}
 
 	mainWindow->fsTree->setRootIndex(
 		FsManager::getInstance()->changePath(
