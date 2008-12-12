@@ -5,7 +5,8 @@
              by an external application)
  * [Fixed]   startup files content sequence error. Now the ethernet setup appear
              as first
- * [Added]   a simple file-system manager of the current Lab directory.
+ * [Added]   a simple file system manager to manage files inside the lab
+             (actions like: add file/folder, delete file/folder, rename, etc..).
 
 --------------------------------------------------------------------------------
 

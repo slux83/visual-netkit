@@ -16,6 +16,7 @@
         <file alias="manage_interfaces" >menu_icons/manage_interfaces.png</file>
         <file alias="mouse_icon" >menu_icons/mouse.png</file>
         <file alias="new_icon" >menu_icons/new.png</file>
+        <file alias="new_folder_icon" >menu_icons/folder-new.png</file>
         <file alias="open_icon" >menu_icons/open.png</file>
         <file alias="quit_icon" >menu_icons/quit.png</file>
         <file alias="redo_icon" >menu_icons/redo.png</file>
@@ -37,7 +38,8 @@
         <file alias="list_remove" >menu_icons/list-remove.png</file>
         <file alias="area_on_top" >menu_icons/area_on_top.png</file>
         <file alias="area_on_bottom" >menu_icons/area_on_bottom.png</file>
-        
+        <file alias="text_editor" >menu_icons/text-editor.png</file>
+        <file alias="refresh" >menu_icons/refresh.png</file>
     </qresource>
     <qresource prefix="/small" >
         <file alias="file_conf" >small_icons/file_conf.png</file>
