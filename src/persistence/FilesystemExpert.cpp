@@ -16,29 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FSMANAGER_H_
-#define FSMANAGER_H_
-
-#include <QDirModel>
+#include "FilesystemExpert.h"
+#include <QDebug>
 
 /**
- * [SINGLETON]
- * The file system manager of the laboratory
+ * [STATIC]
+ * Add an empty file
+ * Return a filled string with a message on error
  */
-class FsManager
+QString FilesystemExpert::newFile(QString path, QString fileName)
 {
-
-private:
-	static FsManager *instance;
-	QDirModel *fsModel;
-
-public:
-	FsManager();
-	virtual ~FsManager();
-	static FsManager* getInstance();
-	QDirModel * getFsModel() { return fsModel; }
-	QModelIndex changePath(QString path);
-	bool newFile(QString path, QString fileName);
-};
-
-#endif /*FSMANAGER_H_*/
+	qDebug() << "Creating a new file:" << path.append(fileName);
+	return fileName;
+}

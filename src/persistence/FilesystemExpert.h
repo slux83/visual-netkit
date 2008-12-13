@@ -16,29 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FSMANAGER_H_
-#define FSMANAGER_H_
+#ifndef FILESYSTEMEXPERT_H_
+#define FILESYSTEMEXPERT_H_
 
-#include <QDirModel>
+#include <QString>
 
 /**
- * [SINGLETON]
- * The file system manager of the laboratory
+ * Static class that can manage the filesystem
  */
-class FsManager
+class FilesystemExpert
 {
-
-private:
-	static FsManager *instance;
-	QDirModel *fsModel;
-
 public:
-	FsManager();
-	virtual ~FsManager();
-	static FsManager* getInstance();
-	QDirModel * getFsModel() { return fsModel; }
-	QModelIndex changePath(QString path);
-	bool newFile(QString path, QString fileName);
+	FilesystemExpert() {};
+	virtual ~FilesystemExpert() {};
+
+	static QString newFile(QString path, QString fileName);
 };
 
-#endif /*FSMANAGER_H_*/
+#endif /* FILESYSTEMEXPERT_H_ */

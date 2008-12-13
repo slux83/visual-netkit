@@ -18,6 +18,7 @@
 
 #include "FsTreeView.h"
 #include <QDebug>
+#include <QInputDialog>
 
 /**
  * Constructor
@@ -29,15 +30,15 @@ FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 	contextMenu = new QMenu(this);
 
 	//Create menu actions with connections
-	contextMenu->addAction(QIcon(":/menu/new_icon"), tr("New File"), this, SLOT(newFile()));
-	contextMenu->addAction(QIcon(":/menu/new_folder_icon"), tr("New Folder"), this, SLOT(newFolder()));
+	menuActions.insert(NewFile, contextMenu->addAction(QIcon(":/menu/new_icon"), tr("New File"), this, SLOT(newFile())));
+	menuActions.insert(NewFolder, contextMenu->addAction(QIcon(":/menu/new_folder_icon"), tr("New Folder"), this, SLOT(newFolder())));
 	contextMenu->addSeparator();
-	contextMenu->addAction(QIcon(":/menu/text_editor"), tr("Edit File"), this, SLOT(editFile()));
+	menuActions.insert(TextEditor, contextMenu->addAction(QIcon(":/menu/text_editor"), tr("Edit File"), this, SLOT(editFile())));
 	contextMenu->addSeparator();
-	contextMenu->addAction(QIcon(":/menu/trash"), tr("Delete"), this, SLOT(deleteFile()));
-	contextMenu->addAction(QIcon(), tr("Rename..."), this, SLOT(renameFile()));
+	menuActions.insert(Delete, contextMenu->addAction(QIcon(":/menu/trash"), tr("Delete"), this, SLOT(deleteFile())));
+	menuActions.insert(Rename, contextMenu->addAction(QIcon(), tr("Rename..."), this, SLOT(renameFile())));
 	contextMenu->addSeparator();
-	contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView()));
+	menuActions.insert(Refresh, contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView())));
 }
 
 /**
@@ -53,11 +54,42 @@ void FsTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
 	QModelIndex mIndex = indexAt(event->pos());		//get the selected item
 
-	qDebug() << "Selected item:" << mIndex.data(QDirModel::FilePathRole);
+	//qDebug() << "Selected item:" << mIndex.data(QDirModel::FilePathRole);
 
 	if(mIndex.isValid())
 	{
 		current = mIndex;
+		filterMenu();
 		contextMenu->exec(event->globalPos());
 	}
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Create a new empty file
+ */
+void FsTreeView::newFile()
+{
+	bool okPressed;
+
+	QString fileName = QInputDialog::getText(
+			this,
+			tr("Insert the file name"),
+			tr("File Name"), QLineEdit::Normal,
+			QString(), &okPressed);
+
+	if(okPressed && !fileName.trimmed().isEmpty())
+		fsManager->newFile(current.data(QDirModel::FilePathRole).toString(), fileName.trimmed());
+}
+
+/**
+ * [PRIVATE]
+ * Enable/Disable actions for context menu in base of the file selected
+ */
+void FsTreeView::filterMenu()
+{
+	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+
+	menuActions.value(NewFile)->setEnabled(fInfo.isDir());
+	menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
 }
