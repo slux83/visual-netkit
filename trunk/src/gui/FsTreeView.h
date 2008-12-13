@@ -33,15 +33,29 @@ class FsTreeView : public QTreeView
 {
 	Q_OBJECT
 
+enum ActionEnum
+{
+	NewFile		= 0,
+	NewFolder	= 1,
+	TextEditor	= 2,
+	Trash		= 3,
+	Rename		= 4,
+	Delete		= 5,
+	Refresh		= 6
+};
+
 private:
 	FsManager *fsManager;
 	QMenu *contextMenu;
 	QModelIndex current;
+	QMap<ActionEnum, QAction*> menuActions;
+
+	void filterMenu();
 
 private slots:
 	//TODO: implements these slots
 	void deleteFile() {};
-	void newFile() {};
+	void newFile();
 	void newFolder() {};
 	void renameFile() {};
 	void refreshView() {};

@@ -24,7 +24,8 @@ UI_DIR = build/ui
 OBJECTS_DIR = build/obj
 RESOURCES = resources/VisualNetkit.qrc
 CONFIG += debug
-HEADERS = src/gui/FsTreeView.h \
+HEADERS = src/persistence/FilesystemExpert.h \
+    src/gui/FsTreeView.h \
     src/gui/handles/FsManager.h \
     src/gui/TreeView.h \
     src/gui/handles/AbstractPropertyHandler.h \
@@ -90,7 +91,8 @@ HEADERS = src/gui/FsTreeView.h \
     src/core/HardwareInterface.h \
     src/core/CollisionDomain.h \
     src/core/Laboratory.h
-SOURCES = src/gui/FsTreeView.cpp \
+SOURCES = src/persistence/FilesystemExpert.cpp \
+    src/gui/FsTreeView.cpp \
     src/gui/handles/FsManager.cpp \
     src/gui/TreeView.cpp \
     src/gui/handles/AreaController.cpp \
