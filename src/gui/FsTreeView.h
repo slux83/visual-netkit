@@ -54,12 +54,12 @@ private:
 
 private slots:
 	//TODO: implements these slots
-	void deleteFile() {};
+	void deleteFile() {}
 	void newFile();
-	void newFolder() {};
-	void renameFile() {};
-	void refreshView() {};
-	void editFile() {};
+	void newFolder() {}
+	void renameFile() {}
+	void refreshView(bool expandCurrent = false);
+	void editFile() {}
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);

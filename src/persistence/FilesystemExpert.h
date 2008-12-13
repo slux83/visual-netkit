@@ -26,11 +26,10 @@
  */
 class FilesystemExpert
 {
-public:
-	FilesystemExpert() {};
-	virtual ~FilesystemExpert() {};
 
+public:
 	static QString newFile(QString path, QString fileName);
+
 };
 
 #endif /* FILESYSTEMEXPERT_H_ */

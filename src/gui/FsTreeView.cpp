@@ -19,6 +19,7 @@
 #include "FsTreeView.h"
 #include <QDebug>
 #include <QInputDialog>
+#include <QMessageBox>
 
 /**
  * Constructor
@@ -54,8 +55,6 @@ void FsTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
 	QModelIndex mIndex = indexAt(event->pos());		//get the selected item
 
-	//qDebug() << "Selected item:" << mIndex.data(QDirModel::FilePathRole);
-
 	if(mIndex.isValid())
 	{
 		current = mIndex;
@@ -70,16 +69,37 @@ void FsTreeView::contextMenuEvent(QContextMenuEvent *event)
  */
 void FsTreeView::newFile()
 {
-	bool okPressed;
+	//TODO: to fix some core dumps :p
 
+	bool okPressed;
+	QString error;
+	QString filePath;
+
+	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+
+	//Current index is a root file?
+	if(fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile())
+		filePath = current.parent().data(QDirModel::FilePathRole).toString();
+	else
+		filePath = current.data(QDirModel::FilePathRole).toString();
+
+	qDebug() << filePath;// << fsManager->getLabPath();// << current.parent().data(QDirModel::FilePathRole).toString();
+
+	//Get the file name
 	QString fileName = QInputDialog::getText(
 			this,
+			tr("Path: ") + filePath + "\n" +
 			tr("Insert the file name"),
 			tr("File Name"), QLineEdit::Normal,
 			QString(), &okPressed);
 
 	if(okPressed && !fileName.trimmed().isEmpty())
-		fsManager->newFile(current.data(QDirModel::FilePathRole).toString(), fileName.trimmed());
+		error = fsManager->newFile(filePath, fileName.trimmed());
+
+	if(!error.isEmpty())
+		QMessageBox::warning(this, tr("Error"), tr("Unable to create an empty file") + ": " + error);
+	else
+		refreshView(true);
 }
 
 /**
@@ -90,6 +110,17 @@ void FsTreeView::filterMenu()
 {
 	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
 
-	menuActions.value(NewFile)->setEnabled(fInfo.isDir());
 	menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Refresh the view
+ */
+void FsTreeView::refreshView(bool expandCurrent)
+{
+	fsManager->getFsModel()->refresh(current.parent());
+
+	if(expandCurrent)
+		expand(current);
 }

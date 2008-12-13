@@ -18,6 +18,7 @@
 
 #include "FilesystemExpert.h"
 #include <QDebug>
+#include <QFile>
 
 /**
  * [STATIC]
@@ -26,6 +27,12 @@
  */
 QString FilesystemExpert::newFile(QString path, QString fileName)
 {
-	qDebug() << "Creating a new file:" << path.append(fileName);
-	return fileName;
+	QFile f(path + "/" + fileName);
+
+	if(!f.open(QFile::WriteOnly))
+		return f.errorString();
+
+	f.close();
+
+	return QString();
 }
