@@ -18,6 +18,7 @@
 
 #include "FsManager.h"
 #include "../../persistence/FilesystemExpert.h"
+#include "../../core/handles/LabFacadeController.h"
 
 FsManager* FsManager::instance = NULL;
 
@@ -60,7 +61,15 @@ QModelIndex FsManager::changePath(QString path)
 /**
  * Create a new file empty
  */
-bool FsManager::newFile(QString path, QString fileName)
+QString FsManager::newFile(QString path, QString fileName)
 {
-	FilesystemExpert::newFile(path, fileName);
+	return FilesystemExpert::newFile(path, fileName);
+}
+
+/**
+ * Get the current lab path
+ */
+QString FsManager::getLabPath()
+{
+	return LabFacadeController::getInstance()->getCurrentLab()->getLabPath().path();
 }

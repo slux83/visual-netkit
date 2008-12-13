@@ -38,7 +38,8 @@ public:
 	static FsManager* getInstance();
 	QDirModel * getFsModel() { return fsModel; }
 	QModelIndex changePath(QString path);
-	bool newFile(QString path, QString fileName);
+	QString newFile(QString path, QString fileName);
+	QString getLabPath();
 };
 
 #endif /*FSMANAGER_H_*/
