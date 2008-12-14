@@ -71,5 +71,10 @@ QString FsManager::newFile(QString path, QString fileName)
  */
 QString FsManager::getLabPath()
 {
-	return LabFacadeController::getInstance()->getCurrentLab()->getLabPath().path();
+	Laboratory *l = LabFacadeController::getInstance()->getCurrentLab();
+	if(l == NULL)
+		qWarning() << "FsManager::getLabPath()" << "NULL Laboratory";
+
+	return l->getLabPath().absolutePath();
+
 }
