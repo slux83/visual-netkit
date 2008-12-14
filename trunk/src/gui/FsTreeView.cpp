@@ -69,16 +69,17 @@ void FsTreeView::contextMenuEvent(QContextMenuEvent *event)
  */
 void FsTreeView::newFile()
 {
-	//TODO: to fix some core dumps :p
-
 	bool okPressed;
 	QString error;
 	QString filePath;
 
 	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+	if(!fInfo.exists())
+		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists";
 
-	//Current index is a root file?
-	if(fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile())
+	//Current index is a file or a root file?
+	if((fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && !fInfo.isDir()) ||
+		(fsManager->getLabPath() != current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile()))
 		filePath = current.parent().data(QDirModel::FilePathRole).toString();
 	else
 		filePath = current.data(QDirModel::FilePathRole).toString();
@@ -119,7 +120,15 @@ void FsTreeView::filterMenu()
  */
 void FsTreeView::refreshView(bool expandCurrent)
 {
-	fsManager->getFsModel()->refresh(current.parent());
+	QDirModel *model = fsManager->getFsModel();
+
+	if(model == NULL)
+	{
+		qWarning() << "fsManager->getFsModel() is NULL";
+		return;
+	}
+
+	model->refresh();	//TODO: cause sometime a crash =/
 
 	if(expandCurrent)
 		expand(current);
