@@ -52,6 +52,9 @@ private:
 
 	void filterMenu();
 
+signals:
+	void refreshNeeded(bool expandCurrent);
+
 private slots:
 	//TODO: implements these slots
 	void deleteFile() {}
