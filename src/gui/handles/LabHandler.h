@@ -73,7 +73,6 @@ public:
 	void setExcludedPaths(QStringList exclPaths) { excludedPaths.clear();  excludedPaths = exclPaths; };
 	QStringList getXmlExcludedPaths() { return excludedPaths; };
 
-
 public slots:
 	void closeLab();
 	void newLab();

@@ -36,7 +36,7 @@ FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 	contextMenu->addSeparator();
 	menuActions.insert(TextEditor, contextMenu->addAction(QIcon(":/menu/text_editor"), tr("Edit File"), this, SLOT(editFile())));
 	contextMenu->addSeparator();
-	menuActions.insert(Delete, contextMenu->addAction(QIcon(":/menu/trash"), tr("Delete"), this, SLOT(deleteFile())));
+	menuActions.insert(Trash, contextMenu->addAction(QIcon(":/menu/trash"), tr("Delete"), this, SLOT(deleteFile()), QKeySequence(QKeySequence::DeleteEndOfLine)));
 	menuActions.insert(Rename, contextMenu->addAction(QIcon(), tr("Rename..."), this, SLOT(renameFile())));
 	contextMenu->addSeparator();
 	menuActions.insert(Refresh, contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView())));
@@ -172,6 +172,8 @@ void FsTreeView::filterMenu()
 		QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
 		menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
 	}
+
+	menuActions.value(Trash)->setEnabled(false);
 }
 
 /**
@@ -179,6 +181,30 @@ void FsTreeView::filterMenu()
  * Refresh the view
  */
 void FsTreeView::refreshView(bool expandCurrent)
+{
+	Q_UNUSED(expandCurrent);
+
+	QDirModel *m = dynamic_cast<QDirModel*>(model());
+
+	if(!m)
+	{
+		qWarning() << "FsTreeView QDirModel is NULL";
+		return;
+	}
+
+
+	//m->refresh();
+
+//	setModel(fsManager->newDirModel());
+//	setRootIndex(fsManager->rootLabPath());
+
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Delete a file/folder recursively
+ */
+void FsTreeView::deleteFile()
 {
 	QDirModel *m = dynamic_cast<QDirModel*>(model());
 
@@ -188,9 +214,45 @@ void FsTreeView::refreshView(bool expandCurrent)
 		return;
 	}
 
-	m->refresh();
+	if(!current.isValid())
+	{
+		qWarning() << "FsTreeView current index invalid";
+		return;
+	}
 
-	//unused if: causes of some crashes
-	if(expandCurrent && current.isValid())
-		expand(current);
+	int resp = QMessageBox::question(this, tr("Confirm Delete?"),
+							tr("Do you want delete the selected item?") + "\n\n" +
+							tr("Item: ") + current.data(QDirModel::FilePathRole).toString(),
+							QMessageBox::Yes | QMessageBox::No);
+
+
+	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+
+	if(!fInfo.exists())
+		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists.";
+
+	if(resp == QMessageBox::No)
+		return;
+
+	if(! fsManager->remove(current.data(QDirModel::FilePathRole).toString()) )
+		QMessageBox::warning(this, tr("Error"),
+				tr("Unable to remove the file/folder") + ": " + fInfo.absoluteFilePath());
+	else
+		refreshView();
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Open an editor of a file
+ */
+void FsTreeView::editFile()
+{
+	if(!current.isValid())
+		return;
+
+	if(! fsManager->openEditor(current.data(QDirModel::FilePathRole).toString()))
+		QMessageBox::warning(this,
+			"Visual Netkit - Error",
+			tr("Cannot open the file").append(" ").append(current.data(QDirModel::FilePathRole).toString()),
+			QMessageBox::Ok);
 }

@@ -17,6 +17,7 @@
  */
 
 #include "FilesystemExpert.h"
+#include "LabSaver.h"
 #include <QDebug>
 #include <QFile>
 #include <QDir>
@@ -48,7 +49,7 @@ QString FilesystemExpert::newFile(QString path, QString fileName)
  * Add an new folder
  * Return a filled string with a message on error
  */
-QString FilesystemExpert:: newFolder(QString path, QString folderName)
+QString FilesystemExpert::newFolder(QString path, QString folderName)
 {
 	QString error;
 	QString fileExistsError = "Folder " + path + "/" + folderName + " ";
@@ -64,4 +65,14 @@ QString FilesystemExpert:: newFolder(QString path, QString folderName)
 		error.append(QObject::tr("Unable to create the folder."));
 
 	return error;
+}
+
+/**
+ * [STATIC]
+ * Remove a folder/file
+ * Return a filled string with a message on error
+ */
+bool FilesystemExpert::remove(QString path)
+{
+	return LabSaver::removeDir(path);
 }

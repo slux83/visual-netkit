@@ -511,7 +511,7 @@ bool LabSaver::createFolderSystem()
 
 
 /**
- * [PRIVATE]
+ * [STATIC_PUBLIC]
  * Removes passed dir and contained files.
  * NOTE: this function is copied from www.qtcentre.org/forum
  */

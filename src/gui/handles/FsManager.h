@@ -40,7 +40,11 @@ public:
 	QModelIndex changePath(QString path);
 	QString newFile(QString path, QString fileName);
 	QString newFolder(QString path, QString folderName);
+	QDirModel * newDirModel();
+	QModelIndex rootLabPath();
+	bool remove(QString path);
 	QString getLabPath();
+	bool openEditor(QString filePath);
 };
 
 #endif /*FSMANAGER_H_*/

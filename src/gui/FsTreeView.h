@@ -40,8 +40,7 @@ enum ActionEnum
 	TextEditor	= 2,
 	Trash		= 3,
 	Rename		= 4,
-	Delete		= 5,
-	Refresh		= 6
+	Refresh		= 5
 };
 
 private:
@@ -57,12 +56,12 @@ signals:
 
 private slots:
 	//TODO: implements these slots
-	void deleteFile() {}
+	void deleteFile();
 	void newFile();
 	void newFolder();
 	void renameFile() {}
 	void refreshView(bool expandCurrent = false);
-	void editFile() {}
+	void editFile();
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
