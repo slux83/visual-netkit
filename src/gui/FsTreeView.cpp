@@ -83,7 +83,6 @@ void FsTreeView::newFile()
 	if(!fInfo.exists())
 		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists";
 
-	qDebug() << "labpath:" << fsManager->getLabPath();
 
 	//Current index is a file or a root file?
 	if( (fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && !fInfo.isDir()) ||
@@ -95,9 +94,6 @@ void FsTreeView::newFile()
 	{
 		filePath = current.data(QDirModel::FilePathRole).toString();
 	}
-
-
-	qDebug() << filePath;
 
 	//Get the file name
 	QString fileName = QInputDialog::getText(
@@ -113,7 +109,7 @@ void FsTreeView::newFile()
 	if(!error.isEmpty())
 		QMessageBox::warning(this, tr("Error"), tr("Unable to create an empty file") + ": " + error);
 	else
-		emit refreshNeeded(true);
+		refreshView();
 }
 
 /**
@@ -135,8 +131,6 @@ void FsTreeView::filterMenu()
  */
 void FsTreeView::refreshView(bool expandCurrent)
 {
-	qDebug() << "Refreshing view...start";
-
 	QDirModel *m = dynamic_cast<QDirModel*>(model());
 
 	if(!m)
@@ -145,10 +139,9 @@ void FsTreeView::refreshView(bool expandCurrent)
 		return;
 	}
 
-	m->refresh();	//TODO: cause sometime a crash =/
+	m->refresh();
 
-	qDebug() << "Refreshing view...done";
-
+	//unused if: causes of some crashes
 	if(expandCurrent && current.isValid())
 		expand(current);
 }
