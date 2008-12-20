@@ -139,6 +139,11 @@ void LabHandler::updateFsDir()
 		mainWindow->fsTree->setColumnHidden (2, true);
 		mainWindow->fsTree->setColumnHidden (3, true);
 	}
+	else
+	{
+		QDirModel *m = dynamic_cast<QDirModel*>(mainWindow->fsTree->model());
+		if(m) m->refresh();	//refresh all
+	}
 
 	mainWindow->fsTree->setRootIndex(
 		FsManager::getInstance()->changePath(

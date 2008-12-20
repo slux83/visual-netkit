@@ -30,6 +30,7 @@ class FilesystemExpert
 public:
 	static QString newFile(QString path, QString fileName);
 	static QString newFolder(QString path, QString folderName);
+	static bool remove(QString path);
 };
 
 #endif /* FILESYSTEMEXPERT_H_ */

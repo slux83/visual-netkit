@@ -19,6 +19,7 @@
 #include "FsManager.h"
 #include "../../persistence/FilesystemExpert.h"
 #include "../../core/handles/LabFacadeController.h"
+#include "../../gui/handles/TabController.h"
 
 FsManager* FsManager::instance = NULL;
 
@@ -59,6 +60,14 @@ QModelIndex FsManager::changePath(QString path)
 }
 
 /**
+ * Get the root of the lab path
+ */
+QModelIndex FsManager::rootLabPath()
+{
+	return fsModel->index(getLabPath(), 0);
+}
+
+/**
  * Create a new file empty
  */
 QString FsManager::newFile(QString path, QString fileName)
@@ -86,3 +95,42 @@ QString FsManager::getLabPath()
 	return l->getLabPath().absolutePath();
 
 }
+
+/**
+ * Remove a file/folder
+ */
+bool FsManager::remove(QString path)
+{
+	QFileInfo fi(path);
+
+	if(fi.isDir())
+		return FilesystemExpert::remove(path);
+	else if(fi.isFile())
+		return QFile::remove(path);
+	else
+		qWarning() << path << "is not a folder or regular file";
+
+	return false;
+}
+
+/**
+ * Destroy and renew the QDirModel
+ */
+QDirModel * FsManager::newDirModel()
+{
+	delete fsModel;
+
+	fsModel = new QDirModel();
+
+	return fsModel;
+}
+
+
+/**
+ * Open new text editor
+ */
+bool FsManager::openEditor(QString filePath)
+{
+	return TabController::getInstance()->openTab(filePath);
+}
+
