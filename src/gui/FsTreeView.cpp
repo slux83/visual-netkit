@@ -67,6 +67,54 @@ void FsTreeView::contextMenuEvent(QContextMenuEvent *event)
 
 /**
  * [PRIVATE_SLOT]
+ * Create a new folder
+ */
+void FsTreeView::newFolder()
+{
+	bool okPressed;
+	QString error;
+	QString filePath;
+
+	if(!current.isValid())
+		qWarning() << "FsTreeView::newFile() Invalid node";
+
+	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+
+	if(!fInfo.exists())
+		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists";
+
+
+	//Current index is a file or a root file?
+	if( (fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && !fInfo.isDir()) ||
+		(fsManager->getLabPath() != current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile()) )
+	{
+		filePath = current.parent().data(QDirModel::FilePathRole).toString();
+	}
+	else
+	{
+		filePath = current.data(QDirModel::FilePathRole).toString();
+	}
+
+	//Get the file name
+	QString folderName = QInputDialog::getText(
+			this,
+			tr("Make New Folder/Path"),
+			tr("Parent: ") + filePath + "\n\n" +
+			tr("Insert the folder name (or a path like 'foo/bar')"),
+			QLineEdit::Normal,
+			QString(), &okPressed);
+
+	if(okPressed && !folderName.trimmed().isEmpty())
+		error = fsManager->newFolder(filePath, folderName.trimmed());
+
+	if(!error.isEmpty())
+		QMessageBox::warning(this, tr("Error"), tr("Unable to create the folder") + ": " + error);
+	else
+		refreshView();
+}
+
+/**
+ * [PRIVATE_SLOT]
  * Create a new empty file
  */
 void FsTreeView::newFile()
@@ -98,9 +146,10 @@ void FsTreeView::newFile()
 	//Get the file name
 	QString fileName = QInputDialog::getText(
 			this,
-			tr("Path: ") + filePath + "\n" +
+			tr("Make New File"),
+			tr("Parent: ") + filePath + "\n\n" +
 			tr("Insert the file name"),
-			tr("File Name"), QLineEdit::Normal,
+			QLineEdit::Normal,
 			QString(), &okPressed);
 
 	if(okPressed && !fileName.trimmed().isEmpty())
