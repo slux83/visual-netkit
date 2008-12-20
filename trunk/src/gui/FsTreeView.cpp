@@ -40,6 +40,8 @@ FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 	menuActions.insert(Rename, contextMenu->addAction(QIcon(), tr("Rename..."), this, SLOT(renameFile())));
 	contextMenu->addSeparator();
 	menuActions.insert(Refresh, contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView())));
+
+	connect(this, SIGNAL(refreshNeeded(bool)), this, SLOT(refreshView(bool)));
 }
 
 /**
@@ -73,18 +75,29 @@ void FsTreeView::newFile()
 	QString error;
 	QString filePath;
 
+	if(!current.isValid())
+		qWarning() << "FsTreeView::newFile() Invalid node";
+
 	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+
 	if(!fInfo.exists())
 		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists";
 
-	//Current index is a file or a root file?
-	if((fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && !fInfo.isDir()) ||
-		(fsManager->getLabPath() != current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile()))
-		filePath = current.parent().data(QDirModel::FilePathRole).toString();
-	else
-		filePath = current.data(QDirModel::FilePathRole).toString();
+	qDebug() << "labpath:" << fsManager->getLabPath();
 
-	qDebug() << filePath;// << fsManager->getLabPath();// << current.parent().data(QDirModel::FilePathRole).toString();
+	//Current index is a file or a root file?
+	if( (fsManager->getLabPath() == current.parent().data(QDirModel::FilePathRole).toString() && !fInfo.isDir()) ||
+		(fsManager->getLabPath() != current.parent().data(QDirModel::FilePathRole).toString() && fInfo.isFile()) )
+	{
+		filePath = current.parent().data(QDirModel::FilePathRole).toString();
+	}
+	else
+	{
+		filePath = current.data(QDirModel::FilePathRole).toString();
+	}
+
+
+	qDebug() << filePath;
 
 	//Get the file name
 	QString fileName = QInputDialog::getText(
@@ -100,7 +113,7 @@ void FsTreeView::newFile()
 	if(!error.isEmpty())
 		QMessageBox::warning(this, tr("Error"), tr("Unable to create an empty file") + ": " + error);
 	else
-		refreshView(true);
+		emit refreshNeeded(true);
 }
 
 /**
@@ -109,9 +122,11 @@ void FsTreeView::newFile()
  */
 void FsTreeView::filterMenu()
 {
-	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
-
-	menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
+	if(current.isValid())
+	{
+		QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
+		menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
+	}
 }
 
 /**
@@ -120,16 +135,20 @@ void FsTreeView::filterMenu()
  */
 void FsTreeView::refreshView(bool expandCurrent)
 {
-	QDirModel *model = fsManager->getFsModel();
+	qDebug() << "Refreshing view...start";
 
-	if(model == NULL)
+	QDirModel *m = dynamic_cast<QDirModel*>(model());
+
+	if(!m)
 	{
-		qWarning() << "fsManager->getFsModel() is NULL";
+		qWarning() << "FsTreeView QDirModel is NULL";
 		return;
 	}
 
-	model->refresh();	//TODO: cause sometime a crash =/
+	m->refresh();	//TODO: cause sometime a crash =/
 
-	if(expandCurrent)
+	qDebug() << "Refreshing view...done";
+
+	if(expandCurrent && current.isValid())
 		expand(current);
 }
