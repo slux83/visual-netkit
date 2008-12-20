@@ -19,6 +19,7 @@
 #include "FilesystemExpert.h"
 #include <QDebug>
 #include <QFile>
+#include <QDir>
 
 /**
  * [STATIC]
@@ -30,7 +31,7 @@ QString FilesystemExpert::newFile(QString path, QString fileName)
 	QString fileExistsError = "File " + path + "/" + fileName + " ";
 
 	if(QFile::exists(path + "/" + fileName))
-		return fileExistsError + QObject::tr("allerady exists.");
+		return fileExistsError + QObject::tr("already exists.");
 
 	QFile f(path + "/" + fileName);
 
@@ -40,4 +41,27 @@ QString FilesystemExpert::newFile(QString path, QString fileName)
 	f.close();
 
 	return QString();
+}
+
+/**
+ * [STATIC]
+ * Add an new folder
+ * Return a filled string with a message on error
+ */
+QString FilesystemExpert:: newFolder(QString path, QString folderName)
+{
+	QString error;
+	QString fileExistsError = "Folder " + path + "/" + folderName + " ";
+	QDir pathDir(path);
+
+	if(pathDir.exists(folderName))
+		return fileExistsError + QObject::tr("already exists.");
+
+	//make the new folder/folder-path
+	bool esite = (folderName.contains("/"))? pathDir.mkpath(folderName) : pathDir.mkdir(folderName);
+
+	if(!esite)
+		error.append(QObject::tr("Unable to create the folder."));
+
+	return error;
 }

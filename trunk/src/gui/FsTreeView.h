@@ -59,7 +59,7 @@ private slots:
 	//TODO: implements these slots
 	void deleteFile() {}
 	void newFile();
-	void newFolder() {}
+	void newFolder();
 	void renameFile() {}
 	void refreshView(bool expandCurrent = false);
 	void editFile() {}

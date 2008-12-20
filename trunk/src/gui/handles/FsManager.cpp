@@ -67,6 +67,14 @@ QString FsManager::newFile(QString path, QString fileName)
 }
 
 /**
+ * Create a new file empty
+ */
+QString FsManager::newFolder(QString path, QString folderName)
+{
+	return FilesystemExpert::newFolder(path, folderName);
+}
+
+/**
  * Get the current lab path
  */
 QString FsManager::getLabPath()

@@ -39,6 +39,7 @@ public:
 	QDirModel * getFsModel() { return fsModel; }
 	QModelIndex changePath(QString path);
 	QString newFile(QString path, QString fileName);
+	QString newFolder(QString path, QString folderName);
 	QString getLabPath();
 };
 
