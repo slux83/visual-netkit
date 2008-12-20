@@ -27,6 +27,11 @@
  */
 QString FilesystemExpert::newFile(QString path, QString fileName)
 {
+	QString fileExistsError = "File " + path + "/" + fileName + " ";
+
+	if(QFile::exists(path + "/" + fileName))
+		return fileExistsError + QObject::tr("allerady exists.");
+
 	QFile f(path + "/" + fileName);
 
 	if(!f.open(QFile::WriteOnly))
