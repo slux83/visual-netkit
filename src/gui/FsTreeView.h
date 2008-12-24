@@ -49,17 +49,17 @@ private:
 	QModelIndex current;
 	QMap<ActionEnum, QAction*> menuActions;
 
+	void removeDirRecursive(QModelIndex index, QStringList *paths);
 	void filterMenu();
 
 signals:
 	void refreshNeeded(bool expandCurrent);
 
 private slots:
-	//TODO: implements these slots
 	void deleteFile();
 	void newFile();
 	void newFolder();
-	void renameFile() {}
+	void renameFile();
 	void refreshView(bool expandCurrent = false);
 	void editFile();
 

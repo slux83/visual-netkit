@@ -42,7 +42,7 @@ public:
 	QString newFolder(QString path, QString folderName);
 	QDirModel * newDirModel();
 	QModelIndex rootLabPath();
-	bool remove(QString path);
+	bool remove(QString path);	//TODO: remove this function
 	QString getLabPath();
 	bool openEditor(QString filePath);
 };

@@ -29,6 +29,8 @@ FsManager* FsManager::instance = NULL;
 FsManager::FsManager()
 {
 	fsModel = new QDirModel();
+	fsModel->setFilter(QDir::Hidden | QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
+	fsModel->setReadOnly(false);
 }
 
 /**
@@ -121,6 +123,8 @@ QDirModel * FsManager::newDirModel()
 	delete fsModel;
 
 	fsModel = new QDirModel();
+	fsModel->setFilter(QDir::Hidden | QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
+	fsModel->setReadOnly(false);
 
 	return fsModel;
 }
