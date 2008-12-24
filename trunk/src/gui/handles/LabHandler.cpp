@@ -132,7 +132,7 @@ void LabHandler::updateFsDir()
 {
 	if(!mainWindow->fsTree->model())
 	{
-		mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
+		mainWindow->fsTree->setDirModel(FsManager::getInstance()->getFsModel());
 
 		//hide extra columns
 		mainWindow->fsTree->setColumnHidden (1, true);
