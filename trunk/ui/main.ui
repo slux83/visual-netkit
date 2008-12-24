@@ -258,7 +258,14 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="FsTreeView" name="fsTree" />
+          <widget class="FsTreeView" name="fsTree" >
+           <property name="editTriggers" >
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="animated" >
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

@@ -172,8 +172,6 @@ void FsTreeView::filterMenu()
 		QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
 		menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
 	}
-
-	menuActions.value(Trash)->setEnabled(false);
 }
 
 /**
@@ -192,12 +190,24 @@ void FsTreeView::refreshView(bool expandCurrent)
 		return;
 	}
 
+	m->refresh();
+}
 
-	//m->refresh();
+/**
+ * [PRIVATE]
+ * Get all paths from a root index
+ */
+void FsTreeView::removeDirRecursive(QModelIndex index, QStringList *paths)
+{
+    if(!index.isValid())
+        return;
 
-//	setModel(fsManager->newDirModel());
-//	setRootIndex(fsManager->rootLabPath());
+    for(int i=0; i<model()->rowCount(index); i++)
+    {
+        removeDirRecursive(index.child(i, 0), paths);
+    }
 
+    paths->append(index.data(QDirModel::FilePathRole).toString());
 }
 
 /**
@@ -225,20 +235,37 @@ void FsTreeView::deleteFile()
 							tr("Item: ") + current.data(QDirModel::FilePathRole).toString(),
 							QMessageBox::Yes | QMessageBox::No);
 
-
-	QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
-
-	if(!fInfo.exists())
-		qWarning() << "File/Dir:" << current.data(QDirModel::FilePathRole).toString() << "doesn't exists.";
-
 	if(resp == QMessageBox::No)
 		return;
 
-	if(! fsManager->remove(current.data(QDirModel::FilePathRole).toString()) )
-		QMessageBox::warning(this, tr("Error"),
-				tr("Unable to remove the file/folder") + ": " + fInfo.absoluteFilePath());
+	QFileInfo fi = m->fileInfo(current);
+	if(fi.isFile())
+		qDebug() << "remove " << m->remove(current);
 	else
-		refreshView();
+	{
+		QStringList *l = new QStringList();
+		removeDirRecursive(current, l);
+		foreach(QString path, *l)
+		{
+			if(m->isDir(m->index(path,0)))
+				qDebug() << path << m->index(path,0).isValid() << m->rmdir(m->index(path,0));
+			else
+				qDebug() << path << m->index(path,0).isValid() << m->remove(m->index(path,0));
+		}
+
+		l->clear();
+		delete l;
+	}
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * Rename an item
+ */
+void FsTreeView::renameFile()
+{
+	if(current.isValid())
+		edit(current);
 }
 
 /**
