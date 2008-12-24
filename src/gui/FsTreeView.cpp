@@ -26,6 +26,8 @@
  */
 FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 {
+	m = NULL;
+
 	//Get my controller singleton instance
 	fsManager = FsManager::getInstance();
 	contextMenu = new QMenu(this);
@@ -182,8 +184,6 @@ void FsTreeView::refreshView(bool expandCurrent)
 {
 	Q_UNUSED(expandCurrent);
 
-	QDirModel *m = dynamic_cast<QDirModel*>(model());
-
 	if(!m)
 	{
 		qWarning() << "FsTreeView QDirModel is NULL";
@@ -202,7 +202,7 @@ void FsTreeView::removeDirRecursive(QModelIndex index, QStringList *paths)
     if(!index.isValid())
         return;
 
-    for(int i=0; i<model()->rowCount(index); i++)
+    for(int i=0; i<m->rowCount(index); i++)
     {
         removeDirRecursive(index.child(i, 0), paths);
     }
@@ -216,8 +216,6 @@ void FsTreeView::removeDirRecursive(QModelIndex index, QStringList *paths)
  */
 void FsTreeView::deleteFile()
 {
-	QDirModel *m = dynamic_cast<QDirModel*>(model());
-
 	if(!m)
 	{
 		qWarning() << "FsTreeView QDirModel is NULL";
@@ -238,24 +236,20 @@ void FsTreeView::deleteFile()
 	if(resp == QMessageBox::No)
 		return;
 
-	QFileInfo fi = m->fileInfo(current);
-	if(fi.isFile())
-		qDebug() << "remove " << m->remove(current);
-	else
-	{
-		QStringList *l = new QStringList();
-		removeDirRecursive(current, l);
-		foreach(QString path, *l)
-		{
-			if(m->isDir(m->index(path,0)))
-				qDebug() << path << m->index(path,0).isValid() << m->rmdir(m->index(path,0));
-			else
-				qDebug() << path << m->index(path,0).isValid() << m->remove(m->index(path,0));
-		}
 
-		l->clear();
-		delete l;
+	QStringList *l = new QStringList();
+	removeDirRecursive(current, l);
+	foreach(QString path, *l)
+	{
+		if(m->isDir(m->index(path,0)))
+			qDebug() << path << m->index(path,0).isValid() << m->rmdir(m->index(path,0));
+		else
+			qDebug() << path << m->index(path,0).isValid() << m->remove(m->index(path,0));
 	}
+
+	l->clear();
+	delete l;
+
 }
 
 /**

@@ -48,6 +48,7 @@ private:
 	QMenu *contextMenu;
 	QModelIndex current;
 	QMap<ActionEnum, QAction*> menuActions;
+	QDirModel *m;
 
 	void removeDirRecursive(QModelIndex index, QStringList *paths);
 	void filterMenu();
@@ -69,6 +70,7 @@ protected:
 public:
 	FsTreeView(QWidget *parent = NULL);
 	virtual ~FsTreeView();
+	void setDirModel(QDirModel *model) { m = model; setModel(model); }
 };
 
 #endif /* FSTREEVIEW_H_ */
