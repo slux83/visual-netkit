@@ -114,12 +114,7 @@ void LabHandler::openLab(QString labPath)
 
 	mainWindow->actionCloseLab->setDisabled(false);
 
-	mainWindow->fsTree->setModel(FsManager::getInstance()->getFsModel());
-
-	//hide extra columns
-	mainWindow->fsTree->setColumnHidden (1, true);
-	mainWindow->fsTree->setColumnHidden (2, true);
-	mainWindow->fsTree->setColumnHidden (3, true);
+	mainWindow->fsTree->setDirModel(FsManager::getInstance()->getFsModel());
 
 	updateFsDir();
 }
@@ -131,20 +126,11 @@ void LabHandler::openLab(QString labPath)
 void LabHandler::updateFsDir()
 {
 	if(!mainWindow->fsTree->model())
-	{
 		mainWindow->fsTree->setDirModel(FsManager::getInstance()->getFsModel());
-
-		//hide extra columns
-		mainWindow->fsTree->setColumnHidden (1, true);
-		mainWindow->fsTree->setColumnHidden (2, true);
-		mainWindow->fsTree->setColumnHidden (3, true);
-	}
 	else
-	{
-		QDirModel *m = dynamic_cast<QDirModel*>(mainWindow->fsTree->model());
-		if(m) m->refresh();	//refresh all
-	}
+		FsManager::getInstance()->getFsModel()->refresh();	//refresh all
 
+	//update the root index (lab dir root)
 	mainWindow->fsTree->setRootIndex(
 		FsManager::getInstance()->changePath(
 			LabFacadeController::getInstance()->getCurrentLab()->getLabPath().absolutePath()));
@@ -156,7 +142,7 @@ void LabHandler::updateFsDir()
  */
 void LabHandler::clearFsDir()
 {
-	mainWindow->fsTree->setModel(NULL);
+	mainWindow->fsTree->setDirModel(NULL);
 }
 
 /**
