@@ -4,7 +4,7 @@
  * [Added]   file editor changes watcher (watch if the file content is changed
              by an external application)
  * [Fixed]   startup files content sequence error. Now the ethernet setup appear
-             as first
+             as first inside startup files
  * [Added]   a simple file system manager to manage files inside the lab
              (actions like: add file/folder, delete file/folder, rename, etc..).
 
