@@ -56,17 +56,9 @@ FsManager* FsManager::getInstance()
 /**
  * Change the root path of the model
  */
-QModelIndex FsManager::changePath(QString path)
+const QModelIndex FsManager::changePath(QString path)
 {
 	return fsModel->index(path, 0);
-}
-
-/**
- * Get the root of the lab path
- */
-QModelIndex FsManager::rootLabPath()
-{
-	return fsModel->index(getLabPath(), 0);
 }
 
 /**
@@ -97,38 +89,6 @@ QString FsManager::getLabPath()
 	return l->getLabPath().absolutePath();
 
 }
-
-/**
- * Remove a file/folder
- */
-bool FsManager::remove(QString path)
-{
-	QFileInfo fi(path);
-
-	if(fi.isDir())
-		return FilesystemExpert::remove(path);
-	else if(fi.isFile())
-		return QFile::remove(path);
-	else
-		qWarning() << path << "is not a folder or regular file";
-
-	return false;
-}
-
-/**
- * Destroy and renew the QDirModel
- */
-QDirModel * FsManager::newDirModel()
-{
-	delete fsModel;
-
-	fsModel = new QDirModel();
-	fsModel->setFilter(QDir::Hidden | QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
-	fsModel->setReadOnly(false);
-
-	return fsModel;
-}
-
 
 /**
  * Open new text editor

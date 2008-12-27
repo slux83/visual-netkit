@@ -26,7 +26,7 @@
  */
 FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 {
-	m = NULL;
+	dirModel = NULL;
 
 	//Get my controller singleton instance
 	fsManager = FsManager::getInstance();
@@ -43,7 +43,9 @@ FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 	contextMenu->addSeparator();
 	menuActions.insert(Refresh, contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView())));
 
-	connect(this, SIGNAL(refreshNeeded(bool)), this, SLOT(refreshView(bool)));
+	setColumnHidden(1, true);
+	setColumnHidden(2, true);
+	setColumnHidden(3, true);
 }
 
 /**
@@ -107,12 +109,7 @@ void FsTreeView::newFolder()
 			QString(), &okPressed);
 
 	if(okPressed && !folderName.trimmed().isEmpty())
-		error = fsManager->newFolder(filePath, folderName.trimmed());
-
-	if(!error.isEmpty())
-		QMessageBox::warning(this, tr("Error"), tr("Unable to create the folder") + ": " + error);
-	else
-		refreshView();
+		qDebug() << "making dir" << folderName << dirModel->mkdir(dirModel->index(filePath, 0), folderName.trimmed());
 }
 
 /**
@@ -170,27 +167,22 @@ void FsTreeView::newFile()
 void FsTreeView::filterMenu()
 {
 	if(current.isValid())
-	{
-		QFileInfo fInfo(current.data(QDirModel::FilePathRole).toString());
-		menuActions.value(TextEditor)->setEnabled(fInfo.isFile());
-	}
+		menuActions.value(TextEditor)->setDisabled(dirModel->isDir(current));
 }
 
 /**
  * [PRIVATE_SLOT]
  * Refresh the view
  */
-void FsTreeView::refreshView(bool expandCurrent)
+void FsTreeView::refreshView()
 {
-	Q_UNUSED(expandCurrent);
-
-	if(!m)
+	if(!dirModel)
 	{
 		qWarning() << "FsTreeView QDirModel is NULL";
 		return;
 	}
 
-	m->refresh();
+	dirModel->refresh();
 }
 
 /**
@@ -200,9 +192,12 @@ void FsTreeView::refreshView(bool expandCurrent)
 void FsTreeView::removeDirRecursive(QModelIndex index, QStringList *paths)
 {
     if(!index.isValid())
-        return;
+    {
+    	qWarning() << "FsTreeView::removeDirRecursive()" << index << "is invalid";
+    	return;
+    }
 
-    for(int i=0; i<m->rowCount(index); i++)
+    for(int i=0; i<dirModel->rowCount(index); i++)
     {
         removeDirRecursive(index.child(i, 0), paths);
     }
@@ -216,7 +211,7 @@ void FsTreeView::removeDirRecursive(QModelIndex index, QStringList *paths)
  */
 void FsTreeView::deleteFile()
 {
-	if(!m)
+	if(!dirModel)
 	{
 		qWarning() << "FsTreeView QDirModel is NULL";
 		return;
@@ -239,12 +234,16 @@ void FsTreeView::deleteFile()
 
 	QStringList *l = new QStringList();
 	removeDirRecursive(current, l);
+
 	foreach(QString path, *l)
 	{
-		if(m->isDir(m->index(path,0)))
-			qDebug() << path << m->index(path,0).isValid() << m->rmdir(m->index(path,0));
+		const QModelIndex elem = dirModel->index(path, 0);
+		if(!elem.isValid()) qDebug() << "Elem" << elem << "is not a valid index";
+
+		if(dirModel->isDir(elem))
+			qDebug() << path << dirModel->rmdir(elem);
 		else
-			qDebug() << path << m->index(path,0).isValid() << m->remove(m->index(path,0));
+			qDebug() << path << dirModel->remove(elem);
 	}
 
 	l->clear();

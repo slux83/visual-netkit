@@ -48,20 +48,17 @@ private:
 	QMenu *contextMenu;
 	QModelIndex current;
 	QMap<ActionEnum, QAction*> menuActions;
-	QDirModel *m;
+	QDirModel *dirModel;
 
 	void removeDirRecursive(QModelIndex index, QStringList *paths);
 	void filterMenu();
-
-signals:
-	void refreshNeeded(bool expandCurrent);
 
 private slots:
 	void deleteFile();
 	void newFile();
 	void newFolder();
 	void renameFile();
-	void refreshView(bool expandCurrent = false);
+	void refreshView();
 	void editFile();
 
 protected:
@@ -70,7 +67,7 @@ protected:
 public:
 	FsTreeView(QWidget *parent = NULL);
 	virtual ~FsTreeView();
-	void setDirModel(QDirModel *model) { m = model; setModel(model); }
+	void setDirModel(QDirModel *model) { dirModel = model; setModel(dirModel); }
 };
 
 #endif /* FSTREEVIEW_H_ */

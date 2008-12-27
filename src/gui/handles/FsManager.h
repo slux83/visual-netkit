@@ -37,12 +37,9 @@ public:
 	virtual ~FsManager();
 	static FsManager* getInstance();
 	QDirModel * getFsModel() { return fsModel; }
-	QModelIndex changePath(QString path);
+	const QModelIndex changePath(QString path);
 	QString newFile(QString path, QString fileName);
 	QString newFolder(QString path, QString folderName);
-	QDirModel * newDirModel();
-	QModelIndex rootLabPath();
-	bool remove(QString path);	//TODO: remove this function
 	QString getLabPath();
 	bool openEditor(QString filePath);
 };

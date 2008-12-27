@@ -17,7 +17,6 @@
  */
 
 #include "FilesystemExpert.h"
-#include "LabSaver.h"
 #include <QDebug>
 #include <QFile>
 #include <QDir>
@@ -67,12 +66,3 @@ QString FilesystemExpert::newFolder(QString path, QString folderName)
 	return error;
 }
 
-/**
- * [STATIC]
- * Remove a folder/file
- * Return a filled string with a message on error
- */
-bool FilesystemExpert::remove(QString path)
-{
-	return LabSaver::removeDir(path);
-}
