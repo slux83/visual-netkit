@@ -134,6 +134,8 @@ void LabHandler::updateFsDir()
 	mainWindow->fsTree->setRootIndex(
 		FsManager::getInstance()->changePath(
 			LabFacadeController::getInstance()->getCurrentLab()->getLabPath().absolutePath()));
+
+	mainWindow->fsTree->resizeColumnToContents(0);
 }
 
 /**

@@ -24,6 +24,7 @@
 #include <QTreeView>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include <QMouseEvent>
 
 /**
  * The file system  tree view of the current laboratory
@@ -60,14 +61,16 @@ private slots:
 	void renameFile();
 	void refreshView();
 	void editFile();
+	void adjustExpand(const QModelIndex &index);
 
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
+	void mouseDoubleClickEvent(QMouseEvent *event);
 
 public:
 	FsTreeView(QWidget *parent = NULL);
 	virtual ~FsTreeView();
-	void setDirModel(QDirModel *model) { dirModel = model; setModel(dirModel); }
+	void setDirModel(QDirModel *model);
 };
 
 #endif /* FSTREEVIEW_H_ */

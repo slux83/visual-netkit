@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QApplication>
 
 /**
  * Constructor
@@ -43,9 +44,8 @@ FsTreeView::FsTreeView(QWidget *parent) : QTreeView(parent)
 	contextMenu->addSeparator();
 	menuActions.insert(Refresh, contextMenu->addAction(QIcon(":/menu/refresh"), tr("Refresh"), this, SLOT(refreshView())));
 
-	setColumnHidden(1, true);
-	setColumnHidden(2, true);
-	setColumnHidden(3, true);
+	connect(this, SIGNAL(expanded(const QModelIndex &)), this, SLOT(adjustExpand(const QModelIndex &)));
+
 }
 
 /**
@@ -104,12 +104,19 @@ void FsTreeView::newFolder()
 			this,
 			tr("Make New Folder/Path"),
 			tr("Parent: ") + filePath + "\n\n" +
-			tr("Insert the folder name (or a path like 'foo/bar')"),
+			tr("Insert the folder name"),
 			QLineEdit::Normal,
 			QString(), &okPressed);
 
-	if(okPressed && !folderName.trimmed().isEmpty())
-		qDebug() << "making dir" << folderName << dirModel->mkdir(dirModel->index(filePath, 0), folderName.trimmed());
+	if(folderName.trimmed().isEmpty())
+		error.append(tr("Please, enter a valid name"));
+
+	if(okPressed && error.isEmpty())
+		if(! dirModel->mkdir( dirModel->index(filePath, 0), folderName.trimmed() ).isValid() )
+			error.append(tr("There was an error during the folder creation."));
+
+	if(!error.isEmpty())
+		QMessageBox::warning(this, "Error", error);
 }
 
 /**
@@ -232,22 +239,26 @@ void FsTreeView::deleteFile()
 		return;
 
 
+	QApplication::setOverrideCursor(Qt::WaitCursor);
+
 	QStringList *l = new QStringList();
 	removeDirRecursive(current, l);
 
 	foreach(QString path, *l)
 	{
 		const QModelIndex elem = dirModel->index(path, 0);
-		if(!elem.isValid()) qDebug() << "Elem" << elem << "is not a valid index";
+		if(!elem.isValid()) qDebug() << "Element" << elem << "is not a valid index";
 
 		if(dirModel->isDir(elem))
-			qDebug() << path << dirModel->rmdir(elem);
+			dirModel->rmdir(elem);
 		else
-			qDebug() << path << dirModel->remove(elem);
+			dirModel->remove(elem);
 	}
 
 	l->clear();
 	delete l;
+
+	QApplication::restoreOverrideCursor();
 
 }
 
@@ -275,4 +286,42 @@ void FsTreeView::editFile()
 			"Visual Netkit - Error",
 			tr("Cannot open the file").append(" ").append(current.data(QDirModel::FilePathRole).toString()),
 			QMessageBox::Ok);
+}
+
+/**
+ * [PROTECTED]
+ * Open text editor on leaf double click
+ */
+void FsTreeView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	QModelIndex mIndex = indexAt(event->pos());		//get the selected item
+
+	if(mIndex.isValid() && !dirModel->isDir(mIndex))
+	{
+		current = mIndex;
+		editFile();
+	}
+	else if(mIndex.isValid() && dirModel->isDir(mIndex))
+		expand(mIndex);
+}
+
+/**
+ * Set the dir model
+ */
+void FsTreeView::setDirModel(QDirModel *model)
+{
+	//set and save the model
+	dirModel = model;
+	setModel(dirModel);
+}
+
+/**
+ * [PRIVATE_SLOT]
+ * adjust row size when expanded
+ */
+void FsTreeView::adjustExpand(const QModelIndex &index)
+{
+	Q_UNUSED(index);
+
+	resizeColumnToContents(0);
 }
