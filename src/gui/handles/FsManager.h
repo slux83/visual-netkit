@@ -39,7 +39,6 @@ public:
 	QDirModel * getFsModel() { return fsModel; }
 	const QModelIndex changePath(QString path);
 	QString newFile(QString path, QString fileName);
-	QString newFolder(QString path, QString folderName);
 	QString getLabPath();
 	bool openEditor(QString filePath);
 };
