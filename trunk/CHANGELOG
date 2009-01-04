@@ -1,7 +1,7 @@
 2009-xx-xx [1.2] Slux <slux83@gmail.com>
  * [Added]   plugin Quagga-core (zebra daemon)
  * [Added]   plugin Quagga-bgp (bgp daemon)
- * [Added]   some Tab editor improovments
+ * [Added]   some Tab editor improvements
  * [Added]   file editor changes watcher (watch if the file content is changed
              by an external application)
  * [Fixed]   startup files content sequence error. Now the ethernet setup appear
