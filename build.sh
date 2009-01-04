@@ -22,7 +22,7 @@ VN_PLUGINS=(	"src/plugin_dev/test"
 		"src/plugin_dev/ipv4" \
 		"src/plugin_dev/mac"  \
 		"src/plugin_dev/quagga/core" \
-#		"src/plugin_dev/zebra" \
+		"src/plugin_dev/quagga/bgp" \
 )
 
 VN_HOME=`pwd`

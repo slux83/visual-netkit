@@ -1,12 +1,18 @@
-200x-xx-xx [1.2] Slux <slux83@gmail.com>
+2009-xx-xx [1.2] Slux <slux83@gmail.com>
  * [Added]   plugin Quagga-core (zebra daemon)
+ * [Added]   plugin Quagga-bgp (bgp daemon)
  * [Added]   some Tab editor improovments
  * [Added]   file editor changes watcher (watch if the file content is changed
              by an external application)
  * [Fixed]   startup files content sequence error. Now the ethernet setup appear
              as first inside startup files
- * [Added]   a simple file system manager to manage files inside the lab
-             (actions like: add file/folder, delete file/folder, rename, etc..).
+ * [Fixed]   plugin dependencies bug when these are showed to be selected
+ * [Added]   plugin dependencies auto-select: when a plugin is selected, all
+             its dependencies are selected (if a dependence is not found, an
+             alert message is showed as warning)
+ * [Added]   an experimental and simple file system manager to manage all files
+             inside the lab (add new file/folder, delete file/folder, rename,
+             edit all files, etc...)
 
 --------------------------------------------------------------------------------
 

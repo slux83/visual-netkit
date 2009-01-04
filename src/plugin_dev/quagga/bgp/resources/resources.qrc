@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/quagga-bgp">
+	<file alias="bgpd.conf">bgpd.conf</file>
+        <file alias="xml-conf">plugin.xml</file>
+    </qresource>
+</RCC>
