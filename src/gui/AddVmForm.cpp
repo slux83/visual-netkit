@@ -175,7 +175,7 @@ void AddVmForm::showPluginInfos(QListWidgetItem *item)
 						listItems.first()->setCheckState(Qt::Checked);		//check the dep
 				}
 
-				//we have not fonud dependencies??
+				//we have not found dependencies??
 				if(!notFoundDeps.isEmpty())
 					QMessageBox::warning(this, "Warning",
 							tr("There are dependency problems") + "\nPlugins (" + notFoundDeps.join(", ") + ") not found.");
