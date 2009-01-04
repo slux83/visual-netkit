@@ -5,51 +5,21 @@
 	</global>
 	<properties>
 		
-		<!--property id="daemons" name="daemons" default_value="" min="1" max="1">
-			<![CDATA[The daemon file tells the Quagga suite which daemons to start.<br />Possible values are: 'yes', 'no', 'priority_number']]>
-			<childs>
-				<property id="daemons-zebra" name="daemons-zebra" default_value="yes" min="1" max="1">
-					<![CDATA[Zebra daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-bgpd" name="daemons-bgpd" default_value="no" min="1" max="1">
-					<![CDATA[Bgp daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-ospfd" name="daemons-ospfd" default_value="no" min="1" max="1">
-					<![CDATA[Ospf daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-ospf6d" name="daemons-ospf6d" default_value="no" min="1" max="1">
-					<![CDATA[Ospf ipv6 daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-ripd" name="daemons-ripd" default_value="no" min="1" max="1">
-					<![CDATA[Rip daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-ripngd" name="daemons-ripngd" default_value="no" min="1" max="1">
-					<![CDATA[Ripng daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-isisd" name="daemons-isisd" default_value="no" min="1" max="1">
-					<![CDATA[Isis daemon]]>
-					<childs/>
-				</property>
-				
-				<property id="daemons-ldpd" name="daemons-ldpd" default_value="no" min="1" max="1">
-					<![CDATA[Ldp daemon]]>
-					<childs/>
-				</property>
-				
-			</childs>
-		</property-->
+		<property id="hostname" name="hostname" default_value="bgpd" min="1" max="1">
+			<![CDATA[Set hostname of the router.]]>
+			<childs/>
+		</property>
+		
+		<property id="as number" name="as number" default_value="100" min="1" max="1">
+			<![CDATA[Enable a BGP protocol process with the specified AS NUMBER. After this statement you can input any BGP Commands. You can not create different BGP process under different AS NUMBER without specifying multiple-instance]]>
+			<childs/>
+		</property>
+		
+		<property id="router-id" name="router-id" default_value="0.0.0.0" min="1" max="1">
+			<![CDATA[This command specifies the router-ID. If bgpd connects to zebra it gets interface and address information. In that case default router ID value is selected as the largest IP Address of the interfaces. When router zebra is not enabled bgpd can't get interface information so router-id is set to 0.0.0.0. So please set router-id by hand.]]>
+			<childs/>
+		</property>
 		
 	</properties>
+	
 </plugin>

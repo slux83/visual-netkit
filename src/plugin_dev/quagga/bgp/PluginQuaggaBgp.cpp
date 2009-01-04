@@ -21,6 +21,7 @@
 #include <QFile>
 
 #include "PluginQuaggaBgp.h"
+#include "NetworkAddress.h"
 
 /**
  * Constructor
@@ -46,9 +47,16 @@ QMap<QString, QString> PluginQuaggaBgp::getTemplates()
 {
 	QMap<QString, QString> templates;
 	QString templateContent;
+	PropertyExpert *pExpert = myProxy->getPropertyExpert();
 
 	//bgpd.conf file
 	templateContent = file2string(":/quagga-bgp/bgpd.conf");
+
+	//replace properties
+	templateContent.replace("<HOSTNAME>", pExpert->searchPropertiesById(properties, "hostname").first()->getValue());
+	templateContent.replace("<AS_NUMBER>", pExpert->searchPropertiesById(properties, "as number").first()->getValue());
+	templateContent.replace("<ROUTER_ID>", pExpert->searchPropertiesById(properties, "router-id").first()->getValue());
+
 	templates.insert(getTemplateLocation() + "bgpd.conf", templateContent);
 
 	return templates;
@@ -88,27 +96,58 @@ bool PluginQuaggaBgp::saveProperty(QString propUniqueId, QString propValue, QStr
 		return true;
 
 	/* Force property save? */
-//	if (pluginAlertMsg == NULL)
-//	{
-//		prop->setValue(propValue);
-//		return true;
-//	}
-//
-//	/* Validate the value */
-//	QRegExp re("yes|no|[0-9]|10");
-//	QRegExpValidator validator(re, NULL);
-//	int pos = 0;
-//	if(validator.validate(propValue, pos) != QValidator::Acceptable)
-//	{
-//		if(pluginAlertMsg)
-//			pluginAlertMsg->append(QObject::tr("Invalid value. Only 'yes', 'no' or 0...10 values are allowed."));
-//		return false;
-//	}
-//
-//	prop->setValue(propValue);
+	if (pluginAlertMsg == NULL)
+	{
+		prop->setValue(propValue);
+		return true;
+	}
+
+	if(prop->getName() == "hostname")
+	{
+		if(propValue.trimmed().isEmpty() && pluginAlertMsg)
+		{
+			pluginAlertMsg->append("The hostname value must be not empty.");
+			return false;
+		}
+		else
+		{
+			prop->setValue(propValue);
+			return true;
+		}
+	}
+
+	if(prop->getName() == "as number")
+	{
+		bool ok;
+		int propNumber = propValue.toInt(&ok);
+		if((!ok || (ok && propNumber < 0)) && pluginAlertMsg)
+		{
+			pluginAlertMsg->append("The as number must be a positive integer.");
+			return false;
+		}
+		else
+		{
+			prop->setValue(propValue);
+			return true;
+		}
+	}
+
+	if(prop->getName() == "router-id")
+	{
+
+		if(!NetworkAddress::validateIp(propValue) && pluginAlertMsg)
+		{
+			pluginAlertMsg->append("The router-id value must be a valid IP address.");
+			return false;
+		}
+		else
+		{
+			prop->setValue(propValue);
+			return true;
+		}
+	}
 
 	return true;
-
 }
 
 /**
