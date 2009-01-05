@@ -170,45 +170,44 @@ void PluginQuaggaBgp::setProxy(PluginProxy* p)
  */
 bool PluginQuaggaBgp::init(QString laboratoryPath)
 {
+	PropertyExpert *pExpert = myProxy->getPropertyExpert();
 
 	/* Get my buddy */
-//	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
-//	if (vm == NULL)
-//	{
-//		qWarning() << "PluginQuaggaBgp::init(): null VM";
-//		return false;
-//	}
-//
-//	QRegExp daemonsRegExp("(.+)=(yes|no|[0-9]|10)");
-//	QString daemonsFilePath = laboratoryPath + "/" + vm->getName() + "/etc/quagga/daemons";
-//	QStringList listMatch;
-//
-//	/* Parse daemons file and get the daemons status */
-//	QString daemonFileContent = file2string(daemonsFilePath);
-//
-//	if(daemonFileContent.isNull())
-//	{
-//		qWarning() << "PluginQuaggaBgp::init()" << "daemon file reading error";
-//		return false;
-//	}
-//
-//	foreach(QString line, daemonFileContent.split("\n", QString::SkipEmptyParts))
-//	{
-//		daemonsRegExp.indexIn(line);
-//		listMatch = daemonsRegExp.capturedTexts();
-//
-//		if(listMatch[0] == "")
-//			continue;	//skip unmatched line
-//
-//		//save the appropriate property entry
-//		QList<PluginProperty *> pList =
-//				myProxy->getPropertyExpert()->searchPropertiesById(properties, "daemons-" + listMatch[1]);
-//
-//		if(!pList.isEmpty())
-//			pList.first()->setValue(listMatch[2]);
-//		else
-//			qWarning() << "PluginQuaggaBgp::init()" << "daemon property not found:" << listMatch;
-//	}
+	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
+	if (vm == NULL)
+	{
+		qWarning() << "PluginQuaggaBgp::init(): null VM";
+		return false;
+	}
+
+	QString bgpconfFilePath = laboratoryPath + "/" + vm->getName() + "/etc/quagga/bgpd.conf";
+
+	/* Parse bgpd.conf file and get the properties */
+	QString bgpdFileContent = file2string(bgpconfFilePath);
+
+	if(bgpconfFilePath.isNull())
+	{
+		qWarning() << "PluginQuaggaBgp::init()" << "bgpd.conf file reading error";
+		return false;
+	}
+
+	foreach(QString line, bgpdFileContent.split("\n", QString::SkipEmptyParts))
+	{
+		QStringList words = line.split(" ", QString::SkipEmptyParts);
+		qDebug() << words;
+
+		//get the hostname
+		if(words.size() == 2 && words[0] == "hostname")
+			pExpert->searchPropertiesById(properties, "hostname").first()->setValue(words[1]);
+
+		//get the as number
+		if(words.size() == 3 &&  words[0] == "router" && words[1] == "bgp")
+			pExpert->searchPropertiesById(properties, "as number").first()->setValue(words[2]);
+
+		//get the router-id
+		if(words.size() == 3 &&  words[0] == "bgp" && words[1] == "router-id")
+			pExpert->searchPropertiesById(properties, "router-id").first()->setValue(words[2]);
+	}
 
 	//set the graphics label
 	myProxy->changeGraphicsLabel(getDefaultGraphisLabel());
