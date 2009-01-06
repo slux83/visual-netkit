@@ -32,7 +32,7 @@ MAKE="make -j2"
 usage()
 {
 	echo
-	echo "Visual Netkit Builder script version 1.0"
+	echo "Visual Netkit Builder script version 1.4"
 	echo "USE ./build.sh [OPTION]"
 	echo
 	echo " 	OPTIONS:"

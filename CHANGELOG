@@ -1,4 +1,4 @@
-2009-xx-xx [1.4] Slux <slux83@gmail.com>
+2009-01-06 [1.4] Slux <slux83@gmail.com>
  * [Added]   plugin Quagga-core (zebra daemon)
  * [Added]   plugin Quagga-bgp (bgp daemon)
  * [Added]   plugin Quagga-rip (rip daemon)
