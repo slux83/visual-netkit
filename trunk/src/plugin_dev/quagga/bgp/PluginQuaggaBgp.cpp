@@ -71,7 +71,7 @@ QString PluginQuaggaBgp::getTemplateLocation(bool getBase)
 	VirtualMachine *vm = static_cast<VirtualMachine*>(myProxy->getBaseElement());
 	if (vm == NULL)
 	{
-		qWarning() << "PluginQuaggaCore::getTemplateLocation(): null virtualmachine.";
+		qWarning() << "PluginQuaggaBgp::getTemplateLocation(): null virtualmachine.";
 		return QString();
 	}
 
@@ -194,7 +194,6 @@ bool PluginQuaggaBgp::init(QString laboratoryPath)
 	foreach(QString line, bgpdFileContent.split("\n", QString::SkipEmptyParts))
 	{
 		QStringList words = line.split(" ", QString::SkipEmptyParts);
-		qDebug() << words;
 
 		//get the hostname
 		if(words.size() == 2 && words[0] == "hostname")
