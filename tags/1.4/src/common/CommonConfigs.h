@@ -26,7 +26,7 @@
 #include "Types.h"
 
 /* Visual Netkit Version */
-#define VISUAL_NETKIT_VERSION "SVN"
+#define VISUAL_NETKIT_VERSION "1.4"
 
 /* Default lab name */
 #define DEFAULT_LAB_NAME "unnamed_lab"
