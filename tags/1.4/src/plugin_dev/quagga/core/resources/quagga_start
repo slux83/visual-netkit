@@ -1,0 +1,3 @@
+
+# Quagga-core plugin
+/etc/init.d/quagga start

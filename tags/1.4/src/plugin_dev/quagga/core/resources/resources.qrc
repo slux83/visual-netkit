@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/quagga-core" >
+        <file alias="daemons" >daemons</file>
+		<file alias="zebra.conf" >zebra.conf</file>
+        <file alias="xml-conf" >plugin.xml</file>
+        <file alias="quagga_start" >quagga_start</file>
+    </qresource>
+</RCC>

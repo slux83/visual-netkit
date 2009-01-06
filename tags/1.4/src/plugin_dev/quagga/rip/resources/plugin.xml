@@ -1,0 +1,20 @@
+<plugin name="quagga-rip">
+	
+	<global type="vm" version="1.0" author="Alessio Di Fazio" dependencies="quagga-core">
+		<![CDATA[The <a href="http://www.quagga.net/" title="What is this?">Quagga</a> (rip daemon) plugin for NetKit ]]>
+	</global>
+	<properties>
+		
+		<property id="hostname" name="hostname" default_value="ripd" min="1" max="1">
+			<![CDATA[Set hostname of the router rip.]]>
+			<childs/>
+		</property>
+		
+		<property id="password" name="password" default_value="zebra" min="1" max="1">
+			<![CDATA[Set password for vty interface. If there is no password, a vty won't accept connections.]]>
+			<childs/>
+		</property>
+		
+	</properties>
+	
+</plugin>

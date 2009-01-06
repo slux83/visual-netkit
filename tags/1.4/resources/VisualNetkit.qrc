@@ -1,0 +1,67 @@
+<RCC>
+    <qresource prefix="/medium" >
+        <file alias="cd" >medium_icons/cd.png</file>
+        <file alias="eth" >medium_icons/eth.png</file>
+        <file alias="lab_home" >medium_icons/lab_home.png</file>
+        <file alias="vm" >medium_icons/vm.png</file>
+    </qresource>
+    <qresource prefix="/menu" >
+    	<file alias="tab_list_icon" >menu_icons/arrow_down.png</file>
+        <file alias="cd_icon" >menu_icons/cd.png</file>
+        <file alias="close_icon" >menu_icons/close.png</file>
+        <file alias="create_group" >menu_icons/create_group.png</file>
+        <file alias="delete" >menu_icons/delete.png</file>
+        <file alias="delete_group" >menu_icons/delete_group.png</file>
+        <file alias="link_icon" >menu_icons/link.png</file>
+        <file alias="manage_interfaces" >menu_icons/manage_interfaces.png</file>
+        <file alias="mouse_icon" >menu_icons/mouse.png</file>
+        <file alias="new_icon" >menu_icons/new.png</file>
+        <file alias="new_folder_icon" >menu_icons/folder-new.png</file>
+        <file alias="open_icon" >menu_icons/open.png</file>
+        <file alias="quit_icon" >menu_icons/quit.png</file>
+        <file alias="redo_icon" >menu_icons/redo.png</file>
+        <file alias="save_icon" >menu_icons/save.png</file>
+        <file alias="save_as_icon" >menu_icons/save_as.png</file>
+        <file alias="selection" >menu_icons/selection.png</file>
+        <file alias="tab_close_icon" >menu_icons/tab_close.png</file>
+        <file alias="undo_icon" >menu_icons/undo.png</file>
+        <file alias="vm_icon" >menu_icons/vm.png</file>
+        <file alias="zoom_in_icon" >menu_icons/zoom_in.png</file>
+        <file alias="zoom_original_icon" >menu_icons/zoom_original.png</file>
+        <file alias="zoom_out_icon" >menu_icons/zoom_out.png</file>
+        <file alias="fullscreen_icon" >menu_icons/view_fullscreen.png</file>
+        <file alias="trash" >menu_icons/trash.png</file>
+        <file alias="area" >menu_icons/area.png</file>
+        <file alias="color_edit" >menu_icons/color_edit.png</file>
+        <file alias="configure" >menu_icons/configure.png</file>
+        <file alias="list_add" >menu_icons/list-add.png</file>
+        <file alias="list_remove" >menu_icons/list-remove.png</file>
+        <file alias="area_on_top" >menu_icons/area_on_top.png</file>
+        <file alias="area_on_bottom" >menu_icons/area_on_bottom.png</file>
+        <file alias="text_editor" >menu_icons/text-editor.png</file>
+        <file alias="refresh" >menu_icons/refresh.png</file>
+    </qresource>
+    <qresource prefix="/small" >
+        <file alias="file_conf" >small_icons/file_conf.png</file>
+        <file alias="graph" >small_icons/graph.png</file>
+        <file alias="folder_root" >small_icons/folder_root.png</file>
+        <file alias="folder_vm" >small_icons/folder_vm.png</file>
+        <file alias="plugin" >small_icons/plugin.png</file>
+    </qresource>
+    <qresource prefix="/big" >
+        <file alias="visualnetkit" >big_icons/visualnetkit.png</file>
+    </qresource>
+    <qresource prefix="/splashscreens" >
+        <file alias="ss" >splash_screens/ss.png</file>
+    </qresource>
+    <qresource prefix="/svg" >
+        <file alias="cs_off" >svg/collision_domain_off.svg</file>
+        <file alias="cs_on" >svg/collision_domain_on.svg</file>
+        <file alias="vm_host" >svg/vm_host.svg</file>
+        <file alias="vm_router" >svg/vm_router.svg</file>
+    </qresource>
+    <qresource prefix="/tpl" >
+        <file alias="lab" >templates/lab</file>
+        <file alias="startup" >templates/startup</file>
+    </qresource>
+</RCC>

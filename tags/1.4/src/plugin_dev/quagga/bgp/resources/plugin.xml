@@ -1,0 +1,25 @@
+<plugin name="quagga-bgp">
+	
+	<global type="vm" version="1.0" author="Alessio Di Fazio" dependencies="quagga-core">
+		<![CDATA[The <a href="http://www.quagga.net/" title="What is this?">Quagga</a> (bgp daemon) plugin for NetKit ]]>
+	</global>
+	<properties>
+		
+		<property id="hostname" name="hostname" default_value="bgpd" min="1" max="1">
+			<![CDATA[Set hostname of the router bgp.]]>
+			<childs/>
+		</property>
+		
+		<property id="as number" name="as number" default_value="100" min="1" max="1">
+			<![CDATA[Enable a BGP protocol process with the specified AS NUMBER. After this statement you can input any BGP Commands. You can not create different BGP process under different AS NUMBER without specifying multiple-instance]]>
+			<childs/>
+		</property>
+		
+		<property id="router-id" name="router-id" default_value="0.0.0.0" min="1" max="1">
+			<![CDATA[This command specifies the router-ID. If bgpd connects to zebra it gets interface and address information. In that case default router ID value is selected as the largest IP Address of the interfaces. When router zebra is not enabled bgpd can't get interface information so router-id is set to 0.0.0.0. So please set router-id by hand.]]>
+			<childs/>
+		</property>
+		
+	</properties>
+	
+</plugin>
