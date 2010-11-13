@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # VisualNetkit Builder script
 # Copyright (C) 2008  Alessio Di Fazio, Paolo Minasi
